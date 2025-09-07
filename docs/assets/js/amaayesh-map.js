@@ -11,7 +11,7 @@ AMA.G = AMA.G || {
   province: L.layerGroup(),
 };
 // expose map placeholder
-window.__AMA_MAP = window.__AMA_MAP || null;
+window.__AMA_MAP = window.__AMA_MAP || {};
 
 // Choropleth flag (opt-in) + debug marker control
 AMA.flags = AMA.flags || {};
@@ -99,6 +99,10 @@ const __COUNTY_ALIASES = Object.assign(
     'بينالود': 'بینالود'
   }
 );
+const AMA_ALIASES = window.AMA_ALIASES = window.AMA_ALIASES || {};
+for (const [alias, canon] of Object.entries(__COUNTY_ALIASES)) {
+  if (alias !== canon) (AMA_ALIASES[canon] = AMA_ALIASES[canon] || []).push(alias);
+}
 function canonicalCountyName(s=''){
   let t = (s||'').toString()
     .replace(/[يى]/g,'ی').replace(/ك/g,'ک')
@@ -221,7 +225,7 @@ function boundsFromGeoJSON(gj){
 }
 
 function enforceDefaultVisibility(map){
-  const G = (window.AMA && AMA.G) || {};
+  const G = (window.AMA && typeof AMA.G === 'function') ? AMA.G() : {};
   const DEFAULT_ON = new Set(['counties','province']); // فقط مرزها
   Object.keys(G).forEach(k=>{
     const grp = G[k]; if (!grp) return;
@@ -610,7 +614,7 @@ window.addEventListener('error', e => {
 // (IIFE wrapper) — now converted to callable function
 async function buildOverlaysAfterBoundary(paths){
 // === AMA HELPERS (top-level, safe scope) ===
-const map = window.__AMA_MAP;
+const map = window.__AMA_MAP?.map;
 const canvasRenderer = window.__AMA_canvasRenderer;
 const AMA_DEBUG = window.AMA_DEBUG;
 let __LAYER_MANIFEST_BASE = '/data/';
@@ -776,6 +780,7 @@ async function joinWindWeightsOnAll(){
       window.__countiesLayer = countiesFill;
       window.__AMA_countySource = 'preloaded all-counties';
       window.__countiesGeoAll = countiesGJ;
+      window.__AMA_COUNTIES_LAYER = countiesFill;
       if (window.AMA_DEBUG) console.log('[AHA] county source=preloaded');
       if (window.AMA_DEBUG) console.log('[AMA] base groups protected:', !!baseAdminGroup, !!countiesFill?.__AMA_PROTECTED, !!boundary?.__AMA_PROTECTED);
     }
@@ -1482,8 +1487,9 @@ async function actuallyLoadManifest(){
           if(infoEl) infoEl.textContent = 'داده شهرستان‌ها در دسترس نیست.';
         }
       }
-    // === Local search & geolocate ===
-    const searchCtl = L.control({position:'topleft'});
+      // === Local search & geolocate (legacy search) ===
+      if (!document.getElementById('ama-county-search')) {
+      const searchCtl = L.control({position:'topleft'});
     searchCtl.onAdd = function(){
       const div = L.DomUtil.create('div','ama-search');
       div.innerHTML = `<input type="text" placeholder="جستجوی شهرستان/سایت…"/><button title="یافتن موقعیت من">📍</button><div class="ama-suggestions" style="display:none"></div>`;
@@ -1526,7 +1532,8 @@ async function actuallyLoadManifest(){
       });
       return div;
     };
-    searchCtl.addTo(map);
+      searchCtl.addTo(map);
+      }
 
     function debounce(fn,ms){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args),ms); }; }
     function toast(msg){ const info=document.getElementById('info'); if(info){ info.textContent=msg; setTimeout(()=>{info.textContent='';},3000); } }
@@ -1854,21 +1861,23 @@ async function actuallyLoadManifest(){
 
       L.control.scale({ metric:true, imperial:false }).addTo(map);
 
-      if (L.Control && L.Control.geocoder) {
-        const geocoder = L.Control.geocoder({ defaultMarkGeocode:false }).addTo(map);
-        geocoder.on('markgeocode', e => {
-          const center = e.geocode.center;
-          const name = e.geocode.name;
-          safeClearGroup(searchLayer);
-          searchLayer.addLayer(L.circleMarker(center, {
-            radius: 7, color: '#22d3ee', weight: 2, fillColor: '#22d3ee', fillOpacity: 1
-          }).bindTooltip(name, {direction:'top', offset:[0,-10]}));
-          if (e.geocode.bbox) {
-            map.fitBounds(e.geocode.bbox);
-          } else {
-            map.setView(center, 14);
-          }
-        });
+      if (!document.getElementById('ama-county-search')) {
+        if (L.Control && L.Control.geocoder) {
+          const geocoder = L.Control.geocoder({ defaultMarkGeocode:false }).addTo(map);
+          geocoder.on('markgeocode', e => {
+            const center = e.geocode.center;
+            const name = e.geocode.name;
+            safeClearGroup(searchLayer);
+            searchLayer.addLayer(L.circleMarker(center, {
+              radius: 7, color: '#22d3ee', weight: 2, fillColor: '#22d3ee', fillOpacity: 1
+            }).bindTooltip(name, {direction:'top', offset:[0,-10]}));
+            if (e.geocode.bbox) {
+              map.fitBounds(e.geocode.bbox);
+            } else {
+              map.setView(center, 14);
+            }
+          });
+        }
       }
 
       // اگر لایه گاز موجود است، جلوه‌های اضافه اعمال شود
@@ -2006,8 +2015,9 @@ async function actuallyLoadManifest(){
 
       applyMode();
 
-      // === Tool Dock ===
-      function makePanel(title, bodyHtml){
+        // === Tool Dock ===
+        if (!document.getElementById('ama-county-search')) {
+        function makePanel(title, bodyHtml){
         const ctl = L.control({position:'topleft'});
         ctl.onAdd = function(){
           const wrap=L.DomUtil.create('div','ama-panel');
@@ -2050,8 +2060,9 @@ async function actuallyLoadManifest(){
 
       panels.search.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); setTimeout(()=>{wrap.querySelector('#ama-search-input')?.focus();},0); const btn=wrap.querySelector('#ama-search-go'); btn?.addEventListener('click',()=>{ const val=wrap.querySelector('#ama-search-input').value.trim(); if(!val) return; const site = windSitesRaw.find(s=>s.name_fa===val); if(site){ map.setView([+site.lat,+site.lon],11); } else { focusCountyByName(val); } }); return wrap; }; })(panels.search.onAdd);
       panels.layers.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const body=wrap.querySelector('.ama-panel-bd'); body.innerHTML='<label><input type="checkbox" data-layer="wind" checked/> لایه باد</label><label><input type="checkbox" data-layer="sites" checked/> سایت‌ها</label>'; body.querySelectorAll('input[data-layer]').forEach(ch=>{ ch.addEventListener('change',()=>{ const lay=ch.dataset.layer; const LAY = lay==='wind'?window.windChoroplethLayer:window.windSitesLayer; if(LAY){ if(ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);} });}); return wrap; }; })(panels.layers.onAdd);
-      panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
-    })();
+        panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
+        }
+      })();
 }
 
 async function ama_bootstrap(){
@@ -2152,10 +2163,48 @@ async function ama_bootstrap(){
   window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
   window.__combinedGeo = provinceFC;
   if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', (countiesFC?.features||[]).length);
+  // --- AMA public registry (single source of truth) ---
+  window.AMA = window.AMA || {};
+  window.__AMA_MAP = window.__AMA_MAP || {};
 
-  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
-  window.__AMA_MAP = map;
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
+  const M = window.__AMA_MAP;
+
+  // ensure single Leaflet map and base tiles
+  M.map = M.map || (typeof L !== 'undefined' ? L.map('map', { preferCanvas:true, zoomControl:true }) : null);
+  if (M.map && !M.__tiles) {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                { attribution:'© OpenStreetMap' }).addTo(M.map);
+    M.__tiles = true;
+  }
+
+  // collect layer groups from window-scoped vars
+  const GROUPS = {
+    wind:     window.windSitesLayer  || null,
+    solar:    window.solarSitesLayer || null,
+    dams:     window.damsLayer       || null,
+    counties: window.__countiesLayer || null,
+    province: (typeof baseAdminGroup !== 'undefined' && baseAdminGroup) ? baseAdminGroup : null
+  };
+
+  M.groups = Object.fromEntries(Object.entries(GROUPS).filter(([,v]) => !!v));
+
+  // expose feature collections for search
+  M.windSitesGeo  = M.windSitesGeo  || (window.windSitesLayer?.toGeoJSON?.()  || null);
+  M.solarSitesGeo = M.solarSitesGeo || (window.solarSitesLayer?.toGeoJSON?.() || null);
+  M.damsGeo       = M.damsGeo       || (window.damsLayer?.toGeoJSON?.()       || null);
+
+  // registry accessor for panel
+  AMA.G = () => (window.__AMA_MAP && window.__AMA_MAP.groups) || {};
+
+  // re-wire panel once layers are ready
+  queueMicrotask(() => {
+    if (window.AMA && typeof AMA.initPanelDirectWire === 'function') {
+      AMA.initPanelDirectWire();
+    }
+  });
+
+  M.leaflet = M.map;
+  const map = M.map;
   if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
     map.attributionControl.setPosition('bottomleft');
@@ -2185,7 +2234,6 @@ async function ama_bootstrap(){
 
   enforceDefaultVisibility(map);
   setTimeout(()=>enforceDefaultVisibility(map), 0);
-  if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
 
   await __refreshBoundary(map, { keepOld:false });
 
