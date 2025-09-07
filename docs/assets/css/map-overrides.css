@@ -1,0 +1,2 @@
+/* stop leaflet from probing images/marker-icon.png via CSS */
+.leaflet-default-icon-path { background-image: none !important; }
