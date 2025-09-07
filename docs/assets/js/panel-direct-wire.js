@@ -1,79 +1,45 @@
-;(function(){
-  const A = window.AMA = window.AMA || {};
-  A.flags = A.flags || {};
-  A.flags.useDomBridge = false;
+;(function () {
+  const A = (window.AMA = window.AMA || {}); A.flags = A.flags || {}; A.flags.useDomBridge = false;
+  const G   = () => (typeof A.G === 'function' ? A.G() : (A.G || {}));
+  const map = () => (window.__AMA_MAP && window.__AMA_MAP.map) || null;
 
-  function G(){ return (A.G)||{} }
-  function map(){ return window.__AMA_MAP }
+  const $cb = el => el?.matches?.('input[type="checkbox"]') ? el : (el?.querySelector?.('input[type="checkbox"]') || null);
+  const isOn = k => { const m=map(), g=G()[k]; return !!(m && g && m.hasLayer && m.hasLayer(g)); };
+  const setOn = (k,on)=>{ const m=map(), g=G()[k]; if(!m||!g) return false; const cur=isOn(k); if(on&&!cur) g.addTo(m); if(!on&&cur) m.removeLayer(g); updateUi(k,on); return true; };
 
-  function isOn(key){
-    const m = map(), g = G()[key];
-    return !!(m && g && m.hasLayer(g));
-  }
-  function setOn(key, on){
-    const m = map(), g = G()[key]; if(!m || !g) return false;
-    const cur = isOn(key);
-    if (on && !cur) g.addTo(m);
-    if (!on && cur) m.removeLayer(g);
-    updateUi(key, on);
-    return true;
-  }
-
-  function $checkbox(el){
-    return el && (el.matches && el.matches('input[type="checkbox"]'))
-      ? el
-      : el && el.querySelector && el.querySelector('input[type="checkbox"]');
-  }
-
-  function updateUi(key, on){
-    const el = document.querySelector(`[data-layer-toggle="${key}"]`);
-    if(!el) return;
-    const cb = $checkbox(el);
-    if (cb){
-      cb.checked = !!on;
-      el.setAttribute('aria-checked', on ? 'true':'false');
-      el.classList.toggle('muted', !on);
-    } else {
-      el.setAttribute('aria-pressed', on ? 'true':'false');
-      el.classList.toggle('muted', !on);
-    }
-  }
-
-  function syncUi(){
-    ['wind','solar','dams','counties','province'].forEach(k=> updateUi(k, isOn(k)));
+  function updateUi(k,on){
+    const el = document.querySelector(`[data-layer-toggle="${k}"]`); if(!el) return;
+    const cb = $cb(el);
+    if (cb){ cb.checked=!!on; el.setAttribute('aria-checked', on?'true':'false'); }
+    else    { el.setAttribute('aria-pressed', on?'true':'false'); }
+    el.classList.toggle('muted', !on);
   }
 
   function bind(){
     document.querySelectorAll('[data-layer-toggle]').forEach(el=>{
-      const key = (el.getAttribute('data-layer-toggle')||'').trim();
-      if(!key) return;
-
-      const cb = $checkbox(el);
-
+      const k=(el.getAttribute('data-layer-toggle')||'').trim(); if(!k) return;
+      const cb=$cb(el);
       if (cb){
-        cb.checked = isOn(key);
-        cb.addEventListener('change', (e)=>{
-          setOn(key, cb.checked);
-          e.stopPropagation();
-        });
+        cb.checked = isOn(k);
+        cb.addEventListener('change', e => { setOn(k, cb.checked); e.stopPropagation(); });
       } else {
-        el.addEventListener('click', (e)=>{
-          const on = el.getAttribute('aria-pressed') !== 'true';
-          setOn(key, on);
-          e.preventDefault();
-        });
+        el.addEventListener('click', e => { const on = el.getAttribute('aria-pressed')!=='true'; setOn(k,on); e.preventDefault(); });
       }
+      updateUi(k, isOn(k));
     });
-    syncUi();
-    setTimeout(syncUi, 0);
   }
 
-  A.initPanelDirectWire = function(){
-    if (!document.querySelector('[data-layer-toggle]')) return;
-    bind();
-  };
+  function syncUi(){
+    document.querySelectorAll('[data-layer-toggle]').forEach(el=>{
+      const k=(el.getAttribute('data-layer-toggle')||'').trim(); updateUi(k, isOn(k));
+    });
+  }
 
-  document.addEventListener('DOMContentLoaded', ()=>{
-    if (document.querySelector('[data-layer-toggle]')) A.initPanelDirectWire();
-  });
+  function ready(){
+    const g = (window.__AMA_MAP && window.__AMA_MAP.groups)||{};
+    return g.counties || g.province || g.wind || g.solar || g.dams;
+  }
+
+  document.addEventListener('ama:groups-ready', ()=>{ bind(); syncUi(); });
+  if(ready()) bind();
 })();
