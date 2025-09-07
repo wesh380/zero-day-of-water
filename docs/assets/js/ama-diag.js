@@ -1,8 +1,9 @@
 ;(function(){
   const MAX_MS = 10000, STEP = 300;
   function collect() {
-    const map = window.__AMA_MAP || (window.AMA && window.AMA.map) || null;
-    const G = (window.AMA && window.AMA.G) || {};
+    const map = window.__AMA_MAP?.map || (window.AMA && window.AMA.map) || null;
+    if (!map || typeof map.hasLayer !== 'function') return { mapReady:false, gKeys:[], groups:[], ui:[] };
+    const G = (window.AMA && typeof window.AMA.G === 'function') ? window.AMA.G() : {};
     const keys = Object.keys(G||{});
     const toggles = Array.from(document.querySelectorAll('[data-layer-toggle]'));
     const groups = keys.map(k=>{
