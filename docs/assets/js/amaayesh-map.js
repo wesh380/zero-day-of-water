@@ -99,6 +99,10 @@ const __COUNTY_ALIASES = Object.assign(
     'بينالود': 'بینالود'
   }
 );
+const AMA_ALIASES = window.AMA_ALIASES = window.AMA_ALIASES || {};
+for (const [alias, canon] of Object.entries(__COUNTY_ALIASES)) {
+  if (alias !== canon) (AMA_ALIASES[canon] = AMA_ALIASES[canon] || []).push(alias);
+}
 function canonicalCountyName(s=''){
   let t = (s||'').toString()
     .replace(/[يى]/g,'ی').replace(/ك/g,'ک')
@@ -1482,8 +1486,9 @@ async function actuallyLoadManifest(){
           if(infoEl) infoEl.textContent = 'داده شهرستان‌ها در دسترس نیست.';
         }
       }
-    // === Local search & geolocate ===
-    const searchCtl = L.control({position:'topleft'});
+      // === Local search & geolocate (legacy search) ===
+      if (!document.getElementById('ama-county-search')) {
+      const searchCtl = L.control({position:'topleft'});
     searchCtl.onAdd = function(){
       const div = L.DomUtil.create('div','ama-search');
       div.innerHTML = `<input type="text" placeholder="جستجوی شهرستان/سایت…"/><button title="یافتن موقعیت من">📍</button><div class="ama-suggestions" style="display:none"></div>`;
@@ -1526,7 +1531,8 @@ async function actuallyLoadManifest(){
       });
       return div;
     };
-    searchCtl.addTo(map);
+      searchCtl.addTo(map);
+      }
 
     function debounce(fn,ms){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args),ms); }; }
     function toast(msg){ const info=document.getElementById('info'); if(info){ info.textContent=msg; setTimeout(()=>{info.textContent='';},3000); } }
@@ -1854,21 +1860,23 @@ async function actuallyLoadManifest(){
 
       L.control.scale({ metric:true, imperial:false }).addTo(map);
 
-      if (L.Control && L.Control.geocoder) {
-        const geocoder = L.Control.geocoder({ defaultMarkGeocode:false }).addTo(map);
-        geocoder.on('markgeocode', e => {
-          const center = e.geocode.center;
-          const name = e.geocode.name;
-          safeClearGroup(searchLayer);
-          searchLayer.addLayer(L.circleMarker(center, {
-            radius: 7, color: '#22d3ee', weight: 2, fillColor: '#22d3ee', fillOpacity: 1
-          }).bindTooltip(name, {direction:'top', offset:[0,-10]}));
-          if (e.geocode.bbox) {
-            map.fitBounds(e.geocode.bbox);
-          } else {
-            map.setView(center, 14);
-          }
-        });
+      if (!document.getElementById('ama-county-search')) {
+        if (L.Control && L.Control.geocoder) {
+          const geocoder = L.Control.geocoder({ defaultMarkGeocode:false }).addTo(map);
+          geocoder.on('markgeocode', e => {
+            const center = e.geocode.center;
+            const name = e.geocode.name;
+            safeClearGroup(searchLayer);
+            searchLayer.addLayer(L.circleMarker(center, {
+              radius: 7, color: '#22d3ee', weight: 2, fillColor: '#22d3ee', fillOpacity: 1
+            }).bindTooltip(name, {direction:'top', offset:[0,-10]}));
+            if (e.geocode.bbox) {
+              map.fitBounds(e.geocode.bbox);
+            } else {
+              map.setView(center, 14);
+            }
+          });
+        }
       }
 
       // اگر لایه گاز موجود است، جلوه‌های اضافه اعمال شود
@@ -2006,8 +2014,9 @@ async function actuallyLoadManifest(){
 
       applyMode();
 
-      // === Tool Dock ===
-      function makePanel(title, bodyHtml){
+        // === Tool Dock ===
+        if (!document.getElementById('ama-county-search')) {
+        function makePanel(title, bodyHtml){
         const ctl = L.control({position:'topleft'});
         ctl.onAdd = function(){
           const wrap=L.DomUtil.create('div','ama-panel');
@@ -2050,8 +2059,9 @@ async function actuallyLoadManifest(){
 
       panels.search.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); setTimeout(()=>{wrap.querySelector('#ama-search-input')?.focus();},0); const btn=wrap.querySelector('#ama-search-go'); btn?.addEventListener('click',()=>{ const val=wrap.querySelector('#ama-search-input').value.trim(); if(!val) return; const site = windSitesRaw.find(s=>s.name_fa===val); if(site){ map.setView([+site.lat,+site.lon],11); } else { focusCountyByName(val); } }); return wrap; }; })(panels.search.onAdd);
       panels.layers.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const body=wrap.querySelector('.ama-panel-bd'); body.innerHTML='<label><input type="checkbox" data-layer="wind" checked/> لایه باد</label><label><input type="checkbox" data-layer="sites" checked/> سایت‌ها</label>'; body.querySelectorAll('input[data-layer]').forEach(ch=>{ ch.addEventListener('change',()=>{ const lay=ch.dataset.layer; const LAY = lay==='wind'?window.windChoroplethLayer:window.windSitesLayer; if(LAY){ if(ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);} });}); return wrap; }; })(panels.layers.onAdd);
-      panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
-    })();
+        panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
+        }
+      })();
 }
 
 async function ama_bootstrap(){
