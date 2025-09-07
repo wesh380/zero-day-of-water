@@ -1,6 +1,30 @@
 // --- Build id ---
 window.__AMA_BUILD_ID = document.querySelector('meta[name="build-id"]')?.content || String(Date.now());
 
+// --- AMA global & layer registry (early)
+const AMA = window.AMA = window.AMA || {};
+AMA.G = AMA.G || {
+  wind: L.layerGroup(),
+  solar: L.layerGroup(),
+  dams: L.layerGroup(),
+  counties: L.layerGroup(),
+  province: L.layerGroup(),
+};
+// expose map placeholder
+window.__AMA_MAP = window.__AMA_MAP || null;
+
+// Choropleth flag (opt-in) + debug marker control
+AMA.flags = AMA.flags || {};
+AMA.flags.debugCountyMarker = false;
+AMA.flags.disableMarkerIcons = true;
+const CHORO_ON = !!AMA.flags.enableChoropleth;
+
+// soft-disable default Marker icons when flag is on
+if (AMA.flags.disableMarkerIcons && typeof L !== 'undefined' && L && L.Marker && L.Marker.prototype){
+  const _initIcon = L.Marker.prototype._initIcon;
+  L.Marker.prototype._initIcon = function(){ /* no-op: hide image icon */ };
+}
+
 ;(function(){
   window.__AMA_UI_VERSION = 'dock-probe-v1';
   if (window.AMA_DEBUG) console.log('[AMA:UI]', window.__AMA_UI_VERSION, 'build=', window.__AMA_BUILD_ID, 'path=', location.pathname);
@@ -138,6 +162,74 @@ function normalizeDataPath(p){
   if(/^https?:\/\//i.test(p)) return p;
   const s = p.startsWith('/') ? p : '/data/' + p.replace(/^(\.\/)?/,'');
   return s.replace(/\/\/+/g,'/');
+}
+
+// Join helper
+function joinPath(base, file){
+  const b = String(base||'').replace(/^\/+|\/+$/g,'');
+  const f = String(file||'').replace(/^\/+/, '');
+  return b ? `${b}/${f}` : f;
+}
+
+// Resolve paths from manifest
+function resolvePathsFromManifest(manifest){
+  const base = (manifest && manifest.baseData) || '';
+  const LAY  = (manifest && manifest.layers) || {};
+  const provinceFile = LAY.province || LAY.combined || 'khorasan_razavi_combined.geojson';
+  return {
+    counties: joinPath(base, LAY.counties || 'counties.geojson'),
+    province: joinPath(base, provinceFile),
+    wind:     joinPath(base, LAY.wind_sites  || 'wind_sites.geojson'),
+    solar:    joinPath(base, LAY.solar_sites || 'solar_sites.geojson'),
+    dams:     joinPath(base, LAY.dams        || 'dams.geojson'),
+  };
+}
+
+// Safe fetch with timeout + legacy fallback
+async function getJSONwithFallback(relPath, timeoutMs = 30000){
+  const urlPrimary = `/data/${String(relPath).replace(/^\/+/, '')}`;
+  const urlLegacy  = `/${String(relPath).replace(/^\/+/, '')}`;
+  async function fetchJson(url){
+    const ctl = new AbortController();
+    const t = setTimeout(()=>ctl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { signal: ctl.signal, cache:'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const ct = (res.headers.get('content-type')||'').toLowerCase();
+      const txt = await res.text();
+      if (ct.includes('html') || txt.trim().startsWith('<!DOCTYPE')) throw new Error('not-json');
+      return JSON.parse(txt);
+    } finally { clearTimeout(t); }
+  }
+  try {
+    return await fetchJson(urlPrimary);
+  } catch(e1){
+    console.warn('[AHA] primary failed:', urlPrimary, e1.message, '→ trying legacy', urlLegacy);
+    try { return await fetchJson(urlLegacy); }
+    catch(e2){ console.error('[AHA] fetch fail:', relPath, e2.message); return null; }
+  }
+}
+
+// Bounds helper
+function boundsFromGeoJSON(gj){
+  try {
+    if (gj && Array.isArray(gj.features) && gj.features.length) {
+      return L.geoJSON(gj).getBounds();
+    }
+  } catch(_){ }
+  return null;
+}
+
+function enforceDefaultVisibility(map){
+  const G = (window.AMA && AMA.G) || {};
+  const DEFAULT_ON = new Set(['counties','province']); // فقط مرزها
+  Object.keys(G).forEach(k=>{
+    const grp = G[k]; if (!grp) return;
+    const shouldOn = DEFAULT_ON.has(k);
+    const isOn = map.hasLayer(grp);
+    if (shouldOn && !isOn) grp.addTo(map);
+    if (!shouldOn && isOn) map.removeLayer(grp);
+  });
 }
 
 window.__AMA_BOOTING = window.__AMA_BOOTING || false;
@@ -308,9 +400,11 @@ window.setActiveWindKPI = function(k){
   if (window.__countiesLayer) {
     const dyn = computeQuantileBreaksFromLayer(window.__countiesLayer, k);
     if (dyn) window.__WIND_BREAKS = dyn;
-    eachPolyFeatureLayer(window.__countiesLayer, l=>{
-      if (l.feature) l.setStyle(styleForCounty(l.feature));
-    });
+    if (CHORO_ON) {
+      eachPolyFeatureLayer(window.__countiesLayer, l=>{
+        if (l.feature) l.setStyle(styleForCounty(l.feature));
+      });
+    }
   }
   if (typeof renderLegend==='function') renderLegend();
   if (typeof __AMA_renderTop10==='function') __AMA_renderTop10();
@@ -631,7 +725,7 @@ async function joinWindWeightsOnAll(){
     p.wind_class   = w.wind_class||'';
     p.__hasWindData= (p.wind_N>0 || p.wind_sumW>0);
 
-    leaf.setStyle(styleForCounty(leaf.feature));
+    if (CHORO_ON) leaf.setStyle(styleForCounty(leaf.feature));
   });
 
   window.__WIND_DATA_READY = true;
@@ -1212,7 +1306,7 @@ async function actuallyLoadManifest(){
     })();
 
     // === WIND: load computed datasets (amaayesh/counties.geojson + amaayesh/wind_sites.geojson) ===
-    {
+    if (CHORO_ON) {
       const classColors = {1:'#bdbdbd', 2:'#f6c945', 3:'#29cc7a'};
       const fmt = (x, d=1) => (x==null || isNaN(x)) ? '—' : Number(x).toFixed(d);
       const radiusFromMW = mw => Math.max(5, 1.6*Math.sqrt(Math.max(0, mw||0)));
@@ -1979,42 +2073,88 @@ async function ama_bootstrap(){
     manifestUrl = manifestUrl2;
     manifest = await fetch(manifestUrl2).then(r=>r.ok ? r.json() : null).catch(_=>null);
   }
-  const base = (manifest && manifest.baseData) || {};
-  const paths = {
-    counties: normalizeDataPath(base.counties || 'amaayesh/counties.geojson'),
-    combined: normalizeDataPath(base.combined || 'amaayesh/khorasan_razavi_combined.geojson'),
-    wind:     normalizeDataPath(base.wind_sites || 'amaayesh/wind_sites.geojson'),
-    solar:    normalizeDataPath(base.solar_sites || 'amaayesh/solar_sites.geojson'),
-    dams:     normalizeDataPath(base.dams || 'amaayesh/dams.geojson'),
-  };
-  if (window.AMA_DEBUG) console.log('[AMA] paths', paths);
+  const pathsResolved = resolvePathsFromManifest(manifest);
+  if (window.AMA_DEBUG) console.log('[AMA] paths', pathsResolved);
 
   window.__LAYER_MANIFEST_JSON = manifest;
   window.__LAYER_MANIFEST_URL = manifestUrl;
-  window.__AMA_BASE_PATHS = paths;
+  window.__AMA_BASE_PATHS = pathsResolved;
 
-  function getJSON(url){ return Promise.race([
-    fetch(url).then(r=>{ if(!r.ok) throw new Error(url+' '+r.status); return r.json(); }),
-    new Promise((_,rej)=> setTimeout(()=>rej(new Error('timeout '+url)), 9000))
-  ]).catch(e=>{ console.error('[AHA] fetch fail:',e.message); return null; }); }
-
-  const [countiesFC, combinedFC] = await Promise.all([
-    getJSON(paths.counties), getJSON(paths.combined)
+  const [countiesFC, provinceFC, windFC, solarFC, damsFC] = await Promise.all([
+    getJSONwithFallback(pathsResolved.counties),
+    getJSONwithFallback(pathsResolved.province),
+    getJSONwithFallback(pathsResolved.wind),
+    getJSONwithFallback(pathsResolved.solar),
+    getJSONwithFallback(pathsResolved.dams),
   ]);
 
-  let all = null;
-  if (Array.isArray(countiesFC?.features) && countiesFC.features.length > 10) {
-    all = countiesFC;
-  } else if (Array.isArray(combinedFC?.features)) {
-    const f = combinedFC.features.filter(x => String(x?.properties?.admin_level) === '6');
-    if (f.length) all = { type:'FeatureCollection', features:f };
+  // سبک پایه برای نقاط
+  function pointStyle(kind){
+    return { radius: 4, weight: 1, opacity: 1, fillOpacity: 0.7 };
   }
-  if (!all) all = { type:'FeatureCollection', features:[] };
-  window.__countiesGeoAll = all;
-  window.__combinedGeo = combinedFC;
-  if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', all.features.length);
 
-  const map = L.map('map', { preferCanvas:true, zoomControl:true });
+  // ساخت لایه GeoJSON با circleMarker
+  function asCircleLayer(gj, kind){
+    if (!gj) return null;
+    return L.geoJSON(gj, {
+      pointToLayer: (_f, latlng)=> L.circleMarker(latlng, pointStyle(kind))
+    });
+  }
+
+  // افزودن ایمن به رجیستری بدون مارکر آیکنی
+  function setPointGroup(key, gj){
+    const grp = AMA.G[key]; if (!grp) return;
+    grp.clearLayers();
+    const lyr = asCircleLayer(gj, key); if (lyr) grp.addLayer(lyr);
+  }
+
+  function addPolyGroup(key, gj){
+    if(!gj) return;
+    const style = key==='province'
+      ? { color:'#6b7280', weight:2, opacity:0.8, fillOpacity:0 }
+      : { color:'#111',    weight:2, opacity:1,   fillOpacity:0 };
+    const layer = L.geoJSON(gj, { style: () => style });
+    AMA.G[key].clearLayers();
+    AMA.G[key].addLayer(layer);
+  }
+
+  addPolyGroup('counties', countiesFC);
+  addPolyGroup('province', provinceFC);
+  setPointGroup('wind', windFC);
+  setPointGroup('solar', solarFC);
+  setPointGroup('dams', damsFC);
+
+  function coerceMarkersToCircles(groupKey){
+    const grp = AMA.G[groupKey]; if (!grp) return;
+    const toAdd = [], toRemove = [];
+    grp.eachLayer(l=>{
+      if (l instanceof L.GeoJSON){
+        l.eachLayer(inn=>{
+          if (inn instanceof L.Marker && typeof inn.getLatLng==='function'){
+            const ll = inn.getLatLng();
+            toRemove.push(inn);
+            toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
+          }
+        });
+      } else if (l instanceof L.Marker && typeof l.getLatLng==='function'){
+        const ll = l.getLatLng();
+        toRemove.push(l);
+        toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
+      }
+    });
+    toRemove.forEach(x=> grp.removeLayer(x));
+    toAdd.forEach(x=> grp.addLayer(x));
+  }
+
+  ['wind','solar','dams'].forEach(k=>{ coerceMarkersToCircles(k); });
+  setTimeout(()=> ['wind','solar','dams'].forEach(k=> coerceMarkersToCircles(k)), 0);
+
+  window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
+  window.__combinedGeo = provinceFC;
+  if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', (countiesFC?.features||[]).length);
+
+  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  window.__AMA_MAP = map;
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
   if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
@@ -2033,7 +2173,6 @@ async function ama_bootstrap(){
 
   const canvasRenderer = L.canvas({padding:0.5});
   window.__AMA_canvasRenderer = canvasRenderer;
-  window.__AMA_MAP = map;
 
   const _rm = map.removeLayer.bind(map);
   map.removeLayer = (lyr) => {
@@ -2044,15 +2183,43 @@ async function ama_bootstrap(){
     return _rm(lyr);
   };
 
+  enforceDefaultVisibility(map);
+  setTimeout(()=>enforceDefaultVisibility(map), 0);
+  if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
+
   await __refreshBoundary(map, { keepOld:false });
-  map.fitBounds(boundary.getBounds(), { padding:[12,12] });
-  map.setMaxBounds(boundary.getBounds().pad(0.25));
+
+  const b1 = (countiesFC && L.geoJSON(countiesFC).getBounds()) || null;
+  const b2 = (provinceFC && L.geoJSON(provinceFC).getBounds()) || null;
+  let bounds = b1 || b2;
+  if (b1 && b2) { try { bounds = b1.extend(b2); } catch(_){} }
+  if (bounds && bounds.isValid && bounds.isValid()) map.fitBounds(bounds);
+  else console.warn('[AMA] no valid bounds; skip fitBounds');
   boundary.setStyle({ className: 'neon-edge' });
   map.on('layeradd overlayadd overlayremove', () => {
     if (boundary?.bringToFront) boundary.bringToFront();
   });
 
-  await buildOverlaysAfterBoundary(paths);
+  window.__AMA_COUNTS = {
+    counties: (countiesFC?.features||[]).length,
+    province: (provinceFC?.features||[]).length,
+    wind: (windFC?.features||[]).length,
+    solar: (solarFC?.features||[]).length,
+    dams: (damsFC?.features||[]).length,
+  };
+
+  window.__dumpAmaState = function(){
+    const info = {
+      manifestUrl,
+      baseData: manifest?.baseData || null,
+      paths: window.__AMA_BASE_PATHS,
+      counts: window.__AMA_COUNTS,
+    };
+    if (window.AMA_DEBUG) console.log('[AMA] dump', info);
+    return info;
+  };
+
+  await buildOverlaysAfterBoundary(pathsResolved);
 
   window.__AMA_BOOTSTRAPPED = true;
   window.__AMA_BOOTING = false;
