@@ -1482,8 +1482,9 @@ async function actuallyLoadManifest(){
           if(infoEl) infoEl.textContent = 'داده شهرستان‌ها در دسترس نیست.';
         }
       }
-    // === Local search & geolocate ===
-    const searchCtl = L.control({position:'topleft'});
+      // === Local search & geolocate (disabled in favor of panel search) ===
+      if(false){
+      const searchCtl = L.control({position:'topleft'});
     searchCtl.onAdd = function(){
       const div = L.DomUtil.create('div','ama-search');
       div.innerHTML = `<input type="text" placeholder="جستجوی شهرستان/سایت…"/><button title="یافتن موقعیت من">📍</button><div class="ama-suggestions" style="display:none"></div>`;
@@ -1526,7 +1527,8 @@ async function actuallyLoadManifest(){
       });
       return div;
     };
-    searchCtl.addTo(map);
+      searchCtl.addTo(map);
+      }
 
     function debounce(fn,ms){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args),ms); }; }
     function toast(msg){ const info=document.getElementById('info'); if(info){ info.textContent=msg; setTimeout(()=>{info.textContent='';},3000); } }
