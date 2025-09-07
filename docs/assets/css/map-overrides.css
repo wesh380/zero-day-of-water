@@ -1,2 +1,12 @@
 /* stop leaflet from probing images/marker-icon.png via CSS */
 .leaflet-default-icon-path { background-image: none !important; }
+
+/* hide legacy left-side controls if any slipped through */
+.leaflet-control-layers,
+.leaflet-control-layers-toggle,
+.ama-modes.leaflet-control,
+.ama-infra.leaflet-control,
+.ama-search.leaflet-control,
+.ama-dock.leaflet-control {
+  display: none !important;
+}
