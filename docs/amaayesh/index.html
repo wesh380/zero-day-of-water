@@ -37,18 +37,18 @@
         <button aria-label="تنظیمات" style="border:0;background:transparent;cursor:pointer;opacity:.7">⚙️</button>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button id="tab-wind"  style="flex:1;padding:8px 12px;border-radius:10px;background:#2563eb;color:#fff;border:0;cursor:pointer">باد</button>
-        <button id="tab-solar" style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">خورشیدی</button>
-        <button id="tab-dams"  style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">آب</button>
+        <button id="tab-wind"  data-layer-toggle="wind"  style="flex:1;padding:8px 12px;border-radius:10px;background:#2563eb;color:#fff;border:0;cursor:pointer">باد</button>
+        <button id="tab-solar" data-layer-toggle="solar" style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">خورشیدی</button>
+        <button id="tab-dams"  data-layer-toggle="dams"  style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">آب</button>
       </div>
       <div style="position:relative;margin-bottom:8px">
         <input id="ama-search" type="text" placeholder="جستجوی شهرستان..."
                style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:10px;outline:none" />
       </div>
       <div style="display:grid;gap:8px">
-        <label><input id="chk-wind-sites"  type="checkbox"/> سایت‌های بادی (انرژی)</label>
-        <label><input id="chk-solar-sites" type="checkbox"/> سایت‌های خورشیدی</label>
-        <label><input id="chk-dam-sites"   type="checkbox"/> سد</label>
+        <label data-layer-toggle="wind"><input id="chk-wind-sites"  type="checkbox"/> سایت‌های بادی (انرژی)</label>
+        <label data-layer-toggle="solar"><input id="chk-solar-sites" type="checkbox"/> سایت‌های خورشیدی</label>
+        <label data-layer-toggle="dams"><input id="chk-dam-sites"   type="checkbox"/> سد</label>
       </div>
     </aside>
 
@@ -77,5 +77,8 @@
   <script defer src="/assets/vendor/leaflet-control-geocoder/Control.Geocoder.js"></script>
   <script defer src="/assets/vendor/leaflet.polylineDecorator.min.js"></script>
   <script defer src="/assets/js/amaayesh-map.js"></script>
+  <script defer src="/assets/js/ama-bridge-new-panel.js"></script>
+  <script defer src="/assets/js/ama-wire-buttons.js"></script>
+  <script defer src="/assets/js/ama-diag.js"></script>
 </body>
 </html>

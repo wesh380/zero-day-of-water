@@ -1,6 +1,18 @@
 // --- Build id ---
 window.__AMA_BUILD_ID = document.querySelector('meta[name="build-id"]')?.content || String(Date.now());
 
+// --- AMA global & layer registry (early)
+window.AMA = window.AMA || {};
+window.AMA.G = window.AMA.G || {
+  wind: L.layerGroup(),
+  solar: L.layerGroup(),
+  dams: L.layerGroup(),
+  counties: L.layerGroup(),
+  province: L.layerGroup(),
+};
+// expose map placeholder
+window.__AMA_MAP = window.__AMA_MAP || null;
+
 ;(function(){
   window.__AMA_UI_VERSION = 'dock-probe-v1';
   if (window.AMA_DEBUG) console.log('[AMA:UI]', window.__AMA_UI_VERSION, 'build=', window.__AMA_BUILD_ID, 'path=', location.pathname);
@@ -138,6 +150,62 @@ function normalizeDataPath(p){
   if(/^https?:\/\//i.test(p)) return p;
   const s = p.startsWith('/') ? p : '/data/' + p.replace(/^(\.\/)?/,'');
   return s.replace(/\/\/+/g,'/');
+}
+
+// Join helper
+function joinPath(base, file){
+  const b = String(base||'').replace(/^\/+|\/+$/g,'');
+  const f = String(file||'').replace(/^\/+/, '');
+  return b ? `${b}/${f}` : f;
+}
+
+// Resolve paths from manifest
+function resolvePathsFromManifest(manifest){
+  const base = (manifest && manifest.baseData) || '';
+  const LAY  = (manifest && manifest.layers) || {};
+  const provinceFile = LAY.province || LAY.combined || 'khorasan_razavi_combined.geojson';
+  return {
+    counties: joinPath(base, LAY.counties || 'counties.geojson'),
+    province: joinPath(base, provinceFile),
+    wind:     joinPath(base, LAY.wind_sites  || 'wind_sites.geojson'),
+    solar:    joinPath(base, LAY.solar_sites || 'solar_sites.geojson'),
+    dams:     joinPath(base, LAY.dams        || 'dams.geojson'),
+  };
+}
+
+// Safe fetch with timeout + legacy fallback
+async function getJSONwithFallback(relPath, timeoutMs = 30000){
+  const urlPrimary = `/data/${String(relPath).replace(/^\/+/, '')}`;
+  const urlLegacy  = `/${String(relPath).replace(/^\/+/, '')}`;
+  async function fetchJson(url){
+    const ctl = new AbortController();
+    const t = setTimeout(()=>ctl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { signal: ctl.signal, cache:'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const ct = (res.headers.get('content-type')||'').toLowerCase();
+      const txt = await res.text();
+      if (ct.includes('html') || txt.trim().startsWith('<!DOCTYPE')) throw new Error('not-json');
+      return JSON.parse(txt);
+    } finally { clearTimeout(t); }
+  }
+  try {
+    return await fetchJson(urlPrimary);
+  } catch(e1){
+    console.warn('[AHA] primary failed:', urlPrimary, e1.message, '→ trying legacy', urlLegacy);
+    try { return await fetchJson(urlLegacy); }
+    catch(e2){ console.error('[AHA] fetch fail:', relPath, e2.message); return null; }
+  }
+}
+
+// Bounds helper
+function boundsFromGeoJSON(gj){
+  try {
+    if (gj && Array.isArray(gj.features) && gj.features.length) {
+      return L.geoJSON(gj).getBounds();
+    }
+  } catch(_){ }
+  return null;
 }
 
 window.__AMA_BOOTING = window.__AMA_BOOTING || false;
@@ -1979,42 +2047,39 @@ async function ama_bootstrap(){
     manifestUrl = manifestUrl2;
     manifest = await fetch(manifestUrl2).then(r=>r.ok ? r.json() : null).catch(_=>null);
   }
-  const base = (manifest && manifest.baseData) || {};
-  const paths = {
-    counties: normalizeDataPath(base.counties || 'amaayesh/counties.geojson'),
-    combined: normalizeDataPath(base.combined || 'amaayesh/khorasan_razavi_combined.geojson'),
-    wind:     normalizeDataPath(base.wind_sites || 'amaayesh/wind_sites.geojson'),
-    solar:    normalizeDataPath(base.solar_sites || 'amaayesh/solar_sites.geojson'),
-    dams:     normalizeDataPath(base.dams || 'amaayesh/dams.geojson'),
-  };
-  if (window.AMA_DEBUG) console.log('[AMA] paths', paths);
+  const pathsResolved = resolvePathsFromManifest(manifest);
+  if (window.AMA_DEBUG) console.log('[AMA] paths', pathsResolved);
 
   window.__LAYER_MANIFEST_JSON = manifest;
   window.__LAYER_MANIFEST_URL = manifestUrl;
-  window.__AMA_BASE_PATHS = paths;
+  window.__AMA_BASE_PATHS = pathsResolved;
 
-  function getJSON(url){ return Promise.race([
-    fetch(url).then(r=>{ if(!r.ok) throw new Error(url+' '+r.status); return r.json(); }),
-    new Promise((_,rej)=> setTimeout(()=>rej(new Error('timeout '+url)), 9000))
-  ]).catch(e=>{ console.error('[AHA] fetch fail:',e.message); return null; }); }
-
-  const [countiesFC, combinedFC] = await Promise.all([
-    getJSON(paths.counties), getJSON(paths.combined)
+  const [countiesFC, provinceFC, windFC, solarFC, damsFC] = await Promise.all([
+    getJSONwithFallback(pathsResolved.counties),
+    getJSONwithFallback(pathsResolved.province),
+    getJSONwithFallback(pathsResolved.wind),
+    getJSONwithFallback(pathsResolved.solar),
+    getJSONwithFallback(pathsResolved.dams),
   ]);
 
-  let all = null;
-  if (Array.isArray(countiesFC?.features) && countiesFC.features.length > 10) {
-    all = countiesFC;
-  } else if (Array.isArray(combinedFC?.features)) {
-    const f = combinedFC.features.filter(x => String(x?.properties?.admin_level) === '6');
-    if (f.length) all = { type:'FeatureCollection', features:f };
+  function addToGroup(groupKey, gj, point=false){
+    if (!gj) return;
+    const opts = point ? { pointToLayer: (_,_latlng)=> L.circleMarker(_latlng,{radius:5,weight:1}) } : {};
+    const layer = L.geoJSON(gj, opts);
+    AMA.G[groupKey].addLayer(layer);
   }
-  if (!all) all = { type:'FeatureCollection', features:[] };
-  window.__countiesGeoAll = all;
-  window.__combinedGeo = combinedFC;
-  if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', all.features.length);
+  addToGroup('counties', countiesFC, false);
+  addToGroup('province', provinceFC, false);
+  addToGroup('wind', windFC, true);
+  addToGroup('solar', solarFC, true);
+  addToGroup('dams', damsFC, true);
 
-  const map = L.map('map', { preferCanvas:true, zoomControl:true });
+  window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
+  window.__combinedGeo = provinceFC;
+  if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', (countiesFC?.features||[]).length);
+
+  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  window.__AMA_MAP = map;
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
   if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
@@ -2033,7 +2098,6 @@ async function ama_bootstrap(){
 
   const canvasRenderer = L.canvas({padding:0.5});
   window.__AMA_canvasRenderer = canvasRenderer;
-  window.__AMA_MAP = map;
 
   const _rm = map.removeLayer.bind(map);
   map.removeLayer = (lyr) => {
@@ -2044,15 +2108,46 @@ async function ama_bootstrap(){
     return _rm(lyr);
   };
 
+  if (!map.hasLayer(AMA.G.counties)) AMA.G.counties.addTo(map);
+  if (!map.hasLayer(AMA.G.province)) AMA.G.province.addTo(map);
+
   await __refreshBoundary(map, { keepOld:false });
-  map.fitBounds(boundary.getBounds(), { padding:[12,12] });
-  map.setMaxBounds(boundary.getBounds().pad(0.25));
+
+  const b1 = boundsFromGeoJSON(countiesFC);
+  const b2 = boundsFromGeoJSON(provinceFC);
+  let bounds = null;
+  if (b1 && b2) { bounds = b1.extend(b2); } else bounds = b1 || b2;
+  if (bounds && bounds.isValid && bounds.isValid()){
+    map.fitBounds(bounds);
+    map.setMaxBounds(bounds.pad(0.25));
+  } else {
+    console.warn('[AMA] no valid bounds – skipping fitBounds');
+  }
   boundary.setStyle({ className: 'neon-edge' });
   map.on('layeradd overlayadd overlayremove', () => {
     if (boundary?.bringToFront) boundary.bringToFront();
   });
 
-  await buildOverlaysAfterBoundary(paths);
+  window.__AMA_COUNTS = {
+    counties: (countiesFC?.features||[]).length,
+    province: (provinceFC?.features||[]).length,
+    wind: (windFC?.features||[]).length,
+    solar: (solarFC?.features||[]).length,
+    dams: (damsFC?.features||[]).length,
+  };
+
+  window.__dumpAmaState = function(){
+    const info = {
+      manifestUrl,
+      baseData: manifest?.baseData || null,
+      paths: window.__AMA_BASE_PATHS,
+      counts: window.__AMA_COUNTS,
+    };
+    if (window.AMA_DEBUG) console.log('[AMA] dump', info);
+    return info;
+  };
+
+  await buildOverlaysAfterBoundary(pathsResolved);
 
   window.__AMA_BOOTSTRAPPED = true;
   window.__AMA_BOOTING = false;
