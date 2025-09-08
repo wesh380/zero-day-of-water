@@ -1,0 +1,50 @@
+name: CSP Inline Style Gate
+on:
+  pull_request:
+jobs:
+  csp-inline-style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm i -g npm@latest || true
+      - name: Scan for inline styles (ratchet)
+        shell: bash
+        run: |
+          set -o pipefail
+          current="$(npm run -s csp:scan | sed '/^\s*$/d' | sort -u)"
+          base_file="tools/csp-baseline.txt"
+          if [ -f "$base_file" ]; then
+            baseline="$(sed '/^\s*$/d' "$base_file" | sort -u)"
+          else
+            baseline=""
+          fi
+
+          # write to temp files for comm
+          tmp_cur="$(mktemp)"; tmp_base="$(mktemp)"
+          printf "%s\n" "$current"  > "$tmp_cur"
+          printf "%s\n" "$baseline" > "$tmp_base"
+
+          echo "----- CSP Inline Style Scan (filenames only) -----"
+          cur_count="$(wc -l < "$tmp_cur" | tr -d ' ')"
+          base_count="$(wc -l < "$tmp_base" | tr -d ' ')"
+          echo "Baseline files: $base_count"
+          echo "Current files : $cur_count"
+
+          # new = current minus baseline (lines unique to current)
+          new_files="$(comm -23 "$tmp_cur" "$tmp_base")"
+          new_count="$(printf "%s\n" "$new_files" | sed '/^\s*$/d' | wc -l | tr -d ' ')"
+
+          if [ "$new_count" -gt 0 ]; then
+            echo ""
+            echo "NEW offending files (not in baseline):"
+            echo "$new_files"
+            echo ""
+            echo "CSP violation: new inline-style usages detected (style=\" or .style. or style={{}})."
+            echo "Fix by moving styles into docs/assets/inline-migration.css and toggling classes."
+            exit 1
+          else
+            echo "No NEW offending files. (Baseline still contains known debt; burn it down over time.)"
+          fi
