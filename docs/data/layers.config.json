@@ -1,7 +1,6 @@
 {
   "files": [
     "amaayesh/khorasan_razavi_combined.geojson",
-    "amaayesh/counties.geojson",
     "amaayesh/wind_sites.geojson",
     "amaayesh/wind_sites_raw.csv",
     "amaayesh/wind_weights_by_county.csv",
@@ -11,7 +10,6 @@
   "baseData": "amaayesh/",
   "layers": {
     "province": "khorasan_razavi_combined.geojson",
-    "counties": "counties.geojson",
     "wind_sites": "wind_sites.geojson",
     "solar_sites": "solar_sites.geojson",
     "dams": "dams.geojson"

@@ -1,9 +1,7 @@
 const paths = [
   '/data/layers.config.json',
-  '/data/amaayesh/counties.geojson',
   '/data/amaayesh/wind_sites.geojson',
   '/amaayesh/layers.config.json',
-  '/amaayesh/data/counties.geojson',
   '/amaayesh/data/wind_sites.geojson'
 ];
 

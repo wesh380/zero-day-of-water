@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 # tools/build_wind_geojson.py
-import os, sys, json, math, re
+import os, sys, json, math
 import pandas as pd
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 IN_COUNTIES_CSV = os.path.join(ROOT, "data", "table8_counties.csv")
 IN_SITES_CSV    = os.path.join(ROOT, "data", "wind_sites_raw.csv")
-IN_COMBINED_GEO = os.path.join(ROOT, "docs", "data", "amaayesh", "khorasan_razavi_combined.geojson")
 OUT_DIR         = os.path.join(ROOT, "docs", "data")
 OUT_DIR_ALT     = os.path.join(ROOT, "docs", "amaayesh", "data")
 OUT_SITES_GEO   = os.path.join(OUT_DIR, "wind_sites.geojson")
-OUT_COUNTIES_GEO= os.path.join(OUT_DIR, "counties.geojson")
 
 os.makedirs(OUT_DIR, exist_ok=True)
 os.makedirs(OUT_DIR_ALT, exist_ok=True)
@@ -106,46 +104,4 @@ with open(OUT_SITES_GEO, "w", encoding="utf-8") as f:
 # write alt copy
 with open(os.path.join(OUT_DIR_ALT, "wind_sites.geojson"), "w", encoding="utf-8") as f:
     json.dump({"type":"FeatureCollection","features":features_sites}, f, ensure_ascii=False)
-
-# 4) خروجی پُلیگون شهرستان‌ها (از combined.geojson)
-with open(IN_COMBINED_GEO, "r", encoding="utf-8") as f:
-    combined = json.load(f)
-
-polys = [f for f in combined.get("features", []) if f.get("geometry",{}).get("type") in ("Polygon","MultiPolygon")]
-def extract_county_name(props):
-    # مثال: "بخش مرکزی شهرستان خواف" → "خواف"
-    name = str(props.get("name",""))
-    m = re.search(r"شهرستان\s+(\S+)", name)
-    if m: return m.group(1)
-    # fallback: اگر خودِ نام دقیقاً یک شهرستان باشد
-    if "شهرستان" in name and len(name.split())==2: return name.split()[-1]
-    return None
-
-features_counties = []
-for f in polys:
-    p = f.get("properties",{})
-    county_name = extract_county_name(p)
-    if not county_name: continue
-    if county_name in counties_indexed.index:
-        meta = counties_indexed.loc[county_name]
-        p.update({
-            "county":       county_name,
-            "wind_class":   int(meta.get("wind_class")) if not pd.isna(meta.get("wind_class")) else None,
-            "capacity_mw":  float(meta.get("capacity_mw")) if not pd.isna(meta.get("capacity_mw")) else None,
-            "sites_count":  int(meta.get("sites_count")) if not pd.isna(meta.get("sites_count")) else None,
-            "area_ha":      float(meta.get("area_ha")) if not pd.isna(meta.get("area_ha")) else None,
-            "MW_per_site":  float(meta.get("MW_per_site")) if not pd.isna(meta.get("MW_per_site")) else None,
-            "MW_per_ha":    float(meta.get("MW_per_ha")) if not pd.isna(meta.get("MW_per_ha")) else None,
-            "ClassNorm":    float(meta.get("ClassNorm")) if not pd.isna(meta.get("ClassNorm")) else None,
-            "P0":           float(meta.get("P0")) if not pd.isna(meta.get("P0")) else None,
-        })
-        features_counties.append({ "type":"Feature", "geometry": f["geometry"], "properties": p })
-
-with open(OUT_COUNTIES_GEO, "w", encoding="utf-8") as f:
-    json.dump({"type":"FeatureCollection","features":features_counties}, f, ensure_ascii=False)
-# write alt copy
-with open(os.path.join(OUT_DIR_ALT, "counties.geojson"), "w", encoding="utf-8") as f:
-    json.dump({"type":"FeatureCollection","features":features_counties}, f, ensure_ascii=False)
-
 print("[ok] wrote:", OUT_SITES_GEO, "and", os.path.join(OUT_DIR_ALT, "wind_sites.geojson"))
-print("[ok] wrote:", OUT_COUNTIES_GEO, "and", os.path.join(OUT_DIR_ALT, "counties.geojson"))

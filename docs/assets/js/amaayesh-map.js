@@ -176,8 +176,9 @@ function resolvePathsFromManifest(manifest){
   const base = (manifest && manifest.baseData) || '';
   const LAY  = (manifest && manifest.layers) || {};
   const provinceFile = LAY.province || LAY.combined || 'khorasan_razavi_combined.geojson';
+  const hasCounties = typeof LAY.counties === 'string' && LAY.counties.trim() !== '';
   return {
-    counties: joinPath(base, LAY.counties || 'counties.geojson'),
+    counties: hasCounties ? joinPath(base, LAY.counties) : null,
     province: joinPath(base, provinceFile),
     wind:     joinPath(base, LAY.wind_sites  || 'wind_sites.geojson'),
     solar:    joinPath(base, LAY.solar_sites || 'solar_sites.geojson'),
@@ -222,7 +223,7 @@ function boundsFromGeoJSON(gj){
 
 function enforceDefaultVisibility(map){
   const G = (window.AMA && AMA.G) || {};
-  const DEFAULT_ON = new Set(['counties','province']); // فقط مرزها
+  const DEFAULT_ON = new Set(['province']); // فقط مرز استان
   Object.keys(G).forEach(k=>{
     const grp = G[k]; if (!grp) return;
     const shouldOn = DEFAULT_ON.has(k);
@@ -928,7 +929,6 @@ async function actuallyLoadManifest(){
       manifestSize: arr.length,
       manifestSample: arr.slice(0,5),
       inManifest: {
-        'amaayesh/counties.geojson': inManifest('amaayesh/counties.geojson'),
         'amaayesh/wind_sites.geojson': inManifest('amaayesh/wind_sites.geojson')
       },
       dataBase: '/data/amaayesh/',
@@ -1304,7 +1304,7 @@ async function actuallyLoadManifest(){
       ctl.addTo(map);
     })();
 
-    // === WIND: load computed datasets (amaayesh/counties.geojson + amaayesh/wind_sites.geojson) ===
+    // === WIND: load computed dataset (amaayesh/wind_sites.geojson) ===
     if (CHORO_ON) {
       const classColors = {1:'#bdbdbd', 2:'#f6c945', 3:'#29cc7a'};
       const fmt = (x, d=1) => (x==null || isNaN(x)) ? '—' : Number(x).toFixed(d);
@@ -1312,7 +1312,7 @@ async function actuallyLoadManifest(){
 
         const countiesLayer = window.__countiesLayer;
         const polysFC = window.__AMA_COUNTIES_SOURCE;
-        window.__AMA_countySource = 'counties.geojson (authoritative)';
+        window.__AMA_countySource = 'none';
         countiesGeo = polysFC; window.countiesGeo = countiesGeo; window.polysFC = polysFC;
         if (polysFC?.features?.length && countiesLayer) {
           createSidepanel();
@@ -2027,12 +2027,13 @@ async function ama_bootstrap(){
   window.__LAYER_MANIFEST_URL = manifestUrl;
   window.__AMA_BASE_PATHS = pathsResolved;
 
+  async function safeLoad(p){ return p ? await getJSONwithFallback(p) : null; }
   const [countiesFC, provinceFC, windFC, solarFC, damsFC] = await Promise.all([
-    getJSONwithFallback(pathsResolved.counties),
-    getJSONwithFallback(pathsResolved.province),
-    getJSONwithFallback(pathsResolved.wind),
-    getJSONwithFallback(pathsResolved.solar),
-    getJSONwithFallback(pathsResolved.dams),
+    safeLoad(pathsResolved.counties),
+    safeLoad(pathsResolved.province),
+    safeLoad(pathsResolved.wind),
+    safeLoad(pathsResolved.solar),
+    safeLoad(pathsResolved.dams),
   ]);
 
   // سبک پایه برای نقاط
