@@ -1086,7 +1086,7 @@ async function actuallyLoadManifest(){
 
     const div = document.createElement('div');
     div.id = 'ama-sidepanel';
-    div.className = 'ama-sidepanel';
+    div.className = 'ama-sidepanel map-panel';
     div.innerHTML = `<header><h3 id="ama-sp-name"></h3><button class="close-btn" aria-label="بستن">×</button></header><div id="ama-sp-body"></div>`;
     document.body.appendChild(div);
     sidepanelEl = div;
@@ -1401,7 +1401,7 @@ async function actuallyLoadManifest(){
           // KPI switcher
           const kpiCtl = L.control({position:'topright'});
           kpiCtl.onAdd = function(){
-            const div=L.DomUtil.create('div','ama-kpi-switch');
+            const div=L.DomUtil.create('div','ama-kpi-switch map-panel');
             div.innerHTML = Object.entries(windKpiLabels).map(([k,v])=>`<label><input type="radio" name="ama-kpi" value="${k}" ${k===windKpiKey?'checked':''}/><span class="chip">${v}</span></label>`).join('');
             if(!window.__WIND_DATA_READY) { div.classList.add('is-disabled'); div.title='داده باد آماده نیست'; }
             L.DomEvent.disableClickPropagation(div);
@@ -1426,7 +1426,7 @@ async function actuallyLoadManifest(){
 
           // Top-10 panel
           window.__AMA_topPanel = L.control({position:"topright"});
-          window.__AMA_topPanel.onAdd = function(){ const wrap=L.DomUtil.create("div","ama-panel"); wrap.innerHTML = `<div class="ama-panel-hd">Top-10 باد</div><div class="ama-panel-bd"><div id="ama-top10"></div></div>`; return wrap; };
+          window.__AMA_topPanel.onAdd = function(){ const wrap=L.DomUtil.create("div","ama-panel map-panel"); wrap.innerHTML = `<div class="ama-panel-hd">Top-10 باد</div><div class="ama-panel-bd"><div id="ama-top10"></div></div>`; return wrap; };
           window.__AMA_renderTop10 = debounce(function(){
             const el=document.getElementById('ama-top10');
             const panel=el?el.closest('.ama-panel'):null;
@@ -1448,7 +1448,7 @@ async function actuallyLoadManifest(){
           // KPI legend panel
           window.__AMA_kpiLegend = L.control({position:"topright"});
           window.__AMA_kpiLegend.onAdd = function(){
-            const wrap = L.DomUtil.create("div","ama-panel");
+            const wrap = L.DomUtil.create("div","ama-panel map-panel");
             const body = L.DomUtil.create("div","ama-kpi-legend",wrap);
             body.id = "ama-kpi-legend";
             return wrap;
@@ -1547,7 +1547,7 @@ async function actuallyLoadManifest(){
 
       // ===== LegendDock =====
       function LegendDock(){
-        const div = L.DomUtil.create('div','legend-dock'); div.dir='rtl';
+        const div = L.DomUtil.create('div','legend-dock map-panel'); div.dir='rtl';
         div.innerHTML = `<div class="legend-tabs"></div><div class="legend-body"></div>`;
         if(localStorage.getItem('ama-legend-collapsed')==='1') div.classList.add('collapsed');
         let groups = [], onFilter = null;
@@ -1714,7 +1714,7 @@ async function actuallyLoadManifest(){
       const LayersDock = L.Control.extend({
         options: { position:'topleft', dir:'rtl' },
         onAdd: function(m){
-          const container = L.DomUtil.create('div', 'layers-dock leaflet-control');
+          const container = L.DomUtil.create('div', 'layers-dock map-panel leaflet-control');
           container.setAttribute('dir', this.options.dir);
 
           const tabsEl = L.DomUtil.create('div', 'ld-tabs', container);
@@ -1972,7 +1972,7 @@ async function actuallyLoadManifest(){
       function makePanel(title, bodyHtml){
         const ctl = L.control({position:'topleft'});
         ctl.onAdd = function(){
-          const wrap=L.DomUtil.create('div','ama-panel');
+          const wrap=L.DomUtil.create('div','ama-panel map-panel');
           wrap.innerHTML=`<div class="ama-panel-hd">${title}<button class="close-btn" aria-label="بستن">×</button></div><div class="ama-panel-bd">${bodyHtml}</div>`;
           const close=wrap.querySelector('.close-btn');
           close.onclick=()=>{ map.removeControl(ctl); };
@@ -1991,7 +1991,7 @@ async function actuallyLoadManifest(){
 
       const dockCtl=L.control({position:'topleft'});
       dockCtl.onAdd=function(){
-        const div=L.DomUtil.create('div','tool-dock');
+        const div=L.DomUtil.create('div','tool-dock map-panel');
         div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="لایه‌ها">🗂</button>
         <button class="dock-btn" data-panel="tools" aria-label="ابزارها">🛠</button>
         <button class="dock-btn" data-panel="download" aria-label="دانلود">⬇</button>

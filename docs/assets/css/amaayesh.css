@@ -1,4 +1,5 @@
-.legend-dock{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);max-width:320px;font-size:14px}
+.map-panel{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px}
+.legend-dock{max-width:320px}
 .legend-dock .legend-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .legend-dock .chip{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
 .legend-dock .chip.muted{opacity:.65}
@@ -24,13 +25,13 @@
 .is-disabled{opacity:.5;pointer-events:none}
 
 /* === Tool Dock === */
-.tool-dock{display:flex;flex-direction:column;background:rgba(10,15,28,.88);padding:8px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25);gap:12px}
+.tool-dock{display:flex;flex-direction:column;gap:12px}
 .tool-dock .dock-btn{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:9999px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .tool-dock .dock-btn:hover{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
 .tool-dock .dock-reset{margin-top:auto}
 
 /* === Layers Dock === */
-.layers-dock{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);max-width:320px;font-size:14px}
+.layers-dock{max-width:320px}
 .layers-dock .ld-tabs{display:flex;gap:8px}
 .layers-dock .ld-tabs button{flex:1;background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
 .layers-dock .ld-tabs button.active{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
@@ -49,14 +50,14 @@
 
 
 /* === KPI switcher === */
-.ama-kpi-switch{background:rgba(10,15,28,.88);color:#fff;padding:8px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;gap:6px}
+.ama-kpi-switch{display:flex;gap:6px}
 .ama-kpi-switch label{display:flex;align-items:center;position:relative}
 .ama-kpi-switch input{position:absolute;opacity:0}
 .ama-kpi-switch .chip{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
 .ama-kpi-switch input:checked+.chip{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
 
 /* === Sidepanel === */
-.ama-sidepanel{position:fixed;right:16px;top:96px;bottom:16px;max-width:360px;width:calc(100% - 32px);background:rgba(17,24,39,.97);color:#e5e7eb;z-index:1000;padding:20px;overflow:auto;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:none}
+.ama-sidepanel{position:fixed;right:16px;top:96px;bottom:16px;max-width:360px;width:calc(100% - 32px);z-index:1000;padding:20px;overflow:auto;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:none}
 .ama-sidepanel.open{display:block}
 .ama-sidepanel header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .ama-sidepanel .close-btn{cursor:pointer;font-size:20px;line-height:1}
@@ -69,7 +70,7 @@
 .ama-legend-warning{background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:6px;font-size:12px;margin-top:6px;text-align:center}
 
 /* === Top-10 panel === */
-.ama-panel{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25);width:320px;font-size:14px;}
+.ama-panel{width:320px}
 .ama-panel-hd{font-weight:700;margin-bottom:8px;}
 .ama-panel-hd .sort{cursor:pointer;margin-right:6px;user-select:none;}
 .ama-panel-bd{max-height:300px;overflow-y:auto;}
@@ -105,12 +106,7 @@
 .leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
 .leaflet-control-zoom a{border-radius:0}
 /* === Force dark (black) theme for guidance panels === */
-.legend-dock,
-.layers-dock,
-.tool-dock,
-.ama-panel,
-.ama-kpi-switch,
-.ama-sidepanel {
+.map-panel {
   background: #000 !important;
   color: #fff !important;
   border-color: #324155 !important;
