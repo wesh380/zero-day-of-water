@@ -1,6 +1,5 @@
 ;(function(){
   const STEP=250, MAX=8000, NEW_SCOPE='#ama-layer-dock';
-  const idMap = { wind:'#chk-wind-sites', solar:'#chk-solar-sites', dams:'#chk-dam-sites' };
   const rxMap = { wind:/باد/i, solar:/خورشیدی/i, dams:/سد/i };
   const missing = new Set(['wind','solar','dams']);
   const bridgedPairs = [];
@@ -19,8 +18,6 @@
       .filter(x=>x.key);
   }
   function findLegacyByKey(key){
-    const byId = document.querySelector(idMap[key]);
-    if (byId && !inNewScope(byId)) return byId;
     const rx = rxMap[key]; if(!rx) return null;
     const labels = Array.from(document.querySelectorAll('label')).filter(l=>!inNewScope(l));
     for (const lbl of labels){
