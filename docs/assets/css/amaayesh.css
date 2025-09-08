@@ -104,3 +104,46 @@
 /* Zoom control tweaks */
 .leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
 .leaflet-control-zoom a{border-radius:0}
+/* === Force dark (black) theme for guidance panels === */
+.legend-dock,
+.layers-dock,
+.tool-dock,
+.ama-panel,
+.ama-kpi-switch,
+.ama-sidepanel {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #324155 !important;
+}
+
+/* Buttons/Chips/Tabs inside panels */
+.legend-dock .chip,
+.layers-dock .ld-tabs button,
+.ama-kpi-switch .chip {
+  background: #111 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #324155 !important;
+}
+.legend-dock .chip.active,
+.layers-dock .ld-tabs button.active,
+.ama-kpi-switch input:checked + .chip {
+  background: #0ea5e9 !important;
+  color: #04121f !important;
+  border-color: #0ea5e9 !important;
+}
+
+/* Hover states readable on dark */
+.legend-dock ul.swatches li:hover,
+.layers-dock .ld-pane label:hover {
+  background: rgba(255,255,255,.06) !important;
+}
+.legend-dock ul.swatches li.active {
+  background: rgba(255,255,255,.12) !important;
+}
+
+/* Panel bodies remain transparent over black container */
+.legend-dock .legend-body,
+.ama-panel-bd { background: transparent !important; }
+
+/* Optional: darker overlay for sidepanel */
+#ama-sp-overlay { background: rgba(0,0,0,.3) !important; }
