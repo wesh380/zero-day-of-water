@@ -81,14 +81,6 @@
 .ama-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1001;display:flex;align-items:center;justify-content:center;}
 .ama-modal .ama-modal-content{background:#0b1220;color:#e5e7eb;padding:20px;max-height:80vh;overflow:auto;border-radius:12px;width:90%;max-width:480px;}
 
-/* === Search control === */
-.ama-search{position:relative;}
-.ama-search input{background:#fff;color:#111;padding:6px 32px 6px 6px;border-radius:6px;border:1px solid #ccc;min-width:220px;}
-.ama-search button{position:absolute;left:0;top:0;bottom:0;width:32px;background:transparent;border:none;cursor:pointer;}
-.ama-suggestions{position:absolute;right:0;left:0;top:100%;background:#fff;color:#111;max-height:200px;overflow:auto;border:1px solid #ccc;border-top:none;z-index:1002;}
-.ama-suggestions div{padding:6px;cursor:pointer;}
-.ama-suggestions div.active,.ama-suggestions div:hover{background:#e5e7eb;}
-
 /* loading badge */
 .ama-loading{font-size:12px;text-align:center;opacity:.8;padding:4px;}
 
