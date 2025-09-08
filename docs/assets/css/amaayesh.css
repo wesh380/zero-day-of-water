@@ -143,3 +143,12 @@
 
 /* Optional: darker overlay for sidepanel */
 #ama-sp-overlay { background: rgba(0,0,0,.3) !important; }
+
+@media (max-width:768px){
+  .ama-panel,
+  .legend-dock{
+    width:calc(100% - 32px);
+    max-width:none;
+    margin:0 16px;
+  }
+}
