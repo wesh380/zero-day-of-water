@@ -1,6 +1,15 @@
 .site-header{ position:sticky; top:0; z-index:50; height:64px; background:rgba(255,255,255,.85); backdrop-filter:blur(6px); border-bottom:1px solid rgba(0,0,0,.08); box-shadow:0 2px 6px rgba(0,0,0,.05); }
+/* navigation */
+.nav-menu{display:flex;gap:1rem;align-items:center;}
+.nav-link{position:relative;padding:.25rem .5rem;color:#1e293b;font-weight:500;border-radius:.5rem;transition:background .3s, color .3s;}
+.nav-link:hover{background:rgba(14,165,233,.1);color:#0ea5e9;}
+.nav-link.active{background:#0ea5e9;color:#fff;}
+
+/* mobile menu */
+#mobileMenu{display:flex;flex-direction:column;gap:.5rem;padding:1rem;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 2px 6px rgba(0,0,0,.05);}
+
 .parallax-section{
-  background: url('hiro2.webp') center/cover no-repeat;
+  background: url('../header2.webp') center/cover no-repeat;
   background-attachment: fixed;
   min-height:100vh;
   position:relative;
@@ -14,12 +23,26 @@
 .hero-content p{ margin-top:.75rem; font-size:clamp(14px,2.1vw,18px); opacity:.95; }
 
 .cards-section{ display:grid; grid-template-columns:repeat(3, minmax(210px,1fr)); gap:1.25rem; max-width:980px; margin:-60px auto 48px; padding:0 16px; }
-.card{ background:rgba(255,255,255,.9); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.12); backdrop-filter:blur(2px); padding:18px 20px; text-align:center; transform:translateY(32px); opacity:0; transition:transform .8s ease, opacity .8s ease; }
+.card{ background:rgba(255,255,255,.9); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.12); backdrop-filter:blur(2px); padding:18px 20px; text-align:center; transform:translateY(32px); opacity:0; transition:transform .8s ease, opacity .8s ease; border-top:4px solid transparent; }
 .card.visible{ transform:translateY(0); opacity:1; }
+.card .icon{font-size:2rem;display:block;margin-bottom:.5rem;}
+.card p{font-size:.875rem;color:#334155;margin-top:.25rem;}
+.card.water{--card-color:#0ea5e9;border-color:var(--card-color);}
+.card.water h3{color:var(--card-color);}
+.card.electricity{--card-color:#f59e0b;border-color:var(--card-color);}
+.card.electricity h3{color:var(--card-color);}
+.card.gas{--card-color:#ef4444;border-color:var(--card-color);}
+.card.gas h3{color:var(--card-color);}
+
+/* generic sections */
+.section{max-width:980px;margin:0 auto;padding:3rem 1rem;}
+.section h2{text-align:center;font-size:1.5rem;font-weight:700;margin-bottom:1rem;}
+.faq-item{margin-bottom:1rem;}
+.faq-item h3{font-weight:600;margin-bottom:.25rem;}
 
 @media (max-width:768px){
   .parallax-section{
-    background: url('../assets/hero2-mobile.webp') center/cover no-repeat;
+    background: url('../header2.webp') center/cover no-repeat;
   }
   .parallax-section::after{ background:linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,.1) 50%, rgba(0,0,0,.35) 100%); }
   .hero-title{ margin-top:10vh; font-size:1.6rem; padding-left:16px; padding-right:16px; }

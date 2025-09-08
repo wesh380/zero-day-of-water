@@ -183,3 +183,27 @@ import { setClass } from './assets/css-classes.js';
     hero.style.setProperty('--hero-parallax', `${window.scrollY * 0.2}px`);
   });
 })();
+
+// navigation menu and active state
+(function(){
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if(menuBtn && mobileMenu){
+    menuBtn.addEventListener('click',()=>{
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+  const links = document.querySelectorAll('.nav-link');
+  function setActive(){
+    const hash = window.location.hash;
+    links.forEach(l=>l.classList.remove('active'));
+    const active = Array.from(links).find(l=>l.getAttribute('href')===hash);
+    if(active) active.classList.add('active');
+  }
+  links.forEach(l=>l.addEventListener('click',()=>{
+    setActive();
+    if(mobileMenu) mobileMenu.classList.add('hidden');
+  }));
+  window.addEventListener('hashchange', setActive);
+  setActive();
+})();

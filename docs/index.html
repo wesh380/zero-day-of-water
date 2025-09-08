@@ -24,9 +24,15 @@
 </head>
   <body class="min-h-screen flex flex-col">
     <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-    <header class="site-header relative flex justify-center items-center px-4">
+    <header class="site-header flex items-center justify-between px-4">
+      <nav class="nav-menu hidden md:flex">
+        <a href="#services" class="nav-link">خدمات</a>
+        <a href="#news" class="nav-link">اخبار</a>
+        <a href="#faq" class="nav-link">سؤالات متداول</a>
+        <a href="#contact" class="nav-link">تماس با ما</a>
+      </nav>
       <img src="page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
-      <div class="absolute top-4 right-4 flex items-center gap-2">
+      <div class="flex items-center gap-2">
         <button id="policyBtn" type="button" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-haspopup="dialog" aria-controls="policySheet" title="سیاست امنیت و حکمرانی داده">
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
           <span>سیاست امنیت و حکمرانی داده</span>
@@ -42,11 +48,19 @@
         <a href="/agrivoltaics/" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="ماشین‌حساب فوتوکِشت">
           <span>فوتوکِشت</span>
         </a>
-        <button id="mobileActionsBtn" type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-haspopup="dialog" aria-controls="mobileActionsSheet" title="منوی سیاست و امنیت">
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
+        <a href="#" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="ورود یا ثبت‌نام">ورود/ثبت‌نام</a>
+        <button id="menuBtn" type="button" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-label="منوی اصلی">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18" /><path d="M3 6h18" /><path d="M3 18h18" /></svg>
         </button>
       </div>
     </header>
+    <div id="mobileMenu" class="hidden md:hidden flex-col items-start w-full px-4 py-2 border-b border-slate-200 bg-white/90 backdrop-blur">
+      <a href="#services" class="nav-link">خدمات</a>
+      <a href="#news" class="nav-link">اخبار</a>
+      <a href="#faq" class="nav-link">سؤالات متداول</a>
+      <a href="#contact" class="nav-link">تماس با ما</a>
+      <a href="#" class="nav-link">ورود/ثبت‌نام</a>
+    </div>
     <section class="parallax-section" aria-label="hero">
       <div class="hero-content">
         <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز در خراسان رضوی</h1>
@@ -55,27 +69,57 @@
     </section>
   <main id="main" class="flex-grow">
     <a href="./amaayesh/index.html"
-       class="inline-flex items-center gap-2 px-4 py-2 my-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white">
-      نقشه آمایش انرژی خراسان رضوی
+       class="inline-flex items-center gap-2 px-6 py-3 my-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-lg font-medium">
+      شروع داشبوردها
     </a>
     <section id="entry-cards" class="cards-section" aria-label="navigation cards">
       <a href="/water/hub" class="card water" aria-label="ورود به داشبورد آب">
         <span class="icon" aria-hidden="true">💧</span>
         <h3>آب</h3>
+        <p>شاخص‌های مصرف و منابع آب</p>
       </a>
       <a href="/electricity/" class="card electricity" aria-label="ورود به داشبورد برق">
         <span class="icon" aria-hidden="true">⚡</span>
         <h3>برق</h3>
+        <p>پایش تولید و مصرف برق</p>
       </a>
       <a href="/gas/" class="card gas" aria-label="ورود به داشبورد گاز">
         <span class="icon" aria-hidden="true">🔥</span>
         <h3>گاز</h3>
+        <p>رصد عرضه و تقاضای گاز</p>
       </a>
     </section>
     <section class="flex justify-center py-6">
       <a href="/test/water-cld.html" class="border rounded px-3 py-2 text-sm">
         مدل آزمایشی بهره‌وری آب
       </a>
+    </section>
+
+    <section id="services" class="section">
+      <h2>خدمات ما</h2>
+      <p>داشبوردهای تعاملی و ابزارهای تصمیم‌گیری برای مدیریت بهینهٔ انرژی و آب.</p>
+    </section>
+
+    <section id="news" class="section">
+      <h2>اخبار و اطلاعیه‌ها</h2>
+      <p>به‌زودی تازه‌ترین اخبار و رویدادها در این بخش منتشر می‌شود.</p>
+    </section>
+
+    <section id="faq" class="section">
+      <h2>سؤالات متداول</h2>
+      <div class="faq-item">
+        <h3>چگونه می‌توانم به داشبوردها دسترسی پیدا کنم؟</h3>
+        <p>از طریق کارت‌های بالا وارد بخش مورد نظر شوید.</p>
+      </div>
+      <div class="faq-item">
+        <h3>داده‌ها هر چند وقت یکبار به‌روز می‌شوند؟</h3>
+        <p>اطلاعات با تاخیر ایمن ۴۸ تا ۷۲ ساعته منتشر می‌شوند.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>تماس با ما</h2>
+      <p>برای ارتباط با تیم ما ایمیل بزنید به <a href="mailto:info@wesh360.ir" class="text-sky-600 underline">info@wesh360.ir</a>.</p>
     </section>
   </main>
   <!-- Policy Sheet -->
