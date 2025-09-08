@@ -1,3 +1,4 @@
+
 /* layout & display */
 .relative{position:relative} .absolute{position:absolute} .block{display:block} .hidden{display:none} .flex{display:flex} .items-center{align-items:center} .text-center{text-align:center} .flex-1{flex:1} .overflow-hidden{overflow:hidden}
 
@@ -37,5 +38,11 @@
 .body-mb{margin-bottom:60px}
 .debug-chip{position:fixed;left:8px;top:8px;z-index:9999;background:#111;color:#0ff;padding:4px 8px;border-radius:8px;font:12px/1 Vazirmatn,system-ui}
 .toast{position:absolute;top:8px;right:8px;z-index:9999;background:#2b2b2b;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;box-shadow:0 6px 24px rgba(0,0,0,.2)}
-.info-popup{background:rgba(17,24,39,.9);color:#e5e7eb;padding:8px 10px;border-radius:10px;font:12px Vazirmatn,sans-serif;display:none;backdrop-filter:blur(2px)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);display:none;z-index:999}
+.info-popup{background:rgba(17,24,39,.9);color:#e5e7eb;padding:8px 10px;border-radius:10px;font:12px Vazirmatn,sans-serif;backdrop-filter:blur(2px)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:999}
+.badge-pos{position:absolute;top:.5rem;left:.5rem}
+.delay-0{transition-delay:0ms} .delay-120{transition-delay:120ms} .delay-240{transition-delay:240ms} .delay-360{transition-delay:360ms} .delay-480{transition-delay:480ms} .delay-600{transition-delay:600ms} .delay-720{transition-delay:720ms} .delay-840{transition-delay:840ms} .delay-960{transition-delay:960ms} .delay-1080{transition-delay:1080ms} .delay-1200{transition-delay:1200ms}
+.sw-gray{background:#e5e7eb}
+.sw-0{background:#f0f9ff} .sw-1{background:#e0f2fe} .sw-2{background:#bae6fd} .sw-3{background:#7dd3fc} .sw-4{background:#38bdf8} .sw-5{background:#0ea5e9} .sw-6{background:#0284c7} .sw-7{background:#0369a1} .sw-8{background:#075985}
+.bubble-8{width:8px;height:8px} .bubble-16{width:16px;height:16px} .bubble-24{width:24px;height:24px} .bubble-32{width:32px;height:32px} .bubble-40{width:40px;height:40px} .bubble-48{width:48px;height:48px} .bubble-56{width:56px;height:56px} .bubble-64{width:64px;height:64px}
+.img-flag{height:16px;vertical-align:middle;margin-left:6px}
