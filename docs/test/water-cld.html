@@ -86,11 +86,11 @@
           <button id="btn-export-csv" class="btn outline">Export CSV</button>
         </div>
 
-        <div id="sim-panel" style="margin-top:12px">
+        <div id="sim-panel" class="mt-12">
           <canvas id="sim-chart"></canvas>
         </div>
 
-        <div id="scenario-panel" style="margin-top:12px">
+        <div id="scenario-panel" class="mt-12">
           <div class="actions">
             <button id="sc-new" class="btn outline">New</button>
             <button id="sc-save" class="btn outline">Save</button>
@@ -105,10 +105,10 @@
           </table>
         </div>
 
-        <div id="sens-panel" style="margin-top:12px">
+        <div id="sens-panel" class="mt-12">
           <div class="slider">
             <label>حساسیت پارامتر</label>
-            <select id="sens-param" class="btn outline" style="flex:1">
+            <select id="sens-param" class="btn outline flex-1">
               <option value="eff">eff</option>
               <option value="dem">dem</option>
             </select>
@@ -123,14 +123,14 @@
         </div>
       </div>
 
-      <div id="panel-formula" style="display:none">
+      <div id="panel-formula" class="hidden">
         <select id="formula-node" class="btn outline"></select>
         <textarea id="formula-expr"></textarea>
         <div class="actions">
           <button id="btn-validate" class="btn">Validate</button>
           <button id="btn-save" class="btn outline">Save</button>
         </div>
-        <div id="formula-msg" style="margin-top:6px;color:#fbbf24"></div>
+        <div id="formula-msg" class="mt-6 text-amber"></div>
       </div>
     </section>
 
@@ -178,7 +178,7 @@
 
         <input id="q" class="btn outline" placeholder="جست‌وجو" value="" /><span class="hint" data-tippy-content="جست‌وجوی نام گره‌ها">❔</span>
 
-        <label class="btn outline" style="display:flex;align-items:center;gap:4px">
+        <label class="btn outline flex items-center gap-1">
           <input type="checkbox" id="f-delay" />تاخیر
         </label><span class="hint" data-tippy-content="نمایش روابط دارای تأخیر زمانی">❔</span>
 
@@ -202,7 +202,7 @@
         <button id="btn-loops" class="btn outline">حلقه‌ها</button><span class="hint" data-tippy-content="شناسایی حلقه‌های بازخورد">❔</span>
       </div>
 
-      <details id="panel-loops" style="margin:8px 0">
+      <details id="panel-loops" class="my-8">
         <summary>Loops</summary>
         <ul id="loops-list"></ul>
       </details>
