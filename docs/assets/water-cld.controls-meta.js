@@ -60,22 +60,26 @@
         const item = el.dataset?.help || el.getAttribute('title') || 'راهنمای این کنترل';
         helpItems.push(item);
         // پنهان کن تا مزاحم نباشد (دست نزدن به کنترل‌های واقعی)
-        el.style.display = 'none';
+        setClass(el, ['hidden'], ['show']);
       }
     });
     if (helpItems.length){
       const ul = pop.querySelector('ul');
       helpItems.forEach(s => { const li = document.createElement('li'); li.textContent = s; ul.appendChild(li); });
     }else{
-      btn.style.display = 'none';
+      setClass(btn, ['hidden'], ['show']);
     }
 
     // باز/بسته کردن پاپ‌اور
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
-      pop.style.display = (pop.style.display === 'block') ? 'none' : 'block';
+      if (pop.classList.contains('show')) {
+        setClass(pop, ['hidden'], ['show']);
+      } else {
+        setClass(pop, ['show'], ['hidden']);
+      }
     });
-    document.addEventListener('click', ()=> pop.style.display='none');
+    document.addEventListener('click', ()=> setClass(pop, ['hidden'], ['show']));
   }
 
   // خواندن متادیتای کنترل

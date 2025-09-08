@@ -173,11 +173,7 @@
   const hero = document.getElementById('landing-hero');
   if (!hero) return;
   const cards = hero.querySelectorAll('.dash-card');
-  cards.forEach((card, i) => {
-    card.style.transitionDelay = `${i * 120}ms`;
+  cards.forEach((card) => {
     requestAnimationFrame(() => card.classList.add('is-visible'));
-  });
-  window.addEventListener('scroll', () => {
-    hero.style.setProperty('--hero-parallax', `${window.scrollY * 0.2}px`);
   });
 })();

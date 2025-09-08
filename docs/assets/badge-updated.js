@@ -54,10 +54,11 @@
         header.appendChild(badge);
       } else {
         // گوشه‌ی کارت بدون به‌هم‌ریختگی
-        card.style.position ||= 'relative';
-        badge.style.position = 'absolute';
-        badge.style.top = '0.5rem';
-        badge.style.left = '0.5rem';
+        setClass(card, ['relative']);
+        setClass(badge, ['absolute']);
+        const rect = card.getBoundingClientRect();
+        swapPercentBucket(badge, 'top', 8 / rect.height * 100);
+        swapPercentBucket(badge, 'left', 8 / rect.width * 100);
         card.appendChild(badge);
       }
     });

@@ -13,11 +13,14 @@
     targetY = window.scrollY || 0;
     currentY = lerp(currentY, targetY, 0.08);
 
-    const norm = currentY * -0.14 * ampMul * (vh / 900);
-    hero.style.transform = `translateY(${norm}px)`;
+    const norm = currentY * 0.14 * ampMul * (vh / 900);
+    swapPxBucket(hero, 'ty', norm, 2, 100);
 
     const p = Math.min(1, currentY / (vh * 0.7));
-    document.documentElement.style.setProperty('--overlay', (0.35 - p * 0.2).toFixed(2));
+    const ov = 0.35 - p * 0.2;
+    const root = document.documentElement;
+    [...root.classList].forEach(c=>{ if(c.startsWith('overlay-')) root.classList.remove(c); });
+    root.classList.add(`overlay-${Math.round(Math.max(0, Math.min(1, ov)) * 10)}`);
 
     requestAnimationFrame(frame);
   }

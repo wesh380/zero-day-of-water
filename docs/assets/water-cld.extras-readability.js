@@ -152,7 +152,7 @@
       host.insertBefore(sticky, container); // قبل از بوم تا بیرون آن قرار گیرد
 
       // Legend شناور قبلی را پنهان کن تا دوبل نشود
-      if (floatLegend) floatLegend.style.display = 'none';
+      if (floatLegend) setClass(floatLegend, ['hidden'], ['show']);
     })();
   }
 

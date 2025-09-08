@@ -170,9 +170,9 @@
     $('#prov-A').textContent = (Array.isArray(A) && A.length) ? A.join('؛ ') : '—';
     $('#prov-L').textContent = (Array.isArray(L) && L.length) ? L.join('؛ ') : '—';
 
-    $('#prov-modal').style.display='block';
+    setClass($('#prov-modal'), ['show'], ['hidden']);
   }
-  function closeModal(){ const m=$('#prov-modal'); if (m) m.style.display='none'; }
+  function closeModal(){ const m=$('#prov-modal'); if (m) setClass(m, ['hidden'], ['show']); }
   function copyJSON(){ navigator.clipboard?.writeText(JSON.stringify(currentCard(), null, 2)); }
   function exportJSON(){
     const blob = new Blob([JSON.stringify(currentCard(), null, 2)], {type:'application/json'});
@@ -197,8 +197,8 @@
       const badge = document.createElement('div');
       badge.className = 'prov-badge';
       badge.dir='rtl';
-      badge.innerHTML = `<span>ⓘ منشأ</span><span style="opacity:.7">نسخه ${p.version}</span>`;
-      host.style.position = host.style.position || 'relative';
+      badge.innerHTML = `<span>ⓘ منشأ</span><span class="opacity-70">نسخه ${p.version}</span>`;
+      setClass(host, ['relative']);
       host.appendChild(badge);
 
       // Tooltip
@@ -224,16 +224,23 @@
         let left = Math.max(8, r.left - (tw - r.width));
         let top  = r.top - th - 8;
         if (top < 8) { top = r.bottom + 8; }
-        tip.style.left = `${left}px`; tip.style.top = `${top}px`;
+        const vw = window.innerWidth, vh = window.innerHeight;
+        swapPercentBucket(tip, 'left', left / vw * 100);
+        swapPercentBucket(tip, 'top',  top / vh * 100);
       }
 
       let open=false;
       function toggle(){
-        open = !open; tip.style.display = open ? 'block' : 'none';
-        if (open) place();
+        open = !open;
+        if (open){
+          setClass(tip, ['show'], ['hidden']);
+          place();
+        } else {
+          setClass(tip, ['hidden'], ['show']);
+        }
       }
       badge.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
-      document.addEventListener('click', ()=>{ if (open){ open=false; tip.style.display='none'; } });
+      document.addEventListener('click', ()=>{ if (open){ open=false; setClass(tip, ['hidden'], ['show']); } });
 
       // Downloads
       tip.addEventListener('click', (e)=>{
