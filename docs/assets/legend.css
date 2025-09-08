@@ -64,15 +64,6 @@
 
 /* neon border & chips reused */
 .neon-edge { filter: drop-shadow(0 0 4px rgba(34,211,238,.9)); }
-.ama-modes { display:flex; gap:8px; direction: rtl; }
-.ama-modes .chip {
-  display:flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid #e5e7eb;
-  background:#fff; cursor:pointer; font-size:13px; box-shadow:0 2px 10px rgba(0,0,0,.06);
-}
-.ama-modes .chip.active { border-color:#22d3ee; box-shadow:0 0 0 3px rgba(34,211,238,.2) inset; }
-@media (prefers-color-scheme: dark){
-  .ama-modes .chip { background:#0b1220; border-color:#1f2937; color:#e5e7eb; }
-}
 
 /* loading placeholder */
 .ama-loading{font-size:12px;text-align:center;opacity:.8;padding:4px;}
@@ -93,6 +84,4 @@
   #ama-top10 .ama-row:hover { background:#111827; }
 }
 
-.ama-infra .box { background:rgba(255,255,255,.95); padding:8px 10px; margin-top:6px; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,.15); direction:rtl; }
-.ama-infra label { display:block; font-size:13px; margin:6px 0; }
 
