@@ -809,10 +809,10 @@ async function joinWindWeightsOnAll(){
       onAdd: function(){
         const c = L.DomUtil.create('div','ama-dock');
         c.innerHTML = `
-        <button class="btn" aria-label="لایه‌ها"    data-act="layers">🗂</button>
-        <button class="btn" aria-label="ابزارها"    data-act="tools">🛠</button>
-        <button class="btn" aria-label="دانلود"    data-act="download">⬇️</button>
-        <button class="btn" aria-label="بازنشانی"  data-act="reset">↺</button>
+        <button class="btn" aria-label="مدیریت لایه‌ها"    data-act="layers">🗂</button>
+        <button class="btn" aria-label="ابزارهای نقشه"    data-act="tools">🛠</button>
+        <button class="btn" aria-label="دانلود داده‌ها"    data-act="download">⬇️</button>
+        <button class="btn" aria-label="بازنشانی نمایش"  data-act="reset">↺</button>
         `;
         // stop map drag
         L.DomEvent.disableClickPropagation(c); L.DomEvent.disableScrollPropagation(c);
@@ -1561,11 +1561,11 @@ async function actuallyLoadManifest(){
           toggle.className = 'chip';
           toggle.type = 'button';
           toggle.setAttribute('aria-expanded', String(!div.classList.contains('collapsed')));
-          toggle.textContent = div.classList.contains('collapsed') ? 'باز کردن' : 'جمع کردن';
+          toggle.textContent = div.classList.contains('collapsed') ? 'نمایش راهنما' : 'پنهان کردن راهنما';
           toggle.onclick = () => {
             div.classList.toggle('collapsed');
             const isCol = div.classList.contains('collapsed');
-            toggle.textContent = isCol ? 'باز کردن' : 'جمع کردن';
+            toggle.textContent = isCol ? 'نمایش راهنما' : 'پنهان کردن راهنما';
             toggle.setAttribute('aria-expanded', String(!isCol));
             localStorage.setItem('ama-legend-collapsed', isCol ? '1' : '0');
           };
@@ -1992,10 +1992,10 @@ async function actuallyLoadManifest(){
       const dockCtl=L.control({position:'topleft'});
       dockCtl.onAdd=function(){
         const div=L.DomUtil.create('div','tool-dock');
-        div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="لایه‌ها">🗂</button>
-        <button class="dock-btn" data-panel="tools" aria-label="ابزارها">🛠</button>
-        <button class="dock-btn" data-panel="download" aria-label="دانلود">⬇</button>
-        <button class="dock-btn dock-reset" data-action="reset" aria-label="بازنشانی">↺</button>`;
+        div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="مدیریت لایه‌ها">🗂</button>
+        <button class="dock-btn" data-panel="tools" aria-label="ابزارهای نقشه">🛠</button>
+        <button class="dock-btn" data-panel="download" aria-label="دانلود داده‌ها">⬇</button>
+        <button class="dock-btn dock-reset" data-action="reset" aria-label="بازنشانی نمایش">↺</button>`;
         return div;
       };
       dockCtl.addTo(map);
