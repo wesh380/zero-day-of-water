@@ -793,7 +793,6 @@ async function joinWindWeightsOnAll(){
         c.innerHTML = `
         <button class="btn" aria-label="لایه‌ها"    data-act="layers">🗂</button>
         <button class="btn" aria-label="ابزارها"    data-act="tools">🛠</button>
-        <button class="btn" aria-label="جستجو"     data-act="search">🔎</button>
         <button class="btn" aria-label="دانلود"    data-act="download">⬇️</button>
         <button class="btn" aria-label="بازنشانی"  data-act="reset">↺</button>
         `;
@@ -1482,55 +1481,6 @@ async function actuallyLoadManifest(){
           if(infoEl) infoEl.textContent = 'داده شهرستان‌ها در دسترس نیست.';
         }
       }
-    // === Local search & geolocate ===
-    const searchCtl = L.control({position:'topleft'});
-    searchCtl.onAdd = function(){
-      const div = L.DomUtil.create('div','ama-search');
-      div.innerHTML = `<input type="text" placeholder="جستجوی شهرستان/سایت…"/><button title="یافتن موقعیت من">📍</button><div class="ama-suggestions" style="display:none"></div>`;
-      L.DomEvent.disableClickPropagation(div);
-      const input = div.querySelector('input');
-      const sugg = div.querySelector('.ama-suggestions');
-      let items=[], idx=-1;
-      const update = ()=>{
-        const q = input.value.trim();
-        sugg.innerHTML=''; idx=-1;
-        if(!q){ sugg.style.display='none'; return; }
-        const list=[];
-        const kq = keyOf(q);
-        if(countiesGeo?.features) countiesGeo.features.forEach(f=>{ const n=f.properties?.county||f.properties?.name||''; if(keyOf(n).includes(kq)) list.push({type:'county',name:n}); });
-        if(windSitesGeo?.features) windSitesGeo.features.forEach(f=>{ const n=f.properties?.name_fa||''; if(keyOf(n).includes(kq)) list.push({type:'site',name:n,latlng:f.geometry?.coordinates?.slice().reverse(),props:f.properties}); });
-        if(!list.length){ sugg.innerHTML='<div>داده‌ای برای جستجو موجود نیست.</div>'; sugg.style.display='block'; return; }
-        items = list.slice(0,10);
-        sugg.innerHTML = items.map((it,i)=>`<div data-i="${i}" data-type="${it.type}">${it.name}</div>`).join('');
-        sugg.style.display='block';
-        sugg.querySelectorAll('div').forEach(d=> d.addEventListener('click', ()=> select(items[+d.dataset.i])));
-      };
-      const deb = debounce(update,300);
-      input.addEventListener('input', deb);
-      input.addEventListener('keydown', e=>{
-        if(e.key==='ArrowDown'){ e.preventDefault(); move(1); }
-        else if(e.key==='ArrowUp'){ e.preventDefault(); move(-1); }
-        else if(e.key==='Enter'){ if(idx>=0) select(items[idx]); }
-      });
-      function move(dir){ if(!items.length) return; idx=(idx+dir+items.length)%items.length; sugg.querySelectorAll('div').forEach((d,i)=>d.classList.toggle('active',i===idx)); }
-      function select(it){ sugg.style.display='none'; input.value=''; if(!it) return; if(it.type==='county'){ focusCountyByName(it.name); } else if(it.type==='site'){ safeClearGroup(searchLayer); const m=L.circleMarker(it.latlng,{radius:6,color:'#22d3ee'}).addTo(searchLayer); m.bindPopup(it.props?.name_fa||'').openPopup(); map.setView(it.latlng,12); } }
-      const btn = div.querySelector('button');
-      btn.addEventListener('click', ()=>{
-        if(!navigator.geolocation){ toast('مرورگر از موقعیت‌یابی پشتیبانی نمی‌کند'); return; }
-        navigator.geolocation.getCurrentPosition(pos=>{
-          const ll=[pos.coords.latitude,pos.coords.longitude];
-          safeClearGroup(searchLayer);
-          L.marker(ll).addTo(searchLayer).bindPopup('موقعیت من').openPopup();
-          map.setView(ll,12);
-        }, err=>{ toast(err.code===1?'مجوز دسترسی به موقعیت رد شد':'یافتن موقعیت ممکن نشد'); }, {enableHighAccuracy:false, timeout:8000});
-      });
-      return div;
-    };
-    searchCtl.addTo(map);
-
-    function debounce(fn,ms){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args),ms); }; }
-    function toast(msg){ const info=document.getElementById('info'); if(info){ info.textContent=msg; setTimeout(()=>{info.textContent='';},3000); } }
-
     // جایی که datasetهای دیگر را می‌خواندی (مثلاً برق/آب/گاز/نفت):
     let electricityLinesLayer = null;
     if (window.__LAYER_MANIFEST?.has('electricity_lines.geojson')) {
@@ -2024,7 +1974,6 @@ async function actuallyLoadManifest(){
       const panels={
         layers: makePanel('لایه‌ها','<div id="ama-layer-panel"></div>'),
         tools: makePanel('ابزارها','<div id="ama-tools-panel"></div>'),
-        search: makePanel('جستجو','<div class="ama-search"><input id="ama-search-input" type="text" aria-label="نام شهرستان"/><button id="ama-search-go">🔍</button></div>'),
         download: makePanel('دانلود','<button id="ama-dl-csv">دانلود CSV</button>')
       };
 
@@ -2033,7 +1982,6 @@ async function actuallyLoadManifest(){
         const div=L.DomUtil.create('div','tool-dock');
         div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="لایه‌ها">🗂</button>
         <button class="dock-btn" data-panel="tools" aria-label="ابزارها">🛠</button>
-        <button class="dock-btn" data-panel="search" aria-label="جستجو">🔍</button>
         <button class="dock-btn" data-panel="download" aria-label="دانلود">⬇</button>
         <button class="dock-btn dock-reset" data-action="reset" aria-label="بازنشانی">↺</button>`;
         return div;
@@ -2048,7 +1996,6 @@ async function actuallyLoadManifest(){
       });
       dockEl.querySelector('button[data-action="reset"]').addEventListener('click',e=>{e.preventDefault(); resetAll();});
 
-      panels.search.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); setTimeout(()=>{wrap.querySelector('#ama-search-input')?.focus();},0); const btn=wrap.querySelector('#ama-search-go'); btn?.addEventListener('click',()=>{ const val=wrap.querySelector('#ama-search-input').value.trim(); if(!val) return; const site = windSitesRaw.find(s=>s.name_fa===val); if(site){ map.setView([+site.lat,+site.lon],11); } else { focusCountyByName(val); } }); return wrap; }; })(panels.search.onAdd);
       panels.layers.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const body=wrap.querySelector('.ama-panel-bd'); body.innerHTML='<label><input type="checkbox" data-layer="wind" checked/> لایه باد</label><label><input type="checkbox" data-layer="sites" checked/> سایت‌ها</label>'; body.querySelectorAll('input[data-layer]').forEach(ch=>{ ch.addEventListener('change',()=>{ const lay=ch.dataset.layer; const LAY = lay==='wind'?window.windChoroplethLayer:window.windSitesLayer; if(LAY){ if(ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);} });}); return wrap; }; })(panels.layers.onAdd);
       panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
     })();
