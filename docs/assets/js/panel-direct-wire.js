@@ -84,7 +84,7 @@
   document.addEventListener('DOMContentLoaded', ()=>{
     if (document.querySelector('[data-layer-toggle]')) {
       A.initPanelDirectWire();
-      ensureOn('wind');
+      alert('\u062e\u0648\u0634 \u0622\u0645\u062f\u06cc\u062f!');
     }
   });
 })();
