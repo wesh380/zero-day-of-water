@@ -2133,10 +2133,17 @@ async function ama_bootstrap(){
   window.__combinedGeo = provinceFC;
   if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', (countiesFC?.features||[]).length);
 
-  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  const map = window.__AMA_MAP || AMA.map || L.map('map', {
+    preferCanvas: true,
+    zoomControl: false,
+    touchZoom: true,
+    dragging: true
+  });
   window.__AMA_MAP = map;
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
-  if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
+  L.control.zoom({ position: 'bottomright' }).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
     map.attributionControl.setPosition('bottomleft');
   }
@@ -2214,3 +2221,14 @@ map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
 }
 
 ama_bootstrap();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const panel = document.getElementById('ama-top-dock');
+  const btn = document.getElementById('infoToggle');
+  if (panel && btn) {
+    btn.addEventListener('click', () => {
+      const open = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+});
