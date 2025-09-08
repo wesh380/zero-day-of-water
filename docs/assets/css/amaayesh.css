@@ -1,5 +1,5 @@
 .map-panel{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px}
-.legend-dock{max-width:320px}
+.legend-dock{max-width:320px;color:#000!important;background:rgba(255,255,255,.9)!important}
 .legend-dock .legend-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .legend-dock .chip{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
 .legend-dock .chip.muted{opacity:.65}
