@@ -1,3 +1,5 @@
+import { setClass } from '../css-classes.js';
+
 // --- Build id ---
 window.__AMA_BUILD_ID = document.querySelector('meta[name="build-id"]')?.content || String(Date.now());
 
@@ -32,7 +34,7 @@ if (AMA.flags.disableMarkerIcons && typeof L !== 'undefined' && L && L.Marker &&
   try {
     const el = document.createElement('div');
     el.id = 'ama-ui-probe';
-    el.style.cssText = 'position:fixed;left:8px;top:8px;z-index:9999;background:#111;color:#0ff;padding:4px 8px;border-radius:8px;font:12px/1 Vazirmatn,system-ui';
+    setClass(el, ['debug-chip']);
     el.textContent = 'AMA UI • ' + window.__AMA_UI_VERSION;
     document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(el));
     setTimeout(()=>{ const n=document.getElementById('ama-ui-probe'); n && n.remove(); }, 3000);
@@ -59,6 +61,21 @@ function keyOf(s=''){
     .toLowerCase();
 }
 const sameCounty = (a,b)=> keyOf(a) === keyOf(b);
+
+const SWATCH_PALETTE = ['#f0f9ff','#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0284c7','#0369a1','#075985'];
+function swClass(color){
+  if(!color) return 'sw-gray';
+  const hex = color.toLowerCase();
+  const parse = h => {
+    const n = h.replace('#','');
+    return [parseInt(n.slice(0,2),16), parseInt(n.slice(2,4),16), parseInt(n.slice(4,6),16)];
+  };
+  const [r,g,b] = parse(hex);
+  let idx=0,min=Infinity;
+  SWATCH_PALETTE.forEach((c,i)=>{ const [cr,cg,cb]=parse(c); const d=(r-cr)**2+(g-cg)**2+(b-cb)**2; if(d<min){min=d;idx=i;} });
+  return `sw-${idx}`;
+}
+function bubbleSizeClass(r){ const size=Math.min(64,Math.max(8,Math.round((r*2)/8)*8)); return `bubble-${size}`; }
 // === County & Province helpers (tolerant) ===
 const ACTIVE_PROVINCE = 'خراسان رضوی';
 
@@ -148,8 +165,8 @@ function showToast(msg){
     if(!el){
       el = document.createElement('div');
       el.id = 'ama-toast';
-      el.style.cssText = 'position:absolute;top:8px;right:8px;z-index:9999;background:#2b2b2b;color:#fff;padding:8px 10px;border-radius:10px;font-size:12px;box-shadow:0 6px 24px rgba(0,0,0,.2)';
-      host.style.position = host.style.position || 'relative';
+      setClass(el, ['toast']);
+      setClass(host, ['relative']);
       host.appendChild(el);
     }
     el.textContent = msg;
@@ -194,7 +211,7 @@ async function getJSONwithFallback(relPath, timeoutMs = 30000){
     const ctl = new AbortController();
     const t = setTimeout(()=>ctl.abort(), timeoutMs);
     try {
-      const res = await fetch(url, { signal: ctl.signal, cache:'no-store' });
+      const res = await fetch(url, { signal: ctl.signal });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = (res.headers.get('content-type')||'').toLowerCase();
       const txt = await res.text();
@@ -636,7 +653,7 @@ async function fetchJSONFromManifest(rel){
   let url = absFromManifest(rel);
   url = normalizeDataPath(url);
   if (__jsonCache.has(url)) return __jsonCache.get(url);
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url);
   if (AMA_DEBUG) console.log('[ama:data]', 'GET', url, '->', res.status);
   if (!res.ok) throw new Error('data-not-found: ' + url);
   const j = await res.json();
@@ -652,7 +669,7 @@ async function fetchTextFromManifest(rel){
   const base = __LAYER_MANIFEST_BASE || '/data/';
   const cleanRel = String(rel || '').replace(/^\.?\//,'');
   const url = new URL(cleanRel, location.origin + base).pathname + qs;
-  const res = await fetch(url, { cache:'no-store' });
+  const res = await fetch(url);
   if (AMA_DEBUG) console.log('[ama:data:text] GET', url, '->', res.status);
   if (!res.ok) throw new Error('data-not-found: ' + url);
   return await res.text();
@@ -830,18 +847,17 @@ async function joinWindWeightsOnAll(){
   function showInfo(html){
     if (!infoCtl || !infoCtl._div) return;
     infoCtl._div.innerHTML = html;
-    infoCtl._div.style.display = 'block';
+    setClass(infoCtl._div, [], ['hidden']);
   }
   function hideInfo(){
     if (!infoCtl || !infoCtl._div) return;
-    infoCtl._div.style.display = 'none';
+    setClass(infoCtl._div, ['hidden']);
     infoCtl._div.innerHTML = '';
   }
 
   infoCtl = L.control({ position: 'topleft' });
   infoCtl.onAdd = function(map){
-    const div = L.DomUtil.create('div','ama-infox');
-    div.style.cssText = 'background:rgba(17,24,39,.9);color:#e5e7eb;padding:8px 10px;border-radius:10px;font:12px Vazirmatn, sans-serif;display:none;backdrop-filter:blur(2px)';
+    const div = L.DomUtil.create('div','ama-infox info-popup hidden');
     div.setAttribute('dir','rtl');
     return (infoCtl._div = div);
   };
@@ -894,7 +910,7 @@ async function actuallyLoadManifest(){
   for (const b of bases){
     const url = b + 'layers.config.json' + qs;
     try{
-      const res = await fetch(url, { cache:'no-store' });
+      const res = await fetch(url);
       if (AMA_DEBUG) console.log('[ama:fetch]', 'GET', url, '->', res.status);
       if (res.ok){
         const json = await res.json();
@@ -1064,7 +1080,7 @@ async function actuallyLoadManifest(){
     if(sidepanelEl) return;
     sidepanelOverlay = document.createElement('div');
     sidepanelOverlay.id = 'ama-sp-overlay';
-    sidepanelOverlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.3);display:none;z-index:999;';
+    sidepanelOverlay.className = 'overlay hidden';
     document.body.appendChild(sidepanelOverlay);
     sidepanelOverlay.addEventListener('click', closeSidepanel);
 
@@ -1079,7 +1095,7 @@ async function actuallyLoadManifest(){
   }
 
   function closeSidepanel(){
-    if(sidepanelOverlay) sidepanelOverlay.style.display='none';
+    if(sidepanelOverlay) setClass(sidepanelOverlay, ['hidden']);
     sidepanelEl?.classList.remove('open');
   }
 
@@ -1100,7 +1116,7 @@ async function actuallyLoadManifest(){
     body.innerHTML = `${kpiHtml}${sites.length?`<div><b>سایت‌های این شهرستان:</b><ul class="sp-sites">${list}</ul></div>`:''}<div style="margin-top:8px"><button id="ama-sp-dl">دانلود CSV شهرستان</button></div>`;
     sidepanelEl.querySelector('#ama-sp-name').textContent = name;
     sidepanelEl.classList.add('open');
-    if(sidepanelOverlay) sidepanelOverlay.style.display='block';
+    if(sidepanelOverlay) setClass(sidepanelOverlay, [], ['hidden']);
     const btn = sidepanelEl.querySelector('.close-btn');
     btn.focus();
     sidepanelEl.onkeydown = e=>{
@@ -1415,8 +1431,8 @@ async function actuallyLoadManifest(){
             const el=document.getElementById('ama-top10');
             const panel=el?el.closest('.ama-panel'):null;
             if(!panel||!el) return;
-            if(window.__WIND_WEIGHTS_MISSING){ panel.style.display='none'; return; }
-            panel.style.display='block';
+            if(window.__WIND_WEIGHTS_MISSING){ setClass(panel, ['hidden']); return; }
+            setClass(panel, [], ['hidden']);
             if(!window.__WIND_DATA_READY){ el.innerHTML = '<div class="ama-loading">در حال بارگذاری…</div>'; return; }
             const rows=polysFC.features.map(f=>f.properties).filter(p=>p.__hasWindData);
             rows.sort((a,b)=>(b[windKpiKey]||0)-(a[windKpiKey]||0));
@@ -1456,9 +1472,9 @@ async function actuallyLoadManifest(){
               `${nf.format(br[2])}–${nf.format(br[3])}`,
               `>${nf.format(br[3])}`
             ];
-            let html='<div class="lg"><span class="sw" style="background:#e5e7eb"></span>بدون داده</div>';
+            let html='<div class="lg"><span class="sw sw-gray"></span>بدون داده</div>';
             for(let i=0;i<labels.length;i++){
-              html += `<div class="lg"><span class="sw" style="background:${ramp[i]}"></span>${labels[i]}</div>`;
+              html += `<div class="lg"><span class="sw ${swClass(ramp[i])}"></span>${labels[i]}</div>`;
             }
             el.innerHTML = html;
           },300);
@@ -1506,7 +1522,7 @@ async function actuallyLoadManifest(){
       const d = L.DomUtil.create('div','ama-infra');
       d.innerHTML = `
         <button class="chip" id="btn-infra">زیرساخت ▾</button>
-        <div id="infra-box" class="box" style="display:none">
+        <div id="infra-box" class="box hidden">
           <label><input type="checkbox" data-layer="electricity"> خطوط انتقال برق</label>
           <label><input type="checkbox" data-layer="water"> شبکه آب‌رسانی</label>
           <label><input type="checkbox" data-layer="gas"> خطوط انتقال گاز</label>
@@ -1515,7 +1531,7 @@ async function actuallyLoadManifest(){
       L.DomEvent.disableClickPropagation(d);
       d.querySelector('#btn-infra').onclick = ()=> {
         const el = d.querySelector('#infra-box');
-        el.style.display = (el.style.display==='none'?'block':'none');
+        el.classList.toggle('hidden');
       };
       d.querySelectorAll('input[type=checkbox]').forEach(ch=>{
         ch.addEventListener('change', ()=>{
@@ -1571,7 +1587,7 @@ async function actuallyLoadManifest(){
         ${g.sub?`<div class="subhead text-[10px] opacity-70">${g.sub}</div>`:''}
         <ul class="swatches">${g.classes.map(c=>`
           <li data-min="${c.min}" data-max="${c.max}" aria-label="از ${fmt(c.min)} تا ${fmt(c.max)}">
-            <span class="sw" style="background:${c.color}"></span>
+            <span class="sw ${swClass(c.color)}"></span>
             <span class="lbl">${c.label || (`${fmt(c.min)}–${fmt(c.max)}`)}</span>
           </li>`).join('')}
         </ul>`;
@@ -1583,11 +1599,11 @@ async function actuallyLoadManifest(){
         <div class="subhead">رنگ = درصد پرشدگی</div>
         <ul class="swatches">${g.classes.map(c=>`
           <li data-min="${c.min}" data-max="${c.max}">
-            <span class="sw" style="background:${c.color}"></span><span class="lbl">${c.label}</span>
+            <span class="sw ${swClass(c.color)}"></span><span class="lbl">${c.label}</span>
           </li>`).join('')}
         </ul>
         <div class="subhead" style="margin-top:8px">اندازه = ظرفیت مخزن (میلیون m³)</div>
-        <div class="bubbles">${g.samples.map(s=>`<span class="bubble" style="width:${s.r*2}px;height:${s.r*2}px"></span><span class="lbl">${s.v}</span>`).join('')}</div>`;
+        <div class="bubbles">${g.samples.map(s=>`<span class="bubble ${bubbleSizeClass(s.r)}"></span><span class="lbl">${s.v}</span>`).join('')}</div>`;
           }
           const meta = `<div class="legend-meta"><span>منبع: ${g.source||'—'}</span><span>اعتماد داده: ${g.confidence||'—'}</span></div>`;
           body.insertAdjacentHTML('beforeend', meta);
@@ -1719,8 +1735,7 @@ async function actuallyLoadManifest(){
 
           const body = L.DomUtil.create('div', 'ld-body', container);
           const dataPane = L.DomUtil.create('div', 'ld-pane', body);
-          const displayPane = L.DomUtil.create('div', 'ld-pane', body);
-          displayPane.style.display = 'none';
+          const displayPane = L.DomUtil.create('div', 'ld-pane hidden', body);
 
           const overlaySwitches = [];
           function makeSwitch(parent, label, layer, disabled, {track=false}={}){
@@ -1779,8 +1794,8 @@ async function actuallyLoadManifest(){
             tabDispBtn.setAttribute('aria-selected', !isData?'true':'false');
             tabDataBtn.tabIndex = isData?0:-1;
             tabDispBtn.tabIndex = !isData?0:-1;
-            dataPane.style.display = isData?'block':'none';
-            displayPane.style.display = isData?'none':'block';
+            dataPane.classList.toggle('hidden', !isData);
+            displayPane.classList.toggle('hidden', isData);
           }
           tabDataBtn.addEventListener('click', ()=>activate('data'));
           tabDispBtn.addEventListener('click', ()=>activate('disp'));
@@ -2107,9 +2122,9 @@ async function ama_bootstrap(){
   }
   map.setView([36.3,59.6],7);
 
-  map.createPane('polygons');  map.getPane('polygons').style.zIndex = 400;
-  map.createPane('points');    map.getPane('points').style.zIndex   = 500;
-  map.createPane('boundary');  map.getPane('boundary').style.zIndex = 650;
+map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
+map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
+map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
   if (window.AMA_DEBUG) console.log('[AHA] panes zIndex=', {
     polygons: getComputedStyle(map.getPane('polygons')).zIndex,
     points:   getComputedStyle(map.getPane('points')).zIndex,

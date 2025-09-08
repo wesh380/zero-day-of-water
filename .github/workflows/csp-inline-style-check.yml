@@ -1,0 +1,24 @@
+name: CSP Inline Style Gate
+on:
+  pull_request:
+jobs:
+  csp-inline-style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm i -g npm@latest || true
+      - run: |
+          set -o pipefail
+          output=$(npm run -s csp:scan)
+          count=$(printf "%s" "$output" | sed '/^$/d' | wc -l)
+          echo "$output"
+          echo "Found $count files with potential inline-style usage."
+          if [ "$count" -gt 0 ]; then
+            echo "CSP violation: Inline styles are not allowed (style=\" or .style. or style={{}})."
+            echo "Fix by moving styles into docs/assets/inline-migration.css and toggling classes."
+            exit 1
+          fi
+

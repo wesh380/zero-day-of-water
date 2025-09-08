@@ -103,7 +103,8 @@ function analyzeConsumption() {
   const marker = document.getElementById('etf-user-marker');
   const text = document.getElementById('etf-analysis-text');
   const percent = Math.min(val, 600) / 600 * 100;
-  marker.style.right = `${percent}%`;
+  const pct = Math.max(0, Math.min(100, Math.round(percent)));
+  swapPercentBucket(marker, 'right', pct);
   let msg = '';
   if (val <= 200) msg = 'شما در محدوده کم‌مصرف هستید.';
   else if (val <= 400) msg = 'شما در محدوده مصرف متوسط قرار دارید.';

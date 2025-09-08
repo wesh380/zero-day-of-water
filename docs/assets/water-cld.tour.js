@@ -69,11 +69,16 @@
     if (!target) return;
     const r = target.getBoundingClientRect();
     const pad = 8;
-    focus.style.display='block';
-    focus.style.left = `${Math.max(8, r.left - pad)}px`;
-    focus.style.top  = `${Math.max(8, r.top  - pad)}px`;
-    focus.style.width  = `${r.width + pad*2}px`;
-    focus.style.height = `${r.height + pad*2}px`;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const l = Math.max(8, r.left - pad);
+    const t = Math.max(8, r.top - pad);
+    const w = r.width + pad*2;
+    const h = r.height + pad*2;
+    swapPercentBucket(focus, 'left', l / vw * 100);
+    swapPercentBucket(focus, 'top',  t / vh * 100);
+    swapPercentBucket(focus, 'w',    w / vw * 100);
+    swapPercentBucket(focus, 'h',    h / vh * 100);
+    setClass(focus, ['show'], ['hidden']);
 
     // جای پاپ‌اور: ترجیح پایین/راست؛ اگر جا نبود، تطبیق بده
     let x = r.left, y = r.bottom + 10;
@@ -81,12 +86,13 @@
     const vw = window.innerWidth, vh = window.innerHeight, pw = Math.min(360, pop.offsetWidth||320), ph = pop.offsetHeight||120;
     if (x + pw + 8 > vw) x = Math.max(8, vw - pw - 8);
     if (y + ph + 8 > vh) y = Math.max(8, r.top - ph - 12);
-    pop.style.left = `${x}px`; pop.style.top = `${y}px`;
+    swapPercentBucket(pop, 'left', x / vw * 100);
+    swapPercentBucket(pop, 'top',  y / vh * 100);
   }
 
   // محتوای هر مرحله
   function renderStep(s){
-    backdrop.style.display='block';
+    setClass(backdrop, ['show'], ['hidden']);
     const { title, html, target, side } = s;
     pop.innerHTML = `
       <h4>${title}</h4>
@@ -104,8 +110,8 @@
   function teardown(done=false){
     window.removeEventListener('resize', onRelayout);
     window.removeEventListener('scroll', onRelayout, true);
-    if (backdrop) backdrop.style.display='none';
-    if (focus) focus.style.display='none';
+    if (backdrop) setClass(backdrop, ['hidden'], ['show']);
+    if (focus) setClass(focus, ['hidden'], ['show']);
     if (done) LS.setItem(KEY_DONE, '1');
   }
 

@@ -1,3 +1,5 @@
+import { setClass } from './css-classes.js';
+
 // ===== Controls Meta & Grouping (singleton, CSP-safe, no interference) =====
 (function(){
   if (window.__CTL_META_BOUND__) return;
@@ -51,6 +53,7 @@
     pop.className = 'controls-help-pop';
     pop.innerHTML = '<ul></ul>';
     card.appendChild(pop);
+    setClass(pop, ['hidden']);
 
     // جمع‌آوری همه «؟»های پراکنده داخل کارت → به لیست راهنما
     const helpItems = [];
@@ -60,22 +63,22 @@
         const item = el.dataset?.help || el.getAttribute('title') || 'راهنمای این کنترل';
         helpItems.push(item);
         // پنهان کن تا مزاحم نباشد (دست نزدن به کنترل‌های واقعی)
-        el.style.display = 'none';
+        setClass(el, ['hidden']);
       }
     });
     if (helpItems.length){
       const ul = pop.querySelector('ul');
       helpItems.forEach(s => { const li = document.createElement('li'); li.textContent = s; ul.appendChild(li); });
     }else{
-      btn.style.display = 'none';
+      setClass(btn, ['hidden']);
     }
 
     // باز/بسته کردن پاپ‌اور
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
-      pop.style.display = (pop.style.display === 'block') ? 'none' : 'block';
+      pop.classList.toggle('hidden');
     });
-    document.addEventListener('click', ()=> pop.style.display='none');
+    document.addEventListener('click', ()=> setClass(pop, ['hidden']));
   }
 
   // خواندن متادیتای کنترل
