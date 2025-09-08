@@ -1277,7 +1277,7 @@ async function actuallyLoadManifest(){
     tabs.push(solarLegendCfg);
     if (damsLayer) tabs.push(damsLegendCfg);
 
-    // === Province focus & toggle ===
+    /* Province focus & toggle control removed
     (function(){
       const ctl = L.control({position:"topleft"});
       ctl.onAdd = function() {
@@ -1303,6 +1303,7 @@ async function actuallyLoadManifest(){
       };
       ctl.addTo(map);
     })();
+    */
 
     // === WIND: load computed dataset (amaayesh/wind_sites.geojson) ===
     if (CHORO_ON) {
@@ -1499,7 +1500,7 @@ async function actuallyLoadManifest(){
       oilPipelinesLayer    = await optionalGeoJSONFile('oil_pipelines.geojson',      { style: f => ({ color:'#ef4444', weight: 2 }) });
     }
 
-    // Infra drawer control
+    /* Infrastructure drawer control removed
     const infraCtl = L.control({position:'topleft'});
     infraCtl.onAdd = function(){
       const d = L.DomUtil.create('div','ama-infra');
@@ -1526,6 +1527,7 @@ async function actuallyLoadManifest(){
       return d;
     };
     infraCtl.addTo(map);
+    */
 
       // ===== LegendDock =====
       function LegendDock(){
