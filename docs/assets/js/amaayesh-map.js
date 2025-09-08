@@ -15,6 +15,19 @@ AMA.G = AMA.G || {
 // expose map placeholder
 window.__AMA_MAP = window.__AMA_MAP || null;
 
+// --- Analytics helper ---
+function trackAnalyticsEvent(action, params = {}) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', action, params);
+    } else if (typeof window.ga === 'function') {
+      window.ga('send', 'event', action, params);
+    }
+  } catch (e) {
+    if (window.AMA_DEBUG) console.warn('[analytics]', e);
+  }
+}
+
 // Choropleth flag (opt-in) + debug marker control
 AMA.flags = AMA.flags || {};
 AMA.flags.debugCountyMarker = false;
@@ -840,6 +853,7 @@ async function joinWindWeightsOnAll(){
   let windSitesGeo = null;
   let __focused = null;
   let sidepanelEl = null;
+  let currentPanelName = null;
   const currentSort = { key:'P0', dir:'desc' };
   let p0RankMap = {};
   let infoCtl = null;
@@ -1097,12 +1111,17 @@ async function actuallyLoadManifest(){
   function closeSidepanel(){
     if(sidepanelOverlay) setClass(sidepanelOverlay, ['hidden']);
     sidepanelEl?.classList.remove('open');
+    if (currentPanelName) {
+      trackAnalyticsEvent('panel_close', { panel: currentPanelName });
+      currentPanelName = null;
+    }
   }
 
   function openSidepanel(p){
     if(!sidepanelEl) createSidepanel();
     if(!sidepanelEl) return;
     const name = p.county || p.name || '—';
+    currentPanelName = name;
     const body = sidepanelEl.querySelector('#ama-sp-body');
     const kpiHtml = `<div class="kpi-grid">
         <div>N</div><div>${p.wind_N!=null?__AMA_fmtNumberFa(p.wind_N,{digits:0}):'—'}</div>
@@ -1116,6 +1135,7 @@ async function actuallyLoadManifest(){
     body.innerHTML = `${kpiHtml}${sites.length?`<div><b>سایت‌های این شهرستان:</b><ul class="sp-sites">${list}</ul></div>`:''}<div style="margin-top:8px"><button id="ama-sp-dl">دانلود CSV شهرستان</button></div>`;
     sidepanelEl.querySelector('#ama-sp-name').textContent = name;
     sidepanelEl.classList.add('open');
+    trackAnalyticsEvent('panel_open', { panel: name });
     if(sidepanelOverlay) setClass(sidepanelOverlay, [], ['hidden']);
     const btn = sidepanelEl.querySelector('.close-btn');
     btn.focus();
@@ -2121,6 +2141,10 @@ async function ama_bootstrap(){
     map.attributionControl.setPosition('bottomleft');
   }
   map.setView([36.3,59.6],7);
+
+  map.on('click', e => {
+    trackAnalyticsEvent('map_click', { lat: e.latlng.lat, lng: e.latlng.lng });
+  });
 
 map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
 map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
