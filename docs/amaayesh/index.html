@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/css/map-inline.css" />
   <meta name="build-id" content="ama-20250906">
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col" style="--header-h:0px; --footer-h:0px">
   <header class="w-full px-4 py-3 flex items-center justify-between">
     <h1 class="text-lg md:text-2xl font-bold">نقشه تعاملی آمایش انرژی — خراسان رضوی</h1>
     <nav class="text-sm md:text-base"><a href="../index.html" class="underline decoration-dotted">صفحه اصلی</a></nav>
@@ -56,6 +56,18 @@
   </main>
 
   <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 • Energy Spatial Planning • Leaflet</footer>
+
+  <script>
+    const body = document.body;
+    const header = body.querySelector('header');
+    const footer = body.querySelector('footer');
+    function setHF(){
+      body.style.setProperty('--header-h', header.offsetHeight + 'px');
+      body.style.setProperty('--footer-h', footer.offsetHeight + 'px');
+    }
+    window.addEventListener('load', setHF);
+    window.addEventListener('resize', setHF);
+  </script>
 
   <!-- supercluster optional (CDN removed due to CSP). Use local vendor if added. -->
   <script defer src="/assets/vendor/leaflet/leaflet.js"></script>
