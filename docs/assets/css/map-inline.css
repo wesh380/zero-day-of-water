@@ -26,3 +26,9 @@ html, body { height:100% }
 .ama-top-table{ width:100%; font:500 12px system-ui; color:#374151; }
 .ama-top-thead{ background:#f9fafb; color:#4b5563; }
 .ama-top-th{ padding:6px; }
+
+@media (max-width:768px){
+  .is-mobile{ flex-direction:column; }
+  .is-mobile #map{ height:60vh; }
+  .is-mobile .ama-panel{ position:static; width:clamp(260px,90%,480px); margin:12px auto 0; }
+}
