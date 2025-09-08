@@ -15,9 +15,7 @@
 - [x] Gas landing page contains a card linking to `./fuel-carbon.html`.
 
 ## CSP Domains
-If Content Security Policy headers are enabled, whitelist:
-- `https://cdn.jsdelivr.net`
-- `https://cdn.tailwindcss.com`
+If Content Security Policy headers are enabled, all assets load from `self` and no external domains are required.
 
 ## Known Follow-ups
 - Migrate remaining pages from Google Fonts to local `docs/fonts/vazirmatn/` to reduce CSP and performance risks.
