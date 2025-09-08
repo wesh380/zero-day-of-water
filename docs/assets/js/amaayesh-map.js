@@ -1188,6 +1188,68 @@ async function actuallyLoadManifest(){
     a.href = url; a.download = name; a.click();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
+
+  // Initialize open/close + resize behavior for AMA panels
+  function initAmaPanel(el, key){
+    if(!el) return el;
+    const storagePrefix = `ama-panel:${key}`;
+    const header = el.querySelector('.ama-panel-hd');
+    // --- toggle button ---
+    if(header){
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'toggle-btn';
+      const refresh = ()=>{ btn.textContent = el.classList.contains('ama-panel-collapsed') ? '+' : '−'; };
+      btn.addEventListener('click', ()=>{
+        el.classList.toggle('ama-panel-collapsed');
+        const open = !el.classList.contains('ama-panel-collapsed');
+        localStorage.setItem(`${storagePrefix}:open`, open ? '1' : '0');
+        refresh();
+      });
+      header.appendChild(btn);
+      const savedOpen = localStorage.getItem(`${storagePrefix}:open`);
+      if(savedOpen === '0') el.classList.add('ama-panel-collapsed');
+      refresh();
+    }
+
+    // --- resize handle ---
+    const handle = document.createElement('div');
+    handle.className = 'ama-panel-resize-handle';
+    el.appendChild(handle);
+    const heightKey = `${storagePrefix}:h`;
+    const savedH = parseInt(localStorage.getItem(heightKey),10);
+    if(savedH) el.setAttribute('style', `height:${savedH}px`);
+    let startY = 0, startH = 0;
+    const start = (e)=>{
+      startY = e.touches ? e.touches[0].clientY : e.clientY;
+      startH = el.offsetHeight;
+      const map = window.__AMA_MAP;
+      if(map){ try{ map.dragging.disable(); map.scrollWheelZoom.disable(); }catch(_){} }
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move);
+      document.addEventListener('mouseup', end);
+      document.addEventListener('touchend', end);
+      e.preventDefault();
+    };
+    const move = (e)=>{
+      const y = e.touches ? e.touches[0].clientY : e.clientY;
+      const nh = Math.max(80, startH + (y - startY));
+      el.setAttribute('style', `height:${nh}px`);
+    };
+    const end = ()=>{
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      document.removeEventListener('mouseup', end);
+      document.removeEventListener('touchend', end);
+      const map = window.__AMA_MAP;
+      if(map){ try{ map.dragging.enable(); map.scrollWheelZoom.enable(); }catch(_){} }
+      const h = parseInt(getComputedStyle(el).height,10) || el.offsetHeight;
+      localStorage.setItem(heightKey, h);
+    };
+    handle.addEventListener('mousedown', start);
+    handle.addEventListener('touchstart', start);
+    return el;
+  }
   function openTopModal(rows){
     const modal = document.createElement('div');
     modal.className = 'ama-modal';
@@ -1446,7 +1508,7 @@ async function actuallyLoadManifest(){
 
           // Top-10 panel
           window.__AMA_topPanel = L.control({position:"topright"});
-          window.__AMA_topPanel.onAdd = function(){ const wrap=L.DomUtil.create("div","ama-panel map-panel"); wrap.innerHTML = `<div class="ama-panel-hd">Top-10 باد</div><div class="ama-panel-bd"><div id="ama-top10"></div></div>`; return wrap; };
+          window.__AMA_topPanel.onAdd = function(){ const wrap=L.DomUtil.create("div","ama-panel map-panel"); wrap.innerHTML = `<div class="ama-panel-hd">Top-10 باد</div><div class="ama-panel-bd"><div id="ama-top10"></div></div>`; return initAmaPanel(wrap,'top10'); };
           window.__AMA_renderTop10 = debounce(function(){
             const el=document.getElementById('ama-top10');
             const panel=el?el.closest('.ama-panel'):null;
@@ -1989,7 +2051,7 @@ async function actuallyLoadManifest(){
       applyMode();
 
       // === Tool Dock ===
-      function makePanel(title, bodyHtml){
+      function makePanel(title, bodyHtml, key){
         const ctl = L.control({position:'topleft'});
         ctl.onAdd = function(){
           const wrap=L.DomUtil.create('div','ama-panel map-panel');
@@ -1998,15 +2060,15 @@ async function actuallyLoadManifest(){
           close.onclick=()=>{ map.removeControl(ctl); };
           wrap.addEventListener('keydown',e=>{ if(e.key==='Escape'){ map.removeControl(ctl); }});
           L.DomEvent.disableClickPropagation(wrap);
-          return wrap;
+          return initAmaPanel(wrap, key || title);
         };
         return ctl;
       }
 
       const panels={
-        layers: makePanel('لایه‌ها','<div id="ama-layer-panel"></div>'),
-        tools: makePanel('ابزارها','<div id="ama-tools-panel"></div>'),
-        download: makePanel('دانلود','<button id="ama-dl-csv">دانلود CSV</button>')
+        layers: makePanel('لایه‌ها','<div id="ama-layer-panel"></div>','layers'),
+        tools: makePanel('ابزارها','<div id="ama-tools-panel"></div>','tools'),
+        download: makePanel('دانلود','<button id="ama-dl-csv">دانلود CSV</button>','download')
       };
 
       const dockCtl=L.control({position:'topleft'});
