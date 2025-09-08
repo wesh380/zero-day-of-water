@@ -14,11 +14,11 @@
     var url = new URL(candidates[i], location.href).href;
     var s = document.createElement('script');
     s.setAttribute('data-cld-bundle', 'true');
-    s.async = true;
+    s.defer = true;
     s.src = url;
     s.onload = function () {
       console.log('[CLD defer] bundle loaded OK:', url, 'CLD_SAFE=', !!window.CLD_SAFE);
-      document.dispatchEvent(new CustomEvent('cld:bundle:loaded', { detail: { url } }));
+      document.dispatchEvent(new Event('cld:bundle:loaded'));
     };
     s.onerror = function () {
       console.warn('[CLD defer] bundle load failed:', url, '→ next…');
