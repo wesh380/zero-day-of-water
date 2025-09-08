@@ -23,7 +23,11 @@
     "vendor:supercluster": "node tools/vendorize_supercluster.js",
     "audit:ama": "node tools/audit_amaayesh.js",
     "verify:publish": "node tools/verify_publish_paths.js https://wesh360.ir/data/layers.config.json https://wesh360.ir/data/amaayesh/counties.geojson https://wesh360.ir/data/amaayesh/wind_sites.geojson || true",
-    "rca:publish": "node tools/rca_publish.js --base=$SITE_URL"
+    "rca:publish": "node tools/rca_publish.js --base=$SITE_URL",
+    "csp:scan:html": "grep -RIn --include='*.html' --exclude-dir='dist' --exclude-dir='vendor' 'style=\"' docs || true",
+    "csp:scan:js": "grep -RIn --include='*.js' --exclude-dir='dist' --exclude-dir='vendor' '\\.style\\.' docs || true",
+    "csp:scan:jsx": "grep -RIn --include='*.{jsx,tsx}' 'style={{' dash || true",
+    "csp:scan": "npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx"
   },
   "keywords": [],
   "author": "",
