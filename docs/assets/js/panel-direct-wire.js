@@ -40,7 +40,10 @@
   }
 
   function syncUi(){
-    ['wind','solar','dams','counties','province'].forEach(k=> updateUi(k, isOn(k)));
+    document.querySelectorAll('[data-layer-toggle]').forEach(el=>{
+      const key = (el.getAttribute('data-layer-toggle')||'').trim();
+      if(key) updateUi(key, isOn(key));
+    });
   }
 
   function bind(){
