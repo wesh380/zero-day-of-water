@@ -1,3 +1,11 @@
+import { Chart as ChartJS, registerables } from 'chart.js';
+ChartJS.register(...registerables);
+console.log('Chart.js registered OK:', !!ChartJS.registry);
+import cytoscape from 'cytoscape';
+import dagre from 'cytoscape-dagre';
+cytoscape.use(dagre);
+console.log('Dagre layout available');
+
 window.__WATER_CLD_READY__ = new Promise(function(resolve){ window.__WATER_CLD_RESOLVE__ = resolve; });
 const getCy = () => window.CLD_SAFE && window.CLD_SAFE.cy;
 // ===== CY READINESS (singleton) =====
@@ -50,7 +58,7 @@ window.__cldSafeFit = window.__cldSafeFit || function (cy) {
       }
       const el = document.getElementById('cy');
       if (!el) { console.warn('[CLD init] #cy missing'); return null; }
-      if (!window.cytoscape) { console.warn('[CLD init] cytoscape not loaded'); return null; }
+      if (!cytoscape) { console.warn('[CLD init] cytoscape not loaded'); return null; }
 
       try {
         if (window.cy && window.cy.tagName) { window._cyDom = window.cy; window.cy = undefined; }
@@ -371,11 +379,11 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     try {
       const el = document.getElementById('sim-chart');
       if (!el) return console.warn('sim-chart not found');
-      if (!window.Chart) return console.warn('Chart.js not loaded');
+      if (!ChartJS) return console.warn('Chart.js not loaded');
       const ctx = el.getContext('2d');
       if (!window.__wesh_sim_chart) {
-        Chart.defaults.font.family = 'Vazirmatn, sans-serif';
-        window.__wesh_sim_chart = new Chart(ctx, {
+        ChartJS.defaults.font.family = 'Vazirmatn, sans-serif';
+        window.__wesh_sim_chart = new ChartJS(ctx, {
           type: 'line',
           data: { labels: [], datasets: [{ label: 'پایه', data: [], borderWidth: 2, fill: false }] },
           options: { responsive: true, maintainAspectRatio: false }
@@ -568,7 +576,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
   document.addEventListener('DOMContentLoaded', async function () {
     const container = document.getElementById('cy');
     if (!container) { console.warn('cy container not found'); return; }
-    if (typeof window.cytoscape === 'undefined') { console.warn('cytoscape not loaded'); return; }
+    if (typeof cytoscape === 'undefined') { console.warn('cytoscape not loaded'); return; }
 
     const cy = cldGetCy();
     if (!cy) { console.warn('[CLD init] cy missing'); return; }
