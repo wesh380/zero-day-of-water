@@ -787,32 +787,6 @@ async function joinWindWeightsOnAll(){
     let AMA_USER_TOGGLE = false;
     let overlays = null;
 
-    const ToolDock = L.Control.extend({
-      options:{ position:'topleft' },
-      onAdd: function(){
-        const c = L.DomUtil.create('div','ama-dock');
-        c.innerHTML = `
-        <button class="btn" aria-label="لایه‌ها"    data-act="layers">🗂</button>
-        <button class="btn" aria-label="ابزارها"    data-act="tools">🛠</button>
-        <button class="btn" aria-label="دانلود"    data-act="download">⬇️</button>
-        <button class="btn" aria-label="بازنشانی"  data-act="reset">↺</button>
-        `;
-        // stop map drag
-        L.DomEvent.disableClickPropagation(c); L.DomEvent.disableScrollPropagation(c);
-        // temp handlers
-        c.addEventListener('click',(e)=>{
-          const b = e.target.closest('button'); if(!b) return;
-          const act = b.dataset.act;
-          if(act==='reset' && window.__countiesLayer && window.__mapBounds){ map.fitBounds(window.__mapBounds); }
-          if(window.AMA_DEBUG) console.log('[dock]', act);
-        });
-        return c;
-      }
-    });
-    // remember map bounds once (to use with reset)
-    if(!window.__mapBounds) setTimeout(()=>{ try{ window.__mapBounds = map.getBounds(); }catch{} }, 500);
-    map.addControl(new ToolDock());
-
     if (window.AMA_DEBUG && map) {
       map.on('zoomend', () => console.log('[ama:event] zoomend =>', map.getZoom()));
       map.on('moveend', () => console.log('[ama:event] moveend =>', map.getCenter()));
@@ -1481,51 +1455,6 @@ async function actuallyLoadManifest(){
           if(infoEl) infoEl.textContent = 'داده شهرستان‌ها در دسترس نیست.';
         }
       }
-    // جایی که datasetهای دیگر را می‌خواندی (مثلاً برق/آب/گاز/نفت):
-    let electricityLinesLayer = null;
-    if (window.__LAYER_MANIFEST?.has('electricity_lines.geojson')) {
-      electricityLinesLayer = await optionalGeoJSONFile('electricity_lines.geojson', { style: f => ({ color:'#22c55e', weight: 2 }) });
-    }
-    let waterMainsLayer = null;
-    if (window.__LAYER_MANIFEST?.has('water_mains.geojson')) {
-      waterMainsLayer      = await optionalGeoJSONFile('water_mains.geojson',        { style: f => ({ color:'#3b82f6', weight: 2 }) });
-    }
-    let gasTransmissionLayer = null;
-    if (window.__LAYER_MANIFEST?.has('gas_transmission.geojson')) {
-      gasTransmissionLayer = await optionalGeoJSONFile('gas_transmission.geojson',   { style: f => ({ color:'#f59e0b', weight: 2 }) });
-    }
-    let oilPipelinesLayer = null;
-    if (window.__LAYER_MANIFEST?.has('oil_pipelines.geojson')) {
-      oilPipelinesLayer    = await optionalGeoJSONFile('oil_pipelines.geojson',      { style: f => ({ color:'#ef4444', weight: 2 }) });
-    }
-
-    // Infra drawer control
-    const infraCtl = L.control({position:'topleft'});
-    infraCtl.onAdd = function(){
-      const d = L.DomUtil.create('div','ama-infra');
-      d.innerHTML = `
-        <button class="chip" id="btn-infra">زیرساخت ▾</button>
-        <div id="infra-box" class="box" style="display:none">
-          <label><input type="checkbox" data-layer="electricity"> خطوط انتقال برق</label>
-          <label><input type="checkbox" data-layer="water"> شبکه آب‌رسانی</label>
-          <label><input type="checkbox" data-layer="gas"> خطوط انتقال گاز</label>
-          <label><input type="checkbox" data-layer="oil"> خطوط لوله نفت</label>
-        </div>`;
-      L.DomEvent.disableClickPropagation(d);
-      d.querySelector('#btn-infra').onclick = ()=> {
-        const el = d.querySelector('#infra-box');
-        el.style.display = (el.style.display==='none'?'block':'none');
-      };
-      d.querySelectorAll('input[type=checkbox]').forEach(ch=>{
-        ch.addEventListener('change', ()=>{
-          const LAY = { electricity:electricityLinesLayer, water:waterMainsLayer, gas:gasTransmissionLayer, oil:oilPipelinesLayer }[ch.dataset.layer];
-          if (!LAY) return;
-          if (ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);
-        });
-      });
-      return d;
-    };
-    infraCtl.addTo(map);
 
       // ===== LegendDock =====
       function LegendDock(){
@@ -1683,7 +1612,6 @@ async function actuallyLoadManifest(){
 
       const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
       Object.values(overlays).forEach(Lyr=> safeRemoveLayer(map, Lyr));
-      const overlayEntries = Object.entries(overlays);
 
       map.on('overlayadd',  e=>{ if(!AMA_INIT_DONE) return; AMA_USER_TOGGLE=true; selectOnly(e.layer); AMA_USER_TOGGLE=false; });
       map.on('overlayremove', e=>{ if(!AMA_INIT_DONE) return; });
@@ -1698,109 +1626,11 @@ async function actuallyLoadManifest(){
           }
         });
       }
-      const LayersDock = L.Control.extend({
-        options: { position:'topleft', dir:'rtl' },
-        onAdd: function(m){
-          const container = L.DomUtil.create('div', 'layers-dock leaflet-control');
-          container.setAttribute('dir', this.options.dir);
-
-          const tabsEl = L.DomUtil.create('div', 'ld-tabs', container);
-          tabsEl.setAttribute('role','tablist');
-
-          const tabDataBtn = L.DomUtil.create('button', 'ld-tab active', tabsEl);
-          tabDataBtn.type = 'button';
-          tabDataBtn.setAttribute('role','tab');
-          tabDataBtn.textContent = 'لایه‌ها';
-          tabDataBtn.setAttribute('aria-selected','true');
-
-          const tabDispBtn = L.DomUtil.create('button', 'ld-tab', tabsEl);
-          tabDispBtn.type = 'button';
-          tabDispBtn.setAttribute('role','tab');
-          tabDispBtn.textContent = 'نمایش';
-          tabDispBtn.setAttribute('aria-selected','false');
-          tabDispBtn.tabIndex = -1;
-
-          const body = L.DomUtil.create('div', 'ld-body', container);
-          const dataPane = L.DomUtil.create('div', 'ld-pane', body);
-          const displayPane = L.DomUtil.create('div', 'ld-pane', body);
-          displayPane.style.display = 'none';
-
-          const overlaySwitches = [];
-          function makeSwitch(parent, label, layer, disabled, {track=false}={}){
-            const lbl = L.DomUtil.create('label', '', parent);
-            if(disabled){ lbl.classList.add('is-disabled'); lbl.title='غیرفعال'; }
-            const inp = L.DomUtil.create('input', '', lbl);
-            inp.type='checkbox';
-            inp.setAttribute('role','switch');
-            if(disabled){ inp.disabled=true; }
-            else {
-              const init = m.hasLayer(layer);
-              inp.checked = init; inp.setAttribute('aria-checked', init);
-              if(track) overlaySwitches.push({inp, layer});
-              inp.addEventListener('change', ()=>{
-                const ch = inp.checked; inp.setAttribute('aria-checked', ch);
-                if(track){
-                  if(ch){
-                    overlaySwitches.forEach(sw=>{
-                      if(sw.inp!==inp){
-                        sw.inp.checked = false;
-                        sw.inp.setAttribute('aria-checked','false');
-                      }
-                    });
-                    AMA_USER_TOGGLE=true; selectOnly(layer); AMA_USER_TOGGLE=false;
-                  } else {
-                    AMA_USER_TOGGLE=true; selectOnly(null); AMA_USER_TOGGLE=false;
-                  }
-                } else {
-                  ch ? m.addLayer(layer) : safeRemoveLayer(map, layer);
-                }
-              });
-              if(!track){
-                const sync = e => { if(e.layer===layer){ const p=m.hasLayer(layer); inp.checked=p; inp.setAttribute('aria-checked',p); } };
-                m.on('layeradd', sync); m.on('layerremove', sync);
-                m.on('overlayadd', sync); m.on('overlayremove', sync);
-              }
-            }
-            const span = L.DomUtil.create('span', '', lbl); span.textContent = label;
-          }
-
-          // data overlays
-          overlayEntries.forEach(([t,l])=>{
-            makeSwitch(dataPane, t, l, !l, {track:true});
-          });
-
-          // display/basemap tab
-          makeSwitch(displayPane, 'مرز شهرستان‌ها', boundary, !boundary);
-          makeSwitch(displayPane, 'شبکه راهنما', window.gridLayer, !window.gridLayer);
-          makeSwitch(displayPane, 'برچسب‌ها', window.labelsLayer, !window.labelsLayer);
-
-          function activate(which){
-            const isData = which==='data';
-            tabDataBtn.classList.toggle('active', isData);
-            tabDispBtn.classList.toggle('active', !isData);
-            tabDataBtn.setAttribute('aria-selected', isData?'true':'false');
-            tabDispBtn.setAttribute('aria-selected', !isData?'true':'false');
-            tabDataBtn.tabIndex = isData?0:-1;
-            tabDispBtn.tabIndex = !isData?0:-1;
-            dataPane.style.display = isData?'block':'none';
-            displayPane.style.display = isData?'none':'block';
-          }
-          tabDataBtn.addEventListener('click', ()=>activate('data'));
-          tabDispBtn.addEventListener('click', ()=>activate('disp'));
-
-          L.DomEvent.disableClickPropagation(container);
-          L.DomEvent.disableScrollPropagation(container);
-          return container;
-        }
-      });
-
-      new LayersDock().addTo(map);
       onZoom();
       AMA_INIT_DONE = true;
       if (window.AMA_DEBUG) console.log('[AHA] overlays list =', Object.keys(overlays));
       if (window.AMA_DEBUG) console.log('[AMA] base groups:', !!baseAdminGroup);
       if (window.AMA_DEBUG) console.log('[AHA] baseData:', windPath, solarPath, damsPath);
-      // --- end custom layers dock ---
 
       L.control.scale({ metric:true, imperial:false }).addTo(map);
 
@@ -1821,39 +1651,6 @@ async function actuallyLoadManifest(){
         });
       }
 
-      // اگر لایه گاز موجود است، جلوه‌های اضافه اعمال شود
-      const gasLayer = gasTransmissionLayer;
-      const gasEffects = L.layerGroup();
-      if (gasLayer) {
-        const halo = L.geoJSON(gasLayer.toGeoJSON(), { style:{ color:'#ffe0d6', weight:8, opacity:1 } });
-        gasEffects.addLayer(halo);
-      gasLayer.bringToFront();
-
-      if (L && L.polylineDecorator && L.Symbol && L.Symbol.arrowHead) {
-        gasEffects.addLayer(L.polylineDecorator(gasLayer, {
-          patterns: [{ offset: 0, repeat: '80px',
-            symbol: L.Symbol.arrowHead({ pixelSize: 8, pathOptions: { color: '#ef476f', weight: 1 }})
-          }]
-        }));
-      }
-
-      if (typeof turf !== 'undefined') {
-        try{
-          const unioned = gasLayer.toGeoJSON().features.reduce((acc,f)=> acc? turf.union(acc,f) : f, null);
-          const distancesKm = [10,30,50];
-          let prev = null;
-          distancesKm.forEach((km,i)=>{
-            const b = turf.buffer(unioned, km, {units:'kilometers'});
-            const ring = prev ? turf.difference(b, prev) : b;
-            prev = b;
-            if(ring) gasEffects.addLayer(L.geoJSON(ring, { style:{ fillColor:'#ffd0cc', fillOpacity:0.25, color:'#e06b5f', weight:1 } }));
-          });
-        }catch(e){ /* اگر Turf در دسترس نبود یا داده نبود، سکوت */ }
-      }
-
-      if (map.hasLayer(gasLayer)) gasEffects.addTo(map);
-      map.on('layeradd', e => { if (e.layer === gasLayer) gasEffects.addTo(map); });
-      map.on('layerremove', e => { if (e.layer === gasLayer) safeRemoveLayer(map, gasEffects); });
     }
 
     window.__AMA__combined = combined;
@@ -1937,67 +1734,7 @@ async function actuallyLoadManifest(){
         if (typeof _re === 'function') { try { _re(); } catch(_){} }
 
       }
-
-      function resetAll(){
-        if(boundary?.getBounds) map.fitBounds(boundary.getBounds(), {padding:[12,12]});
-        else map.setView([36.3,59.6],7);
-
-        currentMode = 'owner';
-        localStorage.setItem('ama-mode', currentMode);
-        const modeDiv = ctl.getContainer ? ctl.getContainer() : null;
-        modeDiv?.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b.dataset.mode==='owner'));
-        applyMode();
-
-        window.legend?.reset?.();
-        safeClearGroup(searchLayer);
-        currentSort.key='P0'; currentSort.dir='desc';
-        window.__AMA_renderTop10?.();
-      }
-
       applyMode();
-
-      // === Tool Dock ===
-      function makePanel(title, bodyHtml){
-        const ctl = L.control({position:'topleft'});
-        ctl.onAdd = function(){
-          const wrap=L.DomUtil.create('div','ama-panel');
-          wrap.innerHTML=`<div class="ama-panel-hd">${title}<button class="close-btn" aria-label="بستن">×</button></div><div class="ama-panel-bd">${bodyHtml}</div>`;
-          const close=wrap.querySelector('.close-btn');
-          close.onclick=()=>{ map.removeControl(ctl); };
-          wrap.addEventListener('keydown',e=>{ if(e.key==='Escape'){ map.removeControl(ctl); }});
-          L.DomEvent.disableClickPropagation(wrap);
-          return wrap;
-        };
-        return ctl;
-      }
-
-      const panels={
-        layers: makePanel('لایه‌ها','<div id="ama-layer-panel"></div>'),
-        tools: makePanel('ابزارها','<div id="ama-tools-panel"></div>'),
-        download: makePanel('دانلود','<button id="ama-dl-csv">دانلود CSV</button>')
-      };
-
-      const dockCtl=L.control({position:'topleft'});
-      dockCtl.onAdd=function(){
-        const div=L.DomUtil.create('div','tool-dock');
-        div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="لایه‌ها">🗂</button>
-        <button class="dock-btn" data-panel="tools" aria-label="ابزارها">🛠</button>
-        <button class="dock-btn" data-panel="download" aria-label="دانلود">⬇</button>
-        <button class="dock-btn dock-reset" data-action="reset" aria-label="بازنشانی">↺</button>`;
-        return div;
-      };
-      dockCtl.addTo(map);
-      const dockEl=dockCtl.getContainer();
-      dockEl.querySelectorAll('button[data-panel]').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const key=btn.dataset.panel; const p=panels[key];
-          if(!p._map) p.addTo(map); else map.removeControl(p);
-        });
-      });
-      dockEl.querySelector('button[data-action="reset"]').addEventListener('click',e=>{e.preventDefault(); resetAll();});
-
-      panels.layers.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const body=wrap.querySelector('.ama-panel-bd'); body.innerHTML='<label><input type="checkbox" data-layer="wind" checked/> لایه باد</label><label><input type="checkbox" data-layer="sites" checked/> سایت‌ها</label>'; body.querySelectorAll('input[data-layer]').forEach(ch=>{ ch.addEventListener('change',()=>{ const lay=ch.dataset.layer; const LAY = lay==='wind'?window.windChoroplethLayer:window.windSitesLayer; if(LAY){ if(ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);} });}); return wrap; }; })(panels.layers.onAdd);
-      panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
     })();
 }
 

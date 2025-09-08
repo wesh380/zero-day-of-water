@@ -23,21 +23,7 @@
 
 .is-disabled{opacity:.5;pointer-events:none}
 
-/* === Tool Dock === */
-.tool-dock{display:flex;flex-direction:column;background:rgba(10,15,28,.88);padding:8px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.25);gap:12px}
-.tool-dock .dock-btn{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:9999px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.tool-dock .dock-btn:hover{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
-.tool-dock .dock-reset{margin-top:auto}
-
-/* === Layers Dock === */
-.layers-dock{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);max-width:320px;font-size:14px}
-.layers-dock .ld-tabs{display:flex;gap:8px}
-.layers-dock .ld-tabs button{flex:1;background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
-.layers-dock .ld-tabs button.active{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
-.layers-dock .ld-body{margin-top:8px}
-.layers-dock .ld-pane label{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer;min-height:44px}
-.layers-dock .ld-pane label:hover{background:rgba(255,255,255,.06)}
-.layers-dock .ld-pane label.is-disabled{cursor:not-allowed;pointer-events:auto}
+/* Removed legacy Tool Dock and Layers Dock styles */
 
 /* Avoid control overlap: stack with gaps per corner */
 .leaflet-top.leaflet-right,
@@ -96,18 +82,13 @@
 /* site labels */
 .site-label{background:transparent;border:none;color:#e5e7eb;font-size:12px;text-shadow:0 0 2px #000;}
 
-.ama-dock { display:flex; flex-direction:column; gap:12px; background:#0b1220cc; padding:10px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,.25); }
-.ama-dock .btn { width:44px; height:44px; border-radius:10px; background:#111827; color:#e5e7eb; border:1px solid #374151; font-size:18px; display:grid; place-items:center; cursor:pointer; }
-.ama-dock .btn:hover { background:#1f2937; }
-.ama-dock .btn:active { transform: translateY(1px); }
+/* Removed legacy dock styles */
 
 /* Zoom control tweaks */
 .leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
 .leaflet-control-zoom a{border-radius:0}
 /* === Force dark (black) theme for guidance panels === */
 .legend-dock,
-.layers-dock,
-.tool-dock,
 .ama-panel,
 .ama-kpi-switch,
 .ama-sidepanel {
@@ -118,14 +99,12 @@
 
 /* Buttons/Chips/Tabs inside panels */
 .legend-dock .chip,
-.layers-dock .ld-tabs button,
 .ama-kpi-switch .chip {
   background: #111 !important;
   color: #e5e7eb !important;
   border: 1px solid #324155 !important;
 }
 .legend-dock .chip.active,
-.layers-dock .ld-tabs button.active,
 .ama-kpi-switch input:checked + .chip {
   background: #0ea5e9 !important;
   color: #04121f !important;
@@ -133,8 +112,7 @@
 }
 
 /* Hover states readable on dark */
-.legend-dock ul.swatches li:hover,
-.layers-dock .ld-pane label:hover {
+.legend-dock ul.swatches li:hover {
   background: rgba(255,255,255,.06) !important;
 }
 .legend-dock ul.swatches li.active {

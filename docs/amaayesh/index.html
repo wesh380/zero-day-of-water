@@ -27,27 +27,6 @@
     <!-- ظرف نقشه: id باید «map» بماند -->
     <div id="map"></div>
 
-    <!-- پنل سمت راست -->
-    <aside id="ama-layer-dock"
-           style="position:absolute;top:16px;right:16px;z-index:1001;pointer-events:auto;
-                  background:rgba(255,255,255,.9);backdrop-filter:saturate(150%) blur(4px);
-                  width:320px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(0,0,0,.08);padding-bottom:8px">
-        <h2 style="font:600 16px system-ui;">لایه‌ها</h2>
-        <button aria-label="تنظیمات" style="border:0;background:transparent;cursor:pointer;opacity:.7">⚙️</button>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button id="tab-wind"  data-layer-toggle="wind"  style="flex:1;padding:8px 12px;border-radius:10px;background:#2563eb;color:#fff;border:0;cursor:pointer">باد</button>
-        <button id="tab-solar" data-layer-toggle="solar" style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">خورشیدی</button>
-        <button id="tab-dams"  data-layer-toggle="dams"  style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">آب</button>
-      </div>
-      <div style="display:grid;gap:8px">
-        <label data-layer-toggle="wind"><input id="chk-wind-sites"  type="checkbox"/> سایت‌های بادی (انرژی)</label>
-        <label data-layer-toggle="solar"><input id="chk-solar-sites" type="checkbox"/> سایت‌های خورشیدی</label>
-        <label data-layer-toggle="dams"><input id="chk-dam-sites"   type="checkbox"/> سد</label>
-      </div>
-    </aside>
-
     <!-- پنل سمت چپ -->
     <aside id="ama-top-dock"
            style="position:absolute;top:16px;left:16px;z-index:1001;pointer-events:auto;
@@ -73,7 +52,6 @@
   <script defer src="/assets/js/leaflet-icon-patch.js"></script>
   <script defer src="/assets/vendor/leaflet.polylineDecorator.min.js"></script>
   <script defer src="/assets/js/amaayesh-map.js"></script>
-  <script defer src="/assets/js/panel-direct-wire.js"></script>
   <script defer src="/assets/js/ama-diag.js"></script>
 </body>
 </html>
