@@ -58,8 +58,13 @@
         });
       } else {
         el.addEventListener('click', (e)=>{
-          const on = el.getAttribute('aria-pressed') !== 'true';
-          setOn(key, on);
+          if (el.tagName === 'BUTTON' && A.selectOnly){
+            A.selectOnly(key);
+            syncUi();
+          } else {
+            const on = el.getAttribute('aria-pressed') !== 'true';
+            setOn(key, on);
+          }
           e.preventDefault();
         });
       }
@@ -74,6 +79,13 @@
   };
 
   document.addEventListener('DOMContentLoaded', ()=>{
-    if (document.querySelector('[data-layer-toggle]')) A.initPanelDirectWire();
+    if (document.querySelector('[data-layer-toggle]')) {
+      A.initPanelDirectWire();
+      // ensure at least one layer (wind) is active by default
+      (function ensureDefault(){
+        if (A.selectOnly && map()) { A.selectOnly('wind'); syncUi(); }
+        else setTimeout(ensureDefault, 50);
+      })();
+    }
   });
 })();

@@ -1681,23 +1681,27 @@ async function actuallyLoadManifest(){
       if (solarSitesLayer) overlays['سایت‌های خورشیدی']       = solarSitesLayer;
       if (damsLayer)       overlays['سدها']                    = damsLayer;
 
-      const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
-      Object.values(overlays).forEach(Lyr=> safeRemoveLayer(map, Lyr));
+      // Legacy layer control removed; layer selection handled via custom buttons
+      // const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
+      // Object.values(overlays).forEach(Lyr=> safeRemoveLayer(map, Lyr));
       const overlayEntries = Object.entries(overlays);
 
       map.on('overlayadd',  e=>{ if(!AMA_INIT_DONE) return; AMA_USER_TOGGLE=true; selectOnly(e.layer); AMA_USER_TOGGLE=false; });
       map.on('overlayremove', e=>{ if(!AMA_INIT_DONE) return; });
 
-      function selectOnly(layerToShow){
-        [windSitesLayer, solarSitesLayer, damsLayer].forEach(Lyr=>{
+      function selectOnly(keyOrLayer){
+        const layerMap = { wind: AMA.G.wind, solar: AMA.G.solar, dams: AMA.G.dams };
+        const target = typeof keyOrLayer === 'string' ? layerMap[keyOrLayer] : keyOrLayer;
+        Object.values(layerMap).forEach(Lyr=>{
           if(!Lyr) return;
-          if(Lyr===layerToShow){
-            if(map.getZoom()>=8 && !map.hasLayer(Lyr)) map.addLayer(Lyr);
+          if(Lyr===target){
+            if(!map.hasLayer(Lyr)) Lyr.addTo(map);
           } else if(map.hasLayer(Lyr)){
             safeRemoveLayer(map, Lyr);
           }
         });
       }
+      AMA.selectOnly = selectOnly;
       const LayersDock = L.Control.extend({
         options: { position:'topleft', dir:'rtl' },
         onAdd: function(m){
