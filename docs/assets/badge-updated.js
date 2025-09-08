@@ -1,3 +1,5 @@
+import { setClass } from './css-classes.js';
+
 (function () {
   'use strict';
 
@@ -54,10 +56,8 @@
         header.appendChild(badge);
       } else {
         // گوشه‌ی کارت بدون به‌هم‌ریختگی
-        card.style.position ||= 'relative';
-        badge.style.position = 'absolute';
-        badge.style.top = '0.5rem';
-        badge.style.left = '0.5rem';
+        setClass(card, ['relative']);
+        setClass(badge, ['badge-pos']);
         card.appendChild(badge);
       }
     });
