@@ -1681,7 +1681,10 @@ async function actuallyLoadManifest(){
       if (solarSitesLayer) overlays['سایت‌های خورشیدی']       = solarSitesLayer;
       if (damsLayer)       overlays['سدها']                    = damsLayer;
 
-      const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
+      if (window.AMA_DEBUG) {
+        const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
+        map.removeControl(ctrl);
+      }
       Object.values(overlays).forEach(Lyr=> safeRemoveLayer(map, Lyr));
       const overlayEntries = Object.entries(overlays);
 
