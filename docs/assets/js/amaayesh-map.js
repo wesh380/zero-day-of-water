@@ -211,7 +211,7 @@ async function getJSONwithFallback(relPath, timeoutMs = 30000){
     const ctl = new AbortController();
     const t = setTimeout(()=>ctl.abort(), timeoutMs);
     try {
-      const res = await fetch(url, { signal: ctl.signal, cache:'no-store' });
+      const res = await fetch(url, { signal: ctl.signal });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const ct = (res.headers.get('content-type')||'').toLowerCase();
       const txt = await res.text();
@@ -653,7 +653,7 @@ async function fetchJSONFromManifest(rel){
   let url = absFromManifest(rel);
   url = normalizeDataPath(url);
   if (__jsonCache.has(url)) return __jsonCache.get(url);
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url);
   if (AMA_DEBUG) console.log('[ama:data]', 'GET', url, '->', res.status);
   if (!res.ok) throw new Error('data-not-found: ' + url);
   const j = await res.json();
@@ -669,7 +669,7 @@ async function fetchTextFromManifest(rel){
   const base = __LAYER_MANIFEST_BASE || '/data/';
   const cleanRel = String(rel || '').replace(/^\.?\//,'');
   const url = new URL(cleanRel, location.origin + base).pathname + qs;
-  const res = await fetch(url, { cache:'no-store' });
+  const res = await fetch(url);
   if (AMA_DEBUG) console.log('[ama:data:text] GET', url, '->', res.status);
   if (!res.ok) throw new Error('data-not-found: ' + url);
   return await res.text();
@@ -910,7 +910,7 @@ async function actuallyLoadManifest(){
   for (const b of bases){
     const url = b + 'layers.config.json' + qs;
     try{
-      const res = await fetch(url, { cache:'no-store' });
+      const res = await fetch(url);
       if (AMA_DEBUG) console.log('[ama:fetch]', 'GET', url, '->', res.status);
       if (res.ok){
         const json = await res.json();
