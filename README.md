@@ -39,6 +39,26 @@ Gemini API calls are routed through a serverless function so the API key is kept
 - Set `GEMINI_API_KEY` (and optional `PREVIEW_ORIGIN`) in Netlify Environment Variables.
 - CSP headers are configured in `netlify.toml`; `connect-src 'self'` is sufficient.
 
+### Content Security Policy
+
+Netlify applies the policy via [`docs/_headers`](docs/_headers). To mirror those headers on a traditional server:
+
+```nginx
+add_header Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://cdn.tailwindcss.com; connect-src 'self';" always;
+add_header Referrer-Policy "no-referrer" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+```
+
+```apache
+<IfModule mod_headers.c>
+  Header set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://cdn.tailwindcss.com; connect-src 'self';"
+  Header set Referrer-Policy "no-referrer"
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "DENY"
+</IfModule>
+```
+
 **Post-deploy tests**
 ```bash
 curl -i -X OPTIONS https://wesh360.ir/api/gemini \
