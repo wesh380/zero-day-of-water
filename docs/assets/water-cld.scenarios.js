@@ -175,7 +175,7 @@
       btn.setAttribute('data-preset', p.id);
       btn.addEventListener('click', async ()=>{
         const res = p.apply(); await rerun();
-        const note = $('#scn-note'); if (note) note.innerHTML = `✓ ${p.note} — <span style="opacity:.8">${res.msg||''}</span>`;
+        const note = $('#scn-note'); if (note) note.innerHTML = `✓ ${p.note} — <span class="opacity-80">${res.msg||''}</span>`;
         document.dispatchEvent(new CustomEvent('scenario:applied',{detail:{id:p.id,title:p.title}}));
         const st = stateFromUI(p.title); saveRecent(st);
       });
@@ -214,13 +214,18 @@
         ul.appendChild(li);
       });
       const rect = btnRecent.getBoundingClientRect();
-      pop.style.display='block'; pop.style.top=`${rect.bottom+6}px`; pop.style.left=`${rect.left}px`;
+      const hostRect = host.getBoundingClientRect();
+      const topPct = ((rect.bottom + 6 - hostRect.top) / hostRect.height) * 100;
+      const leftPct = ((rect.left - hostRect.left) / hostRect.width) * 100;
+      swapPercentBucket(pop, 'top', topPct);
+      swapPercentBucket(pop, 'left', leftPct);
+      setClass(pop, ['show'], ['hidden']);
     });
-    document.addEventListener('click',()=> pop.style.display='none');
+    document.addEventListener('click',()=> setClass(pop, ['hidden'], ['show']));
     pop.addEventListener('click', async (e)=>{
       const idx = e.target?.dataset?.idx; if (idx==null) return;
       e.preventDefault(); const r = loadRecents()[Number(idx)]; if (!r) return;
-      await applyState(r); const n=$('#scn-note'); if(n) n.textContent='✓ سناریوی اخیر اعمال شد.'; pop.style.display='none';
+      await applyState(r); const n=$('#scn-note'); if(n) n.textContent='✓ سناریوی اخیر اعمال شد.'; setClass(pop, ['hidden'], ['show']);
     });
 
     bar.append(btnPin, btnCmp, btnShare, btnRecent);
@@ -264,7 +269,7 @@
         <h5>${spec.label}</h5>
         <div class="row">
           <span class="val">${isNum(a)?a.toFixed(1):'—'}</span><span class="unit">${spec.unit}</span>
-          <span style="opacity:.6">↔</span>
+          <span class="opacity-60">↔</span>
           <span class="val">${isNum(b)?b.toFixed(1):'—'}</span><span class="unit">${spec.unit}</span>
           <span class="delta ${d.dir}">${isNum(d.delta)?Math.abs(d.delta).toFixed(1)+'%':''}</span>
         </div>`;

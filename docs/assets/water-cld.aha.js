@@ -201,7 +201,7 @@
     const host = $('#hero-kpi') || document.body;
     const hint = document.createElement('div');
     hint.className='hero-objective';
-    hint.style.marginTop = '6px';
+    setClass(hint, ['mt-6']);
     hint.innerHTML = 'راهنمای سه‌مرحله‌ای در دسترس است؛ برای مشاهده، به انتهای آدرس <code>?tour=1</code> اضافه کنید.';
     host.appendChild(hint);
     sessionStorage.setItem('aha_tour_hint','1');

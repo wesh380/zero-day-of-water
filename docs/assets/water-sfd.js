@@ -66,13 +66,16 @@
 
     var edge = cy.getElementById('in');
     var valve = document.createElement('div');
-    valve.style.cssText = 'position:absolute;width:14px;height:14px;border:2px solid #58a79a;border-radius:50%;background:#0b1d1a;';
+    valve.className = 'valve';
     cy.container().appendChild(valve);
 
     function placeValve(){
       var mid = edge.renderedMidpoint();
-      valve.style.left = (mid.x - 7) + 'px';
-      valve.style.top = (mid.y - 7) + 'px';
+      var rect = cy.container().getBoundingClientRect();
+      var leftPct = (mid.x - 7) / rect.width * 100;
+      var topPct  = (mid.y - 7) / rect.height * 100;
+      swapPercentBucket(valve, 'left', leftPct);
+      swapPercentBucket(valve, 'top', topPct);
     }
 
     cy.on('render', placeValve);

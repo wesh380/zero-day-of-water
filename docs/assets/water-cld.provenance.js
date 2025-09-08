@@ -1,3 +1,5 @@
+import { setClass, swapPercentBucket } from './css-classes.js';
+
 // ===== Provenance & Model/Policy Card (singleton, CSP-safe, no interference) =====
 (function(){
   if (window.__PROVENANCE_BOUND__) return; window.__PROVENANCE_BOUND__ = true;
@@ -170,9 +172,9 @@
     $('#prov-A').textContent = (Array.isArray(A) && A.length) ? A.join('؛ ') : '—';
     $('#prov-L').textContent = (Array.isArray(L) && L.length) ? L.join('؛ ') : '—';
 
-    $('#prov-modal').style.display='block';
+    setClass($('#prov-modal'), [], ['hidden']);
   }
-  function closeModal(){ const m=$('#prov-modal'); if (m) m.style.display='none'; }
+  function closeModal(){ const m=$('#prov-modal'); if (m) setClass(m, ['hidden']); }
   function copyJSON(){ navigator.clipboard?.writeText(JSON.stringify(currentCard(), null, 2)); }
   function exportJSON(){
     const blob = new Blob([JSON.stringify(currentCard(), null, 2)], {type:'application/json'});
@@ -193,15 +195,13 @@
     const list = scanCharts();
     list.forEach(p=>{
       const host = p.el; if (!host || host.__provMounted) return; host.__provMounted = true;
-      // Badge
       const badge = document.createElement('div');
       badge.className = 'prov-badge';
       badge.dir='rtl';
-      badge.innerHTML = `<span>ⓘ منشأ</span><span style="opacity:.7">نسخه ${p.version}</span>`;
-      host.style.position = host.style.position || 'relative';
+      badge.innerHTML = `<span class="dn">نسخه:</span><span class="opacity-70">${p.version}</span>`;
+      setClass(host, ['relative']);
       host.appendChild(badge);
 
-      // Tooltip
       const tip = document.createElement('div');
       tip.className = 'prov-tip';
       tip.innerHTML = `
@@ -216,26 +216,28 @@
         </div>
       `;
       document.body.appendChild(tip);
+      setClass(tip, ['hidden']);
 
-      // Positioning
       function place(){
         const r = badge.getBoundingClientRect();
-        const tw = tip.offsetWidth || 260, th = tip.offsetHeight || 140;
-        let left = Math.max(8, r.left - (tw - r.width));
-        let top  = r.top - th - 8;
-        if (top < 8) { top = r.bottom + 8; }
-        tip.style.left = `${left}px`; tip.style.top = `${top}px`;
+        const w = Math.max(260, tip.offsetWidth || 140);
+        const th = tip.offsetHeight || 140;
+        const leftPx = Math.max(0, r.left - (w - r.width));
+        const topPx  = (r.top + th > window.innerHeight) ? (r.top - th - 8) : (r.bottom + 8);
+        swapPercentBucket(tip, 'left', leftPx / window.innerWidth * 100);
+        swapPercentBucket(tip, 'top',  topPx  / window.innerHeight * 100);
       }
 
-      let open=false;
+      let open = false;
       function toggle(){
-        open = !open; tip.style.display = open ? 'block' : 'none';
-        if (open) place();
+        open = !open;
+        if (open) { setClass(tip, ['show'], ['hidden']); place(); }
+        else      { setClass(tip, ['hidden'], ['show']); }
       }
-      badge.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
-      document.addEventListener('click', ()=>{ if (open){ open=false; tip.style.display='none'; } });
 
-      // Downloads
+      badge.addEventListener('click', (e)=>{ e.stopPropagation(); toggle(); });
+      document.addEventListener('click', ()=>{ if (open){ open=false; setClass(tip, ['hidden'], ['show']); } });
+
       tip.addEventListener('click', (e)=>{
         const act = e.target?.dataset?.act; if (!act) return;
         e.preventDefault();

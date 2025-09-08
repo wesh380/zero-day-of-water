@@ -1,3 +1,4 @@
+import { setClass } from './assets/css-classes.js';
 'use strict';
 (function () {
   const debug = new URLSearchParams(location.search).get('debug-curtain') === '1';
@@ -174,10 +175,8 @@
   if (!hero) return;
   const cards = hero.querySelectorAll('.dash-card');
   cards.forEach((card, i) => {
-    card.style.transitionDelay = `${i * 120}ms`;
+    const delay = Math.min(1200, Math.round((i * 120) / 120) * 120);
+    setClass(card, [`delay-${delay}`]);
     requestAnimationFrame(() => card.classList.add('is-visible'));
-  });
-  window.addEventListener('scroll', () => {
-    hero.style.setProperty('--hero-parallax', `${window.scrollY * 0.2}px`);
   });
 })();

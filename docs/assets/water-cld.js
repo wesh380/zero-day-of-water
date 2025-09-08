@@ -173,13 +173,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
   function markModelReady(){ __modelReady = true; for(var i=0;i<__modelReadyQueue.length;i++){ try{ __modelReadyQueue[i](); }catch(e){ console.error(e);} } __modelReadyQueue = []; }
   window.whenModelReady = whenModelReady;
 
-  function setVhVar(){
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  setVhVar();
-  window.addEventListener('resize', setVhVar);
-  window.addEventListener('orientationchange', () => { setTimeout(setVhVar, 100); });
+
 
   let model;
   let modelData;
@@ -751,19 +745,18 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         const d = ele.data() || {};
         const box = document.createElement('div');
         box.dir = 'rtl';
-        box.style.whiteSpace = 'normal';
-        box.style.maxWidth = '260px';
+        setClass(box, ['ws-normal', 'max-w-260']);
 
         const parts = [];
         if (ele.isNode && ele.isNode()) {
-          parts.push(`<div style="font-weight:600;margin-bottom:4px">${esc(d.label || d.id || '')}</div>`);
+          parts.push(`<div class="fw-600 mb-1">${esc(d.label || d.id || '')}</div>`);
           if (d.desc) parts.push(`<div>${esc(d.desc)}</div>`);
           const meta = [];
           if (d.unit)  meta.push(`واحد: ${esc(d.unit)}`);
           if (d.group) meta.push(`گروه: ${esc(d.group)}`);
-          if (meta.length) parts.push(`<div style="opacity:.8;margin-top:4px">${meta.join(' • ')}</div>`);
+          if (meta.length) parts.push(`<div class="opacity-80 mt-1">${meta.join(' • ')}</div>`);
         } else {
-          parts.push(`<div style="font-weight:600;margin-bottom:4px">${esc(d.label || '')}</div>`);
+          parts.push(`<div class="fw-600 mb-1">${esc(d.label || '')}</div>`);
           const meta = [];
           if (d.sign) meta.push(`قطبیت: ${d.sign === '+' ? 'مثبت (+)' : 'منفی (−)'}`);
           if (typeof d.weight === 'number') meta.push(`وزن: ${d.weight}`);
@@ -1005,7 +998,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
           const negCount = (cycle.edgeIds || []).filter(id => cy.getElementById(id).data('sign') === '-').length;
           const sign = negCount % 2 === 0 ? '+' : '-';
           li.textContent = `${sign}: ${labels.join(' \u2192 ')}`;
-          li.style.cursor = 'pointer';
+          setClass(li, ['cursor-pointer']);
           li.addEventListener('click', () => {
             cy.elements().removeClass('highlight');
             const col = cy.collection();
@@ -1081,14 +1074,30 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       });
     }
 
+    function colorToIndex(hex){
+      const palette=['#f1f5f9','#e2e8f0','#cbd5e1','#94a3b8','#64748b','#475569','#334155','#1f2937','#0f172a'];
+      if(!hex) return 0;
+      const toRGB=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+      const target=toRGB(hex);
+      let min=Infinity, idx=0;
+      palette.forEach((c,i)=>{
+        const rgb=toRGB(c);
+        const d=(rgb[0]-target[0])**2+(rgb[1]-target[1])**2+(rgb[2]-target[2])**2;
+        if(d<min){min=d;idx=i;}
+      });
+      return idx;
+    }
     const legend = document.getElementById('legend');
     if (legend) {
       const items = [
-        '<span class="badge pos"><i class="dot" style="background:var(--pos)"></i>مثبت</span>',
-        '<span class="badge neg"><i class="dot" style="background:var(--neg)"></i>منفی</span>',
-        '<span class="badge dashed"><i class="dot" style="border:2px dashed #cbd5e1"></i>تاخیردار/غیرمستقیم</span>'
+        '<span class="badge bg-pos"><i class="dot bg-pos"></i>مثبت</span>',
+        '<span class="badge bg-neg"><i class="dot bg-neg"></i>منفی</span>',
+        '<span class="badge dot-dashed"><i class="dot dot-dashed"></i>تاخیردار/غیرمستقیم</span>'
       ];
-      groups.forEach(g => items.push(`<span class="badge" style="border-color:${g.color}"><i class="dot" style="background:${g.color}"></i>${g.id}</span>`));
+      groups.forEach(g => {
+        const k = colorToIndex(g.color);
+        items.push(`<span class="badge clr-${k}"><i class="dot clr-${k}"></i>${g.id}</span>`);
+      });
       legend.innerHTML = items.join('');
     }
 
@@ -1264,14 +1273,14 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       tabParam.addEventListener('click', () => {
         CLD_SAFE?.safeAddClass(tabParam, 'active');
         tabFormula.classList.remove('active');
-        panelParam.style.display = 'block';
-        panelFormula.style.display = 'none';
+        setClass(panelParam, ['show'], ['hidden']);
+        setClass(panelFormula, ['hidden'], ['show']);
       });
       tabFormula.addEventListener('click', () => {
         CLD_SAFE?.safeAddClass(tabFormula, 'active');
         tabParam.classList.remove('active');
-        panelParam.style.display = 'none';
-        panelFormula.style.display = 'block';
+        setClass(panelParam, ['hidden'], ['show']);
+        setClass(panelFormula, ['show'], ['hidden']);
       });
     }
 

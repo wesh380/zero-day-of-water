@@ -11,7 +11,7 @@ function predictDelta(){ // \u062a\u062e\u0645\u06cc\u0646 \u0633\u0628\u06a9: \
 function renderGhost(g){
   $$('.kpi').forEach(k=>{
     const key=k.dataset.kpi; if(!key||g[key]==null) return;
-    let tag=k.querySelector('.ghost'); if(!tag){ tag=document.createElement('span'); tag.className='ghost'; tag.style.cssText='position:absolute;bottom:6px;inset-inline-end:6px;font-size:11px;opacity:.7'; k.appendChild(tag) }
+    let tag=k.querySelector('.ghost'); if(!tag){ tag=document.createElement('span'); tag.className='ghost ghost-tag'; k.appendChild(tag) }
     const d=g[key]; const s=(d>=0?'+':'')+d.toFixed(1)+'%~'; tag.textContent=s;
   });
 }

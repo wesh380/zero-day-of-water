@@ -1,3 +1,5 @@
+import { setClass } from './css-classes.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const svgNS = 'http://www.w3.org/2000/svg';
   const svg = document.getElementById('cld-svg');
@@ -5,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 600;
     const height = 420;
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-    svg.style.userSelect = 'none';
+    setClass(svg, ['select-none']);
 
     const defs = document.createElementNS(svgNS, 'defs');
     const marker = document.createElementNS(svgNS, 'marker');
@@ -45,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
       line.setAttribute('stroke', '#999');
       line.setAttribute('stroke-width', '2');
       line.setAttribute('marker-end', 'url(#arrow)');
-      line.style.pointerEvents = 'none';
+      setClass(line, ['pe-none']);
       svg.appendChild(line);
 
       const label = document.createElementNS(svgNS, 'text');
       label.setAttribute('font-size', '12');
       label.setAttribute('fill', '#000');
       label.setAttribute('text-anchor', 'middle');
-      label.style.pointerEvents = 'none';
+      setClass(label, ['pe-none']);
       label.textContent = l.sign;
       svg.appendChild(label);
 
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nodes.forEach(n => {
       const g = document.createElementNS(svgNS, 'g');
       g.setAttribute('transform', `translate(${n.x},${n.y})`);
-      g.style.cursor = 'move';
+      setClass(g, ['cursor-move']);
 
       const circle = document.createElementNS(svgNS, 'circle');
       circle.setAttribute('r', '30');
