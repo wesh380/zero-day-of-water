@@ -1,21 +1,14 @@
+import { useEffect } from 'react';
+
 export default function Footer() {
-  if (typeof document !== 'undefined') {
-    document.body.style.marginBottom = '60px';
-  }
+  useEffect(() => {
+    document.body.classList.add('body-mb');
+    return () => document.body.classList.remove('body-mb');
+  }, []);
   return (
     <footer
       dir="rtl"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        fontSize: '13px',
-        color: '#555',
-        textAlign: 'center',
-        paddingTop: '12px',
-        paddingBottom: '12px',
-      }}
+      className="footer-fixed"
     >
       <img
         src="/assets/IRAN-FLAG.png"
