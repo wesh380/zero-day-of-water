@@ -1681,12 +1681,7 @@ async function actuallyLoadManifest(){
       if (solarSitesLayer) overlays['سایت‌های خورشیدی']       = solarSitesLayer;
       if (damsLayer)       overlays['سدها']                    = damsLayer;
 
-      const ctrl = L.control.layers(null, overlays, { collapsed:false, position:'topleft' }).addTo(map);
-      Object.values(overlays).forEach(Lyr=> safeRemoveLayer(map, Lyr));
       const overlayEntries = Object.entries(overlays);
-
-      map.on('overlayadd',  e=>{ if(!AMA_INIT_DONE) return; AMA_USER_TOGGLE=true; selectOnly(e.layer); AMA_USER_TOGGLE=false; });
-      map.on('overlayremove', e=>{ if(!AMA_INIT_DONE) return; });
 
       function selectOnly(layerToShow){
         [windSitesLayer, solarSitesLayer, damsLayer].forEach(Lyr=>{

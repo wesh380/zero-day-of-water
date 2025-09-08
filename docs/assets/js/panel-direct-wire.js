@@ -19,6 +19,11 @@
     return true;
   }
 
+  function ensureOn(key, retries = 20){
+    if (setOn(key, true)) return;
+    if (retries > 0) setTimeout(() => ensureOn(key, retries - 1), 250);
+  }
+
   function $checkbox(el){
     return el && (el.matches && el.matches('input[type="checkbox"]'))
       ? el
@@ -77,6 +82,9 @@
   };
 
   document.addEventListener('DOMContentLoaded', ()=>{
-    if (document.querySelector('[data-layer-toggle]')) A.initPanelDirectWire();
+    if (document.querySelector('[data-layer-toggle]')) {
+      A.initPanelDirectWire();
+      ensureOn('wind');
+    }
   });
 })();
