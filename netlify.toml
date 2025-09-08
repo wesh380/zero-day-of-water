@@ -78,6 +78,11 @@ for = "/*"
   Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self';"
 
 [[headers]]
+for = "/amaayesh/*"
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self';"
+
+[[headers]]
 for = "/data/amaayesh/*"
   [headers.values]
   Cache-Control = "public, max-age=900, stale-while-revalidate=60"

@@ -9,12 +9,7 @@
   <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css" />
   <link rel="stylesheet" href="/assets/css/map-overrides.css" />
   <link rel="stylesheet" href="../assets/legend.css"/>
-  <style>
-    html, body { height:100% }
-    .label{ font-family: Vazirmatn, sans-serif; font-size:12px; text-shadow:0 0 6px #fff }
-    .map-wrap{ height:calc(100vh - 110px) }
-    #map{ height:100vh; width:100%; }
-  </style>
+  <link rel="stylesheet" href="/assets/css/map-inline.css" />
   <meta name="build-id" content="ama-20250906">
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -23,25 +18,22 @@
     <nav class="text-sm md:text-base"><a href="../index.html" class="underline decoration-dotted">صفحه اصلی</a></nav>
   </header>
 
-  <main class="flex relative" style="isolation:isolate">
+  <main class="flex relative ama-main">
     <!-- ظرف نقشه: id باید «map» بماند -->
     <div id="map"></div>
 
     <!-- پنل سمت راست -->
-    <aside id="ama-layer-dock"
-           style="position:absolute;top:16px;right:16px;z-index:1001;pointer-events:auto;
-                  background:rgba(255,255,255,.9);backdrop-filter:saturate(150%) blur(4px);
-                  width:320px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(0,0,0,.08);padding-bottom:8px">
-        <h2 style="font:600 16px system-ui;">لایه‌ها</h2>
-        <button aria-label="تنظیمات" style="border:0;background:transparent;cursor:pointer;opacity:.7">⚙️</button>
+    <aside id="ama-layer-dock" class="ama-panel ama-layer-dock">
+      <div class="ama-panel-header">
+        <h2 class="ama-panel-title">لایه‌ها</h2>
+        <button aria-label="تنظیمات" class="ama-settings-btn">⚙️</button>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button id="tab-wind"  data-layer-toggle="wind"  style="flex:1;padding:8px 12px;border-radius:10px;background:#2563eb;color:#fff;border:0;cursor:pointer">باد</button>
-        <button id="tab-solar" data-layer-toggle="solar" style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">خورشیدی</button>
-        <button id="tab-dams"  data-layer-toggle="dams"  style="flex:1;padding:8px 12px;border-radius:10px;background:#e5e7eb;border:0;cursor:pointer">آب</button>
+      <div class="ama-tabs">
+        <button id="tab-wind"  data-layer-toggle="wind"  class="ama-tab-btn ama-tab-active">باد</button>
+        <button id="tab-solar" data-layer-toggle="solar" class="ama-tab-btn ama-tab-inactive">خورشیدی</button>
+        <button id="tab-dams"  data-layer-toggle="dams"  class="ama-tab-btn ama-tab-inactive">آب</button>
       </div>
-      <div style="display:grid;gap:8px">
+      <div class="ama-checkbox-grid">
         <label data-layer-toggle="wind"><input id="chk-wind-sites"  type="checkbox"/> سایت‌های بادی (انرژی)</label>
         <label data-layer-toggle="solar"><input id="chk-solar-sites" type="checkbox"/> سایت‌های خورشیدی</label>
         <label data-layer-toggle="dams"><input id="chk-dam-sites"   type="checkbox"/> سد</label>
@@ -49,17 +41,14 @@
     </aside>
 
     <!-- پنل سمت چپ -->
-    <aside id="ama-top-dock"
-           style="position:absolute;top:16px;left:16px;z-index:1001;pointer-events:auto;
-                  background:rgba(255,255,255,.9);backdrop-filter:saturate(150%) blur(4px);
-                  width:280px;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(0,0,0,.08);padding-bottom:8px">
-        <h2 style="font:600 16px system-ui;">برترین‌ها</h2>
-        <span style="padding:.25rem .5rem;border-radius:9999px;background:#dbeafe;color:#1d4ed8;font:600 12px system-ui;">Top 10</span>
+    <aside id="ama-top-dock" class="ama-panel ama-top-dock">
+      <div class="ama-panel-header">
+        <h2 class="ama-panel-title">برترین‌ها</h2>
+        <span class="ama-top-badge">Top 10</span>
       </div>
-      <table style="width:100%;font:500 12px system-ui;color:#374151">
-        <thead style="background:#f9fafb;color:#4b5563">
-          <tr><th style="padding:6px">رتبه</th><th style="padding:6px">شهرستان</th><th style="padding:6px">پتانسیل (MW)</th></tr>
+      <table class="ama-top-table">
+        <thead class="ama-top-thead">
+          <tr><th class="ama-top-th">رتبه</th><th class="ama-top-th">شهرسان</th><th class="ama-top-th">پتانسیل (MW)</th></tr>
         </thead>
         <tbody id="ama-top10"></tbody>
       </table>
