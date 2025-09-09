@@ -27,7 +27,8 @@
     "csp:scan:html": "grep -RlIF --include='*.html' --exclude-dir='dist' --exclude-dir='vendor' --exclude='*.min.html' 'style=\"' docs || true",
     "csp:scan:js": "grep -RlIF --include='*.js'   --exclude-dir='dist' --exclude-dir='vendor' --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' --exclude='*plugin*.js' '.style.' docs || true",
     "csp:scan:jsx": "grep -RlIF --include='*.{jsx,tsx}' 'style={{' dash || true",
-    "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u"
+    "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
+    "report:cy": "node scripts/cy-state-report.js"
   },
   "keywords": [],
   "author": "",
