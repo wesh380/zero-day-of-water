@@ -5,7 +5,6 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
 
-
 /data/*
   Cache-Control: public, max-age=600
 /data/*.geojson

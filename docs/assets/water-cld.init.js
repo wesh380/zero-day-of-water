@@ -10,7 +10,14 @@
 
   // Simple debug log when CLD bundle signals it is ready
   window.addEventListener('cld:bundle:loaded', () => {
-    const ok = !!(window.CLD_SAFE && window.CLD_SAFE.cy);
-    console.log("[CLD] bundle loaded -> cy ready?", ok);
+    const cy = window.CLD_SAFE && window.CLD_SAFE.cy;
+    if (cy) {
+      console.log("[CLD] bundle loaded -> cy ready?", true, {
+        cyNodes: cy.nodes().length,
+        cyEdges: cy.edges().length,
+      });
+    } else {
+      console.log("[CLD] bundle loaded -> cy ready?", false);
+    }
   });
 })();
