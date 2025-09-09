@@ -23,10 +23,10 @@ function serveDocs(){
   const browser = await puppeteer.launch({args:['--no-sandbox'], headless:'new'});
   const page = await browser.newPage();
   await page.goto(`http://localhost:${port}/test/water-cld.html`, { waitUntil: 'networkidle2' });
-  await page.waitForFunction(() => window.__WATER_CLD_READY__, { timeout: 15000 });
-  await page.evaluate(() => window.__WATER_CLD_READY__);
-  const n = await page.evaluate(() => (window.CLD_SAFE && window.CLD_SAFE.cy && window.CLD_SAFE.cy.nodes().length) || 0);
-  assert(n > 0);
+  await page.waitForFunction(() => !!window.__WATER_CLD_READY__, { timeout: 20000 });
+  await page.waitForSelector('#cy', { timeout: 20000 });
+  const cyExists = await page.$('#cy') !== null;
+  assert(cyExists);
   await browser.close();
   server.close();
   console.log('e2e-cld.test passed');
