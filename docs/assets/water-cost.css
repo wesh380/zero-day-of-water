@@ -1,6 +1,7 @@
 :root{
   --bg:#F8FAFC; --card:#FFFFFF; --muted:#64748B; --border:#E2E8F0;
   --title:#0F172A; --primary:#3B82F6; --accent:#06B6D4; --success:#10B981; --danger:#EF4444;
+  --column-bg:#F8FAFC; --progress-bg:#E5E7EB; --progress-fill:linear-gradient(90deg,var(--primary),var(--accent));
   --radius:16px; --pad:18px; --g:16px; --shadow:0 10px 24px rgba(2,6,23,.06);
 }
 [dir="rtl"] body{background:var(--bg); color:var(--title); font-family:'Vazirmatn',sans-serif;}
@@ -23,9 +24,9 @@
 
 .tbl{width:100%; border-collapse:separate; border-spacing:0 8px; font-size:.92rem;}
 .tbl th{color:var(--muted); font-weight:700; text-align:right; padding:0 8px 6px;}
-.tbl td{background:#F8FAFC; border:1px solid var(--border); padding:10px 12px; border-radius:10px;}
-.progress{height:8px; background:#E5E7EB; border-radius:999px; overflow:hidden;}
-.progress > span{display:block; height:100%; background:linear-gradient(90deg,var(--primary),var(--accent));}
+.tbl td{background:var(--column-bg); border:1px solid var(--border); padding:10px 12px; border-radius:10px;}
+.progress{height:8px; background:var(--progress-bg); border-radius:999px; overflow:hidden;}
+.progress > span{display:block; height:100%; background:var(--progress-fill);}
 
 .controls .group{display:grid; gap:10px; margin-bottom:14px;}
 .controls label{font-weight:700; font-size:.95rem;}

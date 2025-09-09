@@ -2,17 +2,25 @@
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
 /* From electricity/peak.html */
+:root {
+    --background-color: #0a0a0a;
+    --text-color: #f9fafb;
+    --link-color: #6ee7b7;
+    --scrollbar-track: var(--background-color);
+    --scrollbar-thumb: #94a3b8;
+    --scrollbar-thumb-hover: #64748b;
+}
 body {
     font-family: 'Vazirmatn', sans-serif;
-    background-color: #f1f5f9;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #64748b; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 .chart-container { position: relative; height: 350px; width: 100%; }
 
 /* From agrivoltaics/index.dev.html */
 /* استایل پشتیبان در صورت در دسترس نبودن Tailwind */
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:#0a0a0a; color:#eee}
-a{color:#6ee7b7}
+a{color:var(--link-color)}
