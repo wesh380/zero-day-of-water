@@ -1,7 +1,9 @@
+// Lightweight loader to insert the CLD bundle script with simple fallback paths
 (function () {
   var existing = document.querySelector('script[data-cld-bundle]');
   if (existing) { console.log('[CLD defer] bundle tag already in DOM:', existing.src); return; }
 
+  // Allow overriding via window.CLD_BUNDLE_URLS
   var candidates = (Array.isArray(window.CLD_BUNDLE_URLS) && window.CLD_BUNDLE_URLS.length)
     ? window.CLD_BUNDLE_URLS
     : ['../assets/dist/water-cld.bundle.js?v=3', './assets/dist/water-cld.bundle.js?v=3'];
@@ -14,6 +16,7 @@
     var url = new URL(candidates[i], location.href).href;
     var s = document.createElement('script');
     s.setAttribute('data-cld-bundle', 'true');
+    // Note: defer has no effect for dynamically inserted scripts; kept for consistency
     s.defer = true;
     s.src = url;
     s.onload = function () {
@@ -21,7 +24,7 @@
       document.dispatchEvent(new Event('cld:bundle:loaded'));
     };
     s.onerror = function () {
-      console.warn('[CLD defer] bundle load failed:', url, '→ next…');
+      console.warn('[CLD defer] bundle load failed:', url, '-> next');
       tryLoad(i + 1);
     };
     console.debug('[CLD defer] trying:', url);
