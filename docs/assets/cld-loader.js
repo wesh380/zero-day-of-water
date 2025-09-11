@@ -66,6 +66,7 @@
 
   (async function(){
     // Load mapper + validator first (optional but recommended)
+    await tryScripts([A+'cld/core/inject.js', B+'cld/core/inject.js']);
     await tryScripts([A+'cld-mapper.js', B+'cld-mapper.js']);
     await tryScripts([A+'cld-validate.js', B+'cld-validate.js']);
     if (needCy) {

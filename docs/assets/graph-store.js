@@ -100,14 +100,20 @@
       if (!json) return this;
       // prefer safe-add/json if guards exist
       return safeRun(function(cy){
-        if (typeof cy.json === 'function' && json && json.elements){
+        if (json && json.elements){
+          // Normalize to array-of-elements
+          var arr = (window.CLD_MAP && typeof window.CLD_MAP.coerceElements === 'function')
+            ? window.CLD_MAP.coerceElements(json)
+            : ([]).concat(json.elements.nodes||[], json.elements.edges||[]);
           try{
             if (hasBatch()) cy.startBatch();
             cy.elements().remove();
-            // if safe-add altered json, rely on it; otherwise naive restore
-            cy.json({ elements: json.elements });
-          }finally{
-            if (hasBatch()) try{ cy.endBatch(); }catch(_){ }
+          } finally { if (hasBatch()) try{ cy.endBatch(); }catch(_){ } }
+          if (window.CLD_CORE && typeof window.CLD_CORE.inject === 'function') {
+            window.CLD_CORE.inject(cy, arr);
+          } else {
+            if (hasBatch()) cy.startBatch();
+            try{ cy.add(arr); } finally { if (hasBatch()) try{ cy.endBatch(); }catch(_){ } }
           }
         } else if (Array.isArray(json)){
           if (hasBatch()) cy.startBatch();

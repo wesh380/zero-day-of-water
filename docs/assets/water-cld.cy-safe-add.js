@@ -134,7 +134,8 @@
         tryAddEdges(edges);
         try { cy.endBatch && cy.endBatch(); } catch(_){ }
         attachReplayOnce();
-        return orig.json({ elements: cy.elements().jsons() });
+        // maintain setter semantics (return the instance)
+        return cy;
       }
       return orig.json(obj);
     };
