@@ -11,3 +11,7 @@
   Content-Type: application/geo+json; charset=utf-8
 /data/*.csv
   Content-Type: text/csv; charset=utf-8
+
+# Loosen style-src-elem only for CLD test pages to allow Cytoscape inline <style>
+/test/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; script-src 'self'; connect-src 'self'; style-src-elem 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'
