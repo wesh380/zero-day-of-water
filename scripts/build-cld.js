@@ -15,6 +15,8 @@ const DIST = path.join(ASSETS, 'dist');
   const manualOrder = [
     'docs/assets/debug/sentinel.js',
     'docs/assets/graph-store.js',
+    'docs/assets/cld-mapper.js',
+    'docs/assets/cld-validate.js',
     'docs/assets/water-cld.cy-stub.js',
     'docs/assets/water-cld.cy-addclass-patch.js',
     'docs/assets/water-cld.cy-batch-guard.js',
@@ -44,9 +46,13 @@ const DIST = path.join(ASSETS, 'dist');
   const min = await minify(jsBundle, {
     compress:true,
     mangle:{ reserved:['cytoscape','dagre','elk'] },
-    ecma:2017
+    ecma:2017,
+    sourceMap: true
   });
   await fs.writeFile(path.join(DIST,'water-cld.bundle.js'), min.code, 'utf8');
+  if (min.map) {
+    await fs.writeFile(path.join(DIST,'water-cld.bundle.js.map'), min.map, 'utf8');
+  }
 
   // 2) CSS های CLD
   const cssFiles = glob.sync('**/*.css', {

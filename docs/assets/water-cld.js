@@ -498,6 +498,33 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     if (__chartReady && typeof initBaselineIfPossible === 'function') initBaselineIfPossible();
 
     const els = { nodes: mapped.nodes, edges: mapped.edges };
+    // Harmonize data fields expected by downstream styles and filters
+    try {
+      // Nodes: ensure _label mirrors label for styles that use data(_label)
+      for (let i=0;i<els.nodes.length;i++){
+        const en = els.nodes[i];
+        if (en && en.data){
+          const lbl = (en.data.label != null) ? String(en.data.label) : '';
+          if (!en.data._label && lbl) en.data._label = lbl;
+        }
+      }
+      // Edges: ensure sign is present and provide _signLabel for source-label mapping
+      for (let i=0;i<els.edges.length;i++){
+        const ee = els.edges[i];
+        if (ee && ee.data){
+          let s = ee.data.sign || ee.data.polarity || ee.data.p || '';
+          if (!ee.data.sign && s) ee.data.sign = s;
+          if (!ee.data._signLabel) ee.data._signLabel = (s === '+' || s === '-') ? s : '';
+          // Add convenience classes for styling
+          if (s === '+') { ee.classes = (ee.classes ? ee.classes + ' ' : '') + 'pos'; }
+          else if (s === '-') { ee.classes = (ee.classes ? ee.classes + ' ' : '') + 'neg'; }
+          // Ensure edge label exists to avoid toString() issues in style pipeline
+          if (!ee.data.label) {
+            ee.data.label = ee.data._signLabel || '';
+          }
+        }
+      }
+    } catch(_){ }
     window.__lastElementsForCy = els;
 
     const inject = () => {
@@ -505,18 +532,15 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       // اگر خالی بود، فقط هشدار بده ولی چرخه رو نشکن
       if (!els || !Array.isArray(els.nodes)) { console.warn('[CLD] invalid els'); }
       try {
-        if (window.graphStore?.restore) {
-          window.graphStore.restore({ elements: { nodes: els.nodes, edges: els.edges } });
-        } else {
+        const arrayEls = (window.CLD_MAP && window.CLD_MAP.coerceElements)
+          ? window.CLD_MAP.coerceElements({ elements: { nodes: els.nodes, edges: els.edges } })
+          : els.nodes.concat(els.edges);
+        if (window.graphStore?.restore) { window.graphStore.restore(arrayEls); } else {
           const C = cldGetCy(); if (!C) return;
           if (C.startBatch) C.startBatch();
           try {
-            if (typeof C.json === 'function') {
-              C.elements().remove();
-              C.json({ elements: { nodes: els.nodes, edges: els.edges } });
-            } else {
-              C.add(els.nodes.concat(els.edges));
-            }
+            C.elements().remove();
+            C.add(arrayEls);
           } finally { if (C.endBatch) try { C.endBatch(); } catch (_) {} }
         }
       } catch (err) { console.error('[CLD] inject failed', err); return; }
@@ -529,7 +553,21 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       // اجرای layout/fit فقط یک‌بار و پس از اتمام dispatch رویداد
       try {
         const algo = window?.cldLayoutName || 'dagre';
-        const layout = cy.layout({ name: algo, rankDir: 'LR', fit: true });
+        const base = { name: algo, fit: true, animate: false };
+        if (algo === 'dagre') {
+          Object.assign(base, { rankDir: 'LR', nodeSep: 60, rankSep: 90, edgeSep: 24, spacingFactor: 1.12, padding: 30 });
+        } else if (algo === 'elk') {
+          base.elk = {
+            'elk.direction': 'RIGHT',
+            'elk.spacing.nodeNode': 60,
+            'elk.spacing.edgeEdge': 16,
+            'elk.spacing.edgeNode': 24,
+            'elk.layered.spacing.baseValue': 60,
+            'elk.alignment': 'CENTER',
+            'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX'
+          };
+        }
+        const layout = cy.layout(base);
         layout.run();
         cy.once('layoutstop', () => {
           try { cy.fit(); } catch(_) {}
