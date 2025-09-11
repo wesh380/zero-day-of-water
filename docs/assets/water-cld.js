@@ -497,7 +497,19 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     if (typeof markModelReady === 'function') markModelReady();
     if (__chartReady && typeof initBaselineIfPossible === 'function') initBaselineIfPossible();
 
-    const els = { nodes: mapped.nodes, edges: mapped.edges };
+    // Prefer new core validator/mapper if present
+    try { if (window.CLD_CORE && typeof window.CLD_CORE.validateModel==='function') { window.CLD_CORE.validateModel(model); } } catch(_){ }
+    let els;
+    try {
+      if (window.CLD_CORE && typeof window.CLD_CORE.mapModelToElements === 'function'){
+        const arr = window.CLD_CORE.mapModelToElements(model) || [];
+        const nodes = [], edges = [];
+        for (var i=0;i<arr.length;i++){ var el = arr[i]; if (el && el.group==='nodes') nodes.push(el); else if (el && el.group==='edges') edges.push(el); }
+        els = { nodes, edges };
+      } else {
+        els = { nodes: mapped.nodes, edges: mapped.edges };
+      }
+    } catch(_){ els = { nodes: mapped.nodes, edges: mapped.edges }; }
     // Harmonize data fields expected by downstream styles and filters
     try {
       // Nodes: ensure _label mirrors label for styles that use data(_label)

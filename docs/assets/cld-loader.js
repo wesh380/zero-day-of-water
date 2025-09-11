@@ -65,10 +65,10 @@
   var needElk = !(window.elk);
 
   (async function(){
-    // Load mapper + validator first (optional but recommended)
+    // Ensure CLD_CORE APIs exist before bundle usage
+    await tryScripts([A+'cld/core/validate.js', B+'cld/core/validate.js']);
+    await tryScripts([A+'cld/core/mapper.js', B+'cld/core/mapper.js']);
     await tryScripts([A+'cld/core/inject.js', B+'cld/core/inject.js']);
-    await tryScripts([A+'cld-mapper.js', B+'cld-mapper.js']);
-    await tryScripts([A+'cld-validate.js', B+'cld-validate.js']);
     if (needCy) {
       await tryScripts([A+'vendor/cytoscape.min.js', B+'vendor/cytoscape.min.js']);
     }
