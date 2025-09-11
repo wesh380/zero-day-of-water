@@ -28,7 +28,8 @@
     "csp:scan:js": "grep -RlIF --include='*.js'   --exclude-dir='dist' --exclude-dir='vendor' --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' --exclude='*plugin*.js' '.style.' docs || true",
     "csp:scan:jsx": "grep -RlIF --include='*.{jsx,tsx}' 'style={{' dash || true",
     "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
-    "report:cy": "node scripts/cy-state-report.js"
+    "report:cy": "node scripts/cy-state-report.js",
+    "e2e:smoke": "node tests/e2e/cld-smoke.js"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +41,8 @@
     "clean-css": "^5.3.3",
     "fs-extra": "^11.3.1",
     "glob": "^11.0.3",
-    "puppeteer": "^21.11.0",
+    "http-server": "^14.1.1",
+    "puppeteer": "^24.10.2",
     "supercluster": "^7.1.5",
     "tailwindcss": "^3.4.17",
     "terser": "^5.43.1"
