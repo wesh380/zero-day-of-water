@@ -1,61 +1,59 @@
-﻿{
-    "name":  "zero-day-of-water2",
-    "version":  "1.0.0",
-    "description":  "This repository hosts a simple dashboard served from the `/docs` directory and a proxy for Gemini API requests.",
-    "main":  "tailwind.config.js",
-    "directories":  {
-                        "doc":  "docs"
-                    },
-    "scripts":  {
-                    "prebuild":  "node tools/build-wind-weights.mjs",
-                    "build:css":  "tailwindcss -i docs/assets/tailwind.input.css -o docs/assets/tailwind.css --minify",
-                    "build":  "npm run build:css \u0026\u0026 npm run build:agri \u0026\u0026 npm run prepare:agri",
-                    "test":  "node tests/mapper.test.js \u0026\u0026 node tests/e2e-cld.test.js \u0026\u0026 node tests/e2e-water-cld.behaviors.test.js",
-                    "flag:test":  "node scripts/check-flag.js",
-                    "check:no-binary":  "node tools/check-no-binary.js",
-                    "validate:layers":  "node tools/validate_layers.js",
-                    "build:agri":  "babel docs/agrivoltaics/app.jsx --presets @babel/preset-react -o docs/agrivoltaics/app.js",
-                    "prepare:agri":  "mkdir -p docs/agrivoltaics/vendor \u0026\u0026 cp node_modules/react/umd/react.production.min.js docs/agrivoltaics/vendor/ \u0026\u0026 cp node_modules/react-dom/umd/react-dom.production.min.js docs/agrivoltaics/vendor/ \u0026\u0026 cp node_modules/qrcode-generator/dist/qrcode.js docs/agrivoltaics/vendor/ \u0026\u0026 cp node_modules/jspdf/dist/jspdf.umd.min.js docs/agrivoltaics/vendor/",
-                    "build:cld":  "node scripts/build-cld.js",
-                    "check:cld-html":  "bash tools/check-cld-html.sh",
-                    "serve-docs":  "npx http-server docs -p 5173",
-                    "build:wind":  "python3 tools/build_wind_geojson.py",
-                    "vendor:supercluster":  "node tools/vendorize_supercluster.js",
-                    "audit:ama":  "node tools/audit_amaayesh.js",
-                    "verify:publish":  "node tools/verify_publish_paths.js https://wesh360.ir/data/layers.config.json https://wesh360.ir/data/amaayesh/counties.geojson https://wesh360.ir/data/amaayesh/wind_sites.geojson || true",
-                    "rca:publish":  "node tools/rca_publish.js --base=$SITE_URL",
-                    "csp:scan:html":  "grep -RlIF --include=\u0027*.html\u0027 --exclude-dir=\u0027dist\u0027 --exclude-dir=\u0027vendor\u0027 --exclude=\u0027*.min.html\u0027 \u0027style=\"\u0027 docs || true",
-                    "csp:scan:js":  "grep -RlIF --include=\u0027*.js\u0027   --exclude-dir=\u0027dist\u0027 --exclude-dir=\u0027vendor\u0027 --exclude=\u0027*.min.js\u0027 --exclude=\u0027*.bundle.js\u0027 --exclude=\u0027*.umd.js\u0027 --exclude=\u0027*plugin*.js\u0027 \u0027.style.\u0027 docs || true",
-                    "csp:scan:jsx":  "grep -RlIF --include=\u0027*.{jsx,tsx}\u0027 \u0027style={{\u0027 dash || true",
-                    "csp:scan":  "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
-                    "report:cy":  "node scripts/cy-state-report.js",
-                    "e2e:smoke": "node tests/e2e/cld-smoke.js"
-                },
-    "keywords":  [
-
-                 ],
-    "author":  "",
-    "license":  "ISC",
-    "type":  "commonjs",
-    "devDependencies":  {
-                            "@babel/cli":  "^7.28.3",
-                            "@babel/preset-react":  "^7.27.1",
-                            "clean-css":  "^5.3.3",
-                            "fs-extra":  "^11.3.1",
-                            "glob":  "^11.0.3",
-                            "http-server":  "^14.1.1",
-                            "puppeteer":  "^21.11.0",
-                            "supercluster":  "^7.1.5",
-                            "tailwindcss":  "^3.4.17",
-                            "terser":  "^5.43.1"
-                        },
-    "dependencies":  {
-                         "@netlify/blobs":  "^10.0.8",
-                         "@netlify/functions":  "^4.2.1",
-                         "jspdf":  "^3.0.1",
-                         "node-fetch":  "^3.3.2",
-                         "qrcode-generator":  "^2.0.4",
-                         "react":  "^18.3.1",
-                         "react-dom":  "^18.3.1"
-                     }
+{
+  "name": "zero-day-of-water2",
+  "version": "1.0.0",
+  "description": "This repository hosts a simple dashboard served from the `/docs` directory and a proxy for Gemini API requests.",
+  "main": "tailwind.config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "prebuild": "node tools/build-wind-weights.mjs",
+    "build:css": "tailwindcss -i docs/assets/tailwind.input.css -o docs/assets/tailwind.css --minify",
+    "build": "npm run build:css && npm run build:agri && npm run prepare:agri",
+    "test": "node tests/mapper.test.js && node tests/e2e-cld.test.js && node tests/e2e-water-cld.behaviors.test.js",
+    "flag:test": "node scripts/check-flag.js",
+    "check:no-binary": "node tools/check-no-binary.js",
+    "validate:layers": "node tools/validate_layers.js",
+    "build:agri": "babel docs/agrivoltaics/app.jsx --presets @babel/preset-react -o docs/agrivoltaics/app.js",
+    "prepare:agri": "mkdir -p docs/agrivoltaics/vendor && cp node_modules/react/umd/react.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/react-dom/umd/react-dom.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/qrcode-generator/dist/qrcode.js docs/agrivoltaics/vendor/ && cp node_modules/jspdf/dist/jspdf.umd.min.js docs/agrivoltaics/vendor/",
+    "build:cld": "node scripts/build-cld.js",
+    "check:cld-html": "bash tools/check-cld-html.sh",
+    "serve-docs": "npx http-server docs -p 5173",
+    "build:wind": "python3 tools/build_wind_geojson.py",
+    "vendor:supercluster": "node tools/vendorize_supercluster.js",
+    "audit:ama": "node tools/audit_amaayesh.js",
+    "verify:publish": "node tools/verify_publish_paths.js https://wesh360.ir/data/layers.config.json https://wesh360.ir/data/amaayesh/counties.geojson https://wesh360.ir/data/amaayesh/wind_sites.geojson || true",
+    "rca:publish": "node tools/rca_publish.js --base=$SITE_URL",
+    "csp:scan:html": "grep -RlIF --include='*.html' --exclude-dir='dist' --exclude-dir='vendor' --exclude='*.min.html' 'style=\"' docs || true",
+    "csp:scan:js": "grep -RlIF --include='*.js'   --exclude-dir='dist' --exclude-dir='vendor' --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' --exclude='*plugin*.js' '.style.' docs || true",
+    "csp:scan:jsx": "grep -RlIF --include='*.{jsx,tsx}' 'style={{' dash || true",
+    "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
+    "report:cy": "node scripts/cy-state-report.js",
+    "e2e:smoke": "node tests/e2e/cld-smoke.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "clean-css": "^5.3.3",
+    "fs-extra": "^11.3.1",
+    "glob": "^11.0.3",
+    "http-server": "^14.1.1",
+    "puppeteer": "^24.10.2",
+    "supercluster": "^7.1.5",
+    "tailwindcss": "^3.4.17",
+    "terser": "^5.43.1"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.0.8",
+    "@netlify/functions": "^4.2.1",
+    "jspdf": "^3.0.1",
+    "node-fetch": "^3.3.2",
+    "qrcode-generator": "^2.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }
