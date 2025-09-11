@@ -29,7 +29,8 @@
     "csp:scan:jsx": "grep -RlIF --include='*.{jsx,tsx}' 'style={{' dash || true",
     "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
     "report:cy": "node scripts/cy-state-report.js",
-    "e2e:smoke": "node tests/e2e/cld-smoke.js"
+    "e2e:smoke": "node tests/e2e/cld-smoke.js",
+    "test:unit:mapper": "node tests/unit/mapper.test.js"
   },
   "keywords": [],
   "author": "",
