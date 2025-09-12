@@ -1,3 +1,6 @@
+/** @typedef {import('./types').CLDNode} CLDNode */
+/** @typedef {import('./types').CLDEdge} CLDEdge */
+
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
@@ -11,6 +14,10 @@
     } catch (_) {}
   }
 }(typeof self !== 'undefined' ? self : this, function () {
+  /**
+   * @param {{nodes?: CLDNode[]; edges?: CLDEdge[]; [k:string]: any}} model
+   * @returns {{ ok: boolean; errs: string[]; nodes: CLDNode[]; edges: CLDEdge[] }}
+   */
   function validateModel(model) {
     var errs = [];
     if (!model) errs.push('model is null/undefined');

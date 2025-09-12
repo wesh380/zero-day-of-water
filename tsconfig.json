@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": ["docs/assets/cld/core/**/*.js"]
+}
+

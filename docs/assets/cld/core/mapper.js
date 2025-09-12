@@ -1,3 +1,6 @@
+/** @typedef {import('./types').CLDNode} CLDNode */
+/** @typedef {import('./types').CLDEdge} CLDEdge */
+
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
@@ -15,6 +18,10 @@
   // Contract (min):
   //  Node: { id, label, group? }
   //  Edge: { id?, source, target, sign:(+|-)?, weight?:number, delay?:number }
+  /**
+   * @param {{nodes?: CLDNode[]; edges?: CLDEdge[]; [k:string]: any}} model
+   * @returns {Array<{group:'nodes'|'edges'; data: any}>}
+   */
   function mapModelToElements(model) {
     var nodes = (model && (model.nodes || model.Vertices || model.NODES)) || [];
     var edges = (model && (model.edges || model.Links || model.EDGES)) || [];

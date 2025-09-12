@@ -1,3 +1,5 @@
+/** @typedef {import('./types').CLDNode} CLDNode */
+/** @typedef {import('./types').CLDEdge} CLDEdge */
 /* UMD-safe CLD Core Facade (no ES exports) */
 (function(global){
   // deps expected: validate.js, mapper.js, inject.js already loaded
