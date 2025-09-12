@@ -1,15 +1,20 @@
+// @ts-check
 /** @typedef {import('./types').CLDNode} CLDNode */
 /** @typedef {import('./types').CLDEdge} CLDEdge */
 
+/** @param {any} root @param {any} factory */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
     var api = factory();
     try {
+      // @ts-ignore augmenting global root in UMD context
       root.CLD_CORE = root.CLD_CORE || {};
+      // @ts-ignore augmenting global root in UMD context
       root.CLD_CORE.validateModel = api.validateModel;
       // also expose as global function for legacy callers
+      // @ts-ignore augmenting global root in UMD context
       root.validateModel = api.validateModel;
     } catch (_) {}
   }

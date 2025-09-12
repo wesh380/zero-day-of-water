@@ -1,15 +1,20 @@
+// @ts-check
 /** @typedef {import('./types').CLDNode} CLDNode */
 /** @typedef {import('./types').CLDEdge} CLDEdge */
 
+/** @param {any} root @param {any} factory */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
     var api = factory();
     try {
+      // @ts-ignore augmenting global root in UMD context
       root.CLD_CORE = root.CLD_CORE || {};
+      // @ts-ignore augmenting global root in UMD context
       root.CLD_CORE.mapModelToElements = api.mapModelToElements;
       // also expose as global function for legacy callers
+      // @ts-ignore augmenting global root in UMD context
       root.mapModelToElements = api.mapModelToElements;
     } catch (_) {}
   }
@@ -20,7 +25,7 @@
   //  Edge: { id?, source, target, sign:(+|-)?, weight?:number, delay?:number }
   /**
    * @param {{nodes?: CLDNode[]; edges?: CLDEdge[]; [k:string]: any}} model
-   * @returns {Array<{group:'nodes'|'edges'; data: any}>}
+   * @returns {Array<{group:string; data: any}>}
    */
   function mapModelToElements(model) {
     var nodes = (model && (model.nodes || model.Vertices || model.NODES)) || [];
@@ -47,7 +52,10 @@
       var delay = (e.delay != null ? Number(e.delay) : (e.lag != null ? Number(e.lag) : null));
       cyEdges.push({ group: 'edges', data: { id: sid, source: s, target: t, sign: sign || '', weight: weight, delay: delay } });
     }
-    return cyNodes.concat(cyEdges);
+    return /** @type {Array<{group:string; data:any}>} */ ([]).concat(
+      /** @type {any[]} */ (cyNodes),
+      /** @type {any[]} */ (cyEdges)
+    );
   }
 
   return { mapModelToElements: mapModelToElements };
