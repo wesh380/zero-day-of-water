@@ -47,15 +47,14 @@
     return { nodes: _cy.nodes().length, edges: _cy.edges().length };
   }
 
-  function runLayout(name, opts){
+  function runLayout(name = 'dagre', opts = {}){
     if (!_cy) throw new Error('Core not initialized');
     var algo = name || 'dagre';
     var defaults = { name: algo, fit: true, animate: false };
     return _cy.layout(Object.assign({}, defaults, opts||{})).run();
   }
 
-  function applyFilters(options){
-    var hideDisconnected = options && options.hideDisconnected;
+  function applyFilters({ hideDisconnected = false } = {}){
     if (!_cy) return;
     _cy.batch(function(){
       _cy.elements().show();
