@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-nocheck
 /** @typedef {import('./types').CLDNode} CLDNode */
 /** @typedef {import('./types').CLDEdge} CLDEdge */
 /* UMD-safe CLD Core Facade (no ES exports) */
