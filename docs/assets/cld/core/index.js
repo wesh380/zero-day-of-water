@@ -36,6 +36,17 @@
     var layout = opts && opts.layout;
     _cy = cy || null;
     if (layout && typeof layout === 'function' && _cy) layout(_cy);
+    // Optional default layout
+    try {
+      if (_cy && opts && opts.defaultLayout) {
+        var dl = String(opts.defaultLayout || 'elk');
+        if (typeof (global.CLD_CORE && global.CLD_CORE._runLayoutImpl) === 'function') {
+          global.CLD_CORE._runLayoutImpl(_cy, dl, opts.layoutOptions || {});
+        } else {
+          runLayout(dl, opts.layoutOptions || {});
+        }
+      }
+    } catch(_){}
   }
 
   /** @param {any} rawModel */
@@ -62,9 +73,14 @@
    * @param {string=} name
    * @param {any=} opts
    */
-  function runLayout(name = 'dagre', opts = {}){
+  function runLayout(name = 'elk', opts = {}){
     if (!_cy) throw new Error('Core not initialized');
-    var algo = name || 'dagre';
+    try {
+      if (global.CLD_CORE && typeof global.CLD_CORE._runLayoutImpl === 'function') {
+        return global.CLD_CORE._runLayoutImpl(_cy, name, opts);
+      }
+    } catch(e){ try{ console.warn('[CLD core] layout impl error; falling back to dagre', e); }catch(_){} }
+    var algo = (name === 'elk') ? 'dagre' : (name || 'dagre');
     var defaults = { name: algo, fit: true, animate: false };
     return _cy.layout(Object.assign({}, defaults, opts||{})).run();
   }
