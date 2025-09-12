@@ -17,6 +17,11 @@
       }
     } catch (_) {}
     if (CORE.setModel && model){ try{ W.__lastSetModelCounts = CORE.setModel(model); }catch(_){ } }
+    try {
+      console.debug('[CLD bootstrap] core?', !!W.CLD_CORE, 'cy?', !!(CORE && CORE.getCy && CORE.getCy()));
+      var C0 = (CORE && typeof CORE.getCy === 'function') ? CORE.getCy() : null;
+      if (C0) console.debug('[CLD bootstrap] counts:', C0.nodes().length, C0.edges().length);
+    } catch(_){}
     // Ensure container sizing and a visible graph immediately after mount
     try {
       var cyNow = (CORE && typeof CORE.getCy === 'function') ? CORE.getCy() : (W.CLD_SAFE && W.CLD_SAFE.cy);

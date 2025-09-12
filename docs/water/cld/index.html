@@ -242,55 +242,19 @@
   <script defer src="/assets/vendor/dagre.min.js"></script>
   <script defer src="/assets/vendor/cytoscape-dagre.js"></script>
   <script defer src="/assets/vendor/chart.umd.min.js"></script>
-  <script src="/assets/cld/core/validate.js"></script>
-  <script src="/assets/cld/core/mapper.js"></script>
-  <script src="/assets/cld/core/inject.js"></script>
-  <script src="/assets/cld/core/layout.js"></script>
-  <script src="/assets/cld/core/index.js"></script>
-  <!-- DEBUG: print CLD_CORE keys early -->
-  <script>
-    (function(){
-      setTimeout(function(){
-        try {
-          var keys = window.CLD_CORE ? Object.keys(window.CLD_CORE) : [];
-          console.log('[DEBUG page] CLD_CORE keys', keys);
-        } catch(e){ console.error('[DEBUG page] CLD_CORE keys error', e); }
-      }, 0);
-    })();
-  </script>
-  <!-- Inline tiny test model to make E2E independent of external data -->
-  <script>
-    window.DATA_MODEL = {
-      nodes: [
-        { id: "A", label: "Alpha" },
-        { id: "B", label: "Beta" }
-      ],
-      edges: [
-        { source: "A", target: "B", sign: "+" }
-      ]
-    };
-  </script>
-  <script src="/assets/cld/ui/bridge-init.js"></script>
-  <script src="/assets/water-cld.defer.js"></script>
-  <script src="/assets/water-cld.init.js"></script>
-  <!-- DEBUG: after bridge, sample counts from different sources -->
-  <script>
-    (function(){
-      function pickCy(){
-        var fromFacade = (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function') ? window.CLD_CORE.getCy() : null;
-        var fromHidden = window.__cy || null;
-        var fromGlobal = (window.cy && typeof window.cy.nodes==='function') ? window.cy : null;
-        return { fromFacade: fromFacade, fromHidden: fromHidden, fromGlobal: fromGlobal };
-      }
-      setTimeout(function(){
-        try {
-          var C = pickCy();
-          function cnt(x){ try { return x ? { n:x.nodes().length, e:x.edges().length } : null; } catch(_){ return null; } }
-          console.log('[DEBUG page] counts facade/hidden/global', cnt(C.fromFacade), cnt(C.fromHidden), cnt(C.fromGlobal));
-        } catch(e){ console.error('[DEBUG page] count error', e); }
-      }, 500);
-    })();
-  </script>
+  <script src="/assets/cld/core/validate.js" defer></script>
+  <script src="/assets/cld/core/mapper.js" defer></script>
+  <script src="/assets/cld/core/inject.js" defer></script>
+  <script src="/assets/cld/core/layout.js" defer></script>
+  <script src="/assets/cld/core/index.js" defer></script>
+  <!--
+    CLD bootstrap alignment with test/water-cld.html
+    - Differences: remove inline debug and inline model; use external model file and absolute paths.
+  -->
+  <script src="/assets/water-cld.model.js"></script>
+  <script src="/assets/cld/ui/bridge-init.js" defer></script>
+  <script src="/assets/water-cld.defer.js" defer></script>
+  <script src="/assets/water-cld.init.js" defer></script>
 
   <!-- Direct CLD bundle (after core is ready) -->
   </body>
