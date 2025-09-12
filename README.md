@@ -95,5 +95,9 @@ curl -i -X POST http://localhost:8888/api/gemini \
 5. **Deploy**
    Push to `main` to trigger a Deploy Preview and then production.
 6. **Troubleshoot CORS**
-   If the preview throws a CORS error, verify that the origin uses `process.env.URL` or `DEPLOY_PRIME_URL`.
+If the preview throws a CORS error, verify that the origin uses `process.env.URL` or `DEPLOY_PRIME_URL`.
 
+## Netlify Node policy
+- Production: Node 18
+- Deploy Preview: Node 22 (canary)
+- هدف: اطمینان از سازگاری با Node 22 قبل از مهاجرت Production.
