@@ -48,6 +48,12 @@ jobs:
       - name: E2E smoke
         run: npm run e2e:smoke
 
+      - name: E2E CSP (no violations, fast)
+        env:
+          TEST_FAST: '1'
+          NAV_TIMEOUT: '15000'
+        run: npm run e2e:csp:fast
+
       - name: Ban cy.json({elements}) in source
         shell: bash
         run: |

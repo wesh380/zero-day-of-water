@@ -56,9 +56,11 @@ async function main() {
   const navTimeout = parseInt(process.env.NAV_TIMEOUT || (fast ? '15000' : '60000'), 10);
   const port = parseInt(process.env.TEST_PORT || '5173', 10);
 
-  const args = ['http-server', 'docs', '-p', String(port), '-s', '-c', '60'];
-  const npxBin = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-  const server = spawn(npxBin, args, { stdio: 'inherit' });
+  const httpServerBin = process.platform === 'win32'
+    ? path.join('node_modules', '.bin', 'http-server.cmd')
+    : path.join('node_modules', '.bin', 'http-server');
+  const cmd = `"${httpServerBin}" docs -p ${port} -s -c 60`;
+  const server = spawn(cmd, { stdio: 'inherit', shell: true });
 
   let closed = false;
   const cleanup = async () => {
@@ -77,7 +79,11 @@ async function main() {
     throw e;
   });
 
-  const browser = await puppeteer.launch({ headless: 'new', args: ['--disable-dev-shm-usage'] });
+  const launchArgs = ['--disable-dev-shm-usage'];
+  if (process.env.CI === 'true' || process.platform === 'linux') {
+    launchArgs.push('--no-sandbox', '--disable-setuid-sandbox');
+  }
+  const browser = await puppeteer.launch({ headless: 'new', args: launchArgs });
   const page = await browser.newPage();
 
   // Capture CSP violations via SecurityPolicyViolationEvent
@@ -149,4 +155,3 @@ main().catch((err) => {
   console.error('[e2e:csp] Unhandled error:', err && err.stack ? err.stack : err);
   process.exit(1);
 });
-
