@@ -4,3 +4,5 @@ node_modules/
 docs/assets/*-test.png
 docs/debug/
 docs/**/debug-*.png
+tests/artifacts/
+tests/artifacts/*
