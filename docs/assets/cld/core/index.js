@@ -1,4 +1,7 @@
-// @ts-nocheck
+// @ts-check
+/**
+ * @typedef {{ cy: any, layout?: any, defaultLayout?: 'elk'|'dagre'|string, layoutOptions?: any }} InitCoreOptions
+ */
 /** @typedef {import('./types').CLDNode} CLDNode */
 /** @typedef {import('./types').CLDEdge} CLDEdge */
 /* UMD-safe CLD Core Facade (no ES exports) */
@@ -28,22 +31,22 @@
   }
 
   /**
-   * @param {{ cy?: any, layout?: any }} opts
+   * @param {InitCoreOptions} options
    * @returns {void}
    */
-  function initCore(opts){
-    var cy = opts && opts.cy;
-    var layout = opts && opts.layout;
+  function initCore(options = /** @type {any} */ ({})){
+    var cy = options && options.cy;
+    var layout = options && options.layout;
     _cy = cy || null;
     if (layout && typeof layout === 'function' && _cy) layout(_cy);
     // Optional default layout
     try {
-      if (_cy && opts && opts.defaultLayout) {
-        var dl = String(opts.defaultLayout || 'elk');
-        if (typeof (global.CLD_CORE && global.CLD_CORE._runLayoutImpl) === 'function') {
-          global.CLD_CORE._runLayoutImpl(_cy, dl, opts.layoutOptions || {});
+      if (_cy && options && options.defaultLayout) {
+        var dl = String(options.defaultLayout || 'elk');
+        if (typeof ((/** @type {any} */(global)).CLD_CORE && (/** @type {any} */(global)).CLD_CORE._runLayoutImpl) === 'function') {
+          (/** @type {any} */(global)).CLD_CORE._runLayoutImpl(_cy, dl, options.layoutOptions || {});
         } else {
-          runLayout(dl, opts.layoutOptions || {});
+          runLayout(dl, options.layoutOptions || {});
         }
       }
     } catch(_){}
@@ -52,9 +55,9 @@
   /** @param {any} rawModel */
   function setModel(rawModel){
     if (!_cy) throw new Error('Core not initialized');
-    if (typeof global.validateModel === 'function') try{ global.validateModel(rawModel); }catch(_){}
-    var mapped = (typeof global.mapModelToElements === 'function')
-      ? global.mapModelToElements(rawModel)
+    if (typeof (/** @type {any} */(global)).validateModel === 'function') try{ (/** @type {any} */(global)).validateModel(rawModel); }catch(_){}
+    var mapped = (typeof (/** @type {any} */(global)).mapModelToElements === 'function')
+      ? (/** @type {any} */(global)).mapModelToElements(rawModel)
       : (rawModel && rawModel.elements) || rawModel || [];
     var arr = _coerce(mapped);
     try {
@@ -62,8 +65,8 @@
       var e=arr.filter(function(/** @type {any} */ e){return e.group==='edges'}).length;
       console.log('[CLD core] before inject counts', JSON.stringify({nodes:n,edges:e}));
     } catch(_){}
-    if (global.CLD_CORE && typeof global.CLD_CORE.inject==='function')
-      global.CLD_CORE.inject(_cy, arr);
+    if ((/** @type {any} */(global)).CLD_CORE && typeof (/** @type {any} */(global)).CLD_CORE.inject==='function')
+      (/** @type {any} */(global)).CLD_CORE.inject(_cy, arr);
     else
       _cy.add(arr);
     return { nodes: _cy.nodes().length, edges: _cy.edges().length };
@@ -76,8 +79,8 @@
   function runLayout(name = 'elk', opts = {}){
     if (!_cy) throw new Error('Core not initialized');
     try {
-      if (global.CLD_CORE && typeof global.CLD_CORE._runLayoutImpl === 'function') {
-        return global.CLD_CORE._runLayoutImpl(_cy, name, opts);
+      if ((/** @type {any} */(global)).CLD_CORE && typeof (/** @type {any} */(global)).CLD_CORE._runLayoutImpl === 'function') {
+        return (/** @type {any} */(global)).CLD_CORE._runLayoutImpl(_cy, name, opts);
       }
     } catch(e){ try{ console.warn('[CLD core] layout impl error; falling back to dagre', e); }catch(_){} }
     var algo = (name === 'elk') ? 'dagre' : (name || 'dagre');
@@ -106,10 +109,11 @@
 
   // expose
   try {
-    global.CLD_CORE = Object.assign(global.CLD_CORE||{}, {
+    /** @type {any} */
+    (/** @type {any} */(global)).CLD_CORE = Object.assign((/** @type {any} */(global)).CLD_CORE||{}, {
       initCore: initCore, setModel: setModel, runLayout: runLayout,
       applyFilters: applyFilters, getCy: getCy,
-      validateModel: global.validateModel, mapModelToElements: global.mapModelToElements
+      validateModel: (/** @type {any} */(global)).validateModel, mapModelToElements: (/** @type {any} */(global)).mapModelToElements
     });
   } catch(_){}
   try {
