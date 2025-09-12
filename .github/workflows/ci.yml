@@ -108,7 +108,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: inline-style-js-warnings
+          name: inline-style-js-warnings-${{ matrix.node-version }}-${{ github.run_attempt }}
           path: REPORTS/inline-style-js-warnings.txt
           if-no-files-found: ignore
 
