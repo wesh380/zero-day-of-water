@@ -1,0 +1,48 @@
+name: CI
+on:
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docs/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
+  push:
+    branches: [ feat/**, fix/** ]
+    paths:
+      - 'docs/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: { contents: read }
+
+jobs:
+  test:
+    if: github.actor != 'netlify[bot]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18, 22]
+    name: test (node ${{ matrix.node-version }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: ${{ matrix['node-version'] }} }
+      - run: npm ci
+      - run: npm run test:unit:mapper
+      - run: npm run e2e:smoke
+      - name: Inline-style scan (loosened)
+        run: |
+          ! grep -RIn 'style="' docs \
+            | grep -v 'docs/assets/dist' \
+            | grep -v 'docs/assets/vendor' \
+            || (echo "Inline styles detected outside dist/vendor"; exit 1)
+

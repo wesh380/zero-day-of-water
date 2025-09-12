@@ -37,6 +37,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18 <23"
+  },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
