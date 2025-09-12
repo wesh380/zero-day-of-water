@@ -17,6 +17,15 @@
       }
     } catch (_) {}
     if (CORE.setModel && model){ try{ W.__lastSetModelCounts = CORE.setModel(model); }catch(_){ } }
+    // Ensure container sizing and a visible graph immediately after mount
+    try {
+      var cyNow = (CORE && typeof CORE.getCy === 'function') ? CORE.getCy() : (W.CLD_SAFE && W.CLD_SAFE.cy);
+      if (cyNow && typeof cyNow.resize === 'function') {
+        try { cyNow.resize(); } catch(_){}
+        if (typeof W.__cldSafeFit === 'function') { try { W.__cldSafeFit(cyNow); } catch(_){} }
+        else { try { if (typeof cyNow.fit === 'function') cyNow.fit(); } catch(_){} }
+      }
+    } catch(_){}
     UI.bindControls && UI.bindControls(document);
     UI.bindSearch   && UI.bindSearch(document);
     UI.renderLegend && UI.renderLegend(document.querySelector('#legend'));
