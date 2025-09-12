@@ -30,7 +30,8 @@
     "csp:scan": "{ npm run -s csp:scan:html; npm run -s csp:scan:js; npm run -s csp:scan:jsx; } | sort -u",
     "report:cy": "node scripts/cy-state-report.js",
     "e2e:smoke": "node tests/e2e/cld-smoke.js",
-    "test:unit:mapper": "node tests/unit/mapper.test.js"
+    "test:unit:mapper": "node tests/unit/mapper.test.js",
+    "e2e:smoke:fixed": "cross-env TEST_PORT=9099 node tests/e2e/cld-smoke.js"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +41,7 @@
     "@babel/cli": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "clean-css": "^5.3.3",
+    "cross-env": "^10.0.0",
     "fs-extra": "^11.3.1",
     "glob": "^11.0.3",
     "http-server": "^14.1.1",

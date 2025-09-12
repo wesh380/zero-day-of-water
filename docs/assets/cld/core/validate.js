@@ -6,6 +6,8 @@
     try {
       root.CLD_CORE = root.CLD_CORE || {};
       root.CLD_CORE.validateModel = api.validateModel;
+      // also expose as global function for legacy callers
+      root.validateModel = api.validateModel;
     } catch (_) {}
   }
 }(typeof self !== 'undefined' ? self : this, function () {

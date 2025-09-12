@@ -69,6 +69,7 @@
     await tryScripts([A+'cld/core/validate.js', B+'cld/core/validate.js']);
     await tryScripts([A+'cld/core/mapper.js', B+'cld/core/mapper.js']);
     await tryScripts([A+'cld/core/inject.js', B+'cld/core/inject.js']);
+    await tryScripts([A+'cld/core/index.js', B+'cld/core/index.js']);
     if (needCy) {
       await tryScripts([A+'vendor/cytoscape.min.js', B+'vendor/cytoscape.min.js']);
     }

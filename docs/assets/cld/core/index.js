@@ -1,0 +1,85 @@
+/* UMD-safe CLD Core Facade (no ES exports) */
+(function(global){
+  // deps expected: validate.js, mapper.js, inject.js already loaded
+  var _cy = null;
+
+  function _coerce(el){
+    try {
+      if (global.CLD_CORE && typeof global.CLD_CORE._coerceElements==='function')
+        return global.CLD_CORE._coerceElements(el);
+    } catch(_){}
+    if (!el) return [];
+    if (Array.isArray(el)) return el;
+    if (el.elements && (el.elements.nodes || el.elements.edges)){
+      var en = el.elements.nodes||[], ee = el.elements.edges||[];
+      return en.concat(ee);
+    }
+    if (el.nodes || el.edges){
+      var n = el.nodes||[], e = el.edges||[];
+      return n.concat(e);
+    }
+    return [];
+  }
+
+  function initCore(opts){
+    var cy = opts && opts.cy;
+    var layout = opts && opts.layout;
+    _cy = cy || null;
+    if (layout && typeof layout === 'function' && _cy) layout(_cy);
+  }
+
+  function setModel(rawModel){
+    if (!_cy) throw new Error('Core not initialized');
+    if (typeof global.validateModel === 'function') try{ global.validateModel(rawModel); }catch(_){}
+    var mapped = (typeof global.mapModelToElements === 'function')
+      ? global.mapModelToElements(rawModel)
+      : (rawModel && rawModel.elements) || rawModel || [];
+    var arr = _coerce(mapped);
+    try {
+      var n=arr.filter(function(e){return e.group==='nodes'}).length;
+      var e=arr.filter(function(e){return e.group==='edges'}).length;
+      console.log('[CLD core] before inject counts', JSON.stringify({nodes:n,edges:e}));
+    } catch(_){}
+    if (global.CLD_CORE && typeof global.CLD_CORE.inject==='function')
+      global.CLD_CORE.inject(_cy, arr);
+    else
+      _cy.add(arr);
+    return { nodes: _cy.nodes().length, edges: _cy.edges().length };
+  }
+
+  function runLayout(name, opts){
+    if (!_cy) throw new Error('Core not initialized');
+    var algo = name || 'dagre';
+    var defaults = { name: algo, fit: true, animate: false };
+    return _cy.layout(Object.assign({}, defaults, opts||{})).run();
+  }
+
+  function applyFilters(options){
+    var hideDisconnected = options && options.hideDisconnected;
+    if (!_cy) return;
+    _cy.batch(function(){
+      _cy.elements().show();
+      if (hideDisconnected){
+        var connected = _cy.nodes().filter(function(n){ return n.connectedEdges().length>0; });
+        var unconnected = _cy.nodes().difference(connected);
+        unconnected.hide();
+      }
+    });
+  }
+
+  function getCy(){ return _cy; }
+
+  // expose
+  try {
+    global.CLD_CORE = Object.assign(global.CLD_CORE||{}, {
+      initCore: initCore, setModel: setModel, runLayout: runLayout,
+      applyFilters: applyFilters, getCy: getCy,
+      validateModel: global.validateModel, mapModelToElements: global.mapModelToElements
+    });
+  } catch(_){}
+  try {
+    if (typeof module!=='undefined' && module.exports){
+      Object.assign(module.exports, { initCore, setModel, runLayout, applyFilters, getCy });
+    }
+  } catch(_){}
+})(typeof window!=='undefined'?window:globalThis);

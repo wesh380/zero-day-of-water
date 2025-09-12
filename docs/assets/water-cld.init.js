@@ -10,6 +10,9 @@
 
   // Simple debug log when CLD bundle signals it is ready
   function onBundleLoaded(){
+  if (typeof window!=="undefined" && window.CLD_CORE){ try{ console.log("[DEBUG guard] facade present, skip legacy patches"); }catch(_){ } return; }
+    // If a core facade is present, skip legacy runtime patches
+    if (window.CLD_CORE) return;
     const cy = window.CLD_SAFE && window.CLD_SAFE.cy;
     if (cy) {
       console.log("[CLD] bundle loaded -> cy ready", {
