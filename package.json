@@ -37,6 +37,7 @@
     "e2e:render": "node tests/e2e/cld-render-check.js",
     "e2e:render:free": "cross-env PORT=0 node tests/e2e/cld-render-check.js",
     "e2e:redirect": "node tests/e2e/redirect-check.js",
+    "e2e:bundle": "node tests/e2e/bundle-url-check.js",
     "ts:check": "tsc -p tsconfig.json"
   },
   "keywords": [],
