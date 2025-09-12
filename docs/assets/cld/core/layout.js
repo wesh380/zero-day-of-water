@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-check
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
@@ -6,18 +6,19 @@
     var api = factory();
     try {
       // Attach impl under CLD_CORE for the facade to delegate to
-      root.CLD_CORE = root.CLD_CORE || {};
-      root.CLD_CORE._runLayoutImpl = api.runLayout;
+      /** @type {any} */ (root).CLD_CORE = (/** @type {any} */ (root).CLD_CORE) || {};
+      /** @type {any} */ (root).CLD_CORE._runLayoutImpl = api.runLayout;
     } catch (_) {}
   }
 }(typeof self !== 'undefined' ? self : this, function () {
   /**
    * Run a layout with safe fallback.
    * @param {any} cy
-   * @param {string=} name
+   * @param {'elk'|'dagre'|string=} name
    * @param {any=} opts
+   * @returns {void}
    */
-  async function runLayout(cy, name = 'elk', opts = {}) {
+  function runLayout(cy, name = 'elk', opts = {}) {
     if (!cy || typeof cy.layout !== 'function') return;
 
     var algo = name || 'elk';
