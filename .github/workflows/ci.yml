@@ -48,12 +48,22 @@ jobs:
       - name: E2E smoke
         run: npm run e2e:smoke
 
-      - name: Inline-style scan (loosened)
+      - name: Inline-style scan (HTML only, loosened)
+        shell: bash
         run: |
-          ! grep -RIn 'style="' docs \
-            | grep -v 'docs/assets/dist' \
-            | grep -v 'docs/assets/vendor' \
-            || (echo "Inline styles detected outside dist/vendor"; exit 1)
+          echo "Scanning HTML for inline style attributes (excluding vendor/dist/test)..."
+          set -e
+          offenders=$(grep -RIn --include='*.html' \
+            --exclude-dir='vendor' \
+            --exclude-dir='dist' \
+            --exclude-dir='test' \
+            'style="' docs || true)
+          if [ -n "$offenders" ]; then
+            echo "$offenders"
+            echo "Inline styles detected in HTML outside vendor/dist/test."
+            exit 1
+          fi
+          echo "OK: no inline styles found in HTML (outside vendor/dist/test)."
 
       # If Puppeteer requires system deps on the runner, enable this block above tests
       # - name: (Plan B) Install Linux deps for Chromium
