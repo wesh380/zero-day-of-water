@@ -85,9 +85,21 @@ function execPathFromEnv() { return process.env.PUPPETEER_EXECUTABLE_PATH || nul
         const root = document.querySelector('#cy');
         const bb = root ? { w: root.clientWidth, h: root.clientHeight } : { w: 0, h: 0 };
         const C = globalThis.CLD_CORE || {};
-        const cy = (C && typeof C.getCy === 'function' && C.getCy()) || (globalThis.cy && typeof globalThis.cy.nodes === 'function' && globalThis.cy) || null;
+        const cyFromCore = (C && typeof C.getCy === 'function' && C.getCy()) || null;
+        const cy = cyFromCore || (globalThis.cy && typeof globalThis.cy.nodes === 'function' && globalThis.cy) || null;
         const counts = cy ? { n: cy.nodes().length, e: cy.edges().length } : { n: 0, e: 0 };
-        return { hasRoot: !!root, visible: bb.w > 0 && bb.h > 0, bb, hasCy: !!cy, counts };
+        const scripts = Array.from(document.scripts||[]).map(s=>s.src||'').filter(Boolean);
+        return {
+          hasRoot: !!root,
+          visible: bb.w > 0 && bb.h > 0,
+          bb,
+          corePresent: !!globalThis.CLD_CORE,
+          coreKeys: Object.keys(C||{}),
+          cyFromCore: !!cyFromCore,
+          hasCy: !!cy,
+          counts,
+          scripts
+        };
       });
       diags.push({ t: Date.now(), ...lastDiag });
       if (lastDiag.hasCy && lastDiag.counts.n > 0 && lastDiag.counts.e > 0 && lastDiag.visible) { ready = true; break; }
