@@ -34,11 +34,20 @@ jobs:
     name: test (node ${{ matrix.node-version }})
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
-        with: { node-version: ${{ matrix['node-version'] }} }
-      - run: npm ci
-      - run: npm run test:unit:mapper
-      - run: npm run e2e:smoke
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install (clean)
+        run: npm ci
+
+      - name: Unit (mapper)
+        run: npm run test:unit:mapper
+
+      - name: E2E smoke
+        run: npm run e2e:smoke
+
       - name: Inline-style scan (loosened)
         run: |
           ! grep -RIn 'style="' docs \
@@ -46,3 +55,11 @@ jobs:
             | grep -v 'docs/assets/vendor' \
             || (echo "Inline styles detected outside dist/vendor"; exit 1)
 
+      # If Puppeteer requires system deps on the runner, enable this block above tests
+      # - name: (Plan B) Install Linux deps for Chromium
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y \
+      #       libnss3 libxss1 libatk1.0-0 libatk-bridge2.0-0 libdrm2 libxcb1 \
+      #       libxkbcommon0 libxcomposite1 libxrandr2 libasound2 libpangocairo-1.0-0 \
+      #       libgtk-3-0 libgbm1
