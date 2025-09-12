@@ -1,6 +1,8 @@
 // ===== A11Y & Mobile bootstrap (singleton, CSP-safe, no interference) =====
 /* global graphStore */
 (function(){
+  const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+  const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
   if (window.__A11Y_BOUND__) return; window.__A11Y_BOUND__ = true;
 
   // ------- Helpers -------

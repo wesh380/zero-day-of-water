@@ -1,4 +1,6 @@
 (function () {
+  const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+  const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
   // In some builds a stray HTMLElement may be assigned to window.cy; neutralize safely.
   try { if (window.cy && window.cy.tagName) { window.cy = undefined; } } catch (e) {}
 
@@ -13,7 +15,7 @@
   if (typeof window!=="undefined" && window.CLD_CORE){ try{ console.log("[DEBUG guard] facade present, skip legacy patches"); }catch(_){ } return; }
     // If a core facade is present, skip legacy runtime patches
     if (window.CLD_CORE) return;
-    const cy = window.CLD_SAFE && window.CLD_SAFE.cy;
+    const cy = getCy();
     if (cy) {
       console.log("[CLD] bundle loaded -> cy ready", {
         cyNodes: cy.nodes().length,
@@ -95,10 +97,12 @@
   try {
     function runDagreFallback(){
       try{
-        const cy = (window.CLD_SAFE && window.CLD_SAFE.cy) || window.__cy || window.cy;
-        if (!cy || !cy.layout) return;
-        const dag = cy.layout({ name: 'dagre', rankDir: 'LR', nodeSep: 60, rankSep: 90, edgeSep: 24, spacingFactor: 1.12, padding: 30, animate: false });
-        dag.run();
+        const cy = getCy();
+        if (CLD_CORE && typeof CLD_CORE.runLayout === 'function'){
+          CLD_CORE.runLayout('dagre', { rankDir: 'LR', nodeSep: 60, rankSep: 90, edgeSep: 24, spacingFactor: 1.12, padding: 30, animate: false });
+        } else if (cy && cy.layout) {
+          cy.layout({ name: 'dagre', rankDir: 'LR', nodeSep: 60, rankSep: 90, edgeSep: 24, spacingFactor: 1.12, padding: 30, animate: false }).run();
+        }
         console.warn('[CLD init] ELK failed; fell back to Dagre');
       }catch(e){ console.error('[CLD init] Dagre fallback failed', e); }
     }

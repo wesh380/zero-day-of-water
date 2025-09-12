@@ -1,4 +1,7 @@
 (function(){
+  const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+  const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
+
   document.addEventListener('DOMContentLoaded', function(){
     var cy = cytoscape({
       container: document.getElementById('cy-sfd'),
@@ -62,12 +65,14 @@
       }
     });
 
-    cy.fit();
+    try { if (CLD_CORE && CLD_CORE.initCore) CLD_CORE.initCore({ cy, layout: null }); } catch(_){}
+    const C = getCy() || cy;
+    C.fit();
 
-    var edge = cy.getElementById('in');
+    var edge = C.getElementById('in');
     var valve = document.createElement('div');
     valve.style.cssText = 'position:absolute;width:14px;height:14px;border:2px solid #58a79a;border-radius:50%;background:#0b1d1a;';
-    cy.container().appendChild(valve);
+    C.container().appendChild(valve);
 
     function placeValve(){
       var mid = edge.renderedMidpoint();
@@ -75,7 +80,7 @@
       valve.style.top = (mid.y - 7) + 'px';
     }
 
-    cy.on('render', placeValve);
+    C.on('render', placeValve);
     placeValve();
   });
 })();
