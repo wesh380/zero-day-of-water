@@ -34,6 +34,8 @@
     "e2e:smoke:fixed": "cross-env TEST_PORT=9099 node tests/e2e/cld-smoke.js",
     "e2e:csp:fast": "node tests/e2e/csp-violations.js",
     "e2e:csp:fast:env": "cross-env TEST_FAST=1 NAV_TIMEOUT=15000 node tests/e2e/csp-violations.js",
+    "e2e:render": "node tests/e2e/cld-render-check.js",
+    "e2e:redirect": "node tests/e2e/redirect-check.js",
     "ts:check": "tsc -p tsconfig.json"
   },
   "keywords": [],
@@ -52,6 +54,7 @@
     "fs-extra": "^11.3.1",
     "glob": "^11.0.3",
     "http-server": "^14.1.1",
+    "puppeteer-core": "^23.0.0",
     "puppeteer": "^24.10.2",
     "supercluster": "^7.1.5",
     "tailwindcss": "^3.4.17",
