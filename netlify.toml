@@ -13,6 +13,9 @@
 [context.deploy-preview]
   command = "npm ci && npm run build || true && npm run verify:publish || true"
 
+[context.deploy-preview.environment]
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
