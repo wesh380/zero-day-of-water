@@ -48,6 +48,21 @@ jobs:
       - name: E2E smoke
         run: npm run e2e:smoke
 
+      - name: Ban cy.json({elements}) in source
+        shell: bash
+        run: |
+          echo "Scanning for cy.json({elements ...}) in source (excluding vendor/dist/test)…"
+          set -e
+          offenders=$(grep -RIn --include='*.js' \
+            --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+            -E 'cy\.json\s*\(\s*\{[^)]*elements' docs || true)
+          if [ -n "$offenders" ]; then
+            echo "$offenders"
+            echo "Found cy.json({elements ...}) in source. Use inject(cy, elements) instead."
+            exit 1
+          fi
+          echo "OK: no cy.json({elements ...}) usages in source."
+
       - name: Inline-style scan (HTML only, loosened)
         shell: bash
         run: |
