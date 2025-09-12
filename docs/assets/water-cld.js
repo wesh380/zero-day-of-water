@@ -1,13 +1,13 @@
-window.__WATER_CLD_READY__ = new Promise(function(resolve){ window.__WATER_CLD_RESOLVE__ = resolve; });
+﻿window.__WATER_CLD_READY__ = new Promise(function(resolve){ window.__WATER_CLD_RESOLVE__ = resolve; });
 const getCy = () => window.CLD_SAFE && window.CLD_SAFE.cy;
 // ===== CY READINESS (singleton) =====
 window.__CLD_READY__ = window.__CLD_READY__ || false;
 window.onCyReady = window.onCyReady || function (run) {
-  // اگر cy آماده است همین الآن اجرا کن
+  // Ø§Ú¯Ø± cy Ø¢Ù…Ø§Ø¯Ù‡ Ø§Ø³Øª Ù‡Ù…ÛŒÙ† Ø§Ù„Ø¢Ù† Ø§Ø¬Ø±Ø§ Ú©Ù†
   const c0 = getCy();
   if (c0 && typeof c0.on === 'function') { try { run(c0); } catch (e) {} return; }
 
-  // فقط یک‌بار به رویدادها گوش بده
+  // ÙÙ‚Ø· ÛŒÚ©â€ŒØ¨Ø§Ø± Ø¨Ù‡ Ø±ÙˆÛŒØ¯Ø§Ø¯Ù‡Ø§ Ú¯ÙˆØ´ Ø¨Ø¯Ù‡
   if (!window.__CLD_READY__) {
     window.__CLD_READY__ = true;
     document.addEventListener('cy:ready', e => {
@@ -28,12 +28,12 @@ window.onCyReady = window.onCyReady || function (run) {
   }
 };
 
-// Debounce عمومی سبک (برای رفرش‌ها)
+// Debounce Ø¹Ù…ÙˆÙ…ÛŒ Ø³Ø¨Ú© (Ø¨Ø±Ø§ÛŒ Ø±ÙØ±Ø´â€ŒÙ‡Ø§)
 window.__cldDebounce = window.__cldDebounce || function (fn, ms = 50) {
   let t = 0; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
 };
 
-// fit ایمن (صفر المنت → کاری نکن؛ اجرا فقط یک‌بار بعد از layoutstop)
+// fit Ø§ÛŒÙ…Ù† (ØµÙØ± Ø§Ù„Ù…Ù†Øª â†’ Ú©Ø§Ø±ÛŒ Ù†Ú©Ù†Ø› Ø§Ø¬Ø±Ø§ ÙÙ‚Ø· ÛŒÚ©â€ŒØ¨Ø§Ø± Ø¨Ø¹Ø¯ Ø§Ø² layoutstop)
 window.__cldSafeFit = window.__cldSafeFit || function (cy) {
   if (!cy || cy.elements().length === 0) return;
   try { cy.fit(cy.elements(), 40); } catch (e) {}
@@ -55,15 +55,16 @@ window.__cldSafeFit = window.__cldSafeFit || function (cy) {
       try {
         if (window.cy && window.cy.tagName) { window._cyDom = window.cy; window.cy = undefined; }
       } catch(e){}
-      // ایجاد instance جدید بدون مقداردهی مستقیم به window.cy
+      // Ø§ÛŒØ¬Ø§Ø¯ instance Ø¬Ø¯ÛŒØ¯ Ø¨Ø¯ÙˆÙ† Ù…Ù‚Ø¯Ø§Ø±Ø¯Ù‡ÛŒ Ù…Ø³ØªÙ‚ÛŒÙ… Ø¨Ù‡ window.cy
       const cy = cytoscape({ container: el, elements: [] });
-      // نگهداری instance در متغیرهای داخلی؛ graph-store آن را adopt می‌کند
+      try{ if (window.CLD_CORE && typeof window.CLD_CORE.initCore === 'function') window.CLD_CORE.initCore({ cy }); }catch(_){ }
+      // Ù†Ú¯Ù‡Ø¯Ø§Ø±ÛŒ instance Ø¯Ø± Ù…ØªØºÛŒØ±Ù‡Ø§ÛŒ Ø¯Ø§Ø®Ù„ÛŒØ› graph-store Ø¢Ù† Ø±Ø§ adopt Ù…ÛŒâ€ŒÚ©Ù†Ø¯
       window.__cy   = cy;
       window.lastCy = cy;
       window.CLD_SAFE = window.CLD_SAFE || {};
       window.CLD_SAFE.cy = cy;
       if (!window._cyDom) window.cy = cy;
-      // ارسال سیگنال آمادگی برای سایر ماژول‌ها
+      // Ø§Ø±Ø³Ø§Ù„ Ø³ÛŒÚ¯Ù†Ø§Ù„ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¨Ø±Ø§ÛŒ Ø³Ø§ÛŒØ± Ù…Ø§Ú˜ÙˆÙ„â€ŒÙ‡Ø§
       document.dispatchEvent(new CustomEvent('cy:ready', { detail: { cy } }));
       document.dispatchEvent(new CustomEvent('cld:ready', { detail: { cy } }));
       console.log('[CLD init] cy built', true);
@@ -377,7 +378,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         Chart.defaults.font.family = 'Vazirmatn, sans-serif';
         window.__wesh_sim_chart = new Chart(ctx, {
           type: 'line',
-          data: { labels: [], datasets: [{ label: 'پایه', data: [], borderWidth: 2, fill: false }] },
+          data: { labels: [], datasets: [{ label: 'Ù¾Ø§ÛŒÙ‡', data: [], borderWidth: 2, fill: false }] },
           options: { responsive: true, maintainAspectRatio: false }
         });
       }
@@ -416,7 +417,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     const labels = out.years || Array.from({ length: out.baseline ? out.baseline.length : (out.series ? out.series.length : 0) }, (_, i) => i);
     window.__wesh_sim_chart.data.labels = labels;
     const datasets = [{
-      label: 'پایه',
+      label: 'Ù¾Ø§ÛŒÙ‡',
       data: out.baseline || out.series || [],
       borderWidth: 2,
       borderColor: '#0ea5e9',
@@ -424,7 +425,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       fill: false
     }];
     if (out.scenario) datasets.push({
-      label: 'سناریو',
+      label: 'Ø³Ù†Ø§Ø±ÛŒÙˆ',
       data: out.scenario,
       borderWidth: 2,
       borderColor: 'rgb(220,38,38)',
@@ -472,7 +473,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     });
     const edges = (m.edges || []).map(function(e, i){
       const id = e.id || (e.data && e.data.id) || (e.source + '__' + e.target + '__' + (e.sign || '') || ('e_' + i));
-      return { data: { id: id, source: e.source, target: e.target, sign: e.sign, label: e.label || (e.sign === '-' ? '−' : '+'), weight: (typeof e.weight === 'number') ? e.weight : undefined, delayYears: (typeof e.delayYears === 'number') ? e.delayYears : 0 } };
+      return { data: { id: id, source: e.source, target: e.target, sign: e.sign, label: e.label || (e.sign === '-' ? 'âˆ’' : '+'), weight: (typeof e.weight === 'number') ? e.weight : undefined, delayYears: (typeof e.delayYears === 'number') ? e.delayYears : 0 } };
     });
     return { nodes: nodes, edges: edges };
   }
@@ -541,19 +542,27 @@ function cldToCyElements(graph){ return toCyElements(graph); }
 
     const inject = () => {
       console.debug('[CLD] to-cy arrays', { nNodes: els.nodes.length, nEdges: els.edges.length, sampleNode: els.nodes[0] });
-      // اگر خالی بود، فقط هشدار بده ولی چرخه رو نشکن
+      // Ø§Ú¯Ø± Ø®Ø§Ù„ÛŒ Ø¨ÙˆØ¯ØŒ ÙÙ‚Ø· Ù‡Ø´Ø¯Ø§Ø± Ø¨Ø¯Ù‡ ÙˆÙ„ÛŒ Ú†Ø±Ø®Ù‡ Ø±Ùˆ Ù†Ø´Ú©Ù†
       if (!els || !Array.isArray(els.nodes)) { console.warn('[CLD] invalid els'); }
       try {
-        const arrayEls = (window.CLD_MAP && window.CLD_MAP.coerceElements)
-          ? window.CLD_MAP.coerceElements({ elements: { nodes: els.nodes, edges: els.edges } })
-          : els.nodes.concat(els.edges);
-        if (window.graphStore?.restore) { window.graphStore.restore(arrayEls); } else {
-          const C = cldGetCy(); if (!C) return;
-          if (C.startBatch) C.startBatch();
-          try {
-            C.elements().remove();
-            C.add(arrayEls);
-          } finally { if (C.endBatch) try { C.endBatch(); } catch (_) {} }
+        if (window.CLD_CORE && typeof window.CLD_CORE.setModel === 'function') {
+          window.CLD_CORE.setModel(model);
+        } else {
+          const arrayEls = (window.CLD_MAP && window.CLD_MAP.coerceElements)
+            ? window.CLD_MAP.coerceElements({ elements: { nodes: els.nodes, edges: els.edges } })
+            : els.nodes.concat(els.edges);
+          if (window.graphStore?.restore) { window.graphStore.restore(arrayEls); } else {
+            const C = cldGetCy(); if (!C) return;
+            if (C.startBatch) C.startBatch();
+            try {
+              C.elements().remove();
+              if (window.CLD_CORE && typeof window.CLD_CORE.inject === 'function') {
+                window.CLD_CORE.inject(C, arrayEls);
+              } else {
+                C.add(arrayEls);
+              }
+            } finally { if (C.endBatch) try { C.endBatch(); } catch (_) {} }
+          }
         }
       } catch (err) { console.error('[CLD] inject failed', err); return; }
 
@@ -562,7 +571,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       const ne = cy?.edges()?.length || 0;
       console.log('[CLD] added to cy', { cyNodes: nn, cyEdges: ne });
 
-      // اجرای layout/fit فقط یک‌بار و پس از اتمام dispatch رویداد
+      // Ø§Ø¬Ø±Ø§ÛŒ layout/fit ÙÙ‚Ø· ÛŒÚ©â€ŒØ¨Ø§Ø± Ùˆ Ù¾Ø³ Ø§Ø² Ø§ØªÙ…Ø§Ù… dispatch Ø±ÙˆÛŒØ¯Ø§Ø¯
       try {
         const algo = window?.cldLayoutName || 'dagre';
         const base = { name: algo, fit: true, animate: false };
@@ -579,8 +588,20 @@ function cldToCyElements(graph){ return toCyElements(graph); }
             'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX'
           };
         }
-        const layout = cy.layout(base);
-        layout.run();
+        if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function'){
+          const opts = Object.assign({}, base);
+          try{ delete opts.name; }catch(_){ }
+          window.CLD_CORE.runLayout(algo, opts);
+        } else {
+        if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function'){
+          const opts = Object.assign({}, base);
+          try{ delete opts.name; }catch(_){ }
+          window.CLD_CORE.runLayout(algo, opts);
+        } else {
+          const layout = cy.layout(base);
+          layout.run();
+        }
+        }
         cy.once('layoutstop', () => {
           try { cy.fit(); } catch(_) {}
           window.waterKernel?.emit?.('MODEL_LOADED', graph);
@@ -648,11 +669,15 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       { selector: 'edge.highlight', style: { 'line-color': colorAccent, 'target-arrow-color': colorAccent, 'source-arrow-color': colorAccent, 'width': 4 } }
     ];
     cy.style().fromJson(baseStyle).update();
-    cy.layout({ name: 'grid' }).run();
+    if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
+      window.CLD_CORE.runLayout('grid', {});
+    } else {
+      cy.layout({ name: 'grid' }).run();
+    }
 
     // === Edge labels only at higher zoom levels ===
     (function(){
-      var showAt = 1.0; // آستانه زوم (zoom threshold)
+      var showAt = 1.0; // Ø¢Ø³ØªØ§Ù†Ù‡ Ø²ÙˆÙ… (zoom threshold)
       function syncEdgeLabels(){
         var z = cy.zoom();
         cy.batch(function(){
@@ -669,7 +694,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
 
     // === Neighbor highlight with fade on hover ===
     (function(){
-      var dim = 0.15; // شدت کم‌رنگ شدن
+      var dim = 0.15; // Ø´Ø¯Øª Ú©Ù…â€ŒØ±Ù†Ú¯ Ø´Ø¯Ù†
       window.__WATER_CLD_READY__.then(function(){
         cy.on('mouseover', 'node', function(evt){
           var n = evt.target;
@@ -693,7 +718,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
           cy.elements().removeClass('faded');
         });
 
-        // تعریف استایل کلاس faded
+        // ØªØ¹Ø±ÛŒÙ Ø§Ø³ØªØ§ÛŒÙ„ Ú©Ù„Ø§Ø³ faded
         cy.style()
           .selector('.faded')
           .style({ 'opacity': dim })
@@ -715,7 +740,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
           'font-size': 15,
           'font-weight': 600,
           'color': '#0a0f0e',
-          'background-color': '#f8fafc',   // NOTE: Cytoscape از CSS var پشتیبانی مستقیم ندارد
+          'background-color': '#f8fafc',   // NOTE: Cytoscape Ø§Ø² CSS var Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒ Ù…Ø³ØªÙ‚ÛŒÙ… Ù†Ø¯Ø§Ø±Ø¯
           'border-color': '#94a3b8',
           'border-width': 1,
           'shape': 'round-rectangle'
@@ -809,16 +834,16 @@ function cldToCyElements(graph){ return toCyElements(graph); }
           parts.push(`<div style="font-weight:600;margin-bottom:4px">${esc(d.label || d.id || '')}</div>`);
           if (d.desc) parts.push(`<div>${esc(d.desc)}</div>`);
           const meta = [];
-          if (d.unit)  meta.push(`واحد: ${esc(d.unit)}`);
-          if (d.group) meta.push(`گروه: ${esc(d.group)}`);
-          if (meta.length) parts.push(`<div style="opacity:.8;margin-top:4px">${meta.join(' • ')}</div>`);
+          if (d.unit)  meta.push(`ÙˆØ§Ø­Ø¯: ${esc(d.unit)}`);
+          if (d.group) meta.push(`Ú¯Ø±ÙˆÙ‡: ${esc(d.group)}`);
+          if (meta.length) parts.push(`<div style="opacity:.8;margin-top:4px">${meta.join(' â€¢ ')}</div>`);
         } else {
           parts.push(`<div style="font-weight:600;margin-bottom:4px">${esc(d.label || '')}</div>`);
           const meta = [];
-          if (d.sign) meta.push(`قطبیت: ${d.sign === '+' ? 'مثبت (+)' : 'منفی (−)'}`);
-          if (typeof d.weight === 'number') meta.push(`وزن: ${d.weight}`);
-          if (typeof d.delayYears === 'number') meta.push(`تأخیر: ${d.delayYears} سال`);
-          if (meta.length) parts.push(`<div>${meta.join(' • ')}</div>`);
+          if (d.sign) meta.push(`Ù‚Ø·Ø¨ÛŒØª: ${d.sign === '+' ? 'Ù…Ø«Ø¨Øª (+)' : 'Ù…Ù†ÙÛŒ (âˆ’)'}`);
+          if (typeof d.weight === 'number') meta.push(`ÙˆØ²Ù†: ${d.weight}`);
+          if (typeof d.delayYears === 'number') meta.push(`ØªØ£Ø®ÛŒØ±: ${d.delayYears} Ø³Ø§Ù„`);
+          if (meta.length) parts.push(`<div>${meta.join(' â€¢ ')}</div>`);
         }
         box.innerHTML = parts.join('');
         return box;
@@ -899,13 +924,25 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     if (layoutPresetSel) layoutPresetSel.addEventListener('change', () => {
       const val = layoutPresetSel.value;
       if (!val) {
-        if (layoutSel) runLayout(layoutSel.value);
+        if (layoutSel) {
+          if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
+            window.CLD_CORE.runLayout(layoutSel.value, {});
+          } else {
+            runLayout(layoutSel.value);
+          }
+        }
         return;
       }
       if (window.getLayoutPreset) {
         const opt = window.getLayoutPreset(val);
         if (opt) {
-          try { cy.layout(opt).run(); } catch(e) { console.error('layout preset', e); }
+          try {
+            if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
+              window.CLD_CORE.runLayout(opt.name || 'dagre', opt);
+            } else {
+              cy.layout(opt).run();
+            }
+          } catch(e) { console.error('layout preset', e); }
         }
       }
     });
@@ -1096,7 +1133,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
             const data = JSON.parse(ev.target.result);
             const groups = data.groups || [];
             if (groupSelect) {
-              groupSelect.innerHTML = '<option value="">همه گروه‌ها</option>';
+              groupSelect.innerHTML = '<option value="">Ù‡Ù…Ù‡ Ú¯Ø±ÙˆÙ‡â€ŒÙ‡Ø§</option>';
               groups.forEach(g => {
                 const opt = document.createElement('option');
                 opt.value = g.id;
@@ -1120,9 +1157,17 @@ function cldToCyElements(graph){ return toCyElements(graph); }
               classes: e.sign === '-' ? 'neg' : 'pos'
             }));
             cy.elements().remove();
-            cy.add(els);
-            runLayout('elk');
-            updateSignFilter(); // اگر جایی تعریف نشده، می‌توانید بعداً حذف/جایگزین کنید
+            if (window.CLD_CORE && Array.isArray(els) && typeof window.CLD_CORE.inject === 'function') {
+              window.CLD_CORE.inject(cy, els);
+            } else {
+              cy.add(els);
+            }
+            if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
+              window.CLD_CORE.runLayout('elk', {});
+            } else {
+              runLayout('elk');
+            }
+            updateSignFilter(); // Ø§Ú¯Ø± Ø¬Ø§ÛŒÛŒ ØªØ¹Ø±ÛŒÙ Ù†Ø´Ø¯Ù‡ØŒ Ù…ÛŒâ€ŒØªÙˆØ§Ù†ÛŒØ¯ Ø¨Ø¹Ø¯Ø§Ù‹ Ø­Ø°Ù/Ø¬Ø§ÛŒÚ¯Ø²ÛŒÙ† Ú©Ù†ÛŒØ¯
           } catch (err) {
             console.error('Import JSON failed', err);
           }
@@ -1134,9 +1179,9 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     const legend = document.getElementById('legend');
     if (legend) {
       const items = [
-        '<span class="badge pos"><i class="dot" style="background:var(--pos)"></i>مثبت</span>',
-        '<span class="badge neg"><i class="dot" style="background:var(--neg)"></i>منفی</span>',
-        '<span class="badge dashed"><i class="dot" style="border:2px dashed #cbd5e1"></i>تاخیردار/غیرمستقیم</span>'
+        '<span class="badge pos"><i class="dot" style="background:var(--pos)"></i>Ù…Ø«Ø¨Øª</span>',
+        '<span class="badge neg"><i class="dot" style="background:var(--neg)"></i>Ù…Ù†ÙÛŒ</span>',
+        '<span class="badge dashed"><i class="dot" style="border:2px dashed #cbd5e1"></i>ØªØ§Ø®ÛŒØ±Ø¯Ø§Ø±/ØºÛŒØ±Ù…Ø³ØªÙ‚ÛŒÙ…</span>'
       ];
       groups.forEach(g => items.push(`<span class="badge" style="border-color:${g.color}"><i class="dot" style="background:${g.color}"></i>${g.id}</span>`));
       legend.innerHTML = items.join('');
@@ -1347,7 +1392,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     if (validateBtn) validateBtn.addEventListener('click', () => {
       try {
         new Parser().parse(formulaExpr.value);
-        if (formulaMsg) formulaMsg.textContent = '✅';
+        if (formulaMsg) formulaMsg.textContent = 'âœ…';
       } catch (err) {
         if (formulaMsg) formulaMsg.textContent = err.message;
       }
@@ -1415,25 +1460,25 @@ function cldToCyElements(graph){ return toCyElements(graph); }
 
         var dirSel = document.createElement('select');
         dirSel.id = 'layout-dir';
-        dirSel.setAttribute('aria-label','جهت چیدمان');
+        dirSel.setAttribute('aria-label','Ø¬Ù‡Øª Ú†ÛŒØ¯Ù…Ø§Ù†');
 
         var optLR = document.createElement('option');
-        optLR.value = 'LR'; optLR.textContent = 'چپ→راست';
+        optLR.value = 'LR'; optLR.textContent = 'Ú†Ù¾â†’Ø±Ø§Ø³Øª';
         var optTB = document.createElement('option');
-        optTB.value = 'TB'; optTB.textContent = 'بالا→پایین';
+        optTB.value = 'TB'; optTB.textContent = 'Ø¨Ø§Ù„Ø§â†’Ù¾Ø§ÛŒÛŒÙ†';
         dirSel.appendChild(optLR); dirSel.appendChild(optTB);
 
-        // قرار دادن بلافاصله بعد از #layout
+        // Ù‚Ø±Ø§Ø± Ø¯Ø§Ø¯Ù† Ø¨Ù„Ø§ÙØ§ØµÙ„Ù‡ Ø¨Ø¹Ø¯ Ø§Ø² #layout
         layoutSel.insertAdjacentElement('afterend', dirSel);
 
-        // رویداد تغییر جهت
+        // Ø±ÙˆÛŒØ¯Ø§Ø¯ ØªØºÛŒÛŒØ± Ø¬Ù‡Øª
         dirSel.addEventListener('change', function () {
           var algo = (document.getElementById('layout')||{}).value || 'elk';
           saveState({ dir: dirSel.value, layout: algo });
           if (window.runLayout) window.runLayout(algo, dirSel.value);
         });
 
-        // تغییر الگوریتم نیز جهت را حفظ کند
+        // ØªØºÛŒÛŒØ± Ø§Ù„Ú¯ÙˆØ±ÛŒØªÙ… Ù†ÛŒØ² Ø¬Ù‡Øª Ø±Ø§ Ø­ÙØ¸ Ú©Ù†Ø¯
         layoutSel.addEventListener('change', function () {
           var algo = layoutSel.value;
           var dir  = (document.getElementById('layout-dir')||{}).value || 'LR';
@@ -1505,7 +1550,11 @@ function cldToCyElements(graph){ return toCyElements(graph); }
             };
           }
 
-          cy.layout(opts).run();
+          if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function'){
+            window.CLD_CORE.runLayout(opts && opts.name || 'dagre', opts || {});
+          } else {
+            cy.layout(opts).run();
+          }
 
           cy.once('layoutstop', function(){
             if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth: 240, padding: 16});
@@ -1550,7 +1599,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         }
         if (q && typeof st.q === 'string') q.value = st.q;
 
-        // trigger existing handlers (اگر در کد اصلی listen شده)
+        // trigger existing handlers (Ø§Ú¯Ø± Ø¯Ø± Ú©Ø¯ Ø§ØµÙ„ÛŒ listen Ø´Ø¯Ù‡)
         ['change','input'].forEach(function(ev){
           if (wMin)  wMin.dispatchEvent(new Event(ev));
           if (dMax)  dMax.dispatchEvent(new Event(ev));
@@ -1583,7 +1632,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         if (fGroup) fGroup.addEventListener('change', syncFilters);
         if (q) q.addEventListener('input', function(){ saveState({ q: q.value }); });
 
-        // persist layout/dir (در صورت تغییر از بیرون)
+        // persist layout/dir (Ø¯Ø± ØµÙˆØ±Øª ØªØºÛŒÛŒØ± Ø§Ø² Ø¨ÛŒØ±ÙˆÙ†)
         if (layoutSel) layoutSel.addEventListener('change', function(){
           saveState({ layout: layoutSel.value });
         });
@@ -1655,3 +1704,4 @@ function cldToCyElements(graph){ return toCyElements(graph); }
 
   window.CLDSim = { simulate, runLayout: function(name, dir){ return window.runLayout(name, dir); }, resetScenario, parseModel, simulateStep };
 })();
+

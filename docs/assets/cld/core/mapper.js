@@ -6,6 +6,8 @@
     try {
       root.CLD_CORE = root.CLD_CORE || {};
       root.CLD_CORE.mapModelToElements = api.mapModelToElements;
+      // also expose as global function for legacy callers
+      root.mapModelToElements = api.mapModelToElements;
     } catch (_) {}
   }
 }(typeof self !== 'undefined' ? self : this, function () {
