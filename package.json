@@ -31,7 +31,9 @@
     "report:cy": "node scripts/cy-state-report.js",
     "e2e:smoke": "node tests/e2e/cld-smoke.js",
     "test:unit:mapper": "node tests/unit/mapper.test.js",
-    "e2e:smoke:fixed": "cross-env TEST_PORT=9099 node tests/e2e/cld-smoke.js"
+    "e2e:smoke:fixed": "cross-env TEST_PORT=9099 node tests/e2e/cld-smoke.js",
+    "e2e:csp:fast": "node tests/e2e/csp-violations.js",
+    "e2e:csp:fast:env": "cross-env TEST_FAST=1 NAV_TIMEOUT=15000 node tests/e2e/csp-violations.js"
   },
   "keywords": [],
   "author": "",
