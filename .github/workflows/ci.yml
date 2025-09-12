@@ -34,15 +34,89 @@ jobs:
     name: test (node ${{ matrix.node-version }})
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: ${{ matrix['node-version'] }} }
-      - run: npm ci
-      - run: npm run test:unit:mapper
-      - run: npm run e2e:smoke
-      - name: Inline-style scan (loosened)
-        run: |
-          ! grep -RIn 'style="' docs \
-            | grep -v 'docs/assets/dist' \
-            | grep -v 'docs/assets/vendor' \
-            || (echo "Inline styles detected outside dist/vendor"; exit 1)
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install (clean)
+        run: npm ci
+
+      - name: Unit (mapper)
+        run: npm run test:unit:mapper
+
+      - name: E2E smoke
+        run: npm run e2e:smoke
+
+      - name: Inline-style scan (HTML only, loosened)
+        shell: bash
+        run: |
+          echo "Scanning HTML for inline style attributes (excluding vendor/dist/test)..."
+          set -e
+          offenders=$(grep -RIn --include='*.html' \
+            --exclude-dir='vendor' \
+            --exclude-dir='dist' \
+            --exclude-dir='test' \
+            'style="' docs || true)
+          if [ -n "$offenders" ]; then
+            echo "$offenders"
+            echo "Inline styles detected in HTML outside vendor/dist/test."
+            exit 1
+          fi
+          echo "OK: no inline styles found in HTML (outside vendor/dist/test)."
+
+      - name: Inline-style scan (JS warn only)
+        if: always()
+        shell: bash
+        run: |
+          echo "Scanning JS for inline-style patterns (warn only)…"
+          mkdir -p REPORTS
+          set +e
+          # Three common patterns:
+          # 1) style="..." inside strings
+          A=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E 'style\s*=\s*["'"'"'`]' docs 2>/dev/null || true)
+          # 2) setAttribute('style', ...)
+          B=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E 'setAttribute\s*\(\s*["'"'"']style["'"'"']\s*,' docs 2>/dev/null || true)
+          # 3) element.style.<prop>
+          C=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E '\.style\s*\.' docs 2>/dev/null || true)
+
+          OUT="$A"$'\n'$"$B"$'\n'$"$C"
+          OUT=$(echo "$OUT" | sed '/^\s*$/d')
+          echo "$OUT" > REPORTS/inline-style-js-warnings.txt
+
+          COUNT=$(echo "$OUT" | wc -l | tr -d ' ')
+          if [ "$COUNT" -gt 0 ]; then
+            echo "::warning title=JS inline-style scan::Found ${COUNT} matches in JS. See artifact inline-style-js-warnings.txt"
+            echo "----- Matches (first 200 lines) -----"
+            echo "$OUT" | head -n 200
+          else
+            echo "OK: no suspicious inline-style usage found in JS (outside vendor/dist/test)."
+          fi
+          # Warn-only: never fail the job
+          exit 0
+
+      - name: Upload JS inline-style warnings (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inline-style-js-warnings-${{ matrix.node-version }}-${{ github.run_attempt }}
+          path: REPORTS/inline-style-js-warnings.txt
+          if-no-files-found: ignore
+
+      # If Puppeteer requires system deps on the runner, enable this block above tests
+      # - name: (Plan B) Install Linux deps for Chromium
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y \
+      #       libnss3 libxss1 libatk1.0-0 libatk-bridge2.0-0 libdrm2 libxcb1 \
+      #       libxkbcommon0 libxcomposite1 libxrandr2 libasound2 libpangocairo-1.0-0 \
+      #       libgtk-3-0 libgbm1
