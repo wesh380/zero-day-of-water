@@ -7,4 +7,5 @@ docs/**/debug-*.png
 
 node_modules/
 tests/artifacts/
+*.log
 node_modules/

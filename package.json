@@ -35,6 +35,7 @@
     "e2e:csp:fast": "node tests/e2e/csp-violations.js",
     "e2e:csp:fast:env": "cross-env TEST_FAST=1 NAV_TIMEOUT=15000 node tests/e2e/csp-violations.js",
     "e2e:render": "node tests/e2e/cld-render-check.js",
+    "e2e:render:free": "cross-env PORT=0 node tests/e2e/cld-render-check.js",
     "e2e:redirect": "node tests/e2e/redirect-check.js",
     "ts:check": "tsc -p tsconfig.json"
   },
