@@ -37,7 +37,8 @@
       var id = String(n.id);
       var label = (n.label != null ? n.label : (n.name != null ? n.name : (n.title != null ? n.title : id)));
       var group = n.group != null ? n.group : (n.type != null ? n.type : 'var');
-      cyNodes.push({ group: 'nodes', data: { id: id, label: String(label), group: String(group) } });
+      var lbl = String(label);
+      cyNodes.push({ group: 'nodes', data: { id: id, label: lbl, _label: lbl, group: String(group) } });
     }
 
     var edgeIdSeq = 0;
@@ -47,10 +48,11 @@
       var sid = e.id != null ? String(e.id) : ('e_' + (edgeIdSeq++));
       var s = e.source != null ? String(e.source) : '';
       var t = e.target != null ? String(e.target) : '';
-      var sign = (e.sign != null ? e.sign : (e.polarity != null ? e.polarity : ''));
+      var sign = (e.sign != null ? e.sign : (e.polarity != null ? e.polarity : null));
+      var signLabel = (sign === '+' ? 'positive' : (sign === '-' ? 'negative' : null));
       var weight = (e.weight != null ? Number(e.weight) : (e.w != null ? Number(e.w) : null));
       var delay = (e.delay != null ? Number(e.delay) : (e.lag != null ? Number(e.lag) : null));
-      cyEdges.push({ group: 'edges', data: { id: sid, source: s, target: t, sign: sign || '', weight: weight, delay: delay } });
+      cyEdges.push({ group: 'edges', data: { id: sid, source: s, target: t, sign: sign, _signLabel: signLabel, weight: weight, delay: delay } });
     }
     return /** @type {Array<{group:string; data:any}>} */ ([]).concat(
       /** @type {any[]} */ (cyNodes),
