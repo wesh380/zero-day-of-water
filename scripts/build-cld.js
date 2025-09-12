@@ -13,16 +13,30 @@ const DIST = path.join(ASSETS, 'dist');
 
   // 1) JS های CLD با ترتیب صریح گاردها -> هسته -> افزونه‌ها
   const manualOrder = [
+    // debug / early
     'docs/assets/debug/sentinel.js',
-    'docs/assets/graph-store.js',
-    'docs/assets/cld-mapper.js',
-    'docs/assets/cld-validate.js',
+    // core: kernel → guards → store → loop-detect → core facade
+    'docs/assets/cld/core/kernel/shim.js',
+    'docs/assets/cld/core/kernel/adapter.js',
+    'docs/assets/water-cld.kernel.js',
     'docs/assets/water-cld.cy-stub.js',
     'docs/assets/water-cld.cy-addclass-patch.js',
-    'docs/assets/water-cld.cy-batch-guard.js',
-    'docs/assets/water-cld.cy-collection-guard.js',
+    'docs/assets/cld/core/guards/batch-guard.js',
+    'docs/assets/cld/core/guards/collection-guard.js',
     'docs/assets/water-cld.cy-safe-add.js',
-    'docs/assets/water-cld.runtime-guards.js',
+    'docs/assets/cld/core/store.js',
+    'docs/assets/cld/core/loop-detect.js',
+    'docs/assets/cld/core/index.js',
+    // legacy mapper/validate (kept for compatibility)
+    'docs/assets/cld-mapper.js',
+    'docs/assets/cld-validate.js',
+    // loader → ui → entry
+    'docs/assets/cld/loader/paths.js',
+    'docs/assets/cld/loader/runtime-guards.js',
+    'docs/assets/cld/loader/init.js',
+    'docs/assets/cld/ui/controls.js',
+    'docs/assets/cld/ui/legend.js',
+    'docs/assets/cld/ui/search.js',
     'docs/assets/water-cld.cy-alias.js',
     'docs/assets/water-cld.js'
   ].map(p => path.resolve(ROOT, p));

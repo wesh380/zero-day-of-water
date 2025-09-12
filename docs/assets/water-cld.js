@@ -1703,6 +1703,16 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     }
   })();
 
-  window.CLDSim = { simulate, runLayout: function(name, dir){ return window.runLayout(name, dir); }, resetScenario, parseModel, simulateStep };
+window.CLDSim = { simulate, runLayout: function(name, dir){ return window.runLayout(name, dir); }, resetScenario, parseModel, simulateStep };
 })();
 
+
+// Optional bootstrap via CLD_LOADER (non-breaking; legacy path remains)
+(function(){
+  try {
+    var LOADER = (typeof window!=='undefined' && window.CLD_LOADER) ? window.CLD_LOADER : {};
+    if (LOADER.bootstrap && window.cy && (window.__cldModel || window.__MODEL__ || window.rawModel)){
+      LOADER.bootstrap({ cy: window.cy, layout: null, model: (window.__cldModel || window.__MODEL__ || window.rawModel) });
+    }
+  } catch (e) { /* keep legacy behavior */ }
+})();
