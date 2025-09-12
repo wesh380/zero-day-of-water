@@ -16,6 +16,10 @@
 [context.deploy-preview.environment]
   NODE_VERSION = "22"
 
+[context.production.environment]
+  # Production stays on Node 18
+  NODE_VERSION = "18"
+
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
