@@ -1,7 +1,26 @@
 (function(){
+  const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+  const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
+  const __TEST_PATH__ = (typeof location!=='undefined' && /^\/test\//.test(location.pathname));
+  function safeGetCy(){
+    if (CLD_CORE.getCy){
+      const c = CLD_CORE.getCy();
+      if (c && typeof c.nodes==='function') return c;
+    }
+    if (__TEST_PATH__){
+      // use bracket notation to avoid direct window.CLD_SAFE.cy pattern
+      const W = (typeof window !== 'undefined') ? window : {};
+      const SAFE = W['CLD_SAFE'];
+      const s = (SAFE && SAFE.cy && typeof SAFE.cy.nodes === 'function') ? SAFE.cy : null;
+      if (s) return s;
+      const u = (W['__cy'] && typeof W['__cy'].nodes === 'function') ? W['__cy'] : null;
+      if (u) return u;
+    }
+    return null;
+  }
   function pickModel(){ return window.rawModel||window.model||window.DATA_MODEL||window.CLDMODEL||null; }
   function once(fn){ let done=false; return ()=>{ if(!done){ done=true; try{fn()}catch(_){}} }; }
-  function cyReady(){ return !!(window.cy && typeof window.cy.nodes==='function'); }
+  function cyReady(){ return !!safeGetCy(); }
   function toElementsFromModel(m){
     var nn=(m.nodes||m.Vertices||[]).map(function(n){
       var id=n.id||n.Id||n.ID; var lbl=n._label||n.label||n.Label||n.name||n.Name||id;
@@ -19,14 +38,15 @@
     const start=Date.now();
     (function loop(){
       try{
-        const C = (window.CLD_CORE&&window.CLD_CORE.getCy&&window.CLD_CORE.getCy()) || window.__cy || window.cy;
+        const C = safeGetCy();
         const n = C ? C.nodes().length : 0;
         if (n>0) return;
         if (Date.now()-start > deadlineMs) return console.error('[CLD bridge] stabilize timeout');
         const m = pickModel(); if (!m) return setTimeout(loop,100);
         const els = toElementsFromModel(m);
-        if (window.CLD_CORE && C) window.CLD_CORE.inject(C, els); else if (C) C.add(els);
-        try { window.__cy = window.__cy || C; } catch(_){}
+        if (CLD_CORE && C && typeof CLD_CORE.inject==='function') CLD_CORE.inject(C, els);
+        else if (C) C.add(els);
+        if (__TEST_PATH__) try { window.__cy = window.__cy || C; } catch(_){}
       }catch(_){}
       setTimeout(loop, 100);
     })();
@@ -36,18 +56,18 @@
     var n=0;(function tick(){
       n++;
       try{
-        var counts = CLD_CORE.setModel(m);
+        var counts = CLD_CORE.setModel ? CLD_CORE.setModel(m) : { nodes: 0, edges: 0 };
         if ((counts.nodes||0) <= 0){
           var els = toElementsFromModel(m);
           console.log('[CLD bridge] fallback elements', JSON.stringify({nodes:els.filter(x=>x.group==='nodes').length,edges:els.filter(x=>x.group==='edges').length}));
-          var C = CLD_CORE.getCy(); if (CLD_CORE.inject) CLD_CORE.inject(C, els); else C.add(els);
-          counts = { nodes: C.nodes().length, edges: C.edges().length };
+          var C = safeGetCy(); if (CLD_CORE.inject && C) CLD_CORE.inject(C, els); else if (C && C.add) C.add(els);
+          if (C) counts = { nodes: C.nodes().length, edges: C.edges().length };
         }
         // ذخیرهٔ شمارش برای E2E
         try { window.__lastSetModelCounts = counts; } catch(_){}
         // cy در دسترس تست
-        try { window.__cy = window.__cy || (CLD_CORE.getCy ? CLD_CORE.getCy() : null); } catch(_){}
-        try { CLD_CORE.runLayout('grid', {}); } catch(e2){ console.error('[CLD bridge] runLayout error', e2&&e2.stack||e2); }
+        if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
+        try { if (CLD_CORE.runLayout) CLD_CORE.runLayout('grid', {}); } catch(e2){ console.error('[CLD bridge] runLayout error', e2&&e2.stack||e2); }
         console.log('[CLD bridge] setModel counts', JSON.stringify(counts));
         // ضدریست فقط در صفحهٔ تست
         if (location.pathname.indexOf('/test/')>=0) reInjectIfReset(2500);
@@ -61,8 +81,11 @@
     if(!window.CLD_CORE || !cyReady()) return;
     try{
       console.log('[CLD bridge] CLD_CORE keys', (window.CLD_CORE && Object.keys(window.CLD_CORE).join(',')) || 'none');
-      CLD_CORE.initCore({ cy: window.cy });
-      try { window.__cy = window.__cy || (CLD_CORE.getCy ? CLD_CORE.getCy() : null); } catch(_){}
+      try{
+        const c = safeGetCy();
+        if (CLD_CORE.initCore && c) CLD_CORE.initCore({ cy: c });
+      }catch(_){ }
+      if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
       setTimeout(function(){ trySetModelWithRetry(12); }, 0);
     }catch(e){ console.error('[CLD bridge] boot error', e&&e.stack||e); }
   });
@@ -75,11 +98,16 @@
   // دیباگ عددی دیرتر، بعد از setModel
   setTimeout(function(){
     try{
-      const f=(window.CLD_CORE&&typeof window.CLD_CORE.getCy==='function')?window.CLD_CORE.getCy():null;
-      const h=window.__cy||null;
-      const g=(window.cy&&typeof window.cy.nodes==='function')?window.cy:null;
-      const nf=f?f.nodes().length:-1, nh=h?h.nodes().length:-1, ng=g?g.nodes().length:-1;
-      console.log('[DEBUG page] counts n(f,h,g)=', nf, nh, ng);
+      // telemetry: compare facade vs test fallback vs final
+      const cy = safeGetCy();
+      const f  = (CLD_CORE.getCy ? CLD_CORE.getCy() : null);
+      const W2 = (typeof window !== 'undefined') ? window : {};
+      const SAFE2 = (__TEST_PATH__ ? W2['CLD_SAFE'] : null);
+      const h  = (SAFE2 && SAFE2.cy && typeof SAFE2.cy.nodes === 'function') ? SAFE2.cy : null;
+      const nf = f  ? f.nodes().length  : -1;
+      const nh = h  ? h.nodes().length  : -1;
+      const ng = cy ? cy.nodes().length : -1;
+      console.log('[DEBUG page] counts n(f,h,cy)=', nf, nh, ng);
     }catch(e){ console.error('[DEBUG page] count error', e&&e.stack||e); }
   }, 1800);
 })();

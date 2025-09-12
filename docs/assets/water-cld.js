@@ -1,5 +1,6 @@
 ﻿window.__WATER_CLD_READY__ = new Promise(function(resolve){ window.__WATER_CLD_RESOLVE__ = resolve; });
-const getCy = () => window.CLD_SAFE && window.CLD_SAFE.cy;
+const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => (window.CLD_SAFE && window.CLD_SAFE.cy);
 // ===== CY READINESS (singleton) =====
 window.__CLD_READY__ = window.__CLD_READY__ || false;
 window.onCyReady = window.onCyReady || function (run) {
@@ -86,7 +87,7 @@ function cldGetStoreGraph(){
   return g;
 }
 function cldGetCy(){
-  const C = (window.CLD_SAFE && window.CLD_SAFE.cy) || window.__cy || window.lastCy || window.cy || null;
+  const C = (typeof getCy === 'function' && getCy()) || window.__cy || window.lastCy || null;
   return (C && typeof C.startBatch === 'function') ? C : null;
 }
 

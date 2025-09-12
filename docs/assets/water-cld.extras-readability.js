@@ -3,6 +3,8 @@ import { setClass } from './css-classes.js';
 // ===== CLD Readability (singleton, CSP-safe, no interference) =====
 /* global graphStore */
 (function(){
+  const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
+  const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
   // --- گارد عدم‌تداخل
   if (window.__READABILITY_BOUND__ || window.__CLD_READABILITY_BOUND__) return;
   window.__READABILITY_BOUND__ = window.__CLD_READABILITY_BOUND__ = true;
