@@ -43,7 +43,7 @@
         const els = toElementsFromModel(m);
         if (CLD_CORE && C && typeof CLD_CORE.inject==='function') CLD_CORE.inject(C, els);
         else if (C) C.add(els);
-        try { window.__cy = window.__cy || C; } catch(_){}
+        if (__TEST_PATH__) try { window.__cy = window.__cy || C; } catch(_){}
       }catch(_){}
       setTimeout(loop, 100);
     })();
@@ -63,7 +63,7 @@
         // ذخیرهٔ شمارش برای E2E
         try { window.__lastSetModelCounts = counts; } catch(_){}
         // cy در دسترس تست
-        try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
+        if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
         try { if (CLD_CORE.runLayout) CLD_CORE.runLayout('grid', {}); } catch(e2){ console.error('[CLD bridge] runLayout error', e2&&e2.stack||e2); }
         console.log('[CLD bridge] setModel counts', JSON.stringify(counts));
         // ضدریست فقط در صفحهٔ تست
@@ -82,7 +82,7 @@
         const c = safeGetCy();
         if (CLD_CORE.initCore && c) CLD_CORE.initCore({ cy: c });
       }catch(_){ }
-      try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
+      if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
       setTimeout(function(){ trySetModelWithRetry(12); }, 0);
     }catch(e){ console.error('[CLD bridge] boot error', e&&e.stack||e); }
   });
