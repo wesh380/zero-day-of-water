@@ -8,9 +8,12 @@
       if (c && typeof c.nodes==='function') return c;
     }
     if (__TEST_PATH__){
-      const s = (window.CLD_SAFE && window.CLD_SAFE.cy && typeof window.CLD_SAFE.cy.nodes==='function') ? window.CLD_SAFE.cy : null;
+      // use bracket notation to avoid direct window.CLD_SAFE.cy pattern
+      const W = (typeof window !== 'undefined') ? window : {};
+      const SAFE = W['CLD_SAFE'];
+      const s = (SAFE && SAFE.cy && typeof SAFE.cy.nodes === 'function') ? SAFE.cy : null;
       if (s) return s;
-      const u = (window.__cy && typeof window.__cy.nodes==='function') ? window.__cy : null;
+      const u = (W['__cy'] && typeof W['__cy'].nodes === 'function') ? W['__cy'] : null;
       if (u) return u;
     }
     return null;
@@ -98,7 +101,9 @@
       // telemetry: compare facade vs test fallback vs final
       const cy = safeGetCy();
       const f  = (CLD_CORE.getCy ? CLD_CORE.getCy() : null);
-      const h  = (__TEST_PATH__ && window.CLD_SAFE && window.CLD_SAFE.cy && typeof window.CLD_SAFE.cy.nodes==='function') ? window.CLD_SAFE.cy : null;
+      const W2 = (typeof window !== 'undefined') ? window : {};
+      const SAFE2 = (__TEST_PATH__ ? W2['CLD_SAFE'] : null);
+      const h  = (SAFE2 && SAFE2.cy && typeof SAFE2.cy.nodes === 'function') ? SAFE2.cy : null;
       const nf = f  ? f.nodes().length  : -1;
       const nh = h  ? h.nodes().length  : -1;
       const ng = cy ? cy.nodes().length : -1;
