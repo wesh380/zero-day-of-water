@@ -5,16 +5,17 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
 
-function findExecutablePath() {
+function findExecutable() {
   const envPath = process.env.PUPPETEER_EXECUTABLE_PATH;
   const candidates = [
     envPath,
-    'C\\\:\\\Program Files\\\Google\\\Chrome\\\Application\\\chrome.exe',
-    'C\\\:\\\Program Files\\\Google\\\Chrome Beta\\\Application\\\chrome.exe',
-    'C\\\:\\\Program Files (x86)\\\Microsoft\\\Edge\\\Application\\\msedge.exe',
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files\\Google\\Chrome Beta\\Application\\chrome.exe',
+    'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+    'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
     '/usr/bin/google-chrome',
     '/usr/bin/chromium',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
   ].filter(Boolean);
   for (const p of candidates) {
     try { if (p && fs.existsSync(p)) return p; } catch (_) {}
@@ -50,7 +51,7 @@ async function findFreePort() {
 }
 
 (async () => {
-  const exe = findExecutablePath();
+  const exe = findExecutable();
   if (!exe) {
     console.error('No Chrome/Edge executable found. Set PUPPETEER_EXECUTABLE_PATH or install Chrome/Edge.');
     process.exit(1);
