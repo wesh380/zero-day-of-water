@@ -65,6 +65,53 @@ jobs:
           fi
           echo "OK: no inline styles found in HTML (outside vendor/dist/test)."
 
+      - name: Inline-style scan (JS warn only)
+        if: always()
+        shell: bash
+        run: |
+          echo "Scanning JS for inline-style patterns (warn only)…"
+          mkdir -p REPORTS
+          set +e
+          # Three common patterns:
+          # 1) style="..." inside strings
+          A=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E 'style\s*=\s*["'"'"'`]' docs 2>/dev/null || true)
+          # 2) setAttribute('style', ...)
+          B=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E 'setAttribute\s*\(\s*["'"'"']style["'"'"']\s*,' docs 2>/dev/null || true)
+          # 3) element.style.<prop>
+          C=$(grep -RIn --include='*.js' \
+                --exclude-dir='vendor' --exclude-dir='dist' --exclude-dir='test' \
+                --exclude='*.min.js' --exclude='*.bundle.js' --exclude='*.umd.js' \
+                -E '\.style\s*\.' docs 2>/dev/null || true)
+
+          OUT="$A"$'\n'$"$B"$'\n'$"$C"
+          OUT=$(echo "$OUT" | sed '/^\s*$/d')
+          echo "$OUT" > REPORTS/inline-style-js-warnings.txt
+
+          COUNT=$(echo "$OUT" | wc -l | tr -d ' ')
+          if [ "$COUNT" -gt 0 ]; then
+            echo "::warning title=JS inline-style scan::Found ${COUNT} matches in JS. See artifact inline-style-js-warnings.txt"
+            echo "----- Matches (first 200 lines) -----"
+            echo "$OUT" | head -n 200
+          else
+            echo "OK: no suspicious inline-style usage found in JS (outside vendor/dist/test)."
+          fi
+          # Warn-only: never fail the job
+          exit 0
+
+      - name: Upload JS inline-style warnings (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inline-style-js-warnings
+          path: REPORTS/inline-style-js-warnings.txt
+          if-no-files-found: ignore
+
       # If Puppeteer requires system deps on the runner, enable this block above tests
       # - name: (Plan B) Install Linux deps for Chromium
       #   run: |
