@@ -49,6 +49,21 @@ window.__cldSafeFit = window.__cldSafeFit || function (cy) {
       if (window.__cy && typeof window.__cy.startBatch === 'function') {
         return window.__cy; // keep existing instance
       }
+      // Prefer an existing core-managed instance to avoid duplicates
+      try {
+        if (window.CLD_CORE && typeof window.CLD_CORE.getCy === 'function'){
+          var coreCy = window.CLD_CORE.getCy();
+          if (coreCy && typeof coreCy.startBatch === 'function'){
+            window.CLD_SAFE = window.CLD_SAFE || {};
+            window.CLD_SAFE.cy = coreCy;
+            if (!window.__cy) window.__cy = coreCy;
+            window.lastCy = coreCy;
+            if (!window._cyDom && (!window.cy || window.cy !== coreCy)) window.cy = coreCy;
+            try { if (!window.__CY_READY_EVENT_DISPATCHED__) { document.dispatchEvent(new CustomEvent('cy:ready', { detail:{ cy: coreCy }})); document.dispatchEvent(new CustomEvent('cld:ready', { detail:{ cy: coreCy }})); window.__CY_READY_EVENT_DISPATCHED__ = true; } } catch(_){}
+            return coreCy;
+          }
+        }
+      } catch(_){ }
       const el = document.getElementById('cy');
       if (!el) { console.warn('[CLD init] #cy missing'); return null; }
       if (!window.cytoscape) { console.warn('[CLD init] cytoscape not loaded'); return null; }
