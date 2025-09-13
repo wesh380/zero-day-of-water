@@ -145,18 +145,99 @@
 // Attach a resilient model switcher that uses the normalized loader
 // to avoid bad relative paths (e.g., /water/data -> /data)
 (function(){
+  // Minimal cy builder to break init cycles when the bundle hasn't created one yet
+  function ensureCy(){
+    try{
+      if (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function'){
+        var c0 = window.CLD_CORE.getCy(); if (c0 && typeof c0.startBatch==='function') return c0;
+      }
+      if (window.__cy && typeof window.__cy.startBatch==='function') return window.__cy;
+      var el = (typeof document!=='undefined') ? document.getElementById('cy') : null;
+      if (!el || !window.cytoscape) return null;
+      try { if (window.cy && window.cy.tagName) { window._cyDom = window.cy; window.cy = undefined; } } catch(_){}
+      var cy = window.cytoscape({ container: el, elements: [] });
+      try{
+        window.__cy = cy; window.lastCy = cy;
+        window.CLD_SAFE = window.CLD_SAFE || {}; window.CLD_SAFE.cy = cy;
+        if (!window._cyDom) window.cy = cy;
+        document.dispatchEvent(new CustomEvent('cy:ready', { detail: { cy: cy } }));
+        document.dispatchEvent(new CustomEvent('cld:ready', { detail: { cy: cy } }));
+      }catch(_){ }
+      return cy;
+    }catch(_){ return null; }
+  }
   function attachModelSwitcher(){
     try{
       var sw = document.getElementById('model-switch');
       if (!sw) return;
-      async function load(url){
+      // inline minimal loader to avoid races with module scripts
+      function norm(candidate){
+        try{
+          if (!candidate) return null;
+          if (/^https?:\/\//i.test(candidate)) return candidate;
+          if (candidate.startsWith('/')) return candidate;
+          var u = new URL(candidate, location.href);
+          if (u.pathname.indexOf('/water/data/') === 0) return '/data/' + u.pathname.slice('/water/data/'.length);
+          return u.pathname;
+        }catch(_){ return candidate; }
+      }
+      async function loadJson(candidate){
+        var u = norm(candidate);
+        try{
+          var res = await fetch(u, { cache: 'no-cache' });
+          if (!res.ok) throw new Error('HTTP_'+res.status);
+          return await res.json();
+        }catch(e){
+          var msg = String(e && e.message || '');
+          if (msg.indexOf('HTTP_404')>=0){
+            var fname = (u||'').split('/').pop();
+            if (fname){
+              var fb = '/data/' + fname;
+              try { var r2 = await fetch(fb, { cache:'no-cache' }); if (r2.ok) return await r2.json(); } catch(_){}
+            }
+          }
+          throw e;
+        }
+      }
+      async function load(url, attempt){
+        attempt = (typeof attempt==='number') ? attempt : 0;
         try{
           var fn = (window && window.CLD_LOAD_MODEL);
           var boot = (window && (window.CLD_LOADER || window.LOADER));
-          if (!fn || !(boot && boot.bootstrap)) return;
-          var m = await fn(url);
+          var m;
+          if (!fn) {
+            // fallback to inline fetch-based loader while module initializes
+            m = await loadJson(url);
+          } else if (!(boot && boot.bootstrap)) {
+            if (attempt < 60) { setTimeout(function(){ load(url, attempt+1); }, 100); return; }
+            else { console.error('[CLD init] deps not ready for model load'); return; }
+          } else {
+            m = await fn(url);
+          }
           try { window.rawModel = window.rawModel || m; } catch(_){ }
-          boot.bootstrap({ cy: window.cy, layout: null, model: m });
+          // Ensure we have a cy instance for downstream code
+          try {
+            var c = ensureCy();
+            if (c && window.CLD_CORE && typeof window.CLD_CORE.initCore==='function') {
+              try { window.CLD_CORE.initCore({ cy: c }); } catch(_){ }
+            }
+          } catch(_){ }
+          // Preferred path via loader bootstrap
+          try { if (boot && boot.bootstrap) boot.bootstrap({ cy: window.cy, layout: null, model: m }); } catch(e2){ console.warn('[CLD init] bootstrap error; fallback', e2); }
+          // Fallback: if core is available, set model once cy is ready
+          try {
+            var max=60, n=0;
+            (function tryCore(){
+              try{
+                var C = (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function') ? window.CLD_CORE.getCy() : null;
+                if (!C && window.CLD_CORE && typeof window.CLD_CORE.initCore==='function'){
+                  var c2 = ensureCy(); if (c2) { try { window.CLD_CORE.initCore({ cy: c2 }); C = c2; } catch(_){ } }
+                }
+                if (C && window.CLD_CORE && typeof window.CLD_CORE.setModel==='function') { window.CLD_CORE.setModel(m); return; }
+              }catch(_){ }
+              if (++n < max) setTimeout(tryCore, 100);
+            })();
+          } catch(_){ }
         }catch(e){ console.error('[CLD init] model load failed', e); }
       }
       if (!sw.__CLD_PATCHED__){

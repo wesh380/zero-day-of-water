@@ -4,6 +4,11 @@
   function bootstrap(opts){
     opts = opts || {};
     var cy = opts.cy, layout = opts.layout || null, model = opts.model;
+    // Try to find the container for visibility/height guards
+    var container = null;
+    try { container = (typeof document!=='undefined') ? (document.querySelector('#cy, #graph, .cy-root, .cy-container') || null) : null; }
+    catch(_){ container = null; }
+    if (!container) { try { console.error('[CLD][container] not found; expected #cy or #graph or .cy-root/.cy-container'); } catch(_){ } }
     if (CORE.initCore && cy){ CORE.initCore({ cy: cy, layout: layout }); }
     // Mirror the core's cy instance to global/safe accessors to avoid duplicates
     try {
@@ -17,6 +22,19 @@
       }
     } catch (_) {}
     if (CORE.setModel && model){ try{ W.__lastSetModelCounts = CORE.setModel(model); }catch(_){ } }
+    // ensure visible height
+    try {
+      if (container) {
+        var rect = container.getBoundingClientRect ? container.getBoundingClientRect() : { width:0, height:0 };
+        var styles = (typeof getComputedStyle==='function') ? getComputedStyle(container) : null;
+        var hidden = (rect && (rect.height === 0)) || (styles && (styles.display === 'none' || styles.visibility === 'hidden'));
+        if (hidden) {
+          if (!container.style.minHeight) container.style.minHeight = '480px';
+          container.style.display = 'block';
+          container.style.visibility = 'visible';
+        }
+      }
+    } catch(_){ }
     UI.bindControls && UI.bindControls(document);
     UI.bindSearch   && UI.bindSearch(document);
     UI.renderLegend && UI.renderLegend(document.querySelector('#legend'));
