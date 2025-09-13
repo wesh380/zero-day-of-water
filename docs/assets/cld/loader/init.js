@@ -29,9 +29,7 @@
         var styles = (typeof getComputedStyle==='function') ? getComputedStyle(container) : null;
         var hidden = (rect && (rect.height === 0)) || (styles && (styles.display === 'none' || styles.visibility === 'hidden'));
         if (hidden) {
-          if (!container.style.minHeight) container.style.minHeight = '480px';
-          container.style.display = 'block';
-          container.style.visibility = 'visible';
+          try { container.classList && container.classList.add('cld-force-visible'); } catch(_){ }
         }
       }
     } catch(_){ }
