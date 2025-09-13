@@ -141,3 +141,34 @@
     }, { once:true });
   }catch(_){ }
 })();
+
+// Attach a resilient model switcher that uses the normalized loader
+// to avoid bad relative paths (e.g., /water/data -> /data)
+(function(){
+  function attachModelSwitcher(){
+    try{
+      var sw = document.getElementById('model-switch');
+      if (!sw) return;
+      async function load(url){
+        try{
+          var fn = (window && window.CLD_LOAD_MODEL);
+          var boot = (window && (window.CLD_LOADER || window.LOADER));
+          if (!fn || !(boot && boot.bootstrap)) return;
+          var m = await fn(url);
+          try { window.rawModel = window.rawModel || m; } catch(_){ }
+          boot.bootstrap({ cy: window.cy, layout: null, model: m });
+        }catch(e){ console.error('[CLD init] model load failed', e); }
+      }
+      if (!sw.__CLD_PATCHED__){
+        sw.addEventListener('change', function(){ load(sw.value); });
+        sw.__CLD_PATCHED__ = true;
+      }
+      if (sw.value) load(sw.value);
+    }catch(_){ }
+  }
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', attachModelSwitcher, { once:true });
+  } else {
+    attachModelSwitcher();
+  }
+})();
