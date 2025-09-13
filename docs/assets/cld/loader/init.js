@@ -23,5 +23,7 @@
     return W.__lastSetModelCounts || null;
   }
   W.CLD_LOADER = Object.assign({}, W.CLD_LOADER||{}, { bootstrap: bootstrap });
+  // Debug: دسترسی به Loader در پنجره
+  try { W.LOADER = Object.assign({}, W.LOADER || {}, { bootstrap: bootstrap }); } catch(_){ }
 })(typeof window!=='undefined'?window:this);
 
