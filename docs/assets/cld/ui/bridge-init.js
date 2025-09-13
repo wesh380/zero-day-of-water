@@ -1,4 +1,8 @@
+// @ts-check
+// Bridge between CLD core and page ensuring stable model init.
 (function(){
+  if (window.__CLD_BRIDGE_BOOTED__) { console.info('[CLD bridge] already booted'); return; }
+  window.__CLD_BRIDGE_BOOTED__ = true;
   const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
   const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
   const __TEST_PATH__ = (typeof location!=='undefined' && /^\/test\//.test(location.pathname));
@@ -85,15 +89,21 @@
         const c = safeGetCy();
         if (CLD_CORE.initCore && c) CLD_CORE.initCore({ cy: c });
       }catch(_){ }
-      if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
+      if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){ }
       setTimeout(function(){ trySetModelWithRetry(12); }, 0);
+      const cy = safeGetCy();
+      if (cy) {
+        const fit = () => { try { cy.resize(); cy.fit(); } catch(_){ } };
+        requestAnimationFrame(fit);
+      }
     }catch(e){ console.error('[CLD bridge] boot error', e&&e.stack||e); }
   });
-  const t0=Date.now();
+  const start=Date.now();
+  let delay=50;
   (function poll(){
     if (window.CLD_CORE && cyReady()) return boot();
-    if (Date.now()-t0>30000) return console.error('[CLD bridge] timeout');
-    setTimeout(poll,50);
+    if (Date.now()-start>30000){ console.error('[CLD bridge] timeout'); delay=Math.min(delay*2,1000); }
+    setTimeout(poll,delay);
   })();
   // دیباگ عددی دیرتر، بعد از setModel
   setTimeout(function(){

@@ -48,8 +48,29 @@ jobs:
       - name: Unit (mapper)
         run: npm run test:unit:mapper
 
+      - name: Start static server
+        run: |
+          npx http-server docs -p 5173 -c-1 >/dev/null 2>&1 & echo $! > /tmp/http-server.pid
+          for i in {1..30}; do
+            if curl -sf http://127.0.0.1:5173/ >/dev/null; then echo "Server up"; break; fi
+            sleep 1
+          done
+          echo "Will test URLs: http://127.0.0.1:5173/water/cld/ http://127.0.0.1:5173/test/water-cld"
+          echo "Probe candidates:"
+          curl -sI http://127.0.0.1:5173/water/cld/ || true
+          curl -sI http://127.0.0.1:5173/test/water-cld || true
+        shell: bash
+
       - name: E2E smoke
+        env:
+          BASE_URL_CANDIDATES: "http://127.0.0.1:5173/water/cld/,http://127.0.0.1:5173/test/water-cld"
         run: npm run e2e:smoke
+
+      - name: Stop static server
+        if: always()
+        run: |
+          kill $(cat /tmp/http-server.pid) || true
+        shell: bash
 
       - name: E2E CSP (no violations, fast)
         env:

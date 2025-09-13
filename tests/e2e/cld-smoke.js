@@ -1,35 +1,110 @@
-const http=require('http');const path=require('path');const fs=require('fs');const puppeteer=require('puppeteer');
-const PORT=process.env.TEST_PORT?parseInt(process.env.TEST_PORT,10):9099;const ROOT=path.resolve(__dirname,'../../docs');
-function serve(){const s=http.createServer((req,res)=>{const u=req.url.split('?')[0];let p=path.join(ROOT,u);if(u==='/'||u.startsWith('/test'))p=path.join(ROOT,'test','water-cld.html');fs.readFile(p,(e,d)=>{if(e){try{console.log('[srv 404]',u,'->',p);}catch(_){ }res.statusCode=404;return res.end('Not Found')}try{if(u!=='/favicon.ico')console.log('[srv 200]',u);}catch(_){ }const ext=path.extname(p).toLowerCase();const ct=ext==='.html'?'text/html':ext==='.js'?'application/javascript':ext==='.css'?'text/css':ext==='.json'?'application/json':'text/plain';res.setHeader('Content-Type',ct+'; charset=utf-8');res.statusCode=200;res.end(d);});});return new Promise((ok,ko)=>{s.on('error',ko);s.listen(PORT,'0.0.0.0',()=>ok(s));});}
-(async()=>{let server;try{server=await serve();}catch(e){console.error(e);process.exit(1);}const browser=await puppeteer.launch({headless:'new',args:['--no-sandbox']});const page=await browser.newPage();const logs=[];page.on('console',m=>logs.push(m.text()));page.on('pageerror',e=>logs.push('PAGEERR:'+e.message));
-await page.goto(`http://localhost:${PORT}/test/water-cld.html`,{waitUntil:'domcontentloaded'});
+// @ts-check
+// Smoke test ensuring CLD graph renders and data loads without 404s.
+const puppeteer = require('puppeteer');
 
-// اول منتظر شو Bridge شمارش را ثبت کند
-await page.waitForFunction(()=>!!(window.__lastSetModelCounts && window.__lastSetModelCounts.nodes>0),{timeout:30000}).catch(()=>{});
+(async () => {
+  const primary = process.env.BASE_URL || '';
+  const csv = process.env.BASE_URL_CANDIDATES || 'http://127.0.0.1:5173/water/cld/,http://127.0.0.1:5173/test/water-cld';
+  const candidates = [...new Set([primary, ...csv.split(',').map(s => s.trim())].filter(Boolean))];
+  const SELECTORS = ['#graph', '#cy', '#cld-graph', '.cytoscape-container'];
+  const isCI = !!process.env.CI;
 
-// اگر به هر دلیل متغیر نبود، fallback: از cy بخوان
-const counts = await page.evaluate(()=>{
-  try {
-    if (window.CLD_CORE && typeof window.CLD_CORE.runLayout==='function') {
-      window.CLD_CORE.runLayout('elk', {});
+  const browser = await puppeteer.launch({
+    headless: 'new',
+    args: isCI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
+  });
+  const page = await browser.newPage();
+
+  page.setDefaultNavigationTimeout(90000);
+  page.setDefaultTimeout(60000);
+
+  await page.setRequestInterception(true);
+  page.on('request', req => {
+    try {
+      const u = new URL(req.url());
+      if (u.hostname === 'localhost' || u.hostname === '127.0.0.1') req.continue();
+      else req.abort();
+    } catch {
+      req.continue();
     }
-  } catch(_){ }
-  if (window.__lastSetModelCounts && window.__lastSetModelCounts.nodes>0) return window.__lastSetModelCounts;
-  const pick=()=> (window.__cy) || (window.CLD_CORE&&typeof window.CLD_CORE.getCy==='function'&&window.CLD_CORE.getCy()) || ((window.cy&&typeof window.cy.nodes==='function')?window.cy:null);
-  const C=pick(); return C?{nodes:C.nodes().length,edges:C.edges().length}:{nodes:0,edges:0};
-});
-const debugInfo = await page.evaluate(()=>({
-  ready: document.readyState,
-  hasCLD: !!window.CLD_CORE,
-  cldKeys: (window.CLD_CORE && Object.keys(window.CLD_CORE))||[],
-  hasCy: !!(window.cy && typeof window.cy.nodes==='function')
-}));
+  });
 
-if(!counts||!counts.nodes||counts.nodes<=0){
-  console.error('E2E FAIL: nodes not rendered',counts,logs.slice(-30),debugInfo);
-  await browser.close(); server.close(); process.exit(1);
-}else{
-  console.log('E2E OK:',counts);
-  await browser.close(); server.close();
-}
+  const consoleErrors = [];
+  page.on('console', msg => {
+    const t = msg.type();
+    const txt = msg.text();
+    if (t === 'error' || /fetch.*(404|5\d\d)|CSP/i.test(txt)) consoleErrors.push(txt);
+  });
+
+  async function tryUrl(url) {
+    const before = consoleErrors.length;
+    const res = await page.goto(url, { waitUntil: 'domcontentloaded' });
+    for (const sel of SELECTORS) {
+      try {
+        await page.waitForSelector(sel, { timeout: 5000 });
+        return {
+          ok: true,
+          url,
+          selector: sel,
+          status: res && res.status(),
+          errors: consoleErrors.slice(before)
+        };
+      } catch {}
+    }
+    const title = await page.title();
+    const snippet = await page.evaluate(() =>
+      document.documentElement.innerHTML.replace(/\s+/g, ' ').slice(0, 500)
+    );
+    return {
+      ok: false,
+      url,
+      status: res && res.status(),
+      title,
+      snippet,
+      errors: consoleErrors.slice(before)
+    };
+  }
+
+  let matched = null;
+  const attempts = [];
+  for (const u of candidates) {
+    const r = await tryUrl(u);
+    attempts.push(r);
+    if (r.ok) {
+      matched = r;
+      break;
+    }
+  }
+
+  if (!matched) {
+    console.error('No selector matched on any candidate URL.');
+    console.table(
+      attempts.map(a => ({
+        url: a.url,
+        status: a.status,
+        title: a.title,
+        snippetStart: a.snippet?.slice(0, 80) || '',
+        consoleErrorsCount: a.errors.length
+      }))
+    );
+    if (consoleErrors.length)
+      console.error('Console errors:\n' + consoleErrors.join('\n'));
+    throw new Error('CLD smoke: container not found on any candidate');
+  }
+
+  const { url, selector, errors } = matched;
+  await page.waitForFunction(
+    () => window.cy && window.cy.nodes && window.cy.nodes().length > 0,
+    { timeout: 40000 }
+  );
+
+  const height = await page.$eval(selector, el => el.getBoundingClientRect().height);
+  if (height < 40) throw new Error('Graph container height < 40px');
+
+  if (errors.length)
+    throw new Error('Console errors:\n' + errors.join('\n'));
+
+  await browser.close();
+  console.log('CLD smoke ✅', { url, selector });
 })();
+
