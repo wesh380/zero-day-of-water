@@ -33,6 +33,13 @@
 #system-graph, #cy, #cy-wrap{position:relative}
 #cy{min-height:480px;height:100%;width:100%;display:block}
 
+/* CSP-friendly migration styles (no inline style writes) */
+.cld-force-visible{
+  min-height: 480px;
+  display: block !important;
+  visibility: visible !important;
+}
+
 /* components used in JS refactors */
 .footer-fixed{position:fixed;left:0;right:0;bottom:0;font-size:13px;color:#555;text-align:center;padding:12px 0}
 .body-mb{margin-bottom:60px}
