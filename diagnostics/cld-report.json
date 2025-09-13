@@ -1,18 +1,18 @@
 {
-  "url": "http://localhost:5173/water/cld/",
-  "when": "2025-09-13T14:54:52.487Z",
+  "url": "http://127.0.0.1:5173/water/cld/",
+  "when": "2025-09-13T15:46:06.058Z",
   "console": [
-    {
-      "type": "log",
-      "text": "[DEBUG guard] facade present, skip legacy patches"
-    },
     {
       "type": "log",
       "text": "[DEBUG page] counts n(f,h,cy)= -1 -1 -1"
     },
     {
+      "type": "log",
+      "text": "[DEBUG guard] facade present, skip legacy patches"
+    },
+    {
       "type": "debug",
-      "text": "[CLD defer] trying: http://localhost:5173/assets/dist/water-cld.bundle.js?v=4"
+      "text": "[CLD defer] trying: http://127.0.0.1:5173/assets/dist/water-cld.bundle.js?v=4"
     },
     {
       "type": "log",
@@ -20,19 +20,19 @@
     },
     {
       "type": "log",
-      "text": "[DEBUG page] counts facade/hidden/global   "
-    },
-    {
-      "type": "log",
       "text": "[CLD init] cy built true"
     },
     {
       "type": "log",
-      "text": "[CLD defer] bundle loaded OK: http://localhost:5173/assets/dist/water-cld.bundle.js?v=4 CLD_SAFE= true"
+      "text": "[CLD defer] bundle loaded OK: http://127.0.0.1:5173/assets/dist/water-cld.bundle.js?v=4 CLD_SAFE= true"
     },
     {
       "type": "log",
       "text": "[DEBUG guard] facade present, skip legacy patches"
+    },
+    {
+      "type": "log",
+      "text": "[DEBUG page] counts facade/hidden/global  JSHandle@object JSHandle@object"
     },
     {
       "type": "table",
@@ -49,16 +49,17 @@
     {
       "type": "log",
       "text": "[CLD] added to cy JSHandle@object"
+    },
+    {
+      "type": "error",
+      "text": "[CLD init] deps not ready for model load"
     }
   ],
   "requests": [],
   "failures": [],
   "inpage": {
-    "hasCy": true,
-    "counts": {
-      "nodes": 0,
-      "edges": 0
-    },
+    "hasCy": false,
+    "counts": null,
     "containerSelector": "#cy",
     "containerRect": {
       "w": 774,
@@ -67,10 +68,30 @@
     "containerDisplay": "block",
     "containerVisibility": "visible",
     "globals": {
-      "CLD_CORE": true,
       "LOADER": false,
-      "__MODEL__": false,
-      "__cldModel": false
+      "CLD_CORE": true,
+      "MODEL_HINTS": {
+        "__MODEL__": false,
+        "__cldModel": false,
+        "rawModel": false
+      }
+    },
+    "flags": {
+      "hasLoader": false,
+      "hasCore": true,
+      "hasLoadModel": true,
+      "coreKeys": [
+        "validateModel",
+        "mapModelToElements",
+        "inject",
+        "_coerceElements",
+        "_runLayoutImpl",
+        "initCore",
+        "setModel",
+        "runLayout",
+        "applyFilters",
+        "getCy"
+      ]
     }
   }
 }

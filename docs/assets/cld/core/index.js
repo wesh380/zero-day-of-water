@@ -117,4 +117,42 @@
       Object.assign(module.exports, { initCore, setModel, runLayout, applyFilters, getCy });
     }
   } catch(_){}
+  // Lightweight in-page diagnostics helper
+  try {
+    /** @type {any} */
+    var G = (typeof window !== 'undefined' ? window : globalThis);
+    G.CLD_DEBUG = Object.assign({}, G.CLD_DEBUG || {}, {
+      health: function () {
+        try {
+          /** @type {any} */
+          var d = (typeof document !== 'undefined') ? document : null;
+          /** @type {any} */
+          var el = d ? (d.querySelector('#cy, #graph, .cy-root, .cy-container') || null) : null;
+          /** @type {any} */
+          var rect = (el && el.getBoundingClientRect) ? el.getBoundingClientRect() : null;
+          /** @type {any} */
+          var styles = (el && typeof getComputedStyle === 'function') ? getComputedStyle(el) : null;
+          var hasCy = !!_cy;
+          var counts = hasCy ? { nodes: _cy.nodes().length, edges: _cy.edges().length } : null;
+          var ready = !!hasCy;
+          return {
+            hasCy: hasCy, counts: counts, ready: ready,
+            container: {
+              selector: el ? (el.id ? ('#' + el.id) : (el.className || null)) : null,
+              rect: rect ? { w: rect.width, h: rect.height } : null,
+              display: styles ? styles.display : undefined,
+              visibility: styles ? styles.visibility : undefined
+            },
+            globals: {
+              LOADER: !!G.LOADER, CLD_CORE: true,
+              MODEL_HINTS: { __MODEL__: !!G.__MODEL__, __cldModel: !!G.__cldModel, rawModel: !!G.rawModel }
+            }
+          };
+        } catch (e) {
+          try { return { hasCy: !!_cy, counts: null, ready: !!_cy, error: String((e && (e.stack || e)) || e) }; }
+          catch(_) { return { hasCy: false, counts: null, ready: false }; }
+        }
+      }
+    });
+  } catch(_){}
 })(typeof window!=='undefined'?window:globalThis);
