@@ -1723,11 +1723,17 @@ window.CLDSim = { simulate, runLayout: function(name, dir){ return window.runLay
 
 
 // Optional bootstrap via CLD_LOADER (non-breaking; legacy path remains)
-(function(){
+(async function(){
   try {
-    var LOADER = (typeof window!=='undefined' && window.CLD_LOADER) ? window.CLD_LOADER : {};
-    if (LOADER.bootstrap && window.cy && (window.__cldModel || window.__MODEL__ || window.rawModel)){
-      LOADER.bootstrap({ cy: window.cy, layout: null, model: (window.__cldModel || window.__MODEL__ || window.rawModel) });
+    var LOADER = (typeof window!== 'undefined' && window.CLD_LOADER) ? window.CLD_LOADER : {};
+    if (LOADER.bootstrap && window.cy){
+      const model = window.CLD_LOAD_MODEL
+        ? await window.CLD_LOAD_MODEL()
+        : (window.DATA_MODEL || null);
+      if (model){
+        try { window.rawModel = window.rawModel || model; } catch(_){ }
+        LOADER.bootstrap({ cy: window.cy, layout: null, model: model });
+      }
     }
   } catch (e) { /* keep legacy behavior */ }
 })();
