@@ -19,29 +19,49 @@ const puppeteer = require('puppeteer');
   });
 
   await page.goto(url, { waitUntil: 'networkidle2', timeout: 90000 });
+  // Wait for graph counts if possible (best-effort)
+  try {
+    await page.waitForFunction(() => {
+      try {
+        const dbg = (window.CLD_DEBUG && typeof window.CLD_DEBUG.health === 'function') ? window.CLD_DEBUG.health() : null;
+        const cyInst = (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function') ? window.CLD_CORE.getCy() : (window.cy || null);
+        const counts = dbg?.counts || (cyInst ? { nodes: cyInst.nodes().length, edges: cyInst.edges().length } : null);
+        return !!(counts && (counts.nodes||0) > 0);
+      } catch { return false; }
+    }, { timeout: 15000 });
+  } catch (_) {}
 
   // داده‌های داخل صفحه
   const diag = await page.evaluate(() => {
     const pick = k => (window[k] ? Object.keys(window[k]) : null);
-    const el = document.querySelector('#cy, #graph, .cy-root, .cy-container');
+    const dbg = (window.CLD_DEBUG && typeof window.CLD_DEBUG.health === 'function') ? window.CLD_DEBUG.health() : null;
+    const el = dbg?.container?.selector ? document.querySelector(dbg.container.selector) : (document.querySelector('#cy, #graph, .cy-root, .cy-container'));
     const rect = el ? el.getBoundingClientRect() : null;
     const styles = el ? window.getComputedStyle(el) : null;
-    const cyOk = !!window.cy;
-    let counts = null;
-    if (cyOk) counts = { nodes: window.cy.nodes().length, edges: window.cy.edges().length };
+    const cyInst = (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function') ? window.CLD_CORE.getCy() : (window.cy || null);
+    const cyOk = !!cyInst;
+    let counts = dbg?.counts || null;
+    if (!counts && cyOk) counts = { nodes: cyInst.nodes().length, edges: cyInst.edges().length };
+    const flags = {
+      hasLoader: !!(window.CLD_LOADER || window.LOADER),
+      hasCore: !!window.CLD_CORE,
+      hasLoadModel: !!window.CLD_LOAD_MODEL,
+      coreKeys: (window.CLD_CORE ? Object.keys(window.CLD_CORE) : []),
+    };
     return {
-      hasCy: cyOk,
+      hasCy: dbg?.hasCy ?? cyOk,
       counts,
-      containerSelector: el ? (el.id ? '#'+el.id : el.className) : null,
-      containerRect: rect ? { w: rect.width, h: rect.height } : null,
-      containerDisplay: styles ? styles.display : null,
-      containerVisibility: styles ? styles.visibility : null,
-      globals: {
+      containerSelector: dbg?.container?.selector || (el ? (el.id ? '#'+el.id : el.className) : null),
+      containerRect: dbg?.container?.rect || (rect ? { w: rect.width, h: rect.height } : null),
+      containerDisplay: dbg?.container?.display ?? (styles ? styles.display : null),
+      containerVisibility: dbg?.container?.visibility ?? (styles ? styles.visibility : null),
+      globals: dbg?.globals || {
         CLD_CORE: !!window.CLD_CORE,
         LOADER: !!window.LOADER,
         __MODEL__: !!window.__MODEL__,
         __cldModel: !!window.__cldModel
-      }
+      },
+      flags
     };
   });
 
@@ -55,4 +75,3 @@ const puppeteer = require('puppeteer');
 
   console.log('[DIAG] written:', path.join(outDir, 'cld-report.json'));
 })();
-
