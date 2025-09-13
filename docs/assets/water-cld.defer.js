@@ -3,10 +3,11 @@
   var existing = document.querySelector('script[data-cld-bundle]');
   if (existing) { console.log('[CLD defer] bundle tag already in DOM:', existing.src); return; }
 
-  // Allow overriding via window.CLD_BUNDLE_URLS
-  var candidates = (Array.isArray(window.CLD_BUNDLE_URLS) && window.CLD_BUNDLE_URLS.length)
-    ? window.CLD_BUNDLE_URLS
-    : ['../assets/dist/water-cld.bundle.js?v=3', './assets/dist/water-cld.bundle.js?v=3'];
+  var current = document.currentScript;
+  var candidates = ['/assets/dist/water-cld.bundle.js?v=3', '/assets/dist/water-cld.bundle.js'];
+  if (current && current.dataset && current.dataset.bundle) {
+    candidates[0] = current.dataset.bundle;
+  }
 
   function tryLoad(i) {
     if (i >= candidates.length) {
@@ -32,4 +33,3 @@
   }
   tryLoad(0);
 })();
-
