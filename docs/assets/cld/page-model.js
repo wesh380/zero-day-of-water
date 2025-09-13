@@ -1,9 +1,0 @@
-window.DATA_MODEL = {
-  nodes: [
-    { id: "A", label: "Alpha" },
-    { id: "B", label: "Beta" }
-  ],
-  edges: [
-    { source: "A", target: "B", sign: "+" }
-  ]
-};
