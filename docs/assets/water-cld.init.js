@@ -1,8 +1,49 @@
+// @ts-check
+// Bootstrap helpers and patches for water CLD runtime.
 (function () {
   const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
   const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
   // In some builds a stray HTMLElement may be assigned to window.cy; neutralize safely.
   try { if (window.cy && window.cy.tagName) { window.cy = undefined; } } catch (e) {}
+
+  // Candidate paths for data files used by CLD boot.
+  const POSTER_CANDIDATES = [
+    '/data/water-cld-poster.json',
+    '/data/water/cld/water-cld-poster.json',
+    '/data/water/water-cld-poster.json',
+    '/water/data/water-cld-poster.json',
+    './data/water/cld/water-cld-poster.json'
+  ];
+  const MODEL_CANDIDATES = [
+    '/data/water-cld.json',
+    '/data/water/cld-model.json',
+    '/water/data/water-cld.json',
+    './data/water-cld.json'
+  ];
+
+  // Patch fetch to resolve poster/model paths with fallbacks.
+  try {
+    if (typeof window.fetch === 'function' && !window.__CLD_FETCH_PATCHED__) {
+      const origFetch = window.fetch;
+      window.fetch = async function(resource, init){
+        const url = typeof resource === 'string' ? resource : String(resource?.url || '');
+        const isPoster = /water-cld-poster\.json/i.test(url);
+        const isModel = /water-cld(?:-model)?\.json|model\.json/i.test(url);
+        if (isPoster || isModel) {
+          try {
+            const { json, url: picked } = await fetchFirstJSON(isPoster ? POSTER_CANDIDATES : MODEL_CANDIDATES, { timeoutMs: 8000 });
+            console.log('[CLD boot] data OK from', picked);
+            return new Response(JSON.stringify(json), { status: 200, headers: { 'Content-Type': 'application/json' } });
+          } catch (err) {
+            console.error('[CLD boot] fetch bad status 404');
+            return new Response('', { status: 404 });
+          }
+        }
+        return origFetch(resource, init);
+      };
+      window.__CLD_FETCH_PATCHED__ = true;
+    }
+  } catch (e) { console.warn('[CLD boot] fetch patch failed', e); }
 
   // Optional: if a custom bundle URL list is desired, define it here; otherwise rely on loader defaults.
   // window.CLD_BUNDLE_URLS = {
