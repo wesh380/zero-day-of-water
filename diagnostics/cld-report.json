@@ -1,0 +1,76 @@
+{
+  "url": "http://localhost:5173/water/cld/",
+  "when": "2025-09-13T14:54:52.487Z",
+  "console": [
+    {
+      "type": "log",
+      "text": "[DEBUG guard] facade present, skip legacy patches"
+    },
+    {
+      "type": "log",
+      "text": "[DEBUG page] counts n(f,h,cy)= -1 -1 -1"
+    },
+    {
+      "type": "debug",
+      "text": "[CLD defer] trying: http://localhost:5173/assets/dist/water-cld.bundle.js?v=4"
+    },
+    {
+      "type": "log",
+      "text": "[DEBUG page] CLD_CORE keys JSHandle@array"
+    },
+    {
+      "type": "log",
+      "text": "[DEBUG page] counts facade/hidden/global   "
+    },
+    {
+      "type": "log",
+      "text": "[CLD init] cy built true"
+    },
+    {
+      "type": "log",
+      "text": "[CLD defer] bundle loaded OK: http://localhost:5173/assets/dist/water-cld.bundle.js?v=4 CLD_SAFE= true"
+    },
+    {
+      "type": "log",
+      "text": "[DEBUG guard] facade present, skip legacy patches"
+    },
+    {
+      "type": "table",
+      "text": "JSHandle@object"
+    },
+    {
+      "type": "log",
+      "text": "first raw node JSHandle@object"
+    },
+    {
+      "type": "debug",
+      "text": "[CLD] to-cy arrays JSHandle@object"
+    },
+    {
+      "type": "log",
+      "text": "[CLD] added to cy JSHandle@object"
+    }
+  ],
+  "requests": [],
+  "failures": [],
+  "inpage": {
+    "hasCy": true,
+    "counts": {
+      "nodes": 0,
+      "edges": 0
+    },
+    "containerSelector": "#cy",
+    "containerRect": {
+      "w": 774,
+      "h": 480
+    },
+    "containerDisplay": "block",
+    "containerVisibility": "visible",
+    "globals": {
+      "CLD_CORE": true,
+      "LOADER": false,
+      "__MODEL__": false,
+      "__cldModel": false
+    }
+  }
+}
