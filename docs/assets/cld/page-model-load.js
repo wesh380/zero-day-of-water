@@ -1,6 +1,9 @@
-export async function loadModel(){
-  const res = await fetch('/data/water/cld-model.json', { cache: 'no-cache' });
-  if (!res.ok) throw new Error('model fetch failed: '+res.status);
-  return await res.json();
+import { loadModel as _loadModel } from './loader/model-fetch.js';
+
+// Public API used by page init/defer scripts
+export async function loadModel(candidate){
+  return await _loadModel(candidate);
 }
-window.CLD_LOAD_MODEL = loadModel;
+
+// Expose on window for non-module scripts (e.g., water-cld.init.js)
+try { window.CLD_LOAD_MODEL = loadModel; } catch(_) { /* no window in SSR */ }

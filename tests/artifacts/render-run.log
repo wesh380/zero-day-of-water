@@ -1,0 +1,15 @@
+summary: NOT_READY
+url: http://localhost:8082/water/cld/index.html
+elapsedMs: 23502
+lastDiag: {"hasRoot":true,"visible":true,"bb":{"w":772,"h":478},"corePresent":true,"coreKeys":["validateModel","mapModelToElements","inject","_coerceElements","_runLayoutImpl","initCore","setModel","runLayout","applyFilters","getCy"],"cyFromCore":false,"hasCy":true,"counts":{"n":0,"e":0},"scripts":["http://localhost:8082/assets/dist/water-cld.bundle.js?v=3","http://localhost:8082/assets/vendor/cytoscape.min.js","http://localhost:8082/assets/vendor/elk.bundled.js","http://localhost:8082/assets/vendor/cytoscape-elk.js","http://localhost:8082/assets/vendor/dagre.min.js","http://localhost:8082/assets/vendor/cytoscape-dagre.js","http://localhost:8082/assets/vendor/chart.umd.min.js","http://localhost:8082/assets/cld/core/validate.js","http://localhost:8082/assets/cld/core/mapper.js","http://localhost:8082/assets/cld/core/inject.js","http://localhost:8082/assets/cld/core/layout.js","http://localhost:8082/assets/cld/core/index.js","http://localhost:8082/assets/cld/ui/bridge-init.js","http://localhost:8082/assets/water-cld.defer.js","http://localhost:8082/assets/water-cld.init.js"]}
+pageLogs (tail):
+log: [CLD defer] trying bundle: /assets/dist/water-cld.bundle.js?v=3
+log: [DEBUG page] CLD_CORE keys JSHandle@array
+log: [DEBUG guard] facade present, skip legacy patches
+log: [CLD init] cy built true
+log: [CLD defer] bundle loaded OK: /assets/dist/water-cld.bundle.js?v=3
+log: [DEBUG guard] facade present, skip legacy patches
+error: Failed to load resource: the server responded with a status of 404 (Not Found)
+error: [CLD] fetch bad status 404
+log: [DEBUG page] counts facade/hidden/global  JSHandle@object JSHandle@object
+log: [DEBUG page] counts n(f,h,cy)= -1 -1 -1

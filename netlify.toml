@@ -100,3 +100,9 @@ for = "/amaayesh/*.csv"
   [headers.values]
   Cache-Control = "public, max-age=900"
   Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/water/data/*"
+  to = "/data/:splat"
+  status = 200
+  force = true
