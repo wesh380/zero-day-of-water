@@ -1,3 +1,5 @@
+import { waitForVisible, hasSize } from "../utils/waitForVisible.js";
+
 // Ensures a stable kernel object and a readiness promise without inline scripts.
 (function () {
   const g = (typeof window !== 'undefined') ? window : globalThis;
@@ -13,8 +15,6 @@
   // --- helpers
   const getGraph = () => g.kernel?.graph || g.graphStore?.graph || null;
   const getCyEl  = () => document.querySelector('#cy');
-
-  const cyHasSize = (el) => !!el && el.offsetWidth > 0 && el.offsetHeight > 0;
   const hasKernel = () => !!g.kernel;
   const hasGraph  = () => {
     const graph = getGraph();
@@ -24,7 +24,7 @@
   // resolve conditions:
   //   - kernel موجود
   //   - graph اسکلت حداقل {nodes:[],edges:[]} موجود
-  //   - #cy وجود دارد (اندازه اگر صفر بود بعداً با resize درست می‌کنیم)
+  //   - #cy وجود دارد (اندازه قبل از resolve با waitForVisible بررسی می‌شود)
   const readyNow = () => {
     const el = getCyEl();
     return hasKernel() && hasGraph() && !!el;
@@ -35,10 +35,10 @@
     g.kernelReady = new Promise((resolve, reject) => {
       const startMs   = Date.now();
       const warnAtMs  = 1200;  // وقتی منتظر شدیم، یک هشدار بده
-      const softAtMs  = 3000;  // اگر cy بی‌ابعاد بود، بعد از این لحظه با هشدار هم resolve می‌کنیم
-      const hardMs    = 8000;  // تایم‌اوت نهایی
+      const hardMs    = 8000;  // تایم‌اوت نهایی برای kernel/graph/#cy
       let warned = false;
       let resolved = false;
+      let waitingForVisible = false;
 
       const stop = (ok, payload) => {
         if (resolved) return;
@@ -70,13 +70,17 @@
       function maybeResolve(trigger) {
         const el = getCyEl();
         const graph = getGraph();
-        if (readyNow()) {
-          if (!cyHasSize(el)) {
-            console.warn('[kernel-shim] cy exists but has no size yet; continuing (trigger:', trigger, ')');
+        if (readyNow() && !waitingForVisible) {
+          waitingForVisible = true;
+          if (!hasSize(el)) {
+            console.warn('[kernel-shim] #cy has no size yet; waiting for visibility (trigger:', trigger, ')');
           }
-          // normalize: ensure kernel.graph is set
-          if (!g.kernel.graph && graph) g.kernel.graph = graph;
-          return stop(true, { kernel: g.kernel, graph, el });
+          waitForVisible(el, { timeout: 15000 }).then(() => {
+            if (!g.kernel.graph && graph) g.kernel.graph = graph;
+            stop(true, { kernel: g.kernel, graph, el });
+          }).catch(() => {
+            stop(false, new Error('kernelReady: #cy did not become visible in time'));
+          });
         }
       }
 
@@ -93,17 +97,8 @@
         // try normal resolve
         if (readyNow()) return maybeResolve('interval-ready');
 
-        // soft resolve: cy exists but no size yet → allow proceed after softAtMs
-        const el = getCyEl();
-        if (el && waited > softAtMs && hasKernel() && hasGraph()) {
-          console.warn('[kernel-shim] soft-resolve: #cy has no size yet; allowing continue');
-          const graph = getGraph();
-          if (!g.kernel.graph && graph) g.kernel.graph = graph;
-          return stop(true, { kernel: g.kernel, graph, el });
-        }
-
-        // hard timeout
-        if (waited > hardMs) {
+        // hard timeout (only before waiting for visibility)
+        if (!waitingForVisible && waited > hardMs) {
           const el = getCyEl();
           const graph = getGraph();
           console.error('[kernel-shim] kernelReady timeout', {
