@@ -82,6 +82,19 @@
     await tryScripts([A+'vendor/dagre.min.js', B+'vendor/dagre.min.js']);
     await tryScripts([A+'vendor/cytoscape-dagre.js', B+'vendor/cytoscape-dagre.js']);
 
+    (function registerLayouts(){
+      try{
+        if (window.cytoscape && window.elk && !window.__ELK_REGISTERED__){
+          window.cytoscape.use(window.cytoscapeElk || window.elk);
+          window.__ELK_REGISTERED__ = true;
+        }
+        if (window.cytoscape && window.dagre && !window.__DAGRE_REGISTERED__){
+          window.cytoscape.use(window.cytoscapeDagre || window.dagre);
+          window.__DAGRE_REGISTERED__ = true;
+        }
+      }catch(e){ console.warn("[CLD] layout register warn", e); }
+    }());
+
     // Load the CLD bundle (deferred loader picks the right path)
     await tryScripts([A+'water-cld.defer.js', B+'water-cld.defer.js']);
     // Init hooks / debug listeners
