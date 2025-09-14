@@ -1,6 +1,9 @@
 const { spawn } = require('child_process');
 const http = require('http'); const path = require('path'); const fs = require('fs');
 const puppeteer = require('puppeteer');
+const crypto = require('crypto');
+const sha1 = str => crypto.createHash('sha1').update(str).digest('hex');
+const jsonSeen = [];
 const REPORT_DIR = path.join(process.cwd(), 'reports'); fs.mkdirSync(REPORT_DIR, {recursive:true});
 
 function waitFor(url, ms=30000){
@@ -18,8 +21,32 @@ async function probe(url){
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   const requests = [];
+  const respTasks = [];
   page.on('requestfinished', req => requests.push(req.url()));
+  page.on('response', res => {
+    const url = res.url();
+    const ct = res.headers()['content-type'] || '';
+    if (!/json/i.test(ct) && !/\.json($|\?)/i.test(url)) return;
+    const p = res.text().then(body => {
+      try {
+        const hash = sha1(body);
+        if (jsonSeen.find(j => j.sha1 === hash)) return;
+        const data = JSON.parse(body);
+        const nodes = data?.elements?.nodes || data?.nodes || [];
+        const edges = data?.elements?.edges || data?.edges || [];
+        jsonSeen.push({
+          url,
+          schema_version: data.schema_version,
+          model_id: data.model_id,
+          counts: {nodes: nodes.length, edges: edges.length},
+          sha1: hash
+        });
+      } catch(err){ /* ignore parse errors */ }
+    });
+    respTasks.push(p);
+  });
   await page.goto(url, {waitUntil:'networkidle2', timeout:60000}).catch(()=>{});
+  await Promise.all(respTasks);
   const result = await page.evaluate(()=>{
     const scripts = Array.from(document.scripts).map(s=>s.src).filter(Boolean);
     const modelCandidates = ['__MODEL__','__cldModel','rawModel'].filter(k => window[k]!=null);
@@ -71,7 +98,18 @@ async function probe(url){
       if (jsons.length) md.push(`- JSON fetched:\n  - ${jsons.join('\n  - ')}`);
     }
     fs.writeFileSync(path.join(REPORT_DIR,'cld-runtime-usage.md'), md.join('\n'), 'utf8');
+    fs.writeFileSync(path.join(REPORT_DIR,'cld-runtime-models.json'), JSON.stringify(jsonSeen,null,2));
+    const mdModels = ['# CLD Runtime Models\n'];
+    for (const m of jsonSeen) {
+      mdModels.push(`- ${m.url}`);
+      mdModels.push(`  - model_id: ${m.model_id || '(none)'}`);
+      mdModels.push(`  - schema_version: ${m.schema_version || '(none)'}`);
+      mdModels.push(`  - elements: nodes=${m.counts.nodes}, edges=${m.counts.edges}`);
+      mdModels.push(`  - sha1: ${m.sha1}`);
+    }
+    fs.writeFileSync(path.join(REPORT_DIR,'cld-runtime-models.md'), mdModels.join('\n'), 'utf8');
     console.log('Runtime usage written to reports/cld-runtime-usage.{md,json}');
+    console.log('Model metadata written to reports/cld-runtime-models.{md,json}');
     server.kill(); process.exit(0);
   } catch(e){
     console.error(e); server.kill(); process.exit(1);
