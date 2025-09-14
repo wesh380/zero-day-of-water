@@ -28,11 +28,15 @@
   // Helper: add a <script> with onload/onerror and return a Promise
   function loadScript(url){
     return new Promise(function(resolve){
+      var abs = new URL(url, location.href).href;
+      if (document.querySelector('script[src="'+abs+'"]')) {
+        return resolve({ ok:true, url:abs, skipped:true });
+      }
       var s = document.createElement('script');
       s.defer = true;
-      s.src = url;
-      s.onload = function(){ resolve({ ok:true, url:url }); };
-      s.onerror = function(){ resolve({ ok:false, url:url }); };
+      s.src = abs;
+      s.onload = function(){ resolve({ ok:true, url:abs }); };
+      s.onerror = function(){ resolve({ ok:false, url:abs }); };
       document.head.appendChild(s);
     });
   }
