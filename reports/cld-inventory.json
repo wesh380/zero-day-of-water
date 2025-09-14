@@ -1,0 +1,1078 @@
+[
+  {
+    "file": "ARCHITECTURE.md",
+    "role": "Other",
+    "size": 568
+  },
+  {
+    "file": "Plan.md",
+    "role": "Other",
+    "size": 1877
+  },
+  {
+    "file": "diagnostics/cld-diagnose.png",
+    "role": "Other",
+    "size": 101177
+  },
+  {
+    "file": "diagnostics/cld-report.json",
+    "role": "JSON-other",
+    "size": 2178
+  },
+  {
+    "file": "docs/DEV_NOTES.md",
+    "role": "Other",
+    "size": 517
+  },
+  {
+    "file": "docs/_headers",
+    "role": "Other",
+    "size": 1377
+  },
+  {
+    "file": "docs/agrivoltaics/app.js",
+    "role": "Loader-candidate",
+    "size": 44722
+  },
+  {
+    "file": "docs/agrivoltaics/app.jsx",
+    "role": "Other",
+    "size": 34467
+  },
+  {
+    "file": "docs/agrivoltaics/index.dev.html",
+    "role": "HTML-host",
+    "size": 32828,
+    "scripts": [
+      "https://unpkg.com/react@18/umd/react.production.min.js",
+      "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
+      "https://unpkg.com/@babel/standalone/babel.min.js",
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js"
+    ]
+  },
+  {
+    "file": "docs/agrivoltaics/index.html",
+    "role": "HTML-host",
+    "size": 905,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "/agrivoltaics/vendor/react.production.min.js",
+      "/agrivoltaics/vendor/react-dom.production.min.js",
+      "/agrivoltaics/vendor/qrcode.js",
+      "/agrivoltaics/vendor/jspdf.umd.min.js",
+      "/agrivoltaics/app.js"
+    ]
+  },
+  {
+    "file": "docs/agrivoltaics/vendor/jspdf.umd.min.js",
+    "role": "Loader-candidate",
+    "size": 365760
+  },
+  {
+    "file": "docs/agrivoltaics/vendor/qrcode.js",
+    "role": "Loader-candidate",
+    "size": 56694
+  },
+  {
+    "file": "docs/agrivoltaics/vendor/react-dom.production.min.js",
+    "role": "Loader-candidate",
+    "size": 131835
+  },
+  {
+    "file": "docs/agrivoltaics/vendor/react.production.min.js",
+    "role": "Loader-candidate",
+    "size": 10751
+  },
+  {
+    "file": "docs/amaayesh/index.html",
+    "role": "HTML-host",
+    "size": 3427,
+    "scripts": [
+      "/assets/vendor/leaflet/leaflet.js",
+      "/assets/js/leaflet-icon-patch.js",
+      "/assets/vendor/leaflet.polylineDecorator.min.js",
+      "/assets/js/amaayesh-map.js",
+      "/assets/js/panel-direct-wire.js",
+      "/assets/js/ama-diag.js"
+    ]
+  },
+  {
+    "file": "docs/amaayesh/layers.config.json",
+    "role": "JSON-other",
+    "size": 266
+  },
+  {
+    "file": "docs/assets/app.js",
+    "role": "Loader-candidate",
+    "size": 15837
+  },
+  {
+    "file": "docs/assets/badge-updated.js",
+    "role": "UI-candidate",
+    "size": 3158
+  },
+  {
+    "file": "docs/assets/chart.autofix.css",
+    "role": "Other",
+    "size": 444
+  },
+  {
+    "file": "docs/assets/chart.guard.js",
+    "role": "Loader-candidate",
+    "size": 1791
+  },
+  {
+    "file": "docs/assets/cld/core/globals.d.ts",
+    "role": "Other",
+    "size": 185
+  },
+  {
+    "file": "docs/assets/cld/core/guards/batch-guard.js",
+    "role": "Core-candidate",
+    "size": 1763
+  },
+  {
+    "file": "docs/assets/cld/core/guards/collection-guard.js",
+    "role": "Core-candidate",
+    "size": 5676
+  },
+  {
+    "file": "docs/assets/cld/core/index.js",
+    "role": "Loader-candidate",
+    "size": 5950
+  },
+  {
+    "file": "docs/assets/cld/core/inject.js",
+    "role": "Core-candidate",
+    "size": 1219
+  },
+  {
+    "file": "docs/assets/cld/core/kernel/adapter.js",
+    "role": "Core-candidate",
+    "size": 799
+  },
+  {
+    "file": "docs/assets/cld/core/layout.js",
+    "role": "Core-candidate",
+    "size": 1493
+  },
+  {
+    "file": "docs/assets/cld/core/loop-detect.js",
+    "role": "Core-candidate",
+    "size": 2294
+  },
+  {
+    "file": "docs/assets/cld/core/mapper.js",
+    "role": "Core-candidate",
+    "size": 3540
+  },
+  {
+    "file": "docs/assets/cld/core/store.js",
+    "role": "Loader-candidate",
+    "size": 5415
+  },
+  {
+    "file": "docs/assets/cld/core/validate.js",
+    "role": "Core-candidate",
+    "size": 1964
+  },
+  {
+    "file": "docs/assets/cld/loader/init.js",
+    "role": "Loader-candidate",
+    "size": 2263
+  },
+  {
+    "file": "docs/assets/cld/loader/model-fetch.js",
+    "role": "Loader-candidate",
+    "size": 1741
+  },
+  {
+    "file": "docs/assets/cld/loader/paths.js",
+    "role": "Core-candidate",
+    "size": 12592
+  },
+  {
+    "file": "docs/assets/cld/loader/runtime-guards.js",
+    "role": "Core-candidate",
+    "size": 1309
+  },
+  {
+    "file": "docs/assets/cld/page-model-load.js",
+    "role": "Loader-candidate",
+    "size": 347
+  },
+  {
+    "file": "docs/assets/cld/ui/bridge-init.js",
+    "role": "Loader-candidate",
+    "size": 5511
+  },
+  {
+    "file": "docs/assets/cld/ui/controls.js",
+    "role": "Core-candidate",
+    "size": 815
+  },
+  {
+    "file": "docs/assets/cld/ui/legend.js",
+    "role": "UI-candidate",
+    "size": 448
+  },
+  {
+    "file": "docs/assets/cld/ui/search.js",
+    "role": "UI-candidate",
+    "size": 387
+  },
+  {
+    "file": "docs/assets/cld-loader.js",
+    "role": "Loader-candidate",
+    "size": 4750
+  },
+  {
+    "file": "docs/assets/cld-mapper.js",
+    "role": "Loader-candidate",
+    "size": 4639
+  },
+  {
+    "file": "docs/assets/cld-validate.js",
+    "role": "Core-candidate",
+    "size": 2022
+  },
+  {
+    "file": "docs/assets/cost-calculator.js",
+    "role": "UI-candidate",
+    "size": 10616
+  },
+  {
+    "file": "docs/assets/css/amaayesh.css",
+    "role": "Other",
+    "size": 8002
+  },
+  {
+    "file": "docs/assets/css/map-inline.css",
+    "role": "Other",
+    "size": 1928
+  },
+  {
+    "file": "docs/assets/debug/sentinel.js",
+    "role": "Core-candidate",
+    "size": 2718
+  },
+  {
+    "file": "docs/assets/dist/water-cld.bundle.css",
+    "role": "Other",
+    "size": 20536
+  },
+  {
+    "file": "docs/assets/dist/water-cld.bundle.js",
+    "role": "Loader-candidate",
+    "size": 116755
+  },
+  {
+    "file": "docs/assets/dist/water-cld.manifest.json",
+    "role": "JSON-other",
+    "size": 1629
+  },
+  {
+    "file": "docs/assets/electricity-management.js",
+    "role": "Loader-candidate",
+    "size": 4506
+  },
+  {
+    "file": "docs/assets/electricity-peak.js",
+    "role": "Loader-candidate",
+    "size": 4795
+  },
+  {
+    "file": "docs/assets/electricity-quality.js",
+    "role": "UI-candidate",
+    "size": 13021
+  },
+  {
+    "file": "docs/assets/emoji-flag.js",
+    "role": "Loader-candidate",
+    "size": 694
+  },
+  {
+    "file": "docs/assets/inline-migration.css",
+    "role": "Other",
+    "size": 3447
+  },
+  {
+    "file": "docs/assets/js/ama-diag.js",
+    "role": "UI-candidate",
+    "size": 1798
+  },
+  {
+    "file": "docs/assets/js/ama-wire-buttons.js",
+    "role": "UI-candidate",
+    "size": 2488
+  },
+  {
+    "file": "docs/assets/js/amaayesh-map.js",
+    "role": "Loader-candidate",
+    "size": 99331
+  },
+  {
+    "file": "docs/assets/js/gas-fuel-carbon.js",
+    "role": "Loader-candidate",
+    "size": 8454
+  },
+  {
+    "file": "docs/assets/js/panel-direct-wire.js",
+    "role": "Loader-candidate",
+    "size": 2477
+  },
+  {
+    "file": "docs/assets/layout-presets.js",
+    "role": "Core-candidate",
+    "size": 1994
+  },
+  {
+    "file": "docs/assets/legend.css",
+    "role": "Other",
+    "size": 3280
+  },
+  {
+    "file": "docs/assets/libs/chartjs-adapter-date-fns.bundle.min.js",
+    "role": "Core-candidate",
+    "size": 50650
+  },
+  {
+    "file": "docs/assets/libs/chartjs-plugin-annotation.min.js",
+    "role": "Loader-candidate",
+    "size": 38359
+  },
+  {
+    "file": "docs/assets/model-bridge.js",
+    "role": "UI-candidate",
+    "size": 5400
+  },
+  {
+    "file": "docs/assets/numfmt.js",
+    "role": "Loader-candidate",
+    "size": 2841
+  },
+  {
+    "file": "docs/assets/peak-electricity.js",
+    "role": "Loader-candidate",
+    "size": 8072
+  },
+  {
+    "file": "docs/assets/persian-digits.js",
+    "role": "UI-candidate",
+    "size": 524
+  },
+  {
+    "file": "docs/assets/power-tariff.js",
+    "role": "Loader-candidate",
+    "size": 7279
+  },
+  {
+    "file": "docs/assets/sim-worker.js",
+    "role": "Loader-candidate",
+    "size": 4959
+  },
+  {
+    "file": "docs/assets/tailwind.css",
+    "role": "Other",
+    "size": 42616
+  },
+  {
+    "file": "docs/assets/vendor/chart.umd.min.js",
+    "role": "Loader-candidate",
+    "size": 205637
+  },
+  {
+    "file": "docs/assets/vendor/cytoscape-dagre.js",
+    "role": "Loader-candidate",
+    "size": 12665
+  },
+  {
+    "file": "docs/assets/vendor/cytoscape-elk.js",
+    "role": "Loader-candidate",
+    "size": 11301
+  },
+  {
+    "file": "docs/assets/vendor/cytoscape.min.js",
+    "role": "Loader-candidate",
+    "size": 434037
+  },
+  {
+    "file": "docs/assets/vendor/dagre.min.js",
+    "role": "Loader-candidate",
+    "size": 283803
+  },
+  {
+    "file": "docs/assets/vendor/elk.bundled.js",
+    "role": "Loader-candidate",
+    "size": 1585569
+  },
+  {
+    "file": "docs/assets/vendor/expr-eval.min.js",
+    "role": "Loader-candidate",
+    "size": 25276
+  },
+  {
+    "file": "docs/assets/vendor/leaflet/leaflet.css",
+    "role": "Other",
+    "size": 14806
+  },
+  {
+    "file": "docs/assets/vendor/leaflet/leaflet.js",
+    "role": "Loader-candidate",
+    "size": 147552
+  },
+  {
+    "file": "docs/assets/vendor/leaflet-control-geocoder/Control.Geocoder.css",
+    "role": "Other",
+    "size": 3320
+  },
+  {
+    "file": "docs/assets/vendor/leaflet-control-geocoder/Control.Geocoder.js",
+    "role": "Loader-candidate",
+    "size": 25371
+  },
+  {
+    "file": "docs/assets/vendor/leaflet.polylineDecorator.min.js",
+    "role": "Loader-candidate",
+    "size": 6827
+  },
+  {
+    "file": "docs/assets/vendor/popper.min.js",
+    "role": "UI-candidate",
+    "size": 20122
+  },
+  {
+    "file": "docs/assets/vendor/tippy.umd.min.js",
+    "role": "Loader-candidate",
+    "size": 24074
+  },
+  {
+    "file": "docs/assets/vendor/turf.min.js",
+    "role": "Loader-candidate",
+    "size": 604610
+  },
+  {
+    "file": "docs/assets/water-cld.a11y.css",
+    "role": "Other",
+    "size": 2521
+  },
+  {
+    "file": "docs/assets/water-cld.a11y.js",
+    "role": "Loader-candidate",
+    "size": 5841
+  },
+  {
+    "file": "docs/assets/water-cld.aha-metrics.js",
+    "role": "JS-other",
+    "size": 1128
+  },
+  {
+    "file": "docs/assets/water-cld.aha.css",
+    "role": "Other",
+    "size": 927
+  },
+  {
+    "file": "docs/assets/water-cld.aha.js",
+    "role": "Loader-candidate",
+    "size": 9958
+  },
+  {
+    "file": "docs/assets/water-cld.controls-meta.css",
+    "role": "Other",
+    "size": 1310
+  },
+  {
+    "file": "docs/assets/water-cld.controls-meta.js",
+    "role": "Loader-candidate",
+    "size": 8739
+  },
+  {
+    "file": "docs/assets/water-cld.css",
+    "role": "Other",
+    "size": 9994
+  },
+  {
+    "file": "docs/assets/water-cld.cy-addclass-patch.js",
+    "role": "Core-candidate",
+    "size": 904
+  },
+  {
+    "file": "docs/assets/water-cld.cy-alias.js",
+    "role": "JS-other",
+    "size": 1471
+  },
+  {
+    "file": "docs/assets/water-cld.cy-safe-add.js",
+    "role": "Core-candidate",
+    "size": 5956
+  },
+  {
+    "file": "docs/assets/water-cld.cy-stub.js",
+    "role": "UI-candidate",
+    "size": 6023
+  },
+  {
+    "file": "docs/assets/water-cld.defer.js",
+    "role": "Loader-candidate",
+    "size": 1362
+  },
+  {
+    "file": "docs/assets/water-cld.delta-kpi.css",
+    "role": "Other",
+    "size": 273
+  },
+  {
+    "file": "docs/assets/water-cld.delta-kpi.js",
+    "role": "Loader-candidate",
+    "size": 2376
+  },
+  {
+    "file": "docs/assets/water-cld.explain-10s.js",
+    "role": "JS-other",
+    "size": 1736
+  },
+  {
+    "file": "docs/assets/water-cld.extras-controls.js",
+    "role": "Core-candidate",
+    "size": 5981
+  },
+  {
+    "file": "docs/assets/water-cld.extras-hero.js",
+    "role": "Loader-candidate",
+    "size": 4411
+  },
+  {
+    "file": "docs/assets/water-cld.extras-readability.js",
+    "role": "Loader-candidate",
+    "size": 7777
+  },
+  {
+    "file": "docs/assets/water-cld.fix-hints.css",
+    "role": "Other",
+    "size": 331
+  },
+  {
+    "file": "docs/assets/water-cld.fix-hints.js",
+    "role": "UI-candidate",
+    "size": 3405
+  },
+  {
+    "file": "docs/assets/water-cld.ghost-delta.js",
+    "role": "JS-other",
+    "size": 1876
+  },
+  {
+    "file": "docs/assets/water-cld.init.js",
+    "role": "Loader-candidate",
+    "size": 10063
+  },
+  {
+    "file": "docs/assets/water-cld.js",
+    "role": "Loader-candidate",
+    "size": 72632
+  },
+  {
+    "file": "docs/assets/water-cld.kernel.js",
+    "role": "Loader-candidate",
+    "size": 3309
+  },
+  {
+    "file": "docs/assets/water-cld.param-chips.css",
+    "role": "Other",
+    "size": 186
+  },
+  {
+    "file": "docs/assets/water-cld.param-chips.js",
+    "role": "UI-candidate",
+    "size": 1227
+  },
+  {
+    "file": "docs/assets/water-cld.paths.css",
+    "role": "Other",
+    "size": 1672
+  },
+  {
+    "file": "docs/assets/water-cld.presets.css",
+    "role": "Other",
+    "size": 651
+  },
+  {
+    "file": "docs/assets/water-cld.presets.js",
+    "role": "JS-other",
+    "size": 8664
+  },
+  {
+    "file": "docs/assets/water-cld.provenance.css",
+    "role": "Other",
+    "size": 2411
+  },
+  {
+    "file": "docs/assets/water-cld.provenance.js",
+    "role": "Loader-candidate",
+    "size": 12373
+  },
+  {
+    "file": "docs/assets/water-cld.quick-preset.css",
+    "role": "Other",
+    "size": 341
+  },
+  {
+    "file": "docs/assets/water-cld.quick-preset.js",
+    "role": "JS-other",
+    "size": 1886
+  },
+  {
+    "file": "docs/assets/water-cld.readability.css",
+    "role": "Other",
+    "size": 867
+  },
+  {
+    "file": "docs/assets/water-cld.scenarios.css",
+    "role": "Other",
+    "size": 1635
+  },
+  {
+    "file": "docs/assets/water-cld.scenarios.js",
+    "role": "Loader-candidate",
+    "size": 14573
+  },
+  {
+    "file": "docs/assets/water-cld.spotlight.css",
+    "role": "Other",
+    "size": 90
+  },
+  {
+    "file": "docs/assets/water-cld.spotlight.js",
+    "role": "JS-other",
+    "size": 261
+  },
+  {
+    "file": "docs/assets/water-cld.toast.css",
+    "role": "Other",
+    "size": 366
+  },
+  {
+    "file": "docs/assets/water-cld.tour.css",
+    "role": "Other",
+    "size": 1670
+  },
+  {
+    "file": "docs/assets/water-cld.tour.js",
+    "role": "UI-candidate",
+    "size": 7656
+  },
+  {
+    "file": "docs/assets/water-cost-calculator.js",
+    "role": "Loader-candidate",
+    "size": 5787
+  },
+  {
+    "file": "docs/assets/water-cost.css",
+    "role": "Other",
+    "size": 3284
+  },
+  {
+    "file": "docs/assets/water-cost.js",
+    "role": "UI-candidate",
+    "size": 5294
+  },
+  {
+    "file": "docs/assets/water-efficiency.js",
+    "role": "UI-candidate",
+    "size": 5546
+  },
+  {
+    "file": "docs/assets/water-insights.js",
+    "role": "Loader-candidate",
+    "size": 9493
+  },
+  {
+    "file": "docs/assets/water-sfd.js",
+    "role": "Loader-candidate",
+    "size": 2664
+  },
+  {
+    "file": "docs/data/layers.config.json",
+    "role": "JSON-other",
+    "size": 454
+  },
+  {
+    "file": "docs/data/water/cld-model.json",
+    "role": "Data",
+    "size": 161,
+    "nodes": 2,
+    "edges": 1
+  },
+  {
+    "file": "docs/data/water-cld-poster.json",
+    "role": "Data",
+    "size": 11973,
+    "nodes": 41,
+    "edges": 54
+  },
+  {
+    "file": "docs/data/water-cld.json",
+    "role": "Data",
+    "size": 1776,
+    "nodes": 5,
+    "edges": 4
+  },
+  {
+    "file": "docs/debug/ADDME.md",
+    "role": "Other",
+    "size": 392
+  },
+  {
+    "file": "docs/electricity/index.html",
+    "role": "HTML-host",
+    "size": 3164,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/shamsi-date.js",
+      "index.js",
+      "../assets/numfmt.js"
+    ]
+  },
+  {
+    "file": "docs/electricity/peak.html",
+    "role": "HTML-host",
+    "size": 7774,
+    "scripts": [
+      "../assets/vendor/chart.umd.min.js",
+      "../assets/electricity-management.js",
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/electricity-peak.js",
+      "../assets/badge-updated.js"
+    ]
+  },
+  {
+    "file": "docs/electricity/power-tariff.html",
+    "role": "HTML-host",
+    "size": 21686,
+    "scripts": [
+      "../assets/power-tariff.js",
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js"
+    ]
+  },
+  {
+    "file": "docs/electricity/quality.html",
+    "role": "HTML-host",
+    "size": 11901,
+    "scripts": [
+      "../assets/vendor/chart.umd.min.js",
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/electricity-quality.js",
+      "../assets/badge-updated.js"
+    ]
+  },
+  {
+    "file": "docs/gas/energy.html",
+    "role": "HTML-host",
+    "size": 8321,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/vendor/chart.umd.min.js",
+      "../assets/numfmt.js",
+      "./energy.js",
+      "../assets/badge-updated.js"
+    ]
+  },
+  {
+    "file": "docs/gas/energy.js",
+    "role": "UI-candidate",
+    "size": 12509
+  },
+  {
+    "file": "docs/gas/fuel-carbon.html",
+    "role": "HTML-host",
+    "size": 14767,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/vendor/chart.umd.min.js",
+      "../vendor/chartjs-adapter-date-fns/chartjs-adapter-date-fns.bundle.js",
+      "../assets/js/gas-fuel-carbon.js?v=1"
+    ]
+  },
+  {
+    "file": "docs/gas/index.html",
+    "role": "HTML-host",
+    "size": 2518,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "index.js",
+      "../assets/numfmt.js",
+      "../assets/badge-updated.js"
+    ]
+  },
+  {
+    "file": "docs/guide/cld-style.md",
+    "role": "Other",
+    "size": 1955
+  },
+  {
+    "file": "docs/index.html",
+    "role": "HTML-host",
+    "size": 25474,
+    "scripts": [
+      "./assets/unified-badge.js",
+      "./assets/global-footer.js",
+      "./assets/parallax.js",
+      "index.js?v=1",
+      "assets/numfmt.js?v=1",
+      "./assets/cld-loader.js"
+    ]
+  },
+  {
+    "file": "docs/index.js",
+    "role": "Loader-candidate",
+    "size": 6834
+  },
+  {
+    "file": "docs/metrics/panel-kpis.md",
+    "role": "Other",
+    "size": 952
+  },
+  {
+    "file": "docs/page/landing/file_00000000b59462439107e38c78cfbccf.png",
+    "role": "Other",
+    "size": 4011478
+  },
+  {
+    "file": "docs/page/landing/landing.css",
+    "role": "Other",
+    "size": 2096
+  },
+  {
+    "file": "docs/research/index.html",
+    "role": "HTML-host",
+    "size": 24386,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "index.js"
+    ]
+  },
+  {
+    "file": "docs/research/index.js",
+    "role": "UI-candidate",
+    "size": 5043
+  },
+  {
+    "file": "docs/test/water-cld.html",
+    "role": "HTML-host",
+    "size": 15603,
+    "scripts": [
+      "../assets/vendor/cytoscape.min.js",
+      "../assets/vendor/elk.bundled.js",
+      "../assets/vendor/cytoscape-elk.js",
+      "../assets/vendor/dagre.min.js",
+      "../assets/vendor/cytoscape-dagre.js",
+      "../assets/vendor/chart.umd.min.js",
+      "/assets/cld/core/validate.js",
+      "/assets/cld/core/mapper.js",
+      "/assets/cld/core/inject.js",
+      "/assets/cld/core/layout.js",
+      "/assets/cld/core/index.js",
+      "/assets/cld/ui/bridge-init.js",
+      "/assets/water-cld.defer.js",
+      "/assets/water-cld.init.js"
+    ]
+  },
+  {
+    "file": "docs/vendor/chart.js/chart.umd.js",
+    "role": "Loader-candidate",
+    "size": 205363
+  },
+  {
+    "file": "docs/vendor/chart.umd.min.js",
+    "role": "Loader-candidate",
+    "size": 205637
+  },
+  {
+    "file": "docs/vendor/chartjs-adapter-date-fns/chartjs-adapter-date-fns.bundle.js",
+    "role": "Core-candidate",
+    "size": 220817
+  },
+  {
+    "file": "docs/water/cld/index.html",
+    "role": "HTML-host",
+    "size": 14319,
+    "scripts": [
+      "/assets/vendor/cytoscape.min.js",
+      "/assets/vendor/elk.bundled.js",
+      "/assets/vendor/cytoscape-elk.js",
+      "/assets/vendor/dagre.min.js",
+      "/assets/vendor/cytoscape-dagre.js",
+      "/assets/vendor/chart.umd.min.js",
+      "/assets/cld/core/validate.js",
+      "/assets/cld/core/mapper.js",
+      "/assets/cld/core/inject.js",
+      "/assets/cld/core/layout.js",
+      "/assets/cld/core/index.js",
+      "/assets/cld/ui/bridge-init.js",
+      "/assets/water-cld.defer.js",
+      "/assets/cld/page-model-load.js",
+      "/assets/water-cld.init.js",
+      "/assets/cld/page-debug.js",
+      "/assets/cld/page-probe.js"
+    ]
+  },
+  {
+    "file": "docs/water/cost-calculator.html",
+    "role": "HTML-host",
+    "size": 6110,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/vendor/chart.umd.min.js",
+      "../assets/water-cost.js",
+      "../assets/water-init.js"
+    ]
+  },
+  {
+    "file": "docs/water/cost-calculator.js",
+    "role": "UI-candidate",
+    "size": 10633
+  },
+  {
+    "file": "docs/water/hub.html",
+    "role": "HTML-host",
+    "size": 6025,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/water-init.js"
+    ]
+  },
+  {
+    "file": "docs/water/insights.html",
+    "role": "HTML-host",
+    "size": 20407,
+    "scripts": [
+      "/assets/unified-badge.js",
+      "/assets/global-footer.js",
+      "../assets/vendor/chart.umd.min.js",
+      "../assets/water-init.js",
+      "../assets/ai.js",
+      "../assets/app.js",
+      "../assets/water-insights.js",
+      "../assets/emoji-flag.js",
+      "../assets/numfmt.js",
+      "../assets/js/insights-waffle.js"
+    ]
+  },
+  {
+    "file": "netlify.toml",
+    "role": "Other",
+    "size": 2827
+  },
+  {
+    "file": "package-lock.json",
+    "role": "JSON-other",
+    "size": 274065
+  },
+  {
+    "file": "package.json",
+    "role": "JSON-other",
+    "size": 4060
+  },
+  {
+    "file": "scripts/build-cld.js",
+    "role": "Loader-candidate",
+    "size": 3751
+  },
+  {
+    "file": "tests/artifacts/cld-render.png",
+    "role": "Other",
+    "size": 95150
+  },
+  {
+    "file": "tests/artifacts/render-run.log",
+    "role": "Other",
+    "size": 1763
+  },
+  {
+    "file": "tests/e2e/cld-diagnose.js",
+    "role": "Loader-candidate",
+    "size": 3604
+  },
+  {
+    "file": "tests/e2e/cld-runtime-inventory.js",
+    "role": "Core-candidate",
+    "size": 3421
+  },
+  {
+    "file": "tests/e2e/cld-smoke.js",
+    "role": "Core-candidate",
+    "size": 2760
+  },
+  {
+    "file": "tests/e2e-cld.test.js",
+    "role": "JS-other",
+    "size": 1275
+  },
+  {
+    "file": "tests/e2e-water-cld.behaviors.test.js",
+    "role": "UI-candidate",
+    "size": 5424
+  },
+  {
+    "file": "tests/mapper.test.js",
+    "role": "Core-candidate",
+    "size": 1427
+  },
+  {
+    "file": "tests/unit/mapper.test.js",
+    "role": "Core-candidate",
+    "size": 2568
+  },
+  {
+    "file": "tools/audit_amaayesh.js",
+    "role": "UI-candidate",
+    "size": 3290
+  },
+  {
+    "file": "tools/build-wind-weights.mjs",
+    "role": "Other",
+    "size": 8309
+  },
+  {
+    "file": "tools/check-cld-html.sh",
+    "role": "Other",
+    "size": 1286
+  },
+  {
+    "file": "tools/check-no-binary.js",
+    "role": "UI-candidate",
+    "size": 631
+  },
+  {
+    "file": "tools/cld-inventory.js",
+    "role": "Loader-candidate",
+    "size": 3223
+  },
+  {
+    "file": "tools/cld-rewire-plan.js",
+    "role": "Loader-candidate",
+    "size": 1616
+  },
+  {
+    "file": "tools/report-tests-csp.js",
+    "role": "Loader-candidate",
+    "size": 8564
+  },
+  {
+    "file": "tools/validate_layers.js",
+    "role": "Core-candidate",
+    "size": 705
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "url": "http://localhost:8080/water/",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  },
+  {
+    "url": "http://localhost:8080/water/index.html",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  },
+  {
+    "url": "http://localhost:8080/test/water-cld.html",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  },
+  {
+    "url": "http://localhost:8080/water/cost-calculator.html",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  },
+  {
+    "url": "http://localhost:8080/water/hub.html",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  },
+  {
+    "url": "http://localhost:8080/water/insights.html",
+    "error": "Error: Failed to launch the browser process!\n/root/.cache/puppeteer/chrome/linux-140.0.7339.82/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory\n\n\nTROUBLESHOOTING: https://pptr.dev/troubleshooting\n"
+  }
+]
