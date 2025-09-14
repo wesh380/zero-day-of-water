@@ -113,6 +113,8 @@
 
     // Load the CLD bundle (deferred loader picks the right path)
     await tryScripts([A+'water-cld.defer.js', B+'water-cld.defer.js']);
+    // Visibility utilities needed by init and kernel shims
+    await tryScripts([A+'cld/core/utils/waitForVisible.umd.js', B+'cld/core/utils/waitForVisible.umd.js']);
     // Init hooks / debug listeners
     await tryScripts([A+'water-cld.init.js', B+'water-cld.init.js']);
   })();

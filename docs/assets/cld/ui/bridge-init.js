@@ -90,10 +90,17 @@
     }catch(e){ console.error('[CLD bridge] boot error', e&&e.stack||e); }
   });
   const t0=Date.now();
+  let pollId;
   (function poll(){
-    if (window.CLD_CORE && cyReady()) return boot();
-    if (Date.now()-t0>30000) return console.error('[CLD bridge] timeout');
-    setTimeout(poll,50);
+    if (window.CLD_CORE && cyReady()) {
+      if (pollId) clearTimeout(pollId);
+      return boot();
+    }
+    if (Date.now()-t0>30000) {
+      if (pollId) clearTimeout(pollId);
+      return console.error('[CLD bridge] timeout');
+    }
+    pollId = setTimeout(poll,50);
   })();
   // دیباگ عددی دیرتر، بعد از setModel
   setTimeout(function(){

@@ -173,8 +173,15 @@
       async function loadModelAndMount(url){
         const json = await fetch(url, {cache:'no-cache'}).then(r=>r.json());
         const el = document.getElementById('cy');
+        if (window.__CLD_DEBUG__) {
+          try{ console.debug("[CLD init] pre-visible", { w: el?.offsetWidth, h: el?.offsetHeight, display: getComputedStyle(el).display }); }catch(_){ }
+        }
         await waitForVisible(el, {timeout:15000});
         const cy = ensureCy();
+        const elements = (window.CLD_MAP && typeof window.CLD_MAP.coerceElements === 'function') ? window.CLD_MAP.coerceElements(json) : [];
+        if (window.__CLD_DEBUG__) {
+          try{ console.debug("[CLD init] pre-add", { container: { w: el.offsetWidth, h: el.offsetHeight }, nodes: Array.isArray(json.nodes) ? json.nodes.length : Array.isArray(json.elements?.nodes) ? json.elements.nodes.length : elements.filter(e=>e.group==='nodes').length, edges: Array.isArray(json.edges) ? json.edges.length : Array.isArray(json.elements?.edges) ? json.elements.edges.length : elements.filter(e=>e.group==='edges').length }); }catch(_){ }
+        }
         if (window.CLD_CORE?.initCore) window.CLD_CORE.initCore({ cy });
 
         const boot = (window.CLD_LOADER || window.LOADER);
@@ -187,7 +194,16 @@
             try{
               window.CLD_CORE.setModel(json);
               const c = window.CLD_CORE.getCy() || cy;
+              if (window.__CLD_DEBUG__) {
+                try{ console.debug("[CLD init] after add", { size: c.elements().size(), nodes: c.nodes().length, edges: c.edges().length }); }catch(_){ }
+                if (c.elements().size() === 0) {
+                  try{ console.warn("[CLD init] empty graph after add", { sample: elements && elements[0] }); }catch(_){ }
+                }
+              }
               c?.resize(); c?.fit(undefined, 24);
+              if (window.__CLD_DEBUG__) {
+                try{ const bb = c.elements().boundingBox(); console.debug("[CLD init] layout done", { bbox: bb, zoom: c.zoom(), center: c.center() }); }catch(_){ }
+              }
             }catch(e){ console.error("[CLD] setModel error", e); }
           } else if (tries++ < 120){ setTimeout(apply, 100); } else {
             console.error("[CLD] core not ready to set model");
