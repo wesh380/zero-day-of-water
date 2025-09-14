@@ -59,7 +59,7 @@
         var counts = CLD_CORE.setModel ? CLD_CORE.setModel(m) : { nodes: 0, edges: 0 };
         if ((counts.nodes||0) <= 0){
           var els = toElementsFromModel(m);
-          console.log('[CLD bridge] fallback elements', JSON.stringify({nodes:els.filter(x=>x.group==='nodes').length,edges:els.filter(x=>x.group==='edges').length}));
+          if (window.__CLD_DEBUG__) console.log('[CLD bridge] fallback elements', JSON.stringify({nodes:els.filter(x=>x.group==='nodes').length,edges:els.filter(x=>x.group==='edges').length}));
           var C = safeGetCy(); if (CLD_CORE.inject && C) CLD_CORE.inject(C, els); else if (C && C.add) C.add(els);
           if (C) counts = { nodes: C.nodes().length, edges: C.edges().length };
         }
@@ -68,7 +68,7 @@
         // cy در دسترس تست
         if (__TEST_PATH__) try { window.__cy = window.__cy || safeGetCy(); } catch(_){}
         try { if (CLD_CORE.runLayout) CLD_CORE.runLayout('grid', {}); } catch(e2){ console.error('[CLD bridge] runLayout error', e2&&e2.stack||e2); }
-        console.log('[CLD bridge] setModel counts', JSON.stringify(counts));
+        if (window.__CLD_DEBUG__) console.log('[CLD bridge] setModel counts', JSON.stringify(counts));
         // ضدریست فقط در صفحهٔ تست
         if (location.pathname.indexOf('/test/')>=0) reInjectIfReset(2500);
       }catch(e){
@@ -80,7 +80,7 @@
   const boot = once(function(){
     if(!window.CLD_CORE || !cyReady()) return;
     try{
-      console.log('[CLD bridge] CLD_CORE keys', (window.CLD_CORE && Object.keys(window.CLD_CORE).join(',')) || 'none');
+      if (window.__CLD_DEBUG__) console.log('[CLD bridge] CLD_CORE keys', (window.CLD_CORE && Object.keys(window.CLD_CORE).join(',')) || 'none');
       try{
         const c = safeGetCy();
         if (CLD_CORE.initCore && c) CLD_CORE.initCore({ cy: c });
@@ -107,7 +107,7 @@
       const nf = f  ? f.nodes().length  : -1;
       const nh = h  ? h.nodes().length  : -1;
       const ng = cy ? cy.nodes().length : -1;
-      console.log('[DEBUG page] counts n(f,h,cy)=', nf, nh, ng);
+      if (window.__CLD_DEBUG__) console.log('[DEBUG page] counts n(f,h,cy)=', nf, nh, ng);
     }catch(e){ console.error('[DEBUG page] count error', e&&e.stack||e); }
   }, 1800);
 })();

@@ -110,7 +110,7 @@ All numbers must be numeric (no units attached in JSON).
 `;
 
         const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { model: 'gemini-2.0-flash' });
-        console.log("Raw API response:", text);
+        if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
         const clean = text.replace(/```json|```/g, '').trim();
 
         let data;

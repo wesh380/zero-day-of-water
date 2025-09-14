@@ -19,7 +19,7 @@ function inject(cy, elements){
   try {
     const n = arr.filter(e=>e.group==='nodes').length;
     const e = arr.filter(e=>e.group==='edges').length;
-    console.log('[CLD inject] coerced counts', JSON.stringify({nodes:n,edges:e}));
+    if (window.__CLD_DEBUG__) console.log('[CLD inject] coerced counts', JSON.stringify({nodes:n,edges:e}));
   } catch(_){}
   cy.batch(()=> cy.add(arr));
 }
