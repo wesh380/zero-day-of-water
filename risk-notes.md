@@ -1,0 +1,3 @@
+- Multiple Cytoscape layout plugins detected: `docs/assets/vendor/cytoscape-elk.js` and `docs/assets/vendor/cytoscape-dagre.js` (via `docs/assets/vendor/`). Ensure single layout engine version is used to avoid conflicts.
+- Core adapter (`docs/assets/cld/core/kernel/adapter.js`) calls both `cy.resize()` and `cy.fit()` which may lead to repeated layout recalculations.
+- Main controller (`docs/assets/water-cld.js`) also manages window `resize` events while performing multiple `cy.fit()` calls; combined overrides of `fit` and `resize` could cause unexpected behavior.

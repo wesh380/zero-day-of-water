@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحلیل و شبیه‌سازی قبض برق</title>
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <link rel="stylesheet" href="../assets/fonts.css">
+  <link rel="stylesheet" href="../assets/power-tariff.css">
+  <script defer src="../assets/power-tariff.js"></script>
+  <link rel="stylesheet" href="/assets/global-footer.css">
+  <link rel="stylesheet" href="/assets/unified-badge.css">
+  <link rel="stylesheet" href="../assets/inline-migration.css" />
+  <script defer src="/assets/unified-badge.js"></script>
+  <script defer src="/assets/global-footer.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-800">
+<div id="etf-root" class="container mx-auto p-4 md:p-8">
+    <!-- Header -->
+    <header class="text-center mb-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800">
+            <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">مشاور هوشمند برق شما</span>
+        </h1>
+        <p class="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">مصرف خود را تحلیل کن، قبض ماه بعدت را شبیه‌سازی کن و راهکارهای بهینه را پیدا کن.</p>
+    </header>
+
+    <!-- Tabs Navigation -->
+    <div class="mb-10 p-1.5 bg-slate-200 rounded-full flex max-w-md mx-auto">
+        <button class="etf-tab-btn etf-active flex-1 py-2 px-4 rounded-full transition-all duration-300 text-slate-600" data-tab="tariffs">تعرفه‌ها</button>
+        <button class="etf-tab-btn flex-1 py-2 px-4 rounded-full transition-all duration-300 text-slate-600" data-tab="simulator">شبیه‌ساز قبض</button>
+        <button class="etf-tab-btn flex-1 py-2 px-4 rounded-full transition-all duration-300 text-slate-600" data-tab="analysis">تحلیل و راهکار</button>
+    </div>
+
+    <!-- Tab Content -->
+    <main>
+        <!-- Tariffs Tab -->
+        <div id="etf-tariffs" class="etf-tab-content space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Tariff Table Card -->
+                <div class="etf-card dash-card col-span-1 md:col-span-2 border-indigo-500">
+                    <h2 class="text-xl font-bold mb-4 text-slate-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2 2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        جدول تعرفه‌های پلکانی برق (نمونه)
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center">
+                            <thead class="bg-slate-100">
+                                <tr>
+                                    <th class="p-4 font-bold text-slate-600">پله</th>
+                                    <th class="p-4 font-bold text-slate-600">محدوده مصرف (kWh)</th>
+                                    <th class="p-4 font-bold text-slate-600">نرخ هر kWh (ریال)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="etf-tariff-table-body" class="divide-y divide-slate-200"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Helper Cards -->
+                <div class="etf-card dash-card border-purple-500">
+                    <h3 class="text-lg font-bold mb-3 text-slate-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        پله من کدام است؟
+                    </h3>
+                    <p class="text-slate-600 mb-4">مصرف ماهانه‌ات را وارد کن تا پله و هزینه انرژی‌ات را بهت بگوییم.</p>
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <div class="relative w-full">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                            </div>
+                            <input type="number" id="etf-consumption-check-input" placeholder="مثلاً: 250" class="etf-form-input !pr-10">
+                        </div>
+                        <button id="etf-check-tier-btn" class="etf-btn etf-btn-primary whitespace-nowrap">بررسی کن</button>
+                    </div>
+                    <div id="etf-tier-check-result" class="mt-4 text-center font-semibold text-indigo-700 h-6"></div>
+                </div>
+
+                <div class="etf-card dash-card border-teal-500">
+                    <h3 class="text-lg font-bold mb-3 text-slate-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" /></svg>
+                        چطور به پله پایین‌تر برگردم؟
+                    </h3>
+                    <p class="text-slate-600">کاهش مصرف وسایل پرمصرف در ساعات اوج بار و استفاده از لامپ‌های LED، ساده‌ترین راه‌ها برای ورود به پله‌های ارزان‌تر است.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulator Tab -->
+        <div id="etf-simulator" class="etf-tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Input Form -->
+                <div class="lg:col-span-1 etf-card dash-card border-indigo-500">
+                    <h2 class="text-xl font-bold mb-6 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                        ۱. اطلاعات مصرف
+                    </h2>
+                    <div class="space-y-5">
+                        <div>
+                            <label for="etf-kwh-input" class="font-medium text-slate-700">کل مصرف دوره (kWh)</label>
+                            <div class="relative mt-1">
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                                </div>
+                                <input type="number" id="etf-kwh-input" class="etf-form-input !pr-10" placeholder="مثلاً: 350">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="etf-days-input" class="font-medium text-slate-700">تعداد روزهای دوره</label>
+                            <div class="relative mt-1">
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0h18M-4.5 12h22.5" /></svg>
+                                </div>
+                                <input type="number" id="etf-days-input" class="etf-form-input !pr-10" value="30">
+                            </div>
+                        </div>
+                         <div>
+                            <label for="etf-previous-balance" class="font-medium text-slate-700">بدهی/بستانکاری قبلی (ریال)</label>
+                            <div class="relative mt-1">
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a6 6 0 006 6h2.25a6 6 0 006-6v-2.25a6 6 0 00-6-6H8.25a6 6 0 00-6 6v2.25zM16.5 3.75a6 6 0 016 6v2.25a6 6 0 01-6 6h-2.25a6 6 0 01-6-6V9.75a6 6 0 016-6h2.25z" /></svg>
+                                </div>
+                                <input type="number" id="etf-previous-balance" class="etf-form-input !pr-10" value="0" placeholder="بدهی با منفی وارد شود">
+                            </div>
+                        </div>
+                        <button id="etf-calculate-btn" class="etf-btn etf-btn-primary w-full !mt-8">محاسبه قبض</button>
+                    </div>
+                </div>
+
+                <!-- Output Bill -->
+                <div class="lg:col-span-2">
+                    <div id="etf-bill-output-container" class="etf-card dash-card border-indigo-500 hidden">
+                         <div id="etf-bill-to-print" class="p-2">
+                            <h2 class="text-xl font-bold mb-6 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                ۲. قبض شبیه‌سازی شده شما
+                            </h2>
+                            <div class="space-y-4 border-t border-b border-slate-200 py-5">
+                                <div class="flex justify-between items-center"><span class="text-slate-600">بهای انرژی مصرفی:</span><span id="etf-energy-cost" class="font-bold text-lg text-slate-800">0 ریال</span></div>
+                                <div class="flex justify-between items-center"><span class="text-slate-600">آبونمان و هزینه ثابت:</span><span id="etf-fixed-cost" class="font-bold text-lg text-slate-800">0 ریال</span></div>
+                                <div class="flex justify-between items-center"><span class="text-slate-600">عوارض برق:</span><span id="etf-levies-cost" class="font-bold text-lg text-slate-800">0 ریال</span></div>
+                                <div class="flex justify-between items-center"><span class="text-slate-600">مالیات بر ارزش افزوده (۹٪):</span><span id="etf-vat-cost" class="font-bold text-lg text-slate-800">0 ریال</span></div>
+                                <div class="flex justify-between items-center text-sm pt-2 border-t border-dashed"><span class="text-slate-500">بدهی/بستانکاری قبلی:</span><span id="etf-prev-balance-display" class="font-semibold">0 ریال</span></div>
+                            </div>
+                            <div class="flex justify-between items-center mt-5 p-5 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl text-white shadow-xl">
+                                <span class="font-bold text-xl">مبلغ قابل پرداخت:</span>
+                                <span id="etf-total-bill" class="font-extrabold text-2xl">0 ریال</span>
+                            </div>
+                        </div>
+                        <button id="etf-download-pdf-btn" class="etf-btn etf-btn-secondary w-full mt-6">دانلود قبض (PDF)</button>
+                    </div>
+                    
+                    <!-- What if scenario -->
+                    <div id="etf-what-if-container" class="etf-card dash-card mt-8 hidden border-teal-500">
+                         <h3 class="text-lg font-bold mb-5 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            🎯 اگر مصرفم را کم کنم...
+                         </h3>
+                         <input type="range" id="etf-savings-slider" min="0" max="50" value="0" class="w-full">
+                         <div class="flex justify-between text-sm text-slate-500 mt-2">
+                             <span>۰٪</span>
+                             <span>۲۵٪</span>
+                             <span>۵۰٪</span>
+                         </div>
+                         <div id="etf-savings-result" class="mt-5 p-4 bg-teal-50 rounded-lg text-center hidden">
+                             <p>با کاهش <span id="etf-savings-percent" class="font-bold text-teal-800"></span>٪ مصرف:</p>
+                             <p class="mt-2">قبض جدید شما <span id="etf-new-bill-amount" class="font-bold text-teal-700 text-lg"></span> ریال می‌شود.</p>
+                             <p>و شما <span id="etf-savings-amount" class="font-bold text-teal-700 text-lg"></span> ریال صرفه‌جویی می‌کنید!</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Tab -->
+        <div id="etf-analysis" class="etf-tab-content hidden space-y-8">
+            <div class="etf-card dash-card border-indigo-500">
+                <h2 class="text-xl font-bold mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                    تحلیل الگوی مصرف شما
+                </h2>
+                <div class="space-y-4">
+                    <label for="etf-analysis-kwh-input" class="font-medium text-slate-700">کل مصرف ماهانه (kWh) خود را برای تحلیل وارد کنید:</label>
+                    <div class="flex items-center space-x-2 space-x-reverse">
+                        <div class="relative w-full">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                            </div>
+                            <input type="number" id="etf-analysis-kwh-input" class="etf-form-input !pr-10" placeholder="مثلاً: 450">
+                        </div>
+                        <button id="etf-analyze-btn" class="etf-btn etf-btn-primary whitespace-nowrap">تحلیل کن</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="etf-analysis-result-container" class="hidden space-y-8">
+                <div class="etf-card dash-card border-purple-500">
+                    <h3 class="text-lg font-bold mb-4">جایگاه مصرف شما</h3>
+                    <div class="w-full bg-slate-200 rounded-full h-8 overflow-hidden flex relative">
+                        <div class="bg-green-500 h-full flex items-center justify-center text-white font-bold w-33p">کم‌مصرف</div>
+                        <div class="bg-yellow-500 h-full flex items-center justify-center text-white font-bold w-33p">متوسط</div>
+                        <div class="bg-red-500 h-full flex items-center justify-center text-white font-bold w-33p">پرمصرف</div>
+                        <div id="etf-user-marker" class="absolute h-8 w-1 bg-slate-800 rounded-full transition-all duration-500 right-0">
+                            <div class="relative w-full h-full">
+                                <div class="absolute -top-8 right-1/2 transform translate-x-1/2 bg-slate-800 text-white text-sm font-bold px-2 py-1 rounded whitespace-nowrap">شما</div>
+                                <div class="absolute top-8 right-1/2 transform translate-x-1/2 border-4 border-t-slate-800 border-transparent"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="etf-analysis-text" class="mt-4 text-center text-slate-700 font-semibold"></p>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-center text-slate-800">راهکارهای هوشمند برای کاهش مصرف</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="etf-card dash-card border-cyan-500">
+                            <h4 class="font-bold text-lg mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                جادوی سرمایش بهینه
+                            </h4>
+                            <p class="text-slate-600 text-sm">تنظیم دمای کولر گازی روی ۲۴ تا ۲۶ درجه و سرویس سالیانه آن، می‌تواند تا ۱۵٪ مصرف سرمایشی شما را کاهش دهد.</p>
+                            <p class="text-center mt-4 font-bold text-cyan-600 bg-cyan-50 p-2 rounded-lg">صرفه‌جویی تا ۴۵۰٬۰۰۰ ریال در ماه</p>
+                        </div>
+                        <div class="etf-card dash-card border-amber-500">
+                            <h4 class="font-bold text-lg mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                روشنایی هوشمند
+                            </h4>
+                            <p class="text-slate-600 text-sm">جایگزین کردن لامپ‌های رشته‌ای قدیمی با لامپ‌های LED فوق کم‌مصرف، مصرف برق روشنایی را تا ۸۰٪ کاهش می‌دهد.</p>
+                            <p class="text-center mt-4 font-bold text-amber-600 bg-amber-50 p-2 rounded-lg">صرفه‌جویی تا ۲۰۰٬۰۰۰ ریال در ماه</p>
+                        </div>
+                        <div class="etf-card dash-card border-rose-500">
+                            <h4 class="font-bold text-lg mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                                خاموشی دزدان برق
+                            </h4>
+                            <p class="text-slate-600 text-sm">کشیدن وسایلی مثل تلویزیون و شارژرها از برق در زمان عدم استفاده، جلوی مصرف حالت آماده‌به‌کار (Standby) را می‌گیرد.</p>
+                            <p class="text-center mt-4 font-bold text-rose-600 bg-rose-50 p-2 rounded-lg">صرفه‌جویی تا ۱۵۰٬۰۰۰ ریال در ماه</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="mt-12 text-center text-sm text-slate-500 border-t pt-6">
+        <p>⚠️ هشدار دوستانه: اعداد این صفحه راهنمای عمومی‌اند و ممکن است بسته به مقررات روز و منطقه شما فرق داشته باشند.</p>
+    </div>
+</div>
+</body>
+</html>

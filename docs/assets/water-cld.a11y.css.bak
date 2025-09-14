@@ -1,0 +1,57 @@
+/* ===== A11Y & Mobile (RTL + Dark), non-invasive ===== */
+:root{
+  --a11y-ring: #9fd5cd;         /* رنگ حلقه فوکوس با کنتراست بالا */
+  --a11y-ring-bg: #0a1f1d;      /* پس‌زمینهٔ تیره طبیعی پروژه */
+  --a11y-outline-w: 3px;        /* ضخامت حلقهٔ فوکوس */
+  --a11y-min-touch: 44px;       /* حداقل سایز لمس مطابق WCAG */
+}
+
+/* Skip link */
+.a11y-skiplink{
+  position: fixed; inset-inline-start: 8px; top: 8px; z-index: 9999;
+  background: #16312d; color: #e9f3f0; border: 1px solid #1f413c; border-radius: 10px;
+  padding: 6px 10px; font-size: 12px; text-decoration: none;
+  transform: translateY(-140%); transition: transform .12s ease-out;
+}
+.a11y-skiplink:focus{ transform: translateY(0); outline: var(--a11y-outline-w) solid var(--a11y-ring); outline-offset: 2px }
+
+/* Focus ring (به‌صورت افزایشی، بدون دست‌کاری استایل‌های فعلی) */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, [role="button"]:focus-visible, [tabindex]:focus-visible {
+  outline: var(--a11y-outline-w) solid var(--a11y-ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px rgba(159,213,205,.25);
+}
+
+/* حالت‌های Hover/Disabled با کنتراست بهتر (ملایم و افزایشی) */
+button:hover, .btn-soft:hover { border-color: rgba(255,255,255,.35) }
+button[disabled], .btn-soft[disabled]{ opacity:.6; cursor: not-allowed }
+
+/* کلاس کمک برای عناصر کوچک: افزایش سایز لمس بدون برهم‌زدن layout */
+.a11y-touch { min-width: var(--a11y-min-touch); min-height: var(--a11y-min-touch); }
+.a11y-touch.round { border-radius: 999px }
+
+/* متن مخفی برای Screen Reader */
+.sr-only{
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* بهبود کنتراست لینک‌ها */
+a { text-underline-offset: 2px }
+a:focus-visible { text-decoration-thickness: 2px }
+
+/* Cytoscape container (اگر فوکوس بگیرد) */
+.cy-a11y-focus:focus-visible {
+  outline: var(--a11y-outline-w) solid var(--a11y-ring) !important;
+  outline-offset: 2px !important;
+}
+
+/* احترام به ترجیحات کاربر */
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important }
+}
+@media (prefers-contrast: more){
+  :root{ --a11y-outline-w: 4px }
+}
+

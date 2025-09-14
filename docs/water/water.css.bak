@@ -1,0 +1,174 @@
+/* ===== Base (desktop) styles ===== */
+body { background-color: #f0f4f8; }
+
+.main-title { font-weight: 800; color: #1e3a8a; }
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.footprint-card {
+  background-color: #FFFBEA;
+  border: 1px solid #F5EAC2;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.simulator-card {
+  background-color: #E6FAF0;
+  border: 1px solid #C8EEDA;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.water-drop-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.water-drop-background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #3b82f6;
+  border-radius: 0 0 50px 50px;
+  transition: height 1s ease-out;
+}
+
+.water-drop-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 192 0s19.4 4.2 25.4 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192z"/></svg>');
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 192 0s19.4 4.2 25.4 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192z"/></svg>');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: #e0e0e0;
+}
+
+.days-left-card { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; }
+
+.rain-bar {
+  background-color: #93c5fd;
+  border-radius: .5rem;
+  position: relative;
+}
+
+.rain-bar-fill {
+  background-color: #1d4ed8;
+  border-radius: .5rem;
+  transition: height 1s ease-out;
+}
+
+.btn-gemini {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  transition: all .3s ease;
+}
+
+.btn-gemini:hover { box-shadow: 0 0 20px rgba(79, 70, 229, .5); }
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #d1d5db;
+  border-radius: 5px;
+  outline: none;
+  opacity: .7;
+  transition: opacity .2s;
+}
+
+input[type=range]:hover { opacity: 1; }
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #3b82f6;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #3b82f6;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+}
+
+#out-footprint,
+#water-result,
+#simulate-result,
+#solution-result {
+  margin-top: .75rem;
+  line-height: 1.9;
+  font-size: .9rem;
+}
+
+.site-logo {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 150px;
+  height: auto;
+  max-width: 150px;
+  max-height: 150px;
+  z-index: 1000;
+}
+
+/* ===== Mobile overrides ===== */
+@media (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .site-logo {
+    position: static;
+    margin: 10px auto;
+    width: 35vw;
+    max-width: 120px;
+  }
+
+  .water-drop-container {
+    width: 35vw;
+    height: 35vw;
+    max-width: 120px;
+    max-height: 120px;
+  }
+}
+

@@ -1,0 +1,1029 @@
+[
+  {
+    "path": "docs/agrivoltaics/app.js",
+    "size": 44722,
+    "lines": 906,
+    "modified": "2025-09-14T03:35:15.762519Z",
+    "sha256": "4a50072e49cc34b419db16145c6684eec1aae152a3ec5300ebd22cde7e973c33",
+    "backup": {
+      "created": true,
+      "path": "docs/agrivoltaics/app.js.bak",
+      "sha256": "4a50072e49cc34b419db16145c6684eec1aae152a3ec5300ebd22cde7e973c33",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/agrivoltaics/app.jsx",
+    "size": 34467,
+    "lines": 493,
+    "modified": "2025-09-14T03:35:15.762519Z",
+    "sha256": "acaacb4b1a9a54330d2ae7b45e897a5a649b185e6a9083089b3ea63e0cb47c1e",
+    "backup": {
+      "created": true,
+      "path": "docs/agrivoltaics/app.jsx.bak",
+      "sha256": "acaacb4b1a9a54330d2ae7b45e897a5a649b185e6a9083089b3ea63e0cb47c1e",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/agrivoltaics/index.dev.html",
+    "size": 32828,
+    "lines": 475,
+    "modified": "2025-09-14T03:35:15.762519Z",
+    "sha256": "b8653dab75058d3997db3485f7e7b2f56f8d9eab09b67d6dd00c2f3a7f1639dc",
+    "backup": {
+      "created": true,
+      "path": "docs/agrivoltaics/index.dev.html.bak",
+      "sha256": "b8653dab75058d3997db3485f7e7b2f56f8d9eab09b67d6dd00c2f3a7f1639dc",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/app.js",
+    "size": 15837,
+    "lines": 350,
+    "modified": "2025-09-14T03:35:15.766519Z",
+    "sha256": "8dde53d08148e50f7ee1f900e9bc465559234ab7f74ff61f36b2e479b4aaef93",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/app.js.bak",
+      "sha256": "8dde53d08148e50f7ee1f900e9bc465559234ab7f74ff61f36b2e479b4aaef93",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/chart.guard.js",
+    "size": 1791,
+    "lines": 48,
+    "modified": "2025-09-14T03:35:15.766519Z",
+    "sha256": "77dc76f13cb57b19648333142761442ffd9e962d14cd9815a0b56d3f597de239",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/chart.guard.js.bak",
+      "sha256": "77dc76f13cb57b19648333142761442ffd9e962d14cd9815a0b56d3f597de239",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld-loader.js",
+    "size": 3606,
+    "lines": 90,
+    "modified": "2025-09-14T03:35:15.766519Z",
+    "sha256": "96c138abdc33e0c82364e929c38a11d130632eaf3f3d4375e5ec4025c307ace6",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld-loader.js.bak",
+      "sha256": "96c138abdc33e0c82364e929c38a11d130632eaf3f3d4375e5ec4025c307ace6",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld-mapper.js",
+    "size": 4639,
+    "lines": 104,
+    "modified": "2025-09-14T03:35:15.766519Z",
+    "sha256": "9ed29f967e0b9109f52e72cb772411a2afc1515ea9c902d7fa4d0e65e5ac2333",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld-mapper.js.bak",
+      "sha256": "9ed29f967e0b9109f52e72cb772411a2afc1515ea9c902d7fa4d0e65e5ac2333",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/globals.d.ts",
+    "size": 185,
+    "lines": 6,
+    "modified": "2025-09-14T03:35:15.766519Z",
+    "sha256": "d8eaa1a48141c2eae26dd54b08a64b1f26dff5d6eee5c7d26d8d0136da7f3056",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/globals.d.ts.bak",
+      "sha256": "d8eaa1a48141c2eae26dd54b08a64b1f26dff5d6eee5c7d26d8d0136da7f3056",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/guards/batch-guard.js",
+    "size": 1763,
+    "lines": 48,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "8516c76608be7d0e338d49d5988e7104cf9783171391710370ae07607184a16b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/guards/batch-guard.js.bak",
+      "sha256": "8516c76608be7d0e338d49d5988e7104cf9783171391710370ae07607184a16b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/guards/collection-guard.js",
+    "size": 5676,
+    "lines": 153,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "3413d710364770fdefa5aa3ef276083b8cc988de267a20cc661a3e75d829e99b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/guards/collection-guard.js.bak",
+      "sha256": "3413d710364770fdefa5aa3ef276083b8cc988de267a20cc661a3e75d829e99b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/index.js",
+    "size": 5950,
+    "lines": 158,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "decbe1363e2f123ad0b03bf928275e4f393614c81e7b5c3fa68944d8d56ad538",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/index.js.bak",
+      "sha256": "decbe1363e2f123ad0b03bf928275e4f393614c81e7b5c3fa68944d8d56ad538",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/kernel/adapter.js",
+    "size": 799,
+    "lines": 29,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "c56ea1ed974a626bc45800ea4b82a918eca79e88101aaa2dce6c5553ec486674",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/kernel/adapter.js.bak",
+      "sha256": "c56ea1ed974a626bc45800ea4b82a918eca79e88101aaa2dce6c5553ec486674",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/kernel/shim.js",
+    "size": 4505,
+    "lines": 123,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "a9d7e55c8cb4cfcb502076c863e6711d8e036dd6fd6b08255b38b3c6e7ee2da6",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/kernel/shim.js.bak",
+      "sha256": "a9d7e55c8cb4cfcb502076c863e6711d8e036dd6fd6b08255b38b3c6e7ee2da6",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/layout.js",
+    "size": 1493,
+    "lines": 50,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "32223be8eef5281a982df0c59a8b694e01d6f08d3b820ba3b87a29f420c44858",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/layout.js.bak",
+      "sha256": "32223be8eef5281a982df0c59a8b694e01d6f08d3b820ba3b87a29f420c44858",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/mapper.js",
+    "size": 2835,
+    "lines": 64,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "da0ca8c7d727838acd91deec064b1b396e33d1c9948fe76ffb8a595a56b7f762",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/mapper.js.bak",
+      "sha256": "da0ca8c7d727838acd91deec064b1b396e33d1c9948fe76ffb8a595a56b7f762",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/store.js",
+    "size": 5415,
+    "lines": 155,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "ce1baa4236fcbb5d59138cfe1970301de598974e284d9d2af5400f09130c4b37",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/store.js.bak",
+      "sha256": "ce1baa4236fcbb5d59138cfe1970301de598974e284d9d2af5400f09130c4b37",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/core/validate.js",
+    "size": 1964,
+    "lines": 48,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "e859df42918f24e105b69b9222d07323473fa1fa8bd0ff4bf838ac22176dd850",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/core/validate.js.bak",
+      "sha256": "e859df42918f24e105b69b9222d07323473fa1fa8bd0ff4bf838ac22176dd850",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/loader/init.js",
+    "size": 2263,
+    "lines": 45,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "0e65b86ceb5b273b57f2575895c3771d0d12da5a1777ccac0a0a0be349458466",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/loader/init.js.bak",
+      "sha256": "0e65b86ceb5b273b57f2575895c3771d0d12da5a1777ccac0a0a0be349458466",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/loader/model-fetch.js",
+    "size": 1741,
+    "lines": 55,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "5de978d77bf3cc5fc5769533bfd40a61f32b230f3fe2d3c926dadf5a70903ffc",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/loader/model-fetch.js.bak",
+      "sha256": "5de978d77bf3cc5fc5769533bfd40a61f32b230f3fe2d3c926dadf5a70903ffc",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/loader/paths.js",
+    "size": 12592,
+    "lines": 311,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "51d9fa83c608476fafe97269f27e37d663bf0b006c746d26259478e29d3e7dbd",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/loader/paths.js.bak",
+      "sha256": "51d9fa83c608476fafe97269f27e37d663bf0b006c746d26259478e29d3e7dbd",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/loader/runtime-guards.js",
+    "size": 1309,
+    "lines": 30,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "e8baef35828507fe62790102193657368fcf1ede24e5d8e08314d157533f6300",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/loader/runtime-guards.js.bak",
+      "sha256": "e8baef35828507fe62790102193657368fcf1ede24e5d8e08314d157533f6300",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/page-model-load.js",
+    "size": 347,
+    "lines": 9,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "2670791ea58ab3360416311166e23b5edb60a68fdbfcec2dc4036a1929c6a730",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/page-model-load.js.bak",
+      "sha256": "2670791ea58ab3360416311166e23b5edb60a68fdbfcec2dc4036a1929c6a730",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/page-probe.js",
+    "size": 757,
+    "lines": 15,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "b0aa3951422188a39f309db226f7b6fba064e58a1a95d57c9f30a968dcfa3d4d",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/page-probe.js.bak",
+      "sha256": "b0aa3951422188a39f309db226f7b6fba064e58a1a95d57c9f30a968dcfa3d4d",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/ui/bridge-init.js",
+    "size": 5511,
+    "lines": 113,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "8d1611c6b57bc607089fb6da652d1cbf384614408e6c8415e4e7df489f1e281b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/ui/bridge-init.js.bak",
+      "sha256": "8d1611c6b57bc607089fb6da652d1cbf384614408e6c8415e4e7df489f1e281b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/cld/ui/controls.js",
+    "size": 815,
+    "lines": 14,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "4c09a4868be05d2c0755a61c7366e18bad35cf16b777f5f4e79c06de48201cb2",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/cld/ui/controls.js.bak",
+      "sha256": "4c09a4868be05d2c0755a61c7366e18bad35cf16b777f5f4e79c06de48201cb2",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/css/map-inline.css",
+    "size": 1928,
+    "lines": 41,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "97c35dc318e66faabd738c4bf3fbbf4d3ff5017507acf8f658cab7903b230be4",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/css/map-inline.css.bak",
+      "sha256": "97c35dc318e66faabd738c4bf3fbbf4d3ff5017507acf8f658cab7903b230be4",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/date-badge.css",
+    "size": 375,
+    "lines": 9,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "5c849f49f793d6e1afd495dbd418da1732187124beb7cb6cdb4b37933530a033",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/date-badge.css.bak",
+      "sha256": "5c849f49f793d6e1afd495dbd418da1732187124beb7cb6cdb4b37933530a033",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/debug/sentinel.js",
+    "size": 2718,
+    "lines": 65,
+    "modified": "2025-09-14T03:35:15.770519Z",
+    "sha256": "0a6058817544c74f5d2f3ce2e68f64ef315dc42ceb24f54440875a8884cc01b7",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/debug/sentinel.js.bak",
+      "sha256": "0a6058817544c74f5d2f3ce2e68f64ef315dc42ceb24f54440875a8884cc01b7",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/electricity-quality.js",
+    "size": 13021,
+    "lines": 204,
+    "modified": "2025-09-14T03:35:15.774519Z",
+    "sha256": "17748be2127dd67062fe3045d451a12566d57efce00f6812baafbaee838b5a2b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/electricity-quality.js.bak",
+      "sha256": "17748be2127dd67062fe3045d451a12566d57efce00f6812baafbaee838b5a2b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/inline-migration.css",
+    "size": 3447,
+    "lines": 55,
+    "modified": "2025-09-14T03:35:15.774519Z",
+    "sha256": "04ae7227929ac8a92ddfb2a4e383774eba22bd5dc4ad287f07d814ef9957a56e",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/inline-migration.css.bak",
+      "sha256": "04ae7227929ac8a92ddfb2a4e383774eba22bd5dc4ad287f07d814ef9957a56e",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/js/amaayesh-map.js",
+    "size": 99331,
+    "lines": 2278,
+    "modified": "2025-09-14T03:35:15.774519Z",
+    "sha256": "4a8a8775f969e091f3d3126c5498ecafe2de6dbd10d05823002bfc919d4bd42d",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/js/amaayesh-map.js.bak",
+      "sha256": "4a8a8775f969e091f3d3126c5498ecafe2de6dbd10d05823002bfc919d4bd42d",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/js/gas-fuel-carbon.js",
+    "size": 8454,
+    "lines": 207,
+    "modified": "2025-09-14T03:35:15.774519Z",
+    "sha256": "c31dcc2ef3c28c29313870fe0b30987f9267203a9b1030e9a8b1c4f2e4608644",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/js/gas-fuel-carbon.js.bak",
+      "sha256": "c31dcc2ef3c28c29313870fe0b30987f9267203a9b1030e9a8b1c4f2e4608644",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/layout-presets.js",
+    "size": 1994,
+    "lines": 54,
+    "modified": "2025-09-14T03:35:15.774519Z",
+    "sha256": "883a62b33e92145fee8a5b647e5b7cd3550ee9fa38ea6444f4a2305f822aab14",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/layout-presets.js.bak",
+      "sha256": "883a62b33e92145fee8a5b647e5b7cd3550ee9fa38ea6444f4a2305f822aab14",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/model-bridge.js",
+    "size": 5400,
+    "lines": 130,
+    "modified": "2025-09-14T03:35:15.778519Z",
+    "sha256": "07e1e78cda0f899f79a2ba3993a162433eec60458ff6b5ecc4b5c5c732aab8b4",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/model-bridge.js.bak",
+      "sha256": "07e1e78cda0f899f79a2ba3993a162433eec60458ff6b5ecc4b5c5c732aab8b4",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/power-tariff.js",
+    "size": 7279,
+    "lines": 176,
+    "modified": "2025-09-14T03:35:15.778519Z",
+    "sha256": "d6407e49b38987e053c58856d3740f8f842e497b0be83165843f94db773878be",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/power-tariff.js.bak",
+      "sha256": "d6407e49b38987e053c58856d3740f8f842e497b0be83165843f94db773878be",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/shamsi-date.js",
+    "size": 1841,
+    "lines": 50,
+    "modified": "2025-09-14T03:35:15.778519Z",
+    "sha256": "63c7ecc0cf7937cb6ec628992c0c19d694a6d6ce0ad94e81e2a8b83b461bede2",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/shamsi-date.js.bak",
+      "sha256": "63c7ecc0cf7937cb6ec628992c0c19d694a6d6ce0ad94e81e2a8b83b461bede2",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/sim-worker.js",
+    "size": 4959,
+    "lines": 154,
+    "modified": "2025-09-14T03:35:15.778519Z",
+    "sha256": "438935547ff44eb543f3392e46a94ea6f9a9e2549789e456d1eeae05f9c098af",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/sim-worker.js.bak",
+      "sha256": "438935547ff44eb543f3392e46a94ea6f9a9e2549789e456d1eeae05f9c098af",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.a11y.css",
+    "size": 2521,
+    "lines": 57,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "39ed180d6da3338d41778e904f36472179b265990652b24e320365328ab5a16d",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.a11y.css.bak",
+      "sha256": "39ed180d6da3338d41778e904f36472179b265990652b24e320365328ab5a16d",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.a11y.js",
+    "size": 5841,
+    "lines": 132,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "4825d931ad3f6ab1465d6f7e5cbd57c696152bb639b59123c6803df039e1c402",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.a11y.js.bak",
+      "sha256": "4825d931ad3f6ab1465d6f7e5cbd57c696152bb639b59123c6803df039e1c402",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.aha-metrics.js",
+    "size": 1128,
+    "lines": 15,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "af9691164f5da9f62a0e7950ee5c55cc275f7dae8122d6026bc42d9f40c87bbc",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.aha-metrics.js.bak",
+      "sha256": "af9691164f5da9f62a0e7950ee5c55cc275f7dae8122d6026bc42d9f40c87bbc",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.aha.js",
+    "size": 9958,
+    "lines": 231,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "8a4a83ac07c6d733de5a150030d97fdf8783cc67e007ba9902577f865937acbf",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.aha.js.bak",
+      "sha256": "8a4a83ac07c6d733de5a150030d97fdf8783cc67e007ba9902577f865937acbf",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.controls-meta.js",
+    "size": 8739,
+    "lines": 217,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "744353b9fbeb8b78348f1c4aa2e4db468950893e4e71ef5c2261eaa3eebf699b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.controls-meta.js.bak",
+      "sha256": "744353b9fbeb8b78348f1c4aa2e4db468950893e4e71ef5c2261eaa3eebf699b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.css",
+    "size": 9982,
+    "lines": 231,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "2132889625c4a8c7cb480da2935bcbfb3482364e9a50673bd1910a983d97a087",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.css.bak",
+      "sha256": "2132889625c4a8c7cb480da2935bcbfb3482364e9a50673bd1910a983d97a087",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.cy-addclass-patch.js",
+    "size": 904,
+    "lines": 30,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "c399002dcafb043329919d6fd220d9115d759360a1fd28f648492c45dfb88e65",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.cy-addclass-patch.js.bak",
+      "sha256": "c399002dcafb043329919d6fd220d9115d759360a1fd28f648492c45dfb88e65",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.cy-alias.js",
+    "size": 1471,
+    "lines": 39,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "eb38b58984ab13904e7c451197ec445c6d5eefa0ab7c83b6acee5607a646999b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.cy-alias.js.bak",
+      "sha256": "eb38b58984ab13904e7c451197ec445c6d5eefa0ab7c83b6acee5607a646999b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.cy-safe-add.js",
+    "size": 5956,
+    "lines": 173,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "21c331f0619bc3658810cdf4f24f62b306b977955d8cb18899c8db6f8b7ba420",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.cy-safe-add.js.bak",
+      "sha256": "21c331f0619bc3658810cdf4f24f62b306b977955d8cb18899c8db6f8b7ba420",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.cy-stub.js",
+    "size": 6023,
+    "lines": 160,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "03cf3b0606470695f06a5efbf7f9bc7ec7189c3c31937404ccc501817002a383",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.cy-stub.js.bak",
+      "sha256": "03cf3b0606470695f06a5efbf7f9bc7ec7189c3c31937404ccc501817002a383",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.defer.js",
+    "size": 1362,
+    "lines": 35,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "5ae8037fdcb3c509bde831187b70881186ef3e315019997cd074d20874a6a2d3",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.defer.js.bak",
+      "sha256": "5ae8037fdcb3c509bde831187b70881186ef3e315019997cd074d20874a6a2d3",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.delta-kpi.js",
+    "size": 2376,
+    "lines": 22,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "89dd8c0a906990dd2556889e938ccc2379bd4fdfe3c72cca69cd40a8d1217f26",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.delta-kpi.js.bak",
+      "sha256": "89dd8c0a906990dd2556889e938ccc2379bd4fdfe3c72cca69cd40a8d1217f26",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.explain-10s.js",
+    "size": 1736,
+    "lines": 38,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "db1787134c539efd2695d53ab03d7b93680bff4e04fdcef44f26c8ffa17b866d",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.explain-10s.js.bak",
+      "sha256": "db1787134c539efd2695d53ab03d7b93680bff4e04fdcef44f26c8ffa17b866d",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.extras-controls.js",
+    "size": 5981,
+    "lines": 131,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "c85f3b7ecdfec98b0baac8bc9e120cec309eee036e5a2c67711e6002ac446469",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.extras-controls.js.bak",
+      "sha256": "c85f3b7ecdfec98b0baac8bc9e120cec309eee036e5a2c67711e6002ac446469",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.extras-hero.js",
+    "size": 4411,
+    "lines": 112,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "362d527c13c245b59f5c15fb989f868776c67e9f62426f4ea18f02d3a7fe91da",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.extras-hero.js.bak",
+      "sha256": "362d527c13c245b59f5c15fb989f868776c67e9f62426f4ea18f02d3a7fe91da",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.extras-readability.js",
+    "size": 7777,
+    "lines": 168,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "7fd439def11d2b2e603ab9258991e5dceb33fd70de846ee223374b508d4ed5a9",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.extras-readability.js.bak",
+      "sha256": "7fd439def11d2b2e603ab9258991e5dceb33fd70de846ee223374b508d4ed5a9",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.fix-hints.js",
+    "size": 3405,
+    "lines": 92,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "ca4212aa41aa15a21a8eec68b7343f1a7d70fc48994afdeac189820db0ae5648",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.fix-hints.js.bak",
+      "sha256": "ca4212aa41aa15a21a8eec68b7343f1a7d70fc48994afdeac189820db0ae5648",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.ghost-delta.js",
+    "size": 1876,
+    "lines": 25,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "04e9316a54152bb7d93fdd9770ebdb5e2078edef63f87895cd229b2c1df2270f",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.ghost-delta.js.bak",
+      "sha256": "04e9316a54152bb7d93fdd9770ebdb5e2078edef63f87895cd229b2c1df2270f",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.init.js",
+    "size": 11520,
+    "lines": 255,
+    "modified": "2025-09-14T03:35:15.810518Z",
+    "sha256": "23c455a2162833496779ab6a0eeb8943eebd8d7c1c5daaa08644681700cb41ac",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.init.js.bak",
+      "sha256": "23c455a2162833496779ab6a0eeb8943eebd8d7c1c5daaa08644681700cb41ac",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.js",
+    "size": 72346,
+    "lines": 1739,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "aa0d34920bab89a65ec2e5a538137575b1bf93c4552421b6e7ade442e4e1b652",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.js.bak",
+      "sha256": "aa0d34920bab89a65ec2e5a538137575b1bf93c4552421b6e7ade442e4e1b652",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.kernel.js",
+    "size": 3309,
+    "lines": 96,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "885f30e355698977dec2523fa2a6bc23f2da911b8273d3d2b04040a724a22522",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.kernel.js.bak",
+      "sha256": "885f30e355698977dec2523fa2a6bc23f2da911b8273d3d2b04040a724a22522",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.param-chips.js",
+    "size": 1227,
+    "lines": 10,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "42fbfb51a8356b0dbf83c2193a1d3e9f0675a0b8542f835ece6fc17579032906",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.param-chips.js.bak",
+      "sha256": "42fbfb51a8356b0dbf83c2193a1d3e9f0675a0b8542f835ece6fc17579032906",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.presets.js",
+    "size": 8664,
+    "lines": 212,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "af6702da960a2ebc6ee9c1d98b4695521efe62c0a04749d18dd214e39dfc98f0",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.presets.js.bak",
+      "sha256": "af6702da960a2ebc6ee9c1d98b4695521efe62c0a04749d18dd214e39dfc98f0",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.provenance.js",
+    "size": 12373,
+    "lines": 275,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "deae5ec8ff707ccb508e95fe882536c15fe0e9fd7deb4019e562ba030c4964a7",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.provenance.js.bak",
+      "sha256": "deae5ec8ff707ccb508e95fe882536c15fe0e9fd7deb4019e562ba030c4964a7",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.quick-preset.js",
+    "size": 1886,
+    "lines": 21,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "3ff6ad062a1db46d1bdd5b798aeb9e5e17711c9d1ff311af5d01d5a917545354",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.quick-preset.js.bak",
+      "sha256": "3ff6ad062a1db46d1bdd5b798aeb9e5e17711c9d1ff311af5d01d5a917545354",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.scenarios.js",
+    "size": 14573,
+    "lines": 304,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "6dabf1f3974ee8b9e0ad3e9432436f02842c6dcb0ee07a03d3beeb305d48906b",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.scenarios.js.bak",
+      "sha256": "6dabf1f3974ee8b9e0ad3e9432436f02842c6dcb0ee07a03d3beeb305d48906b",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.spotlight.js",
+    "size": 261,
+    "lines": 4,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "9ab941d5da3eed51509d16add5f9481f9854b5c818fd3e616b5302d9c07c4dc2",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.spotlight.js.bak",
+      "sha256": "9ab941d5da3eed51509d16add5f9481f9854b5c818fd3e616b5302d9c07c4dc2",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cld.tour.js",
+    "size": 7656,
+    "lines": 186,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "b5f5250f8c0d7347b1e9f8b89cb9cd54be0c10fb42b63094e744d83574efebf9",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cld.tour.js.bak",
+      "sha256": "b5f5250f8c0d7347b1e9f8b89cb9cd54be0c10fb42b63094e744d83574efebf9",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cost-calculator.js",
+    "size": 5787,
+    "lines": 137,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "5f93791016209d44188b98db8ee53456bb910e47bee2f11f94eb5a9a7a4cd796",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cost-calculator.js.bak",
+      "sha256": "5f93791016209d44188b98db8ee53456bb910e47bee2f11f94eb5a9a7a4cd796",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-cost.js",
+    "size": 5294,
+    "lines": 133,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "63b5e1a91d9bbf87cbc2b963bbc1e06d5cdf0184b7909ad5f2293dd7949687b5",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-cost.js.bak",
+      "sha256": "63b5e1a91d9bbf87cbc2b963bbc1e06d5cdf0184b7909ad5f2293dd7949687b5",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-insights.js",
+    "size": 9493,
+    "lines": 263,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "78c7c88018e062fa710db22513e59ab89ff124f4757e464c5f5e7cc71d6c8d56",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-insights.js.bak",
+      "sha256": "78c7c88018e062fa710db22513e59ab89ff124f4757e464c5f5e7cc71d6c8d56",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/assets/water-sfd.js",
+    "size": 2664,
+    "lines": 86,
+    "modified": "2025-09-14T03:35:15.814518Z",
+    "sha256": "9fb4fb682156f1618131bb01a6264d0b4fa59718876730138c2d001db8f677e6",
+    "backup": {
+      "created": true,
+      "path": "docs/assets/water-sfd.js.bak",
+      "sha256": "9fb4fb682156f1618131bb01a6264d0b4fa59718876730138c2d001db8f677e6",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/electricity/power-tariff.html",
+    "size": 21686,
+    "lines": 250,
+    "modified": "2025-09-14T03:35:15.862518Z",
+    "sha256": "239ca7f2636f0fbde09b041f08f51bd7750c26d2d64943bb6a87e63e70e090d5",
+    "backup": {
+      "created": true,
+      "path": "docs/electricity/power-tariff.html.bak",
+      "sha256": "239ca7f2636f0fbde09b041f08f51bd7750c26d2d64943bb6a87e63e70e090d5",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/index.html",
+    "size": 25474,
+    "lines": 248,
+    "modified": "2025-09-14T03:35:15.866518Z",
+    "sha256": "2611a8d911c6bce424eb584de4db7b4a9bbf24d06b38d4c67386119bc3131f28",
+    "backup": {
+      "created": true,
+      "path": "docs/index.html.bak",
+      "sha256": "2611a8d911c6bce424eb584de4db7b4a9bbf24d06b38d4c67386119bc3131f28",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/test/water-cld.html",
+    "size": 15581,
+    "lines": 297,
+    "modified": "2025-09-14T03:35:15.898517Z",
+    "sha256": "b27bdbc9e4233e0005d83db0475acb1a4413771bb1be6c0fdea198be6827c950",
+    "backup": {
+      "created": true,
+      "path": "docs/test/water-cld.html.bak",
+      "sha256": "b27bdbc9e4233e0005d83db0475acb1a4413771bb1be6c0fdea198be6827c950",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/water/cld/index.html",
+    "size": 14293,
+    "lines": 260,
+    "modified": "2025-09-14T03:35:15.906518Z",
+    "sha256": "cb057d3059baee6b0a99d06a6b68172d8fff600ac0a44d5f74e0af564639d10a",
+    "backup": {
+      "created": true,
+      "path": "docs/water/cld/index.html.bak",
+      "sha256": "cb057d3059baee6b0a99d06a6b68172d8fff600ac0a44d5f74e0af564639d10a",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/water/hub.html",
+    "size": 6025,
+    "lines": 70,
+    "modified": "2025-09-14T03:35:15.906518Z",
+    "sha256": "0edad60ba165d366c427e54772eb8713e369b14fa341de16ba200447676249cd",
+    "backup": {
+      "created": true,
+      "path": "docs/water/hub.html.bak",
+      "sha256": "0edad60ba165d366c427e54772eb8713e369b14fa341de16ba200447676249cd",
+      "action": "created"
+    }
+  },
+  {
+    "path": "docs/water/water.css",
+    "size": 3688,
+    "lines": 174,
+    "modified": "2025-09-14T03:35:15.906518Z",
+    "sha256": "b9fc29bbd8471c64e610105c45c38243ee0f71f9b6d1a434d37c8797c2547510",
+    "backup": {
+      "created": true,
+      "path": "docs/water/water.css.bak",
+      "sha256": "b9fc29bbd8471c64e610105c45c38243ee0f71f9b6d1a434d37c8797c2547510",
+      "action": "created"
+    }
+  },
+  {
+    "path": "scripts/build-cld.js",
+    "size": 3751,
+    "lines": 98,
+    "modified": "2025-09-14T03:35:15.906518Z",
+    "sha256": "14ebb7aed031582beeb82f5d9a1667d2121a27f2a86690db5edbed17d336210a",
+    "backup": {
+      "created": true,
+      "path": "scripts/build-cld.js.bak",
+      "sha256": "14ebb7aed031582beeb82f5d9a1667d2121a27f2a86690db5edbed17d336210a",
+      "action": "created"
+    }
+  },
+  {
+    "path": "tools/check-cld-html.sh",
+    "size": 1286,
+    "lines": 48,
+    "modified": "2025-09-14T03:35:15.910517Z",
+    "sha256": "bf3e8881d736a8bfd315a242669e87e60d26a84fbc07dd6753afcfbaf566aaf9",
+    "backup": {
+      "created": true,
+      "path": "tools/check-cld-html.sh.bak",
+      "sha256": "bf3e8881d736a8bfd315a242669e87e60d26a84fbc07dd6753afcfbaf566aaf9",
+      "action": "created"
+    }
+  },
+  {
+    "path": "tools/check-inline-scripts.js",
+    "size": 1039,
+    "lines": 37,
+    "modified": "2025-09-14T03:35:15.910517Z",
+    "sha256": "d7f26bc3b8f2addbc9244e1370af95b5a7a8c5e84e8ad303cf6f4f83a35682fc",
+    "backup": {
+      "created": true,
+      "path": "tools/check-inline-scripts.js.bak",
+      "sha256": "d7f26bc3b8f2addbc9244e1370af95b5a7a8c5e84e8ad303cf6f4f83a35682fc",
+      "action": "created"
+    }
+  },
+  {
+    "path": "tools/dev-serve.js",
+    "size": 3039,
+    "lines": 97,
+    "modified": "2025-09-14T03:35:15.910517Z",
+    "sha256": "e18710f655d18a23850dc497418182ed640e4d95cd316f2c8bc7962ddf7e35f9",
+    "backup": {
+      "created": true,
+      "path": "tools/dev-serve.js.bak",
+      "sha256": "e18710f655d18a23850dc497418182ed640e4d95cd316f2c8bc7962ddf7e35f9",
+      "action": "created"
+    }
+  }
+]

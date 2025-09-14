@@ -1,0 +1,9 @@
+.date-badge { display:flex; justify-content:flex-start; }
+.date-chip{
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.28rem .7rem; border-radius:999px;
+  font-size:.78rem; font-weight:700; line-height:1;
+  color:#091220; background:linear-gradient(135deg,#22d3ee,#a78bfa);
+  box-shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.date-badge-mounted{ margin-top:.5rem; }

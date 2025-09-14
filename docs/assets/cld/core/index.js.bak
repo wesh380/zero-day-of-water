@@ -1,0 +1,158 @@
+// @ts-nocheck
+/** @typedef {import('./types').CLDNode} CLDNode */
+/** @typedef {import('./types').CLDEdge} CLDEdge */
+/* UMD-safe CLD Core Facade (no ES exports) */
+/** @param {any} global */
+(function(global){
+  // deps expected: validate.js, mapper.js, inject.js already loaded
+  /** @type {any} */
+  var _cy = null;
+
+  /** @param {any} el @returns {any[]} */
+  function _coerce(el){
+    try {
+      if (global.CLD_CORE && typeof global.CLD_CORE._coerceElements==='function')
+        return global.CLD_CORE._coerceElements(el);
+    } catch(_){}
+    if (!el) return [];
+    if (Array.isArray(el)) return el;
+    if (el.elements && (el.elements.nodes || el.elements.edges)){
+      var en = el.elements.nodes||[], ee = el.elements.edges||[];
+      return en.concat(ee);
+    }
+    if (el.nodes || el.edges){
+      var n = el.nodes||[], e = el.edges||[];
+      return n.concat(e);
+    }
+    return [];
+  }
+
+  /**
+   * @param {{ cy?: any, layout?: any }} opts
+   * @returns {void}
+   */
+  function initCore(opts){
+    var cy = opts && opts.cy;
+    var layout = opts && opts.layout;
+    _cy = cy || null;
+    if (layout && typeof layout === 'function' && _cy) layout(_cy);
+    // Optional default layout
+    try {
+      if (_cy && opts && opts.defaultLayout) {
+        var dl = String(opts.defaultLayout || 'elk');
+        if (typeof (global.CLD_CORE && global.CLD_CORE._runLayoutImpl) === 'function') {
+          global.CLD_CORE._runLayoutImpl(_cy, dl, opts.layoutOptions || {});
+        } else {
+          runLayout(dl, opts.layoutOptions || {});
+        }
+      }
+    } catch(_){}
+  }
+
+  /** @param {any} rawModel */
+  function setModel(rawModel){
+    if (!_cy) throw new Error('Core not initialized');
+    if (typeof global.validateModel === 'function') try{ global.validateModel(rawModel); }catch(_){}
+    var mapped = (typeof global.mapModelToElements === 'function')
+      ? global.mapModelToElements(rawModel)
+      : (rawModel && rawModel.elements) || rawModel || [];
+    var arr = _coerce(mapped);
+    try {
+      var n=arr.filter(function(/** @type {any} */ e){return e.group==='nodes'}).length;
+      var e=arr.filter(function(/** @type {any} */ e){return e.group==='edges'}).length;
+      console.log('[CLD core] before inject counts', JSON.stringify({nodes:n,edges:e}));
+    } catch(_){}
+    if (global.CLD_CORE && typeof global.CLD_CORE.inject==='function')
+      global.CLD_CORE.inject(_cy, arr);
+    else
+      _cy.add(arr);
+    return { nodes: _cy.nodes().length, edges: _cy.edges().length };
+  }
+
+  /**
+   * @param {string=} name
+   * @param {any=} opts
+   */
+  function runLayout(name = 'elk', opts = {}){
+    if (!_cy) throw new Error('Core not initialized');
+    try {
+      if (global.CLD_CORE && typeof global.CLD_CORE._runLayoutImpl === 'function') {
+        return global.CLD_CORE._runLayoutImpl(_cy, name, opts);
+      }
+    } catch(e){ try{ console.warn('[CLD core] layout impl error; falling back to dagre', e); }catch(_){} }
+    var algo = (name === 'elk') ? 'dagre' : (name || 'dagre');
+    var defaults = { name: algo, fit: true, animate: false };
+    return _cy.layout(Object.assign({}, defaults, opts||{})).run();
+  }
+
+  /**
+   * @param {{ hideDisconnected?: boolean }=} param0
+   * @returns {void}
+   */
+  function applyFilters({ hideDisconnected = false } = {}){
+    if (!_cy) return;
+    _cy.batch(function(){
+      _cy.elements().show();
+      if (hideDisconnected){
+        var connected = _cy.nodes().filter(function(/** @type {any} */ n){ return n.connectedEdges().length>0; });
+        var unconnected = _cy.nodes().difference(connected);
+        unconnected.hide();
+      }
+    });
+  }
+
+  /** @returns {any} */
+  function getCy(){ return _cy; }
+
+  // expose
+  try {
+    global.CLD_CORE = Object.assign(global.CLD_CORE||{}, {
+      initCore: initCore, setModel: setModel, runLayout: runLayout,
+      applyFilters: applyFilters, getCy: getCy,
+      validateModel: global.validateModel, mapModelToElements: global.mapModelToElements
+    });
+  } catch(_){}
+  try {
+    if (typeof module!=='undefined' && module.exports){
+      Object.assign(module.exports, { initCore, setModel, runLayout, applyFilters, getCy });
+    }
+  } catch(_){}
+  // Lightweight in-page diagnostics helper
+  try {
+    /** @type {any} */
+    var G = (typeof window !== 'undefined' ? window : globalThis);
+    G.CLD_DEBUG = Object.assign({}, G.CLD_DEBUG || {}, {
+      health: function () {
+        try {
+          /** @type {any} */
+          var d = (typeof document !== 'undefined') ? document : null;
+          /** @type {any} */
+          var el = d ? (d.querySelector('#cy, #graph, .cy-root, .cy-container') || null) : null;
+          /** @type {any} */
+          var rect = (el && el.getBoundingClientRect) ? el.getBoundingClientRect() : null;
+          /** @type {any} */
+          var styles = (el && typeof getComputedStyle === 'function') ? getComputedStyle(el) : null;
+          var hasCy = !!_cy;
+          var counts = hasCy ? { nodes: _cy.nodes().length, edges: _cy.edges().length } : null;
+          var ready = !!hasCy;
+          return {
+            hasCy: hasCy, counts: counts, ready: ready,
+            container: {
+              selector: el ? (el.id ? ('#' + el.id) : (el.className || null)) : null,
+              rect: rect ? { w: rect.width, h: rect.height } : null,
+              display: styles ? styles.display : undefined,
+              visibility: styles ? styles.visibility : undefined
+            },
+            globals: {
+              LOADER: !!G.LOADER, CLD_CORE: true,
+              MODEL_HINTS: { __MODEL__: !!G.__MODEL__, __cldModel: !!G.__cldModel, rawModel: !!G.rawModel }
+            }
+          };
+        } catch (e) {
+          try { return { hasCy: !!_cy, counts: null, ready: !!_cy, error: String((e && (e.stack || e)) || e) }; }
+          catch(_) { return { hasCy: false, counts: null, ready: false }; }
+        }
+      }
+    });
+  } catch(_){}
+})(typeof window!=='undefined'?window:globalThis);
