@@ -18,7 +18,7 @@
   var st  = 'BOOT';
   var q   = { vendors:[], cy:[], model:[], graph:[] }; // deferred actions per phase
   var once = Object.create(null);
-  var debugOn = false;
+  var debugOn = !!window.__CLD_DEBUG__;
 
   function log(){ if(debugOn && console && console.log) try{ console.log.apply(console, arguments); }catch(_){ } }
   function state(){ return st; }
@@ -68,7 +68,7 @@
   function queue(phase, fn){
     (q[phase]||(q[phase]=[])).push(fn);
   }
-  function debug(v){ debugOn = !!v; return api; }
+  function debug(v){ debugOn = !!v; window.__CLD_DEBUG__ = debugOn; return api; }
 
   // ---- bootstrap wiring
   function onDomReady(){

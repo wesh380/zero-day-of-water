@@ -9,7 +9,7 @@
     try {
       var C = pickCy();
       function cnt(x){ try { return x ? { n:x.nodes().length, e:x.edges().length } : null; } catch(_){ return null; } }
-      console.log('[DEBUG page] counts facade/hidden/global', cnt(C.fromFacade), cnt(C.fromHidden), cnt(C.fromGlobal));
+      if (window.__CLD_DEBUG__) console.log('[DEBUG page] counts facade/hidden/global', cnt(C.fromFacade), cnt(C.fromHidden), cnt(C.fromGlobal));
     } catch(e){ console.error('[DEBUG page] count error', e); }
   }, 500);
 })();

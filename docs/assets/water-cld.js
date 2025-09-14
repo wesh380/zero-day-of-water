@@ -83,7 +83,7 @@ window.__cldSafeFit = window.__cldSafeFit || function (cy) {
       // Ø§Ø±Ø³Ø§Ù„ Ø³ÛŒÚ¯Ù†Ø§Ù„ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¨Ø±Ø§ÛŒ Ø³Ø§ÛŒØ± Ù…Ø§Ú˜ÙˆÙ„â€ŒÙ‡Ø§
       document.dispatchEvent(new CustomEvent('cy:ready', { detail: { cy } }));
       document.dispatchEvent(new CustomEvent('cld:ready', { detail: { cy } }));
-      console.log('[CLD init] cy built', true);
+      if (window.__CLD_DEBUG__) console.log('[CLD init] cy built', true);
       return cy;
     }
 
@@ -502,7 +502,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
 
     const mapped = toCyElements(model);
     console.table({ rawNodes: mapped.rawNodes.length, rawEdges: mapped.rawEdges.length });
-    console.log('first raw node', mapped.rawNodes[0]);
+    if (window.__CLD_DEBUG__) console.log('first raw node', mapped.rawNodes[0]);
 
     const graph = mapped.graph;
     if (window.graphStore?.setGraph) window.graphStore.setGraph(graph);
@@ -585,7 +585,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       const cy = cldGetCy();
       const nn = cy?.nodes()?.length || 0;
       const ne = cy?.edges()?.length || 0;
-      console.log('[CLD] added to cy', { cyNodes: nn, cyEdges: ne });
+      if (window.__CLD_DEBUG__) console.log('[CLD] added to cy', { cyNodes: nn, cyEdges: ne });
 
       // Ø§Ø¬Ø±Ø§ÛŒ layout/fit ÙÙ‚Ø· ÛŒÚ©â€ŒØ¨Ø§Ø± Ùˆ Ù¾Ø³ Ø§Ø² Ø§ØªÙ…Ø§Ù… dispatch Ø±ÙˆÛŒØ¯Ø§Ø¯
       try {

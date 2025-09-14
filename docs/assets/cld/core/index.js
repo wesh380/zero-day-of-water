@@ -60,7 +60,7 @@
     try {
       var n=arr.filter(function(/** @type {any} */ e){return e.group==='nodes'}).length;
       var e=arr.filter(function(/** @type {any} */ e){return e.group==='edges'}).length;
-      console.log('[CLD core] before inject counts', JSON.stringify({nodes:n,edges:e}));
+      if (window.__CLD_DEBUG__) console.log('[CLD core] before inject counts', JSON.stringify({nodes:n,edges:e}));
     } catch(_){}
     if (global.CLD_CORE && typeof global.CLD_CORE.inject==='function')
       global.CLD_CORE.inject(_cy, arr);
