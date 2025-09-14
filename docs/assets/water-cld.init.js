@@ -170,70 +170,35 @@
           return u.pathname;
         }catch(_){ return candidate; }
       }
-      async function loadJson(candidate){
-        var u = norm(candidate);
-        try{
-          var res = await fetch(u, { cache: 'no-cache' });
-          if (!res.ok) throw new Error('HTTP_'+res.status);
-          return await res.json();
-        }catch(e){
-          var msg = String(e && e.message || '');
-          if (msg.indexOf('HTTP_404')>=0){
-            var fname = (u||'').split('/').pop();
-            if (fname){
-              var fb = '/data/' + fname;
-              try { var r2 = await fetch(fb, { cache:'no-cache' }); if (r2.ok) return await r2.json(); } catch(_){}
-            }
+      async function loadModelAndMount(url){
+        const json = await fetch(url, {cache:'no-cache'}).then(r=>r.json());
+        const el = document.getElementById('cy');
+        await waitForVisible(el, {timeout:15000});
+        const cy = ensureCy();
+        if (window.CLD_CORE?.initCore) window.CLD_CORE.initCore({ cy });
+
+        const boot = (window.CLD_LOADER || window.LOADER);
+        if (boot?.bootstrap) { try{ boot.bootstrap({ cy, model: json, layout: null }); }catch(e){ console.warn("[CLD] boot warn", e); } }
+
+        let tries=0;
+        (function apply(){
+          const ready = window.CLD_CORE?.setModel && window.CLD_CORE?.getCy;
+          if (ready){
+            try{
+              window.CLD_CORE.setModel(json);
+              const c = window.CLD_CORE.getCy() || cy;
+              c?.resize(); c?.fit(undefined, 24);
+            }catch(e){ console.error("[CLD] setModel error", e); }
+          } else if (tries++ < 120){ setTimeout(apply, 100); } else {
+            console.error("[CLD] core not ready to set model");
           }
-          throw e;
-        }
-      }
-      async function load(url, attempt){
-        attempt = (typeof attempt==='number') ? attempt : 0;
-        try{
-          var fn = (window && window.CLD_LOAD_MODEL);
-          var boot = (window && (window.CLD_LOADER || window.LOADER));
-          var m;
-          if (!fn) {
-            // fallback to inline fetch-based loader while module initializes
-            m = await loadJson(url);
-          } else if (!(boot && boot.bootstrap)) {
-            if (attempt < 60) { setTimeout(function(){ load(url, attempt+1); }, 100); return; }
-            else { console.error('[CLD init] deps not ready for model load'); return; }
-          } else {
-            m = await fn(url);
-          }
-          try { window.rawModel = window.rawModel || m; } catch(_){ }
-          // Ensure we have a cy instance for downstream code
-          try {
-            var c = ensureCy();
-            if (c && window.CLD_CORE && typeof window.CLD_CORE.initCore==='function') {
-              try { window.CLD_CORE.initCore({ cy: c }); } catch(_){ }
-            }
-          } catch(_){ }
-          // Preferred path via loader bootstrap
-          try { if (boot && boot.bootstrap) boot.bootstrap({ cy: window.cy, layout: null, model: m }); } catch(e2){ console.warn('[CLD init] bootstrap error; fallback', e2); }
-          // Fallback: if core is available, set model once cy is ready
-          try {
-            var max=60, n=0;
-            (function tryCore(){
-              try{
-                var C = (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function') ? window.CLD_CORE.getCy() : null;
-                if (!C && window.CLD_CORE && typeof window.CLD_CORE.initCore==='function'){
-                  var c2 = ensureCy(); if (c2) { try { window.CLD_CORE.initCore({ cy: c2 }); C = c2; } catch(_){ } }
-                }
-                if (C && window.CLD_CORE && typeof window.CLD_CORE.setModel==='function') { window.CLD_CORE.setModel(m); return; }
-              }catch(_){ }
-              if (++n < max) setTimeout(tryCore, 100);
-            })();
-          } catch(_){ }
-        }catch(e){ console.error('[CLD init] model load failed', e); }
+        }());
       }
       if (!sw.__CLD_PATCHED__){
-        sw.addEventListener('change', function(){ load(sw.value); });
+        sw.addEventListener('change', function(){ loadModelAndMount(norm(sw.value)); });
         sw.__CLD_PATCHED__ = true;
       }
-      if (sw.value) load(sw.value);
+      if (sw.value) loadModelAndMount(norm(sw.value));
     }catch(_){ }
   }
   if (document.readyState === 'loading'){
