@@ -217,3 +217,20 @@
     attachModelSwitcher();
   }
 })();
+
+// Resize/visibility hooks to keep the graph fit when container changes
+const doResize = () => {
+  const c = window.CLD_CORE?.getCy?.() || window.__cy;
+  if (c) {
+    c.resize();
+    c.fit(undefined, 24);
+  }
+};
+window.addEventListener('resize', doResize);
+document.addEventListener('transitionend', () => {
+  const el = document.getElementById('cy');
+  if (el?.offsetParent !== null) doResize();
+});
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) doResize();
+});
