@@ -35,7 +35,11 @@
     "e2e:csp:fast": "node tests/e2e/csp-violations.js",
     "e2e:csp:fast:env": "cross-env TEST_FAST=1 NAV_TIMEOUT=15000 node tests/e2e/csp-violations.js",
     "ts:check": "tsc -p tsconfig.json",
-    "diag:cld": "node tests/e2e/cld-diagnose.js"
+    "diag:cld": "node tests/e2e/cld-diagnose.js",
+    "audit:cld:files": "node tools/cld-inventory.js",
+    "audit:cld:runtime": "node tests/e2e/cld-runtime-inventory.js",
+    "audit:cld:rewire": "node tools/cld-rewire-plan.js",
+    "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire"
   },
   "keywords": [],
   "author": "",
