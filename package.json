@@ -39,6 +39,8 @@
     "audit:cld:files": "node tools/cld-inventory.js",
     "audit:cld:runtime": "node tests/e2e/cld-runtime-inventory.js",
     "audit:cld:rewire": "node tools/cld-rewire-plan.js",
+    "audit:cld:arch": "node tools/cld-data-architecture-audit.js",
+    "audit:cld:connect": "node tools/cld-connection-audit.js",
     "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire"
   },
   "keywords": [],
