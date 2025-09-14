@@ -147,24 +147,13 @@
 (function(){
   // Minimal cy builder to break init cycles when the bundle hasn't created one yet
   function ensureCy(){
-    try{
-      if (window.CLD_CORE && typeof window.CLD_CORE.getCy==='function'){
-        var c0 = window.CLD_CORE.getCy(); if (c0 && typeof c0.startBatch==='function') return c0;
-      }
-      if (window.__cy && typeof window.__cy.startBatch==='function') return window.__cy;
-      var el = (typeof document!=='undefined') ? document.getElementById('cy') : null;
-      if (!el || !window.cytoscape) return null;
-      try { if (window.cy && window.cy.tagName) { window._cyDom = window.cy; window.cy = undefined; } } catch(_){}
-      var cy = window.cytoscape({ container: el, elements: [] });
-      try{
-        window.__cy = cy; window.lastCy = cy;
-        window.CLD_SAFE = window.CLD_SAFE || {}; window.CLD_SAFE.cy = cy;
-        if (!window._cyDom) window.cy = cy;
-        document.dispatchEvent(new CustomEvent('cy:ready', { detail: { cy: cy } }));
-        document.dispatchEvent(new CustomEvent('cld:ready', { detail: { cy: cy } }));
-      }catch(_){ }
-      return cy;
-    }catch(_){ return null; }
+    const container = document.getElementById('cy');
+    if (!container) throw new Error("[CLD] #cy not found");
+    if (container.dataset.cyMounted === "1" && window.__cy && !window.__cy.destroyed) return window.__cy;
+    const cy = window.cytoscape({ container, elements: [] });
+    container.dataset.cyMounted = "1";
+    window.__cy = cy;
+    return cy;
   }
   function attachModelSwitcher(){
     try{
