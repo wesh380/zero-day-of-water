@@ -1706,10 +1706,17 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         var last = localStorage.getItem('waterCLD.activeModel');
         if (last) sw.value = last;
       } catch(e){}
+      function selectedUrl(){
+        var opt = sw.options[sw.selectedIndex];
+        var base = opt ? opt.value : sw.value;
+        var ver = opt && opt.dataset ? opt.dataset.version : null;
+        return ver ? base + '?v=' + ver : base;
+      }
       sw.addEventListener('change', function(){
-        window.loadModelFromUrl(sw.value);
+        window.loadModelFromUrl(selectedUrl());
       });
-      if (sw.value) window.loadModelFromUrl(sw.value);
+      var initUrl = selectedUrl();
+      if (initUrl) window.loadModelFromUrl(initUrl);
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initSwitcher);

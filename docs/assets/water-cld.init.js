@@ -194,11 +194,21 @@
           }
         }());
       }
+      function selectedUrl(){
+        try{
+          var opt = sw.options[sw.selectedIndex];
+          var base = opt ? opt.value : sw.value;
+          var ver = opt && opt.dataset ? opt.dataset.version : null;
+          var full = ver ? base + '?v=' + ver : base;
+          return norm(full);
+        }catch(_){ return norm(sw.value); }
+      }
       if (!sw.__CLD_PATCHED__){
-        sw.addEventListener('change', function(){ loadModelAndMount(norm(sw.value)); });
+        sw.addEventListener('change', function(){ loadModelAndMount(selectedUrl()); });
         sw.__CLD_PATCHED__ = true;
       }
-      if (sw.value) loadModelAndMount(norm(sw.value));
+      var initUrl = selectedUrl();
+      if (initUrl) loadModelAndMount(initUrl);
     }catch(_){ }
   }
   if (document.readyState === 'loading'){
