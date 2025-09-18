@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "netlify": {
+      "command": "npx",
+      "args": ["-y", "@netlify/mcp-server"],
+      "env": { "NETLIFY_AUTH_TOKEN": "${env:NETLIFY_AUTH_TOKEN}" },
+      "restart": "onFailure"
+    }
+  }
+}
