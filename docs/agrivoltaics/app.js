@@ -1,13 +1,67 @@
+import { apiFetch } from "/assets/js/api.js";
+
+
+const POLL_INTERVAL_MS = 1000;
+const MAX_ATTEMPTS = 30;
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export async function runJob(payload) {
+  const submitResponse = await apiFetch("/api/submit", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload ?? {}),
+  });
+
+  if (!submitResponse.ok) {
+    const errorText = await submitResponse.text();
+    throw new Error(`Submit failed (${submitResponse.status}): ${errorText}`);
+  }
+
+  const submitBody = await submitResponse.json();
+  const jobId = submitBody?.job_id;
+  if (!jobId) {
+    throw new Error("Submit response missing job_id");
+  }
+
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
+    const resultResponse = await apiFetch(`/api/result/${encodeURIComponent(jobId)}`);
+    if (!resultResponse.ok) {
+      const errorText = await resultResponse.text();
+      throw new Error(`Result fetch failed (${resultResponse.status}): ${errorText}`);
+    }
+
+    const resultBody = await resultResponse.json();
+    const status = typeof resultBody?.status === "string" ? resultBody.status.toLowerCase() : null;
+
+    if (!status || status === "done") {
+      return resultBody;
+    }
+
+    if (status === "failed") {
+      throw new Error("Job failed");
+    }
+
+    if (attempt === MAX_ATTEMPTS - 1) {
+      break;
+    }
+
+    await sleep(POLL_INTERVAL_MS);
+  }
+
+  throw new Error("Job polling timed out");
+}
+
 const {
   useState,
   useMemo,
   useEffect
 } = React;
 
-// نسخه مخصوص استان خراسان رضوی (ساده برای کشاورزان)
-// نکته: اعداد پیش‌فرض تقریبی هستند. لطفاً با شرایط واقعی زمین خودتان تنظیم کنید.
+// Ù†Ø³Ø®Ù‡ Ù…Ø®ØµÙˆØµ Ø§Ø³ØªØ§Ù† Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ (Ø³Ø§Ø¯Ù‡ Ø¨Ø±Ø§ÛŒ Ú©Ø´Ø§ÙˆØ±Ø²Ø§Ù†)
+// Ù†Ú©ØªÙ‡: Ø§Ø¹Ø¯Ø§Ø¯ Ù¾ÛŒØ´â€ŒÙØ±Ø¶ ØªÙ‚Ø±ÛŒØ¨ÛŒ Ù‡Ø³ØªÙ†Ø¯. Ù„Ø·ÙØ§Ù‹ Ø¨Ø§ Ø´Ø±Ø§ÛŒØ· ÙˆØ§Ù‚Ø¹ÛŒ Ø²Ù…ÛŒÙ† Ø®ÙˆØ¯ØªØ§Ù† ØªÙ†Ø¸ÛŒÙ… Ú©Ù†ÛŒØ¯.
 
-// اجزای کمکی ساده
+// Ø§Ø¬Ø²Ø§ÛŒ Ú©Ù…Ú©ÛŒ Ø³Ø§Ø¯Ù‡
 const Section = ({
   title,
   children
@@ -76,7 +130,7 @@ const KV = ({
   className: "text-sm md:text-base font-semibold text-gray-100 mt-0.5"
 }, v));
 async function saveScenario(state, setShareLink) {
-  const res = await fetch("/api/save-scenario", {
+  const res = await apiFetch("/api/save-scenario", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -87,7 +141,7 @@ async function saveScenario(state, setShareLink) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    alert(err.message || "ذخیره نشد؛ بعداً دوباره امتحان کن.");
+    alert(err.message || "Ø°Ø®ÛŒØ±Ù‡ Ù†Ø´Ø¯Ø› Ø¨Ø¹Ø¯Ø§Ù‹ Ø¯ÙˆØ¨Ø§Ø±Ù‡ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†.");
     return;
   }
   const {
@@ -98,10 +152,10 @@ async function saveScenario(state, setShareLink) {
 }
 async function loadScenarioById(id, setState) {
   if (!id) return;
-  const res = await fetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
+  const res = await apiFetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    alert(err.message || "خواندن نشد؛ بعداً دوباره امتحان کن.");
+    alert(err.message || "Ø®ÙˆØ§Ù†Ø¯Ù† Ù†Ø´Ø¯Ø› Ø¨Ø¹Ø¯Ø§Ù‹ Ø¯ÙˆØ¨Ø§Ø±Ù‡ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†.");
     return;
   }
   const saved = await res.json();
@@ -111,79 +165,79 @@ function AgrivoltaicsKhorasan() {
   const [simple, setSimple] = useState(true);
   const [shareLink, setShareLink] = React.useState("");
 
-  // منطقه‌های پرتکرار استان (تقریبی)
+  // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
     mashhad: {
-      title: "دشت مشهد / چناران",
+      title: "Ø¯Ø´Øª Ù…Ø´Ù‡Ø¯ / Ú†Ù†Ø§Ø±Ø§Ù†",
       sun: 1675,
       heat: "med"
     },
     neyshabur: {
-      title: "نیشابور / فیروزه",
+      title: "Ù†ÛŒØ´Ø§Ø¨ÙˆØ± / ÙÛŒØ±ÙˆØ²Ù‡",
       sun: 1680,
       heat: "med"
     },
     torbat: {
-      title: "تربت‌حیدریه / زاوه / مه‌ولات / گناباد",
+      title: "ØªØ±Ø¨Øªâ€ŒØ­ÛŒØ¯Ø±ÛŒÙ‡ / Ø²Ø§ÙˆÙ‡ / Ù…Ù‡â€ŒÙˆÙ„Ø§Øª / Ú¯Ù†Ø§Ø¨Ø§Ø¯",
       sun: 1800,
       heat: "high"
     },
     sabzevar: {
-      title: "سبزوار / بردسکن / کاشمر",
+      title: "Ø³Ø¨Ø²ÙˆØ§Ø± / Ø¨Ø±Ø¯Ø³Ú©Ù† / Ú©Ø§Ø´Ù…Ø±",
       sun: 1750,
       heat: "high"
     },
     quchan: {
-      title: "قوچان / درگز / کلات",
+      title: "Ù‚ÙˆÚ†Ø§Ù† / Ø¯Ø±Ú¯Ø² / Ú©Ù„Ø§Øª",
       sun: 1625,
       heat: "low"
     },
     torbat_jam: {
-      title: "تربت‌جم / تایباد / فریمان / خواف",
+      title: "ØªØ±Ø¨Øªâ€ŒØ¬Ù… / ØªØ§ÛŒØ¨Ø§Ø¯ / ÙØ±ÛŒÙ…Ø§Ù† / Ø®ÙˆØ§Ù",
       sun: 1780,
       heat: "high"
     }
   };
 
-  // محصولات رایج
+  // Ù…Ø­ØµÙˆÙ„Ø§Øª Ø±Ø§ÛŒØ¬
   const cropProfiles = {
-    "زعفران": {
+    "Ø²Ø¹ÙØ±Ø§Ù†": {
       baseYieldChange: 6,
       waterSaving: -28,
       price_per_t: 2000000000,
       yield_t_ha: 4
     },
-    "گندم": {
+    "Ú¯Ù†Ø¯Ù…": {
       baseYieldChange: -2,
       waterSaving: -10,
       price_per_t: 500000000,
       yield_t_ha: 5.5
     },
-    "جو": {
+    "Ø¬Ùˆ": {
       baseYieldChange: -3,
       waterSaving: -10,
       price_per_t: 420000000,
       yield_t_ha: 4.5
     },
-    "پسته": {
+    "Ù¾Ø³ØªÙ‡": {
       baseYieldChange: -3,
       waterSaving: -20,
       price_per_t: 1800000000,
       yield_t_ha: 1.0
     },
-    "انگور": {
+    "Ø§Ù†Ú¯ÙˆØ±": {
       baseYieldChange: 1,
       waterSaving: -15,
       price_per_t: 250000000,
       yield_t_ha: 20
     },
-    "سبزیجات برگی": {
+    "Ø³Ø¨Ø²ÛŒØ¬Ø§Øª Ø¨Ø±Ú¯ÛŒ": {
       baseYieldChange: 8,
       waterSaving: -30,
       price_per_t: 250000000,
       yield_t_ha: 20
     },
-    "طالبی/خربزه": {
+    "Ø·Ø§Ù„Ø¨ÛŒ/Ø®Ø±Ø¨Ø²Ù‡": {
       baseYieldChange: 2,
       waterSaving: -20,
       price_per_t: 180000000,
@@ -191,67 +245,67 @@ function AgrivoltaicsKhorasan() {
     }
   };
 
-  // آب و خاک
+  // Ø¢Ø¨ Ùˆ Ø®Ø§Ú©
   const waterSources = {
     well_electric_subsidized: {
-      title: "چاه – برق یارانه‌ای",
+      title: "Ú†Ø§Ù‡ â€“ Ø¨Ø±Ù‚ ÛŒØ§Ø±Ø§Ù†Ù‡â€ŒØ§ÛŒ",
       elec_tariff: 1000,
       water_cost: 0
     },
     well_electric_normal: {
-      title: "چاه – برق معمولی",
+      title: "Ú†Ø§Ù‡ â€“ Ø¨Ø±Ù‚ Ù…Ø¹Ù…ÙˆÙ„ÛŒ",
       elec_tariff: 3000,
       water_cost: 0
     },
     well_diesel: {
-      title: "چاه – دیزلی",
+      title: "Ú†Ø§Ù‡ â€“ Ø¯ÛŒØ²Ù„ÛŒ",
       elec_tariff: 6000,
       water_cost: 0
     },
     qanat: {
-      title: "قنات / آب ثقلی",
+      title: "Ù‚Ù†Ø§Øª / Ø¢Ø¨ Ø«Ù‚Ù„ÛŒ",
       elec_tariff: 0,
       water_cost: 5000
     },
     canal: {
-      title: "کانال/شبکه آبیاری",
+      title: "Ú©Ø§Ù†Ø§Ù„/Ø´Ø¨Ú©Ù‡ Ø¢Ø¨ÛŒØ§Ø±ÛŒ",
       elec_tariff: 0,
       water_cost: 20000
     }
   };
   const dustLevels = {
     low: {
-      title: "گرد و غبار کم",
+      title: "Ú¯Ø±Ø¯ Ùˆ ØºØ¨Ø§Ø± Ú©Ù…",
       soiling: 3
     },
     med: {
-      title: "گرد و غبار متوسط",
+      title: "Ú¯Ø±Ø¯ Ùˆ ØºØ¨Ø§Ø± Ù…ØªÙˆØ³Ø·",
       soiling: 5
     },
     high: {
-      title: "گرد و غبار زیاد",
+      title: "Ú¯Ø±Ø¯ Ùˆ ØºØ¨Ø§Ø± Ø²ÛŒØ§Ø¯",
       soiling: 8
     }
   };
   const soils = {
     sandy: {
-      title: "شنی",
+      title: "Ø´Ù†ÛŒ",
       pump_kWh_m3: 0.45
     },
     loam: {
-      title: "لوم (میان‌دانه)",
+      title: "Ù„ÙˆÙ… (Ù…ÛŒØ§Ù†â€ŒØ¯Ø§Ù†Ù‡)",
       pump_kWh_m3: 0.5
     },
     clay: {
-      title: "رسی",
+      title: "Ø±Ø³ÛŒ",
       pump_kWh_m3: 0.55
     }
   };
 
-  // وضعیت ورودی‌ها
+  // ÙˆØ¶Ø¹ÛŒØª ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§
   const [s, setS] = useState({
     region: "torbat",
-    crop_type: "زعفران",
+    crop_type: "Ø²Ø¹ÙØ±Ø§Ù†",
     water_source: "well_electric_subsidized",
     dust_level: "med",
     soil_type: "loam",
@@ -259,15 +313,15 @@ function AgrivoltaicsKhorasan() {
     project_area_ha: 1,
     time_horizon_years: 25,
     discount_rate_pct: 12,
-    currency: "ریال",
-    baseline_yield_t_per_ha: cropProfiles["زعفران"].yield_t_ha,
-    expected_yield_change_pct_under_AGV: cropProfiles["زعفران"].baseYieldChange,
-    crop_price_per_t: cropProfiles["زعفران"].price_per_t,
+    currency: "Ø±ÛŒØ§Ù„",
+    baseline_yield_t_per_ha: cropProfiles["Ø²Ø¹ÙØ±Ø§Ù†"].yield_t_ha,
+    expected_yield_change_pct_under_AGV: cropProfiles["Ø²Ø¹ÙØ±Ø§Ù†"].baseYieldChange,
+    crop_price_per_t: cropProfiles["Ø²Ø¹ÙØ±Ø§Ù†"].price_per_t,
     crop_quality_premium_or_discount_pct: 0,
     ag_opex_baseline_per_ha: 600000000,
     ag_opex_change_under_AGV_pct: -5,
     water_use_baseline_m3_per_ha: 6000,
-    water_use_change_under_AGV_pct: cropProfiles["زعفران"].waterSaving,
+    water_use_change_under_AGV_pct: cropProfiles["Ø²Ø¹ÙØ±Ø§Ù†"].waterSaving,
     pv_capacity_kWp_total: 150,
     module_price_per_kWp: 220000000,
     mounting_structure_cost_per_kWp: 70000000,
@@ -307,7 +361,7 @@ function AgrivoltaicsKhorasan() {
     const qr = qrcode(typeNumber, errorCorrectLevel);
     qr.addData(shareLink);
     qr.make();
-    el.innerHTML = qr.createSvgTag(6); // مقیاس
+    el.innerHTML = qr.createSvgTag(6); // Ù…Ù‚ÛŒØ§Ø³
   }, [shareLink]);
   const set = (k, v) => setS(prev => ({
     ...prev,
@@ -320,7 +374,7 @@ function AgrivoltaicsKhorasan() {
   const fmtMoney = n => `${fmt(n)} ${s.currency}`;
   useEffect(() => {
     const reg = regions[s.region];
-    const crop = cropProfiles[s.crop_type] || cropProfiles["زعفران"];
+    const crop = cropProfiles[s.crop_type] || cropProfiles["Ø²Ø¹ÙØ±Ø§Ù†"];
     const dust = dustLevels[s.dust_level];
     const src = waterSources[s.water_source];
     const soil = soils[s.soil_type];
@@ -444,9 +498,9 @@ function AgrivoltaicsKhorasan() {
   const NPV_incremental = npv(s.discount_rate_pct, cashflowsIncremental);
   const IRR_incremental = irr(cashflowsIncremental);
   const decisionText = () => {
-    if (NPV_incremental > 0 && (IRR_incremental ?? 0) > s.discount_rate_pct / 100) return "به‌صرفه";
-    if (Math.abs(NPV_incremental) < 0.05 * capex_total) return "تقریباً سر به سر";
-    return "به‌صرفه نیست";
+    if (NPV_incremental > 0 && (IRR_incremental ?? 0) > s.discount_rate_pct / 100) return "Ø¨Ù‡â€ŒØµØ±ÙÙ‡";
+    if (Math.abs(NPV_incremental) < 0.05 * capex_total) return "ØªÙ‚Ø±ÛŒØ¨Ø§Ù‹ Ø³Ø± Ø¨Ù‡ Ø³Ø±";
+    return "Ø¨Ù‡â€ŒØµØ±ÙÙ‡ Ù†ÛŒØ³Øª";
   };
   const totalPVkWhYear1 = annualPV(0);
   const Chart = ({
@@ -490,7 +544,7 @@ function AgrivoltaicsKhorasan() {
     })));
   };
   const downloadCSV = () => {
-    const rows = [["سال", "برق (kWh)", "درآمد/صرفه‌جویی برق", "خالص کشاورزی (قبل)", "خالص کشاورزی (با)", "افزایشی"]];
+    const rows = [["Ø³Ø§Ù„", "Ø¨Ø±Ù‚ (kWh)", "Ø¯Ø±Ø¢Ù…Ø¯/ØµØ±ÙÙ‡â€ŒØ¬ÙˆÛŒÛŒ Ø¨Ø±Ù‚", "Ø®Ø§Ù„Øµ Ú©Ø´Ø§ÙˆØ±Ø²ÛŒ (Ù‚Ø¨Ù„)", "Ø®Ø§Ù„Øµ Ú©Ø´Ø§ÙˆØ±Ø²ÛŒ (Ø¨Ø§)", "Ø§ÙØ²Ø§ÛŒØ´ÛŒ"]];
     for (let i = 0; i < years; i++) rows.push([i + 1, Math.round(annualPV(i)), Math.round(elecRevenueYear(i)), Math.round(cashflowsBaseline[i]), Math.round(cashflowsAGV[i]), Math.round(cashflowsIncremental[i + 1] ?? 0)]);
     const csv = rows.map(r => r.join(",")).join("\n");
     const blob = new Blob([csv], {
@@ -512,15 +566,15 @@ function AgrivoltaicsKhorasan() {
       format: "a4"
     });
     doc.setFontSize(14);
-    doc.text("گزارش فوتوکِشت – خراسان رضوی", 40, 40);
+    doc.text("Ú¯Ø²Ø§Ø±Ø´ ÙÙˆØªÙˆÚ©ÙØ´Øª â€“ Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ", 40, 40);
     doc.setFontSize(11);
-    doc.text(`هزینه اولیه: ${fmtMoney(capex_total)}`, 40, 70);
-    doc.text(`برق سال اول: ${fmt(totalPVkWhYear1)} kWh`, 40, 90);
-    doc.text(`درآمد/صرفه‌جویی برق سال اول: ${fmtMoney(elecRevenueYear(0))}`, 40, 110);
-    doc.text(`ارزش امروز: ${fmtMoney(NPV_incremental)}`, 40, 130);
-    doc.text(`نتیجه: ${decisionText()}`, 40, 150);
+    doc.text(`Ù‡Ø²ÛŒÙ†Ù‡ Ø§ÙˆÙ„ÛŒÙ‡: ${fmtMoney(capex_total)}`, 40, 70);
+    doc.text(`Ø¨Ø±Ù‚ Ø³Ø§Ù„ Ø§ÙˆÙ„: ${fmt(totalPVkWhYear1)} kWh`, 40, 90);
+    doc.text(`Ø¯Ø±Ø¢Ù…Ø¯/ØµØ±ÙÙ‡â€ŒØ¬ÙˆÛŒÛŒ Ø¨Ø±Ù‚ Ø³Ø§Ù„ Ø§ÙˆÙ„: ${fmtMoney(elecRevenueYear(0))}`, 40, 110);
+    doc.text(`Ø§Ø±Ø²Ø´ Ø§Ù…Ø±ÙˆØ²: ${fmtMoney(NPV_incremental)}`, 40, 130);
+    doc.text(`Ù†ØªÛŒØ¬Ù‡: ${decisionText()}`, 40, 150);
     let y = 190;
-    doc.text("سال | برق | درآمد برق | افزایشی", 40, y);
+    doc.text("Ø³Ø§Ù„ | Ø¨Ø±Ù‚ | Ø¯Ø±Ø¢Ù…Ø¯ Ø¨Ø±Ù‚ | Ø§ÙØ²Ø§ÛŒØ´ÛŒ", 40, y);
     y += 18;
     for (let i = 0; i < Math.min(5, years); i++) {
       doc.text(`${i + 1} | ${fmt(annualPV(i))} | ${fmtMoney(elecRevenueYear(i))} | ${fmtMoney(cashflowsIncremental[i + 1] || 0)}`, 40, y);
@@ -544,7 +598,7 @@ function AgrivoltaicsKhorasan() {
   }, /*#__PURE__*/React.createElement("button", {
     className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
     onClick: () => setSimple(v => !v)
-  }, "\u062D\u0627\u0644\u062A ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
+  }, "\u062D\u0627\u0644\u062A ", simple ? 'Ù¾ÛŒØ´Ø±ÙØªÙ‡' : 'Ø³Ø§Ø¯Ù‡'), /*#__PURE__*/React.createElement("button", {
     onClick: downloadCSV,
     className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
   }, "\u062F\u0627\u0646\u0644\u0648\u062F CSV"), /*#__PURE__*/React.createElement("button", {
@@ -555,7 +609,7 @@ function AgrivoltaicsKhorasan() {
     className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
   }, "\u0630\u062E\u06CC\u0631\u0647 \u0633\u0646\u0627\u0631\u06CC\u0648"), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
-      const id = prompt("کُد/لینک را وارد کنید:");
+      const id = prompt("Ú©ÙØ¯/Ù„ÛŒÙ†Ú© Ø±Ø§ ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯:");
       const onlyId = (id || "").split("id=").pop();
       loadScenarioById(onlyId, setS);
     },
@@ -632,13 +686,13 @@ function AgrivoltaicsKhorasan() {
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632 \u0633\u0648\u062F",
     value: fmtMoney(npv(s.discount_rate_pct, cashflowsIncremental)),
-    sub: `با نرخ ${s.discount_rate_pct}%`
+    sub: `Ø¨Ø§ Ù†Ø±Ø® ${s.discount_rate_pct}%`
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "\u0633\u0648\u062F \u0633\u0627\u0644\u0627\u0646\u0647 \u062A\u0642\u0631\u06CC\u0628\u06CC",
-    value: IRR_incremental == null ? 'نامشخص' : `${(IRR_incremental * 100).toFixed(1)} %`,
+    value: IRR_incremental == null ? 'Ù†Ø§Ù…Ø´Ø®Øµ' : `${(IRR_incremental * 100).toFixed(1)} %`,
     sub: "\u0647\u0631\u0686\u0647 \u0628\u06CC\u0634\u062A\u0631\u060C \u0628\u0647\u062A\u0631"
   })), /*#__PURE__*/React.createElement("div", {
-    className: `rounded-2xl p-4 border shadow-xl ${decisionText() === 'به‌صرفه' ? 'bg-emerald-900/30 border-emerald-700' : decisionText() === 'تقریباً سر به سر' ? 'bg-yellow-900/30 border-yellow-700' : 'bg-rose-900/30 border-rose-700'}`
+    className: `rounded-2xl p-4 border shadow-xl ${decisionText() === 'Ø¨Ù‡â€ŒØµØ±ÙÙ‡' ? 'bg-emerald-900/30 border-emerald-700' : decisionText() === 'ØªÙ‚Ø±ÛŒØ¨Ø§Ù‹ Ø³Ø± Ø¨Ù‡ Ø³Ø±' ? 'bg-yellow-900/30 border-yellow-700' : 'bg-rose-900/30 border-rose-700'}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "text-sm"
   }, "\u062E\u0644\u0627\u0635\u0647 \u062A\u0635\u0645\u06CC\u0645:"), /*#__PURE__*/React.createElement("div", {
@@ -715,13 +769,13 @@ function AgrivoltaicsKhorasan() {
     onChange: v => set("grid_scheme", v),
     options: [{
       value: "PPA/FIT",
-      label: "فروش تضمینی"
+      label: "ÙØ±ÙˆØ´ ØªØ¶Ù…ÛŒÙ†ÛŒ"
     }, {
       value: "NetMetering",
-      label: "تراز با شبکه"
+      label: "ØªØ±Ø§Ø² Ø¨Ø§ Ø´Ø¨Ú©Ù‡"
     }, {
       value: "SelfConsumption",
-      label: "مصرف در مزرعه"
+      label: "Ù…ØµØ±Ù Ø¯Ø± Ù…Ø²Ø±Ø¹Ù‡"
     }]
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u062A\u0636\u0645\u06CC\u0646\u06CC/\u0641\u0631\u0648\u0634 (\u0631\u06CC\u0627\u0644/kWh)",

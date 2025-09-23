@@ -1,9 +1,10 @@
+﻿import { apiFetch } from "/assets/js/api.js";
 export async function askAI(prompt, { json = false } = {}) {
   if (!prompt || String(prompt).trim().length < 3) {
     // Prevent sending empty prompts
     throw new Error('EMPTY_PROMPT');
   }
-  const res = await fetch('/api/gemini', {
+  const res = await apiFetch('/api/gemini', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ prompt, json: !!json })
