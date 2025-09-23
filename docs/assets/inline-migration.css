@@ -53,3 +53,9 @@
 .sw-0{background:#f0f9ff} .sw-1{background:#e0f2fe} .sw-2{background:#bae6fd} .sw-3{background:#7dd3fc} .sw-4{background:#38bdf8} .sw-5{background:#0ea5e9} .sw-6{background:#0284c7} .sw-7{background:#0369a1} .sw-8{background:#075985}
 .bubble-8{width:8px;height:8px} .bubble-16{width:16px;height:16px} .bubble-24{width:24px;height:24px} .bubble-32{width:32px;height:32px} .bubble-40{width:40px;height:40px} .bubble-48{width:48px;height:48px} .bubble-56{width:56px;height:56px} .bubble-64{width:64px;height:64px}
 .img-flag{height:16px;vertical-align:middle;margin-left:6px}
+
+/* Agrovoltaics dev utilities */
+.agv-selftest-trigger {
+  display: none;
+}
+
