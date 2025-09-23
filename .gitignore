@@ -4,3 +4,12 @@ node_modules/
 docs/assets/*-test.png
 docs/debug/
 docs/**/debug-*.png
+
+venvs/
+**/__pycache__/
+*.pyc
+logs/
+data/runtime/
+*.log
+.env
+.vscode/

@@ -1,0 +1,87 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wesh360.local/schemas/cld.schema.json",
+  "title": "Causal Loop Diagram",
+  "type": "object",
+  "required": ["nodes", "edges", "meta"],
+  "additionalProperties": false,
+  "properties": {
+    "nodes": {
+      "$ref": "#/$defs/nodes"
+    },
+    "edges": {
+      "$ref": "#/$defs/edges"
+    },
+    "meta": {
+      "$ref": "#/$defs/meta"
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "label": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/node"
+      },
+      "uniqueItems": true,
+      "$comment": "Node ids must be unique; enforce in application layer if schema equality is insufficient."
+    },
+    "edge": {
+      "type": "object",
+      "required": ["source", "target", "sign"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/identifier"
+        },
+        "target": {
+          "$ref": "#/$defs/identifier"
+        },
+        "sign": {
+          "enum": ["plus", "minus"]
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/edge"
+      },
+      "$comment": "Edge endpoints must correspond to node ids; enforce in application layer."
+    },
+    "meta": {
+      "type": "object",
+      "required": ["model_id"],
+      "additionalProperties": false,
+      "properties": {
+        "model_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "#/$defs/identifier"
+        }
+      }
+    }
+  }
+}

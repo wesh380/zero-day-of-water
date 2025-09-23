@@ -4,7 +4,8 @@
   "description": "This repository hosts a simple dashboard served from the `/docs` directory and a proxy for Gemini API requests.",
   "main": "tailwind.config.js",
   "directories": {
-    "doc": "docs"
+    "doc": "docs",
+    "test": "tests"
   },
   "scripts": {
     "prebuild": "node tools/build-wind-weights.mjs",
@@ -14,7 +15,7 @@
     "flag:test": "node scripts/check-flag.js",
     "check:no-binary": "node tools/check-no-binary.js",
     "validate:layers": "node tools/validate_layers.js",
-    "build:agri": "babel docs/agrivoltaics/app.jsx --presets @babel/preset-react -o docs/agrivoltaics/app.js",
+    "build:agri": "node -e \"console.log('agrivoltaics app.js is checked in; no build step needed.')\"",
     "prepare:agri": "mkdir -p docs/agrivoltaics/vendor && cp node_modules/react/umd/react.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/react-dom/umd/react-dom.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/qrcode-generator/dist/qrcode.js docs/agrivoltaics/vendor/ && cp node_modules/jspdf/dist/jspdf.umd.min.js docs/agrivoltaics/vendor/",
     "build:cld": "node scripts/build-cld.js",
     "check:cld-html": "bash tools/check-cld-html.sh",
@@ -77,5 +78,13 @@
   "sideEffects": [
     "docs/assets/vendor/cytoscape-elk.js",
     "docs/assets/vendor/cytoscape-dagre.js"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sajjadzea/zero-day-of-water2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sajjadzea/zero-day-of-water2/issues"
+  },
+  "homepage": "https://github.com/sajjadzea/zero-day-of-water2#readme"
 }
