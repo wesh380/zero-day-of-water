@@ -1,4 +1,5 @@
-import { apiFetch } from "/assets/js/api.js";
+import { apiFetch, getBaseUrl } from "/assets/js/api.js";
+void getBaseUrl();
 
 
 const POLL_INTERVAL_MS = 1000;

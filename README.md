@@ -101,3 +101,8 @@ If the preview throws a CORS error, verify that the origin uses `process.env.URL
 - Production: Node 18
 - Deploy Preview: Node 22 (canary)
 - هدف: اطمینان از سازگاری با Node 22 قبل از مهاجرت Production.
+
+## تنظیمات ویندوز
+
+پس از هر بار به‌روزرسانی فایل `backend/.env` (مثلا تغییر مقادیر ALLOWED_ORIGINS یا مسیرهای دایرکتوری)? سرویس‌های اجرا شده روی ویندوز مانند API و worker را ری‌استارت کنید تا تنظیمات جدید اعمال شود.
+

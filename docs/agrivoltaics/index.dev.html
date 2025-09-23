@@ -13,11 +13,13 @@
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="../assets/site-overrides.css">
+  <link rel="stylesheet" href="../assets/inline-migration.css">
   <script defer src="/assets/unified-badge.js"></script>
   <script defer src="/assets/global-footer.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <button id="btn-api-selftest" class="agv-selftest-trigger">API Self Test</button>
 
   <script type="text/babel">
     const { useState, useMemo, useEffect } = React;
@@ -472,6 +474,92 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<AgrivoltaicsKhorasan/>);
   </script>
- 
+  <script type="module">
+    import { apiFetch } from '/assets/js/api.js';
+
+    async function runSelfTest() {
+      console.info('[selftest]', 'starting');
+      try {
+        const healthRes = await apiFetch('/api/health');
+        if (!healthRes.ok) {
+          const text = await healthRes.text();
+          throw new Error(`health status ${healthRes.status}: ${text}`);
+        }
+        const healthJson = await healthRes.json();
+        console.info('[selftest]', 'health', healthJson);
+
+        const payload = {
+          nodes: [
+            { id: 'n1', label: 'Demand' },
+            { id: 'n2', label: 'Supply' }
+          ],
+          edges: [
+            { source: 'n1', target: 'n2', sign: 'plus' }
+          ],
+          meta: { model_id: 'ui-selftest' }
+        };
+
+        const submitRes = await apiFetch('/api/submit', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!submitRes.ok) {
+          const text = await submitRes.text();
+          throw new Error(`submit status ${submitRes.status}: ${text}`);
+        }
+
+        const submitJson = await submitRes.json();
+        const jobId = submitJson?.job_id;
+        if (!jobId) {
+          throw new Error('missing job_id in submit response');
+        }
+        console.info('[selftest]', 'submitted', jobId);
+
+        const deadline = Date.now() + 30000;
+        while (Date.now() < deadline) {
+          const pollRes = await apiFetch(`/api/result/${encodeURIComponent(jobId)}`);
+          if (!pollRes.ok) {
+            const text = await pollRes.text();
+            throw new Error(`poll status ${pollRes.status}: ${text}`);
+          }
+
+          const pollJson = await pollRes.json();
+          if (pollJson?.summary) {
+            console.info('[selftest]', 'done', pollJson.summary);
+            return pollJson.summary;
+          }
+
+          if (typeof pollJson?.status === 'string' && pollJson.status.toLowerCase() === 'failed') {
+            throw new Error('job failed');
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+
+        throw new Error('timeout waiting for result');
+      } catch (error) {
+        console.error('[selftest]', error);
+        throw error;
+      }
+    }
+
+    const button = document.getElementById('btn-api-selftest');
+    if (button) {
+      button.addEventListener('click', async () => {
+        try {
+          const summary = await runSelfTest();
+          console.info('[selftest]', 'summary', summary);
+        } catch {
+          // already logged
+        }
+      });
+    }
+
+    window.__apiSelfTest = runSelfTest;
+  </script>
+
 </body>
 </html>
+
+

@@ -7,6 +7,7 @@ const paths = args.length ? args : [
   '/data/amaayesh/dams.geojson',
   '/data/amaayesh/wind_sites_raw.csv',
   '/data/amaayesh/wind_weights_by_county.csv',
+  '/config/api.json',
   '/amaayesh/layers.config.json'
 ];
 
@@ -27,3 +28,4 @@ async function check(p){
   for(const p of paths){ rows.push(await check(p)); }
   console.table(rows);
 })();
+
