@@ -1,4 +1,5 @@
-﻿import { apiFetch } from "/assets/js/api.js";
+import { apiFetch, getBaseUrl } from "/assets/js/api.js";
+void getBaseUrl();
 export async function askAI(prompt, { json = false } = {}) {
   if (!prompt || String(prompt).trim().length < 3) {
     // Prevent sending empty prompts

@@ -184,9 +184,20 @@ def _load_validator() -> Draft202012Validator:
         return _validator
 
 
+DEFAULT_ALLOWED_ORIGINS = [
+    "https://wesh360.ir",
+    "https://filing-mere-plays-jobs.trycloudflare.com",
+    "http://127.0.0.1:8010",
+]
+
+
 def _parse_allowed_origins() -> list[str]:
-    raw = os.getenv("ALLOWED_ORIGINS", "")
-    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+    raw = os.getenv("ALLOWED_ORIGINS")
+    if raw:
+        parsed = [origin.strip() for origin in raw.split(",") if origin.strip()]
+        if parsed:
+            return list(dict.fromkeys(parsed))
+    return DEFAULT_ALLOWED_ORIGINS.copy()
 
 
 def _collect_job_metrics() -> dict[str, int]:
