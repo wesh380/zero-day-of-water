@@ -106,3 +106,13 @@ for = "/amaayesh/*.csv"
   to = "/data/:splat"
   status = 200
   force = true
+
+[[redirects]]
+from = "/test/water-cld"
+to   = "/water/cld/"
+status = 301
+
+[[headers]]
+for = "/water/cld/*"
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.wesh360.ir; font-src 'self' data:;"
