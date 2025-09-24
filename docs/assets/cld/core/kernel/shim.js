@@ -1,8 +1,30 @@
-import { waitForVisible, hasSize } from "../utils/waitForVisible.js";
-
 // Ensures a stable kernel object and a readiness promise without inline scripts.
 (function () {
   const g = (typeof window !== 'undefined') ? window : globalThis;
+
+  const hasSize = (el, minW = 80, minH = 80) =>
+    !!el && el.offsetParent !== null && el.offsetWidth >= minW && el.offsetHeight >= minH;
+
+  const waitForCyVisible = (timeout = 15000) => {
+    const selector = '#cy';
+    const useGlobal = typeof window !== 'undefined' && typeof window.waitForVisible === 'function';
+    if (useGlobal) {
+      return window.waitForVisible(selector, timeout).then((resolved) => {
+        const el = resolved && typeof resolved === 'object' ? resolved : document.querySelector(selector);
+        if (!hasSize(el)) throw new Error('kernelReady: #cy became visible without layout');
+        return el;
+      });
+    }
+    return new Promise((resolve, reject) => {
+      const start = performance.now();
+      (function tick() {
+        const el = document.querySelector(selector);
+        if (hasSize(el)) return resolve(el);
+        if (performance.now() - start > timeout) return reject(new Error('kernelReady: #cy did not become visible in time'));
+        requestAnimationFrame(tick);
+      })();
+    });
+  };
 
   // --- 1) Kernel & Graph skeleton
   g.kernel = g.kernel || {};
@@ -75,11 +97,12 @@ import { waitForVisible, hasSize } from "../utils/waitForVisible.js";
           if (!hasSize(el)) {
             console.warn('[kernel-shim] #cy has no size yet; waiting for visibility (trigger:', trigger, ')');
           }
-          waitForVisible(el, { timeout: 15000 }).then(() => {
+          waitForCyVisible(15000).then((visibleEl) => {
+            const cy = visibleEl || el;
             if (!g.kernel.graph && graph) g.kernel.graph = graph;
-            stop(true, { kernel: g.kernel, graph, el });
-          }).catch(() => {
-            stop(false, new Error('kernelReady: #cy did not become visible in time'));
+            stop(true, { kernel: g.kernel, graph, el: cy });
+          }).catch((err) => {
+            stop(false, err instanceof Error ? err : new Error(String(err)));
           });
         }
       }
