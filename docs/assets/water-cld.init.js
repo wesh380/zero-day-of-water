@@ -1,3 +1,5 @@
+import { getApiBase } from './js/api.js';
+
 const waitForVisible = (selector, opts) => {
   const timeoutValue = typeof opts === 'number' ? opts : (opts && typeof opts.timeout === 'number' ? opts.timeout : undefined);
   if (typeof window !== 'undefined' && typeof window.waitForVisible === 'function') {
@@ -26,6 +28,75 @@ const OFFLINE_BADGE_TEXT = 'Offline \u2013 Read-only';
 const OFFLINE_BUTTON_SELECTORS = ['#btn-run', '#scn-compare-toggle', '#scn-pin'];
 let offlineActive = false;
 let offlineStyleEl = null;
+
+const DEV_MODE = (typeof window !== 'undefined' && typeof window.location === 'object'
+  && typeof window.location.search === 'string' && window.location.search.includes('dev=true'))
+  || (typeof window !== 'undefined' && window.__DEV === true);
+
+function setupDevHealthButton() {
+  if (!DEV_MODE) return;
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('cld-health-btn')) return;
+  const container = document.getElementById('system-graph');
+  if (!container) return;
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'flex';
+  wrapper.style.justifyContent = 'flex-end';
+  wrapper.style.alignItems = 'center';
+  wrapper.style.gap = '8px';
+  wrapper.style.marginBottom = '8px';
+
+  const button = document.createElement('button');
+  button.id = 'cld-health-btn';
+  button.type = 'button';
+  button.className = 'btn outline';
+  button.textContent = 'Health';
+
+  const badge = document.createElement('span');
+  badge.style.display = 'none';
+  badge.style.fontSize = '12px';
+  badge.style.padding = '2px 10px';
+  badge.style.borderRadius = '999px';
+  badge.style.fontWeight = '600';
+  badge.style.background = '#6b7280';
+  badge.style.color = '#fff';
+
+  button.addEventListener('click', async () => {
+    badge.style.display = 'inline-flex';
+    badge.style.alignItems = 'center';
+    badge.textContent = 'API: ...';
+    badge.style.background = '#6b7280';
+    try {
+      const base = await getApiBase();
+      const t0 = performance.now();
+      const res = await fetch(`${base}/api/health`, { cache: 'no-store' });
+      const dt = Math.round(performance.now() - t0);
+      if (res && res.ok) {
+        badge.textContent = `API: OK (${dt} ms)`;
+        badge.style.background = '#15803d';
+      } else {
+        badge.textContent = 'API: FAIL';
+        badge.style.background = '#b91c1c';
+      }
+    } catch (error) {
+      console.warn('[CLD] Health check failed', error);
+      badge.textContent = 'API: FAIL';
+      badge.style.background = '#b91c1c';
+    }
+  });
+
+  wrapper.appendChild(button);
+  wrapper.appendChild(badge);
+  container.insertBefore(wrapper, container.firstChild || null);
+}
+
+if (DEV_MODE && typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setupDevHealthButton(), { once: true });
+  } else {
+    setupDevHealthButton();
+  }
+}
 
 function ensureOfflineStyle() {
   if (offlineStyleEl) return;
