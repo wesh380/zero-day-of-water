@@ -4,10 +4,47 @@ export async function resolveBaseUrl(){
   try { const r2 = await fetch('/config/api.json',{cache:'no-store'}); if (r2.ok){ const j=await r2.json(); if(j.baseUrl) return j.baseUrl; } } catch(_){ }
   return window.location.origin;
 }
+function isCldActionPath(path=''){
+  return path.indexOf('/api/submit') !== -1 || path.indexOf('/api/result') !== -1;
+}
+
+function dispatchApiEvent(type, detail){
+  if (typeof window === 'undefined' || typeof window.dispatchEvent !== 'function') return;
+  try {
+    window.dispatchEvent(new CustomEvent(type, { detail }));
+  } catch (_) {
+    // swallow dispatch failures
+  }
+}
+
+function isServerFailure(response){
+  if (!response) return true;
+  if (typeof response.status === 'number' && response.status >= 500) return true;
+  if (typeof response.ok === 'boolean') return !response.ok && response.status === 0;
+  return false;
+}
+
 export async function apiFetch(path, init={}){
   if (path.startsWith('/api/gemini')) return fetch(path, init);
   const base = await resolveBaseUrl();
-  return fetch(new URL(path, base).toString(), init);
+  const url = new URL(path, base).toString();
+  const cldAction = isCldActionPath(path);
+  try {
+    const response = await fetch(url, init);
+    if (cldAction) {
+      if (isServerFailure(response)) {
+        dispatchApiEvent('api:offline', { path: url, status: response.status });
+      } else {
+        dispatchApiEvent('api:online', { path: url, status: response.status });
+      }
+    }
+    return response;
+  } catch (error) {
+    if (cldAction) {
+      dispatchApiEvent('api:offline', { path: url, error });
+    }
+    throw error;
+  }
 }
 // dev-only badge
 export async function devPingHealth(){
