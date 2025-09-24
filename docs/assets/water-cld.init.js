@@ -357,6 +357,9 @@ if (typeof MutationObserver !== 'undefined') {
           var opt = sw.options[sw.selectedIndex];
           var base = opt ? opt.value : sw.value;
           var ver = opt && opt.dataset ? opt.dataset.version : null;
+          if (ver == null || ver === '' || ver === 'undefined' || ver === 'null') {
+            ver = '1';
+          }
           var full = ver ? base + '?v=' + ver : base;
           return norm(full);
         }catch(_){ return norm(sw.value); }

@@ -42,7 +42,7 @@ export async function loadModel(candidate) {
     return await fetchJson(primary);
   } catch (e) {
     if (String(e.message || '').includes('MODEL_HTTP_404')) {
-      const fname = (primary || '').split('/').pop();
+      const fname = ((primary || '').split('/').pop() || '').split('?')[0];
       if (fname) {
         const fb = '/data/' + fname;
         console.warn('[CLD][model] 404; fallback', fb);
