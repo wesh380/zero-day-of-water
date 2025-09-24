@@ -109,13 +109,23 @@
 
   // ---------- Share Link ----------
   function encodeState(obj){
-    const s = JSON.stringify(obj); const b64 = btoa(unescape(encodeURIComponent(s)));
-    return b64.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); // base64url
+    const json = JSON.stringify(obj);
+    const bytes = encoder.encode(json);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); // base64url
   }
   function decodeState(s){
     try{
-      const b64 = s.replace(/-/g,'+').replace(/_/g,'/'); const pad = b64.length%4 ? '===='.slice(b64.length%4) : '';
-      const str = decodeURIComponent(escape(atob(b64+pad))); return JSON.parse(str);
+      const base = s.replace(/-/g,'+').replace(/_/g,'/');
+      const pad = base.length % 4 ? '='.repeat(4 - (base.length % 4)) : '';
+      const binary = atob(base + pad);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const json = decoder.decode(bytes);
+      return JSON.parse(json);
     }catch(_){ return null; }
   }
   function stateFromUI(name='Scenario'){
@@ -304,4 +314,3 @@
   document.addEventListener('model:updated', ()=>{ if ($('#scn-panel')?.classList.contains('open')) renderPanel(); });
 
 })();
-
