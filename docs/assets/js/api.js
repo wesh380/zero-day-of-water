@@ -25,8 +25,8 @@ function isServerFailure(response){
 }
 
 export async function apiFetch(path, init={}){
-  if (path.startsWith('/api/gemini')) return fetch(path, init);
-  const base = await resolveBaseUrl();
+  const useSiteOrigin = path.startsWith('/api/gemini');
+  const base = useSiteOrigin ? window.location.origin : await resolveBaseUrl();
   const url = new URL(path, base).toString();
   const cldAction = isCldActionPath(path);
   try {
