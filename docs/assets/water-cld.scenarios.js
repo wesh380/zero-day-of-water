@@ -8,6 +8,8 @@
   const $  = (s, r=document)=> r.querySelector(s);
   const $$ = (s, r=document)=> Array.from(r.querySelectorAll(s));
   const LS = window.localStorage;
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder('utf-8');
 
   const KPI_SPEC = {
     supply_demand_gap: {label:'شکاف عرضه–تقاضا', unit:'%', better:'lower'},
@@ -302,3 +304,4 @@
   document.addEventListener('model:updated', ()=>{ if ($('#scn-panel')?.classList.contains('open')) renderPanel(); });
 
 })();
+

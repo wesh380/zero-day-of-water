@@ -1,3 +1,5 @@
+import { waitForVisible } from './js/utils/dom.js';
+
 (function () {
   const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
   const getCy = CLD_CORE.getCy ? CLD_CORE.getCy : () => null;
@@ -178,6 +180,8 @@
         }
         await waitForVisible(el, {timeout:15000});
         const cy = ensureCy();
+        const beforeStats = cy ? { cyNodes: cy.nodes().length, cyEdges: cy.edges().length } : { cyNodes: 0, cyEdges: 0 };
+        try { console.info('[CLD] mount:before', beforeStats); } catch (_) { }
         const elements = (window.CLD_MAP && typeof window.CLD_MAP.coerceElements === 'function') ? window.CLD_MAP.coerceElements(json) : [];
         if (window.__CLD_DEBUG__) {
           try{ console.debug("[CLD init] pre-add", { container: { w: el.offsetWidth, h: el.offsetHeight }, nodes: Array.isArray(json.nodes) ? json.nodes.length : Array.isArray(json.elements?.nodes) ? json.elements.nodes.length : elements.filter(e=>e.group==='nodes').length, edges: Array.isArray(json.edges) ? json.edges.length : Array.isArray(json.elements?.edges) ? json.elements.edges.length : elements.filter(e=>e.group==='edges').length }); }catch(_){ }
@@ -201,6 +205,11 @@
                 }
               }
               c?.resize(); c?.fit(undefined, 24);
+              const afterStats = { cyNodes: c.nodes().length, cyEdges: c.edges().length };
+              try {
+                console.info('[CLD] mount:after', afterStats);
+                if (!afterStats.cyNodes || !afterStats.cyEdges) console.warn('[CLD] mount:empty', afterStats);
+              } catch (_) { }
               if (window.__CLD_DEBUG__) {
                 try{ const bb = c.elements().boundingBox(); console.debug("[CLD init] layout done", { bbox: bb, zoom: c.zoom(), center: c.center() }); }catch(_){ }
               }
@@ -250,3 +259,6 @@ document.addEventListener('transitionend', () => {
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) doResize();
 });
+
+
+
