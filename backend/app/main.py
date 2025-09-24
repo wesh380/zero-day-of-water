@@ -1,4 +1,4 @@
-"""
+﻿"""
 FastAPI application entrypoint.
 """
 from __future__ import annotations
@@ -38,6 +38,8 @@ logger = logging.getLogger("wesh.api")
 
 app = FastAPI(default_response_class=ORJSONResponse)
 
+MAX_SUBMIT_BYTES = 256 * 1024
+SUBMIT_PATH = "/api/submit"
 TOKEN_BUCKET_CAPACITY = 60
 TOKEN_REFILL_RATE = 60 / 60  # tokens per second
 _rate_limiter_lock = Lock()
@@ -61,6 +63,25 @@ def _refill_bucket(bucket: dict[str, float]) -> None:
     )
     bucket["last_refill"] = now
 
+
+@app.middleware("http")
+async def submit_size_limiter(request: Request, call_next):
+    if request.method == "POST" and request.url.path == SUBMIT_PATH:
+        length = None
+        content_length = request.headers.get("content-length")
+        if content_length:
+            try:
+                length = int(content_length)
+            except ValueError:
+                length = None
+            else:
+                if length > MAX_SUBMIT_BYTES:
+                    return ORJSONResponse({"detail": "Payload too large"}, status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+        if length is None:
+            body = await request.body()
+            if len(body) > MAX_SUBMIT_BYTES:
+                return ORJSONResponse({"detail": "Payload too large"}, status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
+    return await call_next(request)
 
 @app.middleware("http")
 async def rate_limiter(request: Request, call_next):
@@ -401,3 +422,5 @@ def get_result(job_id: str) -> Any:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to read result file") from exc
 
     return {"status": state_value}
+
+
