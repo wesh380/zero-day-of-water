@@ -112,6 +112,7 @@ for = "/amaayesh/*.csv"
 from = "/test/water-cld"
 to   = "/water/cld/"
 status = 301
+force = false
 
 [[headers]]
 for = "/water/cld/*"
