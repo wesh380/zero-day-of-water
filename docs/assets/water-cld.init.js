@@ -1,4 +1,138 @@
-import { waitForVisible } from './js/utils/dom.js';
+const waitForVisible = (selector, opts) => {
+  const timeoutValue = typeof opts === 'number' ? opts : (opts && typeof opts.timeout === 'number' ? opts.timeout : undefined);
+  if (typeof window !== 'undefined' && typeof window.waitForVisible === 'function') {
+    const duration = typeof timeoutValue === 'number' ? timeoutValue : 5000;
+    return window.waitForVisible(selector, duration);
+  }
+  const limit = typeof timeoutValue === 'number' ? timeoutValue : 5000;
+  return new Promise((resolve, reject) => {
+    const startedAt = performance.now();
+    (function tick() {
+      const el = document.querySelector(selector);
+      if (el && el.offsetParent !== null) {
+        resolve(el);
+        return;
+      }
+      if (performance.now() - startedAt > limit) {
+        reject(new Error('waitForVisible timeout: ' + selector));
+        return;
+      }
+      requestAnimationFrame(tick);
+    })();
+  });
+};
+const OFFLINE_BADGE_ID = 'cld-offline-badge';
+const OFFLINE_BADGE_TEXT = 'Offline \u2013 Read-only';
+const OFFLINE_BUTTON_SELECTORS = ['#btn-run', '#scn-compare-toggle', '#scn-pin'];
+let offlineActive = false;
+let offlineStyleEl = null;
+
+function ensureOfflineStyle() {
+  if (offlineStyleEl) return;
+  offlineStyleEl = document.createElement('style');
+  offlineStyleEl.textContent = '.cld-offline-badge{position:fixed;bottom:16px;right:16px;padding:6px 12px;border-radius:9999px;background:#dc2626;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.02em;z-index:2147483000;box-shadow:0 8px 18px rgba(15,23,42,0.25);} .cld-offline-disabled{opacity:0.45 !important;pointer-events:none !important;cursor:not-allowed !important;}';
+  if (document.head) {
+    document.head.appendChild(offlineStyleEl);
+  } else {
+    document.addEventListener('DOMContentLoaded', () => document.head && document.head.appendChild(offlineStyleEl), { once: true });
+  }
+}
+
+function getOfflineBadge() {
+  ensureOfflineStyle();
+  let badge = document.getElementById(OFFLINE_BADGE_ID);
+  if (!badge) {
+    badge = document.createElement('div');
+    badge.id = OFFLINE_BADGE_ID;
+    badge.className = 'cld-offline-badge';
+    badge.textContent = OFFLINE_BADGE_TEXT;
+    if (document.body) {
+      document.body.appendChild(badge);
+    } else {
+      document.addEventListener('DOMContentLoaded', () => document.body && document.body.appendChild(badge), { once: true });
+    }
+  }
+  return badge;
+}
+
+function renderOfflineBadge(active) {
+  const badge = document.getElementById(OFFLINE_BADGE_ID);
+  if (active) {
+    const el = getOfflineBadge();
+    if (el) el.textContent = OFFLINE_BADGE_TEXT;
+  } else if (badge) {
+    badge.remove();
+  }
+}
+
+function disableActionButtons(disabled) {
+  OFFLINE_BUTTON_SELECTORS.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el) => {
+      try {
+        if ('disabled' in el) {
+          el.disabled = disabled;
+        }
+        if (disabled) {
+          el.setAttribute('aria-disabled', 'true');
+        } else {
+          el.removeAttribute('aria-disabled');
+        }
+        el.classList.toggle('cld-offline-disabled', disabled);
+      } catch (err) {
+        // ignore toggle failures
+      }
+    });
+  });
+}
+
+function applyOfflineState(active) {
+  offlineActive = !!active;
+  if (offlineActive) {
+    renderOfflineBadge(true);
+    disableActionButtons(true);
+  } else {
+    renderOfflineBadge(false);
+    disableActionButtons(false);
+  }
+}
+
+function isOfflineEventRelevant(detail) {
+  if (!detail || typeof detail !== 'object') {
+    return true;
+  }
+  let path = '';
+  if (typeof detail.path === 'string') {
+    path = detail.path;
+  }
+  if (!path) {
+    return true;
+  }
+  try {
+    path = new URL(path, window.location.origin).pathname || path;
+  } catch (_) {
+    // ignore URL parsing errors and use the raw path
+  }
+  return path.indexOf('/api/submit') !== -1 || path.indexOf('/api/result') !== -1;
+}
+window.addEventListener('api:offline', (event) => {
+  const detail = event && event.detail ? event.detail : {};
+  console.error('[CLD] API offline', detail.path || '', detail.error || detail);
+  if (!isOfflineEventRelevant(detail)) {
+    return;
+  }
+  applyOfflineState(true);
+});
+
+window.addEventListener('api:online', () => {
+  applyOfflineState(false);
+});
+
+if (typeof MutationObserver !== 'undefined') {
+  const offlineObserver = new MutationObserver(() => {
+    if (offlineActive) disableActionButtons(true);
+  });
+  offlineObserver.observe(document.documentElement, { childList: true, subtree: true });
+}
 
 (function () {
   const CLD_CORE = (typeof window !== 'undefined' && window.CLD_CORE) ? window.CLD_CORE : {};
@@ -178,7 +312,7 @@ import { waitForVisible } from './js/utils/dom.js';
         if (window.__CLD_DEBUG__) {
           try{ console.debug("[CLD init] pre-visible", { w: el?.offsetWidth, h: el?.offsetHeight, display: getComputedStyle(el).display }); }catch(_){ }
         }
-        await waitForVisible('#cy', {timeout:15000});
+        await waitForVisible('#cy', 15000);
         const cy = ensureCy();
         const elements = (window.CLD_MAP && typeof window.CLD_MAP.coerceElements === 'function') ? window.CLD_MAP.coerceElements(json) : [];
         const rawNodes = Array.isArray(json.nodes) ? json.nodes.length : Array.isArray(json.elements?.nodes) ? json.elements.nodes.length : elements.filter(e=>e.group==='nodes').length;
