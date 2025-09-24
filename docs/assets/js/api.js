@@ -1,7 +1,38 @@
+async function readApiConfig(path){
+  try {
+    const response = await fetch(path, { cache: 'no-store' });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (data && typeof data.baseUrl === 'string' && data.baseUrl) {
+      return data.baseUrl;
+    }
+  } catch (_) {}
+  return null;
+}
+
+async function resolveBaseUrlInternal(){
+  const paths = ['/config/api.local.json', '/config/api.json'];
+  for (const path of paths) {
+    const base = await readApiConfig(path);
+    if (base) return base;
+  }
+  return window.location.origin;
+}
+
+let apiBasePromise;
+
 export async function resolveBaseUrl(){
+  if (!apiBasePromise) {
+    apiBasePromise = resolveBaseUrlInternal().then((base) => {
+      window.__API_BASE_URL = base;
+      return base;
+    });
+  }
+  return apiBasePromise;
+}
+
+export function getApiBase(){
   if (window.__API_BASE_URL) return window.__API_BASE_URL;
-  try { const r1 = await fetch('/config/api.local.json',{cache:'no-store'}); if (r1.ok){ const j=await r1.json(); if(j.baseUrl) return j.baseUrl; } } catch(_){ }
-  try { const r2 = await fetch('/config/api.json',{cache:'no-store'}); if (r2.ok){ const j=await r2.json(); if(j.baseUrl) return j.baseUrl; } } catch(_){ }
   return window.location.origin;
 }
 function isCldActionPath(path=''){
