@@ -5,9 +5,10 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import os
 from pathlib import Path
 
-RUNTIME_DIR = Path(r"C:\wesh360\data\runtime")
+RUNTIME_DIR = Path(os.getenv("API_RUNTIME_DIR", r"C:\\wesh360\\data\\runtime"))
 PATTERNS = ("*.state", "*.in.json", "*.out.json", "*.err.txt")
 
 
@@ -18,6 +19,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    print(f"[maintenance] runtime_dir={RUNTIME_DIR}", flush=True)
     args = parse_args()
     ttl_hours = args.ttl_hours
     if ttl_hours <= 0:
@@ -50,3 +52,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+

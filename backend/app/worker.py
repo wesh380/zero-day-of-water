@@ -1,4 +1,4 @@
-"""
+﻿"""
 Background worker processing queued jobs for Wesh360.
 """
 from __future__ import annotations
@@ -17,8 +17,8 @@ try:
 except ImportError:  # pragma: no cover - optional dependency
     orjson = None  # type: ignore
 
-RUNTIME_DIR = Path(r"C:\wesh360\data\runtime")
-DERIVED_DIR = Path(r"C:\wesh360\data\derived")
+RUNTIME_DIR = Path(os.getenv("API_RUNTIME_DIR", r"C:\\wesh360\\data\\runtime"))
+DERIVED_DIR = Path(os.getenv("API_DERIVED_DIR", r"C:\\wesh360\\data\\derived"))
 SLEEP_SECONDS = 1
 
 
@@ -168,6 +168,8 @@ def _process_job(job_id: str, state_path: Path, job_hash: str | None) -> None:
 
 
 def main() -> None:
+    _log(f"worker config: runtime={RUNTIME_DIR}")
+    _log(f"worker config: derived={DERIVED_DIR}")
     _ensure_directories()
     _log("worker started")
 
@@ -222,3 +224,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
