@@ -1710,6 +1710,9 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         var opt = sw.options[sw.selectedIndex];
         var base = opt ? opt.value : sw.value;
         var ver = opt && opt.dataset ? opt.dataset.version : null;
+        if (ver == null || ver === '' || ver === 'undefined' || ver === 'null') {
+          ver = '1';
+        }
         return ver ? base + '?v=' + ver : base;
       }
       sw.addEventListener('change', function(){

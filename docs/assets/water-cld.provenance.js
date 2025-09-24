@@ -8,6 +8,12 @@ import { setClass } from './css-classes.js';
   const $  = (s, r=document)=> r.querySelector(s);
   const $$ = (s, r=document)=> Array.from(r.querySelectorAll(s));
   const safe = (v, d='—') => (v==null || v==='') ? d : v;
+  const sanitizeVersion = (val, fallback='1') => {
+    if (val == null) return fallback;
+    const str = String(val).trim();
+    if (!str || str === 'undefined' || str === 'null') return fallback;
+    return str;
+  };
   const meta = (name) => document.querySelector(`meta[name="${name}"]`)?.content || null;
 
   // Read versions/commit from globals or meta
@@ -51,7 +57,7 @@ import { setClass } from './css-classes.js';
         unit:  el.dataset.unit || meta('default-unit') || '',
         source: el.dataset.source || meta('data-source') || '—',
         updated: el.dataset.updated || meta('data-updated') || readVersions().UPDATED || '—',
-        version: el.dataset.version || readVersions().DATA,
+        version: sanitizeVersion(el.dataset.version, sanitizeVersion(readVersions().DATA)),
         csv: el.dataset.csv || '',   // اگر داده CSV دارید
         img: null                    // بعداً اگر canvas بود، PNG می‌سازیم
       };
