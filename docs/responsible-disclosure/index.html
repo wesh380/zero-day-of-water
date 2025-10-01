@@ -4,75 +4,97 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Language" content="fa-IR" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="گزارش مسئولانهٔ آسیب‌پذیری • WESH360" />
   <title>گزارش مسئولانهٔ آسیب‌پذیری • WESH360</title>
   <link rel="stylesheet" href="../assets/tailwind.css" />
   <link rel="stylesheet" href="../assets/fonts.css" />
-  <link rel="stylesheet" href="/assets/global-footer.css" />
-  <link rel="stylesheet" href="/assets/unified-badge.css" />
-  <script defer src="/assets/unified-badge.js"></script>
-  <script defer src="/assets/global-footer.js"></script>
+  <link rel="stylesheet" href="../assets/global-footer.css" />
+  <link rel="stylesheet" href="../assets/unified-badge.css" />
+  <link rel="icon" type="image/png" href="../Logo.png" />
 </head>
-<body class="min-h-screen flex flex-col bg-gradient-to-b from-slate-50 via-sky-50/70 to-white">
+<body class="min-h-screen flex flex-col bg-slate-50">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-  <header class="relative p-4 flex justify-center items-center">
-    <img src="../page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="w-24 md:w-28 h-auto" />
-    <div class="absolute top-4 right-4 flex items-center gap-2">
-      <a href="/security-policy" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="سیاست امنیت و حکمرانی داده">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
-        <span>سیاست امنیت و حکمرانی داده</span>
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 text-slate-800 font-semibold">
+        <img src="../page/landing/logo2.webp" alt="لوگوی وش۳۶۰" class="w-16 h-auto" loading="lazy" decoding="async" />
+        <span class="text-base md:text-lg">وش۳۶۰</span>
       </a>
-      <a href="/responsible-disclosure/" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="گزارش مسئولانهٔ آسیب‌پذیری" aria-current="page">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88" /><path d="M14.12 3.88 16 2" /><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" /><path d="M12 20v-9" /><path d="M6.53 9C4.6 8.8 3 7.1 3 5" /><path d="M6 13H2" /><path d="M3 21c0-2.1 1.7-3.9 3.8-4" /><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /><path d="M22 13h-4" /><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></svg>
-        <span>گزارش مسئولانهٔ آسیب‌پذیری</span>
-      </a>
-      <a href="/research/" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-label="پژوهشگران" title="پژوهشگران">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /><path d="M6.453 15h11.094" /><path d="M8.5 2h7" /></svg>
-        <span>پژوهشگران</span>
-      </a>
-      <a href="/responsible-disclosure/" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300 bg-white/80 text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="گزارش مسئولانهٔ آسیب‌پذیری">
-        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88" /><path d="M14.12 3.88 16 2" /><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" /><path d="M12 20v-9" /><path d="M6.53 9C4.6 8.8 3 7.1 3 5" /><path d="M6 13H2" /><path d="M3 21c0-2.1 1.7-3.9 3.8-4" /><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /><path d="M22 13h-4" /><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></svg>
-      </a>
+      <nav class="hidden md:flex items-center gap-3 text-sm">
+        <a href="/security-policy" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+          <span>سیاست امنیت و حکمرانی داده</span>
+        </a>
+        <a href="/responsible-disclosure" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-current="page">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88" /><path d="M14.12 3.88 16 2" /><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" /><path d="M12 20v-9" /><path d="M6.53 9C4.6 8.8 3 7.1 3 5" /><path d="M6 13H2" /><path d="M3 21c0-2.1 1.7-3.9 3.8-4" /><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /><path d="M22 13h-4" /><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></svg>
+          <span>گزارش مسئولانهٔ آسیب‌پذیری</span>
+        </a>
+        <a href="/research/" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /><path d="M6.453 15h11.094" /><path d="M8.5 2h7" /></svg>
+          <span>پژوهشگران</span>
+        </a>
+      </nav>
     </div>
   </header>
+
   <main id="main" class="flex-grow">
-    <section class="max-w-4xl mx-auto px-4 py-10 md:py-14 space-y-6">
-      <header class="space-y-3 text-center">
-        <h1 class="text-2xl md:text-4xl font-extrabold text-slate-900">گزارش مسئولانهٔ آسیب‌پذیری</h1>
-        <p class="text-slate-600 md:text-lg">امنیت سایبری و امنیت داده خط قرمز خانهٔ هم‌افزایی انرژی و آب است. پیش از انتشار عمومی، یافته‌های امنیتی را به‌صورت محرمانه گزارش کنید تا بررسی و برطرف شود.</p>
-      </header>
-      <article class="bg-white/90 border border-slate-200 rounded-2xl p-6 space-y-4 text-sm leading-7 text-slate-700 prose prose-slate rtl max-w-none">
-        <h2>اصول برنامه</h2>
-        <ul>
-          <li>گزارش‌های با حسن نیت را ارج می‌نهیم و از پژوهشگران امنیتی سپاسگزاریم.</li>
-          <li>فقط داده‌های عمومی، تجمیعی و با تاخیر ایمن در داشبوردها نمایش داده می‌شود.</li>
-          <li>مهلت معقولی برای بررسی، رفع و انتشار عمومی نتیجه در نظر گرفته می‌شود.</li>
-        </ul>
-        <h2>چه چیزی را گزارش دهیم؟</h2>
-        <ol>
-          <li>شرح مختصر مسئله، دامنه و گام‌های بازتولید.</li>
-          <li>محدودهٔ تأثیر و سطح دسترسی موردنیاز.</li>
-          <li>شواهد پشتیبان (اسکرین‌شات یا PoC غیرمخرب).</li>
-        </ol>
-        <h2>کانال‌های ارتباطی</h2>
-        <ul>
-          <li>ایمیل: <a href="mailto:security@wesh360.ir" class="text-sky-700 hover:underline">security@wesh360.ir</a></li>
-          <li>پیام رمزگذاری‌شدهٔ PGP (درخواست کلید از طریق ایمیل).</li>
-        </ul>
-        <h2>قواعد همکاری مسئولانه</h2>
-        <ul>
-          <li>از افشای عمومی قبل از رفع یا هماهنگی با ما خودداری کنید.</li>
-          <li>از بهره‌برداری فراتر از حداقل لازم برای اثبات آسیب‌پذیری بپرهیزید.</li>
-          <li>از تعامل با داده‌های شخصی، حساب‌های کاربری و زیرساخت‌های خارج از دامنهٔ رسمی خودداری کنید.</li>
-        </ul>
-      </article>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="mailto:security@wesh360.ir?subject=WESH360%20Vulnerability%20Report" class="inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
-          ارسال ایمیل گزارش
-        </a>
-        <a href="/security-policy" class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-400">
-          سیاست امنیت و حکمرانی داده
-        </a>
+    <section class="bg-sky-900 text-white py-12">
+      <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
+        <p class="text-sm font-semibold tracking-wide uppercase">WESH360</p>
+        <h1 class="text-2xl md:text-4xl font-extrabold">گزارش مسئولانهٔ آسیب‌پذیری</h1>
+        <p class="text-sm md:text-base text-slate-100 leading-7">مسیر امن برای گزارش آسیب‌پذیری‌ها و ارسال پیشنهادهای توسعه.</p>
       </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-4 py-10 md:py-14">
+      <article class="prose prose-slate rtl max-w-none text-sm md:text-base leading-7 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl shadow-sm p-6 md:p-10 space-y-6">
+        <section aria-labelledby="contact-heading" class="space-y-3">
+          <h2 id="contact-heading" class="text-lg font-bold text-slate-800">راه‌های تماس مستقیم</h2>
+          <p class="text-slate-600">برای دریافت سریع، می‌توانید از یکی از راه‌های زیر استفاده کنید:</p>
+          <ul class="grid gap-3 text-slate-700">
+            <li><strong>تلفن ثابت:</strong> <a class="text-sky-700 hover:underline" href="tel:+985138434143">05138434143</a></li>
+            <li><strong>آیدی تلگرام:</strong> <a class="text-sky-700 hover:underline" href="https://t.me/wesh360" target="_blank" rel="noopener">@wesh360</a></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="guidance-heading" class="space-y-3">
+          <h2 id="guidance-heading" class="text-lg font-bold text-slate-800">راهنمای ارسال</h2>
+          <ul class="list-disc pr-5 space-y-2">
+            <li>فقط اطلاعات فنی لازم؛ از ارسال دادهٔ شخصی خودداری کنید.</li>
+            <li>اگر پیشنهاد بهبود یا توسعه دارید هم همین‌جا ارسال کنید.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="form-heading" class="space-y-4">
+          <h2 id="form-heading" class="text-lg font-bold text-slate-800">فرم گزارش یا پیشنهاد</h2>
+          <p class="text-slate-600">فرم زیر مستقیماً به تیم امنیت و توسعهٔ وش۳۶۰ ارسال می‌شود. لطفاً جزئیات فنی لازم را بنویسید تا بررسی دقیق انجام شود.</p>
+          <form name="responsible-disclosure" method="POST" action="/responsible-disclosure/thanks.html" data-netlify="true" data-netlify-honeypot="bot-field" dir="rtl" class="space-y-4">
+            <input type="hidden" name="form-name" value="responsible-disclosure" />
+            <p class="hidden"><label>فیلد ربات: <input name="bot-field" /></label></p>
+            <fieldset class="space-y-2 border border-slate-200 rounded-xl p-4">
+              <legend class="font-medium text-slate-700">نوع ارسال</legend>
+              <label class="flex items-center gap-2 text-slate-700"><input type="radio" name="type" value="vuln" required /> گزارش آسیب‌پذیری</label>
+              <label class="flex items-center gap-2 text-slate-700"><input type="radio" name="type" value="suggestion" /> پیشنهاد توسعه</label>
+            </fieldset>
+            <label class="grid gap-2 text-slate-700">
+              موضوع
+              <input name="subject" required class="rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+            </label>
+            <label class="grid gap-2 text-slate-700">
+              شرح کامل
+              <textarea name="details" rows="6" required class="rounded-lg border border-slate-300 px-3 py-2 leading-7 focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+            </label>
+            <label class="grid gap-2 text-slate-700">
+              راه ارتباطی اختیاری (ایمیل/تلفن/تلگرام)
+              <input name="contact" class="rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+            </label>
+            <div data-netlify-recaptcha="true"></div>
+            <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-5 py-2 text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-400">
+              ارسال
+            </button>
+          </form>
+        </section>
+      </article>
     </section>
   </main>
 </body>
