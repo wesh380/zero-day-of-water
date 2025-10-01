@@ -20,7 +20,6 @@
   }
 
   const policySheet = document.getElementById('policySheet');
-  const securitySheet = document.getElementById('securitySheet');
   const mobileSheet = document.getElementById('mobileActionsSheet');
   const requestSheet = document.getElementById('requestSheet');
   const proposalSheet = document.getElementById('proposalSheet');
@@ -34,23 +33,21 @@
   }
 
   bindTrigger(document.getElementById('policyBtn'), policySheet);
-  bindTrigger(document.getElementById('securityBtn'), securitySheet);
   bindTrigger(document.getElementById('mobileActionsBtn'), mobileSheet);
   bindTrigger(document.getElementById('mobilePolicyBtn'), policySheet, mobileSheet);
-  bindTrigger(document.getElementById('mobileSecurityBtn'), securitySheet, mobileSheet);
   bindTrigger(document.getElementById('openRequest'), requestSheet);
   bindTrigger(document.getElementById('openProposal'), proposalSheet);
 
   document.querySelectorAll('[data-close]').forEach(el => {
     el.addEventListener('click', e => {
-      const sheet = e.target.closest('#policySheet, #securitySheet, #mobileActionsSheet, #requestSheet, #proposalSheet');
+      const sheet = e.target.closest('#policySheet, #mobileActionsSheet, #requestSheet, #proposalSheet');
       closeSheet(sheet);
     });
   });
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      [policySheet, securitySheet, mobileSheet, requestSheet, proposalSheet].forEach(closeSheet);
+      [policySheet, mobileSheet, requestSheet, proposalSheet].forEach(closeSheet);
     }
   });
 
