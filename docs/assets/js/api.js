@@ -4,6 +4,7 @@ export async function resolveBaseUrl(){
   try { const r2 = await fetch('/config/api.json',{cache:'no-store'}); if (r2.ok){ const j=await r2.json(); if(j.baseUrl) return j.baseUrl; } } catch(_){ }
   return window.location.origin;
 }
+export const getBaseUrl = resolveBaseUrl;
 function isCldActionPath(path=''){
   return path.indexOf('/api/submit') !== -1 || path.indexOf('/api/result') !== -1;
 }
