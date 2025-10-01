@@ -62,6 +62,21 @@ curl -i -X POST http://localhost:8888/api/gemini \
   --data '{"q":"ping"}'
 ```
 
+## Backend API (on-prem service)
+
+The Windows service powering `/api/health`, `/api/submit`, and `/api/poll` reads configuration values from `backend/.env`.
+
+| Key | Default | Notes |
+| --- | --- | --- |
+| `API_HOST` | `127.0.0.1` | Bind address for the FastAPI app. |
+| `API_PORT` | `8010` | Listen port exposed through the reverse proxy. |
+| `API_RUNTIME_DIR` | `C:\wesh360\data\runtime` | Queue directory for CLD job state files. |
+| `API_DERIVED_DIR` | `C:\wesh360\data\derived` | Cached artifacts consumed by the worker. |
+| `API_HMAC_SECRET` | `CHANGEME` | Shared secret for HMAC validation; replace in production. |
+| `ALLOWED_ORIGINS` | `https://wesh360.ir,https://www.wesh360.ir,https://api.wesh360.ir` | Comma-separated CORS whitelist for browser access. |
+
+After updating any of these keys, restart the FastAPI app and worker service so the new paths and origins are picked up.
+
 ## Backlog
 
 - Migrate from `cdn.tailwindcss.com` to CSS compiled with Tailwind CLI at build time.

@@ -17,8 +17,10 @@ try:
 except ImportError:  # pragma: no cover - optional dependency
     orjson = None  # type: ignore
 
-RUNTIME_DIR = Path(os.getenv("API_RUNTIME_DIR", r"C:\\wesh360\\data\\runtime"))
-DERIVED_DIR = Path(os.getenv("API_DERIVED_DIR", r"C:\\wesh360\\data\\derived"))
+DEFAULT_RUNTIME_DIR = Path(r"C:\\wesh360\\data\\runtime")
+DEFAULT_DERIVED_DIR = Path(r"C:\\wesh360\\data\\derived")
+RUNTIME_DIR = DEFAULT_RUNTIME_DIR
+DERIVED_DIR = DEFAULT_DERIVED_DIR
 SLEEP_SECONDS = 1
 
 
@@ -168,8 +170,15 @@ def _process_job(job_id: str, state_path: Path, job_hash: str | None) -> None:
 
 
 def main() -> None:
-    _log(f"worker config: runtime={RUNTIME_DIR}")
-    _log(f"worker config: derived={DERIVED_DIR}")
+    global RUNTIME_DIR, DERIVED_DIR
+
+    runtime_env = os.getenv("API_RUNTIME_DIR")
+    derived_env = os.getenv("API_DERIVED_DIR")
+    RUNTIME_DIR = Path(runtime_env) if runtime_env else DEFAULT_RUNTIME_DIR
+    DERIVED_DIR = Path(derived_env) if derived_env else DEFAULT_DERIVED_DIR
+
+    _log(f"worker config: runtime_env={runtime_env!r} resolved={RUNTIME_DIR}")
+    _log(f"worker config: derived_env={derived_env!r} resolved={DERIVED_DIR}")
     _ensure_directories()
     _log("worker started")
 

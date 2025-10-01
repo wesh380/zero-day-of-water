@@ -12,6 +12,7 @@
     "build:css": "tailwindcss -i docs/assets/tailwind.input.css -o docs/assets/tailwind.css --minify",
     "build": "npm run build:css && npm run build:agri && npm run prepare:agri",
     "test": "node tests/mapper.test.js && node tests/e2e-cld.test.js && node tests/e2e-water-cld.behaviors.test.js",
+    "test:api": "node scripts/test-api.js",
     "flag:test": "node scripts/check-flag.js",
     "check:no-binary": "node tools/check-no-binary.js",
     "validate:layers": "node tools/validate_layers.js",
@@ -42,7 +43,8 @@
     "audit:cld:rewire": "node tools/cld-rewire-plan.js",
     "audit:cld:arch": "node tools/cld-data-architecture-audit.js",
     "audit:cld:connect": "node tools/cld-connection-audit.js",
-    "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire"
+    "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire",
+    "lint:links": "node scripts/lint-links.js"
   },
   "keywords": [],
   "author": "",
