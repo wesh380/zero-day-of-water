@@ -1,0 +1,33 @@
+﻿/* --- experimental soft-hide on HOME only --- */
+body[data-page="home"] [data-cta="amaayesh"],
+body[data-page="home"] [data-cta="water-lab"] {
+  display: none !important;
+}
+
+/* Secret portals (clickable but invisible) */
+.easter-hotspot {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  top: 0;
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.easter-top-left {
+  left: 0;
+}
+.easter-top-right {
+  right: 0;
+}
+
+/* Developer reveal */
+html.dev-show-experimental body[data-page="home"] [data-cta] {
+  display: initial !important;
+}
+/* Optional: when focused by keyboard during dev-reveal, show a faint outline */
+html.dev-show-experimental .easter-hotspot:focus {
+  outline: 2px dashed;
+  outline-offset: 2px;
+  opacity: .1;
+}

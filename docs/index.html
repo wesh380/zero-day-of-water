@@ -17,12 +17,13 @@
   <link rel="preload" as="image" href="./page/landing/hiro2.webp" type="image/webp">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
   <link rel="stylesheet" href="./page/landing/landing.css">
   <link rel="icon" type="image/x-icon" href="./page/landing/favicon.ico">
   <script defer src="./assets/unified-badge.js"></script>
   <script defer src="./assets/global-footer.js"></script>
 </head>
-  <body class="min-h-screen flex flex-col">
+  <body data-page="home" class="min-h-screen flex flex-col">
     <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
     <header class="site-header relative flex justify-center items-center px-4">
       <img src="page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
@@ -54,7 +55,7 @@
       </div>
     </section>
   <main id="main" class="flex-grow">
-    <a href="./amaayesh/index.html"
+    <a data-cta="amaayesh" href="./amaayesh/index.html"
        class="inline-flex items-center gap-2 px-4 py-2 my-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white">
       نقشه آمایش انرژی خراسان رضوی
     </a>
@@ -73,7 +74,7 @@
       </a>
     </section>
     <section class="flex justify-center py-6">
-      <a href="/test/water-cld.html" class="border rounded px-3 py-2 text-sm">
+      <a data-cta="water-lab" href="/test/water-cld.html" class="border rounded px-3 py-2 text-sm">
         مدل آزمایشی بهره‌وری آب
       </a>
     </section>
@@ -207,6 +208,7 @@
   addEventListener('resize', setHF);
 })();
 </script>
+  <script defer src="/assets/js/easter.js"></script>
   <script defer src="./assets/parallax.js"></script>
   <script defer src="index.js?v=1"></script>
   <script defer src="assets/numfmt.js?v=1"></script>

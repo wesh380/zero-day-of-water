@@ -60,7 +60,7 @@
   }
 
   const requestForm = document.getElementById('requestForm');
-  if (requestForm) {
+  if (requestForm && !requestForm.hasAttribute('data-netlify')) {
     requestForm.addEventListener('submit', e => {
       e.preventDefault();
       const data = new FormData(requestForm);
@@ -84,7 +84,7 @@
   }
 
   const proposalForm = document.getElementById('proposalForm');
-  if (proposalForm) {
+  if (proposalForm && !proposalForm.hasAttribute('data-netlify')) {
     proposalForm.addEventListener('submit', e => {
       e.preventDefault();
       const data = new FormData(proposalForm);
