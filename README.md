@@ -85,7 +85,7 @@ curl -i -X POST http://localhost:8888/api/gemini \
    ```bash
    npx http-server docs -p 8080
    ```
-   Visit [http://localhost:8080/agrivoltaics/](http://localhost:8080/agrivoltaics/) and ensure it loads without CSP errors.
+   Visit [http://localhost:8080/solar/agrivoltaics/](http://localhost:8080/solar/agrivoltaics/) and ensure it loads without CSP errors.
 4. **Test Netlify functions**
    ```bash
    npx netlify dev
@@ -105,4 +105,3 @@ If the preview throws a CORS error, verify that the origin uses `process.env.URL
 ## تنظیمات ویندوز
 
 پس از هر بار به‌روزرسانی فایل `backend/.env` (مثلا تغییر مقادیر ALLOWED_ORIGINS یا مسیرهای دایرکتوری)? سرویس‌های اجرا شده روی ویندوز مانند API و worker را ری‌استارت کنید تا تنظیمات جدید اعمال شود.
-

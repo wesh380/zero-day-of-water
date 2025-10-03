@@ -26,13 +26,13 @@
 
 [[redirects]]
   from = "/agrivoltaics"
-  to = "/agrivoltaics/"
+  to = "/solar/agrivoltaics/"
   status = 301
 
 [[redirects]]
   from = "/agrivoltaics/*"
-  to = "/agrivoltaics/index.html"
-  status = 200
+  to = "/solar/agrivoltaics/:splat"
+  status = 301
 
 [[redirects]]
   from = "/api/*"
