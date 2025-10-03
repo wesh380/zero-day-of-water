@@ -1,0 +1,21 @@
+﻿{
+  "legal": {
+    "isObliged": true,
+    "startYear": 1403,
+    "rampPerYearPct": 5,
+    "capSharePct": 20
+  },
+  "pricing": {
+    "greenBoard": 56000,
+    "greenBoardGrowthPct": 20,
+    "gridPrice": null
+  },
+  "finance": {
+    "capexPerKW": 320000000,
+    "specificYield": 1600,
+    "prLossPct": 15,
+    "omPctOfRevenue": 3,
+    "discountPct": 25,
+    "horizonYears": 20
+  }
+}

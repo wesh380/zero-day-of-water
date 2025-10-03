@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Language" content="fa-IR">
+  <title>محاسبه‌گر نیروگاه خورشیدی | WESH360</title>
+  <link rel="stylesheet" href="../../assets/fonts.css">
+  <link rel="stylesheet" href="../../assets/css/solar-calc.css">
+  <link rel="icon" type="image/png" href="../../Logo.png">
+</head>
+<body>
+  <main>
+    <h1>محاسبه‌گر نیروگاه خورشیدی</h1>
+    <div class="legend">
+      <p>تنظیمات پیش‌فرض از فایل پیکربندی خوانده می‌شود و با ورودی‌های شما ترکیب خواهد شد.</p>
+      <p>پس از به‌روزرسانی اعداد، روی دکمه «محاسبه» کلیک کنید تا سناریوهای سرمایه‌گذاری و جریمه را ببینید.</p>
+    </div>
+
+    <section class="panel" aria-labelledby="inputs-title">
+      <header>
+        <h2 id="inputs-title">ورودی‌ها</h2>
+        <p>پارامترهای قانونی، مالی و فنی پروژه را تنظیم کنید.</p>
+      </header>
+      <form data-solar-form novalidate>
+        <div class="form-grid">
+          <fieldset class="field-group">
+            <legend>قانون / مصرف</legend>
+            <div class="field">
+              <label for="input-year">سال ارزیابی</label>
+              <input type="number" id="input-year" min="1300" max="1500" data-testid="input-year" placeholder="مثلاً ۱۴۰۳">
+            </div>
+            <div class="field">
+              <label for="input-annual-consumption">مصرف سالانه (کیلووات‌ساعت)</label>
+              <input type="number" id="input-annual-consumption" min="0" step="1000" data-testid="input-annual-consumption" placeholder="مثلاً ۱٬۲۰۰٬۰۰۰">
+            </div>
+            <div class="field">
+              <label class="toggle-row" for="input-is-obliged">
+                <input type="checkbox" id="input-is-obliged" data-testid="input-is-obliged">
+                <span>ملزم به سهمیه سبز هستم</span>
+              </label>
+            </div>
+            <div class="field">
+              <label for="input-ramp-pct">افزایش سالانه سهم (%)</label>
+              <input type="number" id="input-ramp-pct" min="0" step="0.1" data-testid="input-ramp-pct" placeholder="مثلاً ۵">
+            </div>
+            <div class="field">
+              <label for="input-cap-share-pct">سقف سهم سبز (%)</label>
+              <input type="number" id="input-cap-share-pct" min="0" max="100" step="0.1" data-testid="input-cap-share-pct" placeholder="مثلاً ۲۰">
+            </div>
+          </fieldset>
+
+          <fieldset class="field-group">
+            <legend>مالی</legend>
+            <div class="field">
+              <label for="input-green-board">قیمت مصوب سبز (ریال/کیلووات‌ساعت)</label>
+              <input type="number" id="input-green-board" min="0" step="100" data-testid="input-green-board" placeholder="مثلاً ۵۶٬۰۰۰">
+            </div>
+            <div class="field">
+              <label for="input-green-board-growth">رشد سالانه قیمت سبز (%)</label>
+              <input type="number" id="input-green-board-growth" min="0" step="0.1" data-testid="input-green-board-growth" placeholder="مثلاً ۲۰">
+            </div>
+            <div class="field">
+              <label for="input-grid-price">قیمت فروش به شبکه (در صورت وجود)</label>
+              <input type="number" id="input-grid-price" min="0" step="100" data-testid="input-grid-price" placeholder="مثلاً ۴۵٬۰۰۰">
+            </div>
+            <div class="field">
+              <label for="input-capex-per-kw">سرمایه‌گذاری هر کیلووات (ریال)</label>
+              <input type="number" id="input-capex-per-kw" min="0" step="1000000" data-testid="input-capex-per-kw" placeholder="مثلاً ۳۲۰٬۰۰۰٬۰۰۰">
+            </div>
+            <div class="field">
+              <label for="input-capex-total">سرمایه‌گذاری کل (در صورت محاسبه دستی)</label>
+              <input type="number" id="input-capex-total" min="0" step="1000000" data-testid="input-capex-total" placeholder="مثلاً ۱۶۰٬۰۰۰٬۰۰۰٬۰۰۰">
+            </div>
+            <div class="field">
+              <label for="input-om-pct">هزینه O&amp;M از درآمد (%)</label>
+              <input type="number" id="input-om-pct" min="0" step="0.1" data-testid="input-om-pct" placeholder="مثلاً ۳">
+            </div>
+            <div class="field">
+              <label for="input-discount-pct">نرخ تنزیل (%)</label>
+              <input type="number" id="input-discount-pct" min="0" step="0.1" data-testid="input-discount-pct" placeholder="مثلاً ۲۵">
+            </div>
+            <div class="field">
+              <label for="input-horizon-years">دوره تحلیل (سال)</label>
+              <input type="number" id="input-horizon-years" min="1" max="40" data-testid="input-horizon-years" placeholder="مثلاً ۲۰">
+            </div>
+          </fieldset>
+
+          <fieldset class="field-group">
+            <legend>فنی</legend>
+            <div class="field">
+              <label for="input-project-type">نوع پروژه</label>
+              <select id="input-project-type" data-testid="input-project-type">
+                <option value="rooftop">بام صنعتی</option>
+                <option value="ground">نیروگاه زمینی</option>
+                <option value="hybrid">هیبریدی / تجمیعی</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="input-capacity-kw">ظرفیت پیشنهادی (کیلووات)</label>
+              <input type="number" id="input-capacity-kw" min="0" step="1" data-testid="input-capacity-kw" placeholder="مثلاً ۵۰۰">
+            </div>
+            <div class="field">
+              <label for="input-specific-yield">بازده ویژه (کیلووات‌ساعت/کیلووات)</label>
+              <input type="number" id="input-specific-yield" min="0" step="1" data-testid="input-specific-yield" placeholder="مثلاً ۱۶۰۰">
+            </div>
+            <div class="field">
+              <label for="input-pr-loss-pct">اتلاف عملکردی PR (%)</label>
+              <input type="number" id="input-pr-loss-pct" min="0" max="100" step="0.1" data-testid="input-pr-loss-pct" placeholder="مثلاً ۱۵">
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary" data-action="calculate" data-testid="btn-calculate">محاسبه</button>
+          <button type="button" class="secondary" data-action="reset" data-testid="btn-reset">بازنشانی</button>
+        </div>
+        <p class="form-error" data-solar-error role="alert"></p>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="results-title">
+      <header>
+        <h2 id="results-title">نتایج</h2>
+        <p>اعداد زیر پس از اعمال فرمول‌های مالی و الزامات قانونی به‌صورت خودکار به‌روزرسانی می‌شوند.</p>
+      </header>
+      <div class="results-grid">
+        <div class="results-stack">
+          <div class="kpi-grid" aria-live="polite">
+            <article class="kpi-card">
+              <h3>سرمایه‌گذاری کل</h3>
+              <p class="kpi-value" id="result-total-capex" data-testid="result-total-capex">—</p>
+            </article>
+            <article class="kpi-card">
+              <h3>درآمد سال اول</h3>
+              <p class="kpi-value" id="result-first-year-revenue" data-testid="result-first-year-revenue">—</p>
+            </article>
+            <article class="kpi-card">
+              <h3>هزینه O&amp;M سال اول</h3>
+              <p class="kpi-value" id="result-first-year-om" data-testid="result-first-year-om">—</p>
+            </article>
+            <article class="kpi-card">
+              <h3>دوره بازگشت</h3>
+              <p class="kpi-value" id="result-payback-simple" data-testid="result-payback-simple">—</p>
+              <p class="kpi-subvalue">تنزیلی: <span id="result-payback-discounted" data-testid="result-payback-discounted">—</span></p>
+            </article>
+            <article class="kpi-card">
+              <h3>ارزش فعلی خالص</h3>
+              <p class="kpi-value" id="result-npv" data-testid="result-npv">—</p>
+              <p class="kpi-subvalue">نرخ بازده داخلی: <span id="result-irr" data-testid="result-irr">—</span></p>
+            </article>
+            <article class="kpi-card">
+              <h3>انرژی تولیدی</h3>
+              <p class="kpi-value" id="result-produced-energy" data-testid="result-produced-energy">—</p>
+              <p class="kpi-subvalue">مصرف الزامی سال اول: <span id="result-required-energy" data-testid="result-required-energy">—</span></p>
+            </article>
+            <article class="kpi-card">
+              <h3>جریمه کل پیش‌بینی‌شده</h3>
+              <p class="kpi-value" id="result-total-penalty" data-testid="result-total-penalty">—</p>
+            </article>
+          </div>
+
+          <div class="chart-card" aria-live="polite">
+            <h3>سرمایه‌گذاری در برابر جریمه</h3>
+            <div class="comparison-card" data-testid="comparison-card">
+              <div class="comparison-row">
+                <div class="comparison-header">
+                  <div class="bar-label">سرمایه‌گذاری</div>
+                  <div class="bar-value" id="comparison-investment-value" data-testid="comparison-investment-value">—</div>
+                </div>
+                <div class="progress-row">
+                  <progress id="bar-investment" class="kpi-progress" max="100" value="0" data-testid="comparison-investment-progress"></progress>
+                  <span class="kpi-progress-label" id="bar-investment-label" data-testid="comparison-investment-label">۰٪</span>
+                </div>
+              </div>
+              <div class="comparison-row">
+                <div class="comparison-header">
+                  <div class="bar-label">جریمه</div>
+                  <div class="bar-value" id="comparison-penalty-value" data-testid="comparison-penalty-value">—</div>
+                </div>
+                <div class="progress-row">
+                  <progress id="bar-penalty" class="kpi-progress secondary" max="100" value="0" data-testid="comparison-penalty-progress"></progress>
+                  <span class="kpi-progress-label" id="bar-penalty-label" data-testid="comparison-penalty-label">۰٪</span>
+                </div>
+              </div>
+              <div class="comparison-row ratio-row">
+                <div class="comparison-header">
+                  <div class="bar-label">نسبت جریمه/سرمایه</div>
+                  <div class="bar-value" id="comparison-ratio" data-testid="comparison-ratio">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="netlify-card">
+            <h3>نیاز به همراهی کارشناسی دارید؟</h3>
+            <p>برای تحلیل عمیق‌تر یا دریافت طرح تجاری سفارشی، فرم زیر را پر کنید. تیم WESH360 با شما تماس خواهد گرفت.</p>
+            <form name="solar-advice" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact/thanks.html">
+              <input type="hidden" name="form-name" value="solar-advice">
+              <p class="hidden"><label>ربات: <input name="bot-field"></label></p>
+              <input name="name" required placeholder="نام" data-testid="cta-name">
+              <input name="email" type="email" required placeholder="ایمیل" data-testid="cta-email">
+              <textarea name="note" placeholder="توضیحات" data-testid="cta-note"></textarea>
+              <button type="submit" data-testid="cta-submit">درخواست مشاوره</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../../assets/js/solar-plant-calc.js"></script>
+</body>
+</html>
+
+
+
