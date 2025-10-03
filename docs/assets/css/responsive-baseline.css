@@ -1,0 +1,13 @@
+﻿html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+.container { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: 1rem; }
+/* RTL-safe grid helpers */
+.grid-2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 768px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
+/* Fix common table overflow */
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; }
+/* Buttons/inputs min-tap-target */
+button, .btn, input, select { min-height: 40px; }
