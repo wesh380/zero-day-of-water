@@ -16,7 +16,7 @@
     "check:no-binary": "node tools/check-no-binary.js",
     "validate:layers": "node tools/validate_layers.js",
     "build:agri": "node -e \"console.log('agrivoltaics app.js is checked in; no build step needed.')\"",
-    "prepare:agri": "mkdir -p docs/agrivoltaics/vendor && cp node_modules/react/umd/react.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/react-dom/umd/react-dom.production.min.js docs/agrivoltaics/vendor/ && cp node_modules/qrcode-generator/dist/qrcode.js docs/agrivoltaics/vendor/ && cp node_modules/jspdf/dist/jspdf.umd.min.js docs/agrivoltaics/vendor/",
+    "prepare:agri": "mkdir -p docs/solar/agrivoltaics/vendor && cp node_modules/react/umd/react.production.min.js docs/solar/agrivoltaics/vendor/ && cp node_modules/react-dom/umd/react-dom.production.min.js docs/solar/agrivoltaics/vendor/ && cp node_modules/qrcode-generator/dist/qrcode.js docs/solar/agrivoltaics/vendor/ && cp node_modules/jspdf/dist/jspdf.umd.min.js docs/solar/agrivoltaics/vendor/",
     "build:cld": "node scripts/build-cld.js",
     "check:cld-html": "bash tools/check-cld-html.sh",
     "serve-docs": "npx http-server docs -p 5173",
