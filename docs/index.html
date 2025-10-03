@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -13,13 +13,14 @@
   <script>if(!document.createElement('canvas').toDataURL('image/webp').includes('data:image/webp')){document.documentElement.classList.add('no-webp');}</script>
   <link rel="stylesheet" href="./assets/tailwind.css" />
   <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
+  <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
   <link rel="stylesheet" href="./assets/footer.css">
-  <link rel="preload" as="image" href="./page/landing/hiro2.webp" type="image/webp">
+  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width: 769px)">
+  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width: 768px)">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/css/site.css">
-  <link rel="stylesheet" href="./page/landing/landing.css">
   <link rel="icon" type="image/x-icon" href="./page/landing/favicon.ico">
   <script defer src="./assets/unified-badge.js"></script>
   <script defer src="./assets/global-footer.js"></script>
@@ -50,7 +51,7 @@
         </button>
       </div>
     </header>
-    <section class="parallax-section" aria-label="hero">
+    <section class="hero parallax-section" aria-label="hero">
       <div class="hero-content">
         <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز در خراسان رضوی</h1>
         <p>داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
@@ -213,7 +214,7 @@
 </script>
   <script defer src="/assets/js/easter.js"></script>
   <script defer src="./assets/parallax.js"></script>
-  <script defer src="index.js?v=1"></script>
+  <script type="module" src="/index.js" defer charset="utf-8"></script>
   <script defer src="assets/numfmt.js?v=1"></script>
   <script defer src="./assets/cld-loader.js"></script>
 </body>
