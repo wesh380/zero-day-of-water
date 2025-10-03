@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ù…Ø§Ø´ÛŒÙ†â€ŒØ­Ø³Ø§Ø¨ ÙÙˆØªÙˆÚ©ÙØ´Øª â€“ wesh360</title>
   <!-- React 18 UMD + ReactDOM  -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <!-- Babel Ø¨Ø±Ø§ÛŒ Ø§Ø¬Ø±Ø§ÛŒ JSX Ø¯Ø± Ù…Ø±ÙˆØ±Ú¯Ø± (ÙÙ‚Ø· Ø¬Ù‡Øª Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ø³Ø±ÛŒØ¹Ø› Ø¨Ø±Ø§ÛŒ Ù†Ø³Ø®Ù‡ Ù†Ù‡Ø§ÛŒÛŒ Ø¨Ù‡ØªØ± Ø§Ø³Øª Ø¨ÛŒÙ„Ø¯ Ú©Ù†ÛŒØ¯) -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link rel="stylesheet" href="../../assets/tailwind.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="../../assets/site-overrides.css">
   <link rel="stylesheet" href="../../assets/inline-migration.css">
-  <script defer src="/assets/unified-badge.js"></script>
-  <script defer src="/assets/global-footer.js"></script>
+  <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
+  <script charset="utf-8" defer src="/assets/global-footer.js"></script>
 </head>
 <body>
   <div id="root"></div>
   <button id="btn-api-selftest" class="agv-selftest-trigger">API Self Test</button>
 
-  <script type="text/babel">
+  <script charset="utf-8" type="text/babel">
     const { useState, useMemo, useEffect } = React;
 
     // Ù†Ø³Ø®Ù‡ Ù…Ø®ØµÙˆØµ Ø§Ø³ØªØ§Ù† Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ (Ø³Ø§Ø¯Ù‡ Ø¨Ø±Ø§ÛŒ Ú©Ø´Ø§ÙˆØ±Ø²Ø§Ù†)
@@ -474,7 +474,7 @@
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<AgrivoltaicsKhorasan/>);
   </script>
-  <script type="module">
+  <script charset="utf-8" type="module">
     import { apiFetch } from '/assets/js/api.js';
 
     async function runSelfTest() {
@@ -558,6 +558,6 @@
 
     window.__apiSelfTest = runSelfTest;
   </script>
-
+  <script charset="utf-8" defer src="/assets/js/utf8-fix.js"></script>
 </body>
 </html>
