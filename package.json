@@ -42,7 +42,11 @@
     "audit:cld:rewire": "node tools/cld-rewire-plan.js",
     "audit:cld:arch": "node tools/cld-data-architecture-audit.js",
     "audit:cld:connect": "node tools/cld-connection-audit.js",
-    "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire"
+    "audit:cld:all": "npm run audit:cld:files && npm run audit:cld:runtime && npm run audit:cld:rewire",
+    "audit:responsive": "playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
+    "audit:responsive:all": "PW_ALL=1 playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
+    "audit:responsive:apply": "PW_APPLY=1 playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
+    "serve:docs": "http-server docs -p 5050 -c-1 --silent"
   },
   "keywords": [],
   "author": "",
@@ -54,9 +58,11 @@
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
+    "@playwright/test": "^1.55.1",
     "@tsconfig/recommended": "^1.0.10",
     "clean-css": "^5.3.3",
     "cross-env": "^10.0.0",
+    "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.1",
     "glob": "^11.0.3",
     "http-server": "^14.1.1",

@@ -17,3 +17,10 @@ backend/.env
 
 # MCP artifacts
 .mcp-artifacts/
+
+# Audit artifacts
+/docs/dev/reports/responsive/
+/test-results/
+/playwright-report/
+/blob-report/
+
