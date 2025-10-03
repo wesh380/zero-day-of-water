@@ -163,23 +163,31 @@
           <div class="chart-card" aria-live="polite">
             <h3>سرمایه‌گذاری در برابر جریمه</h3>
             <div class="comparison-card" data-testid="comparison-card">
-              <div class="bar-row">
-                <div class="bar-label">سرمایه‌گذاری</div>
-                <div class="bar-track">
-                  <div class="bar-fill investment" id="bar-investment"></div>
+              <div class="comparison-row">
+                <div class="comparison-header">
+                  <div class="bar-label">سرمایه‌گذاری</div>
+                  <div class="bar-value" id="comparison-investment-value" data-testid="comparison-investment-value">—</div>
                 </div>
-                <div class="bar-value" id="comparison-investment-value" data-testid="comparison-investment-value">—</div>
-              </div>
-              <div class="bar-row">
-                <div class="bar-label">جریمه</div>
-                <div class="bar-track">
-                  <div class="bar-fill penalty" id="bar-penalty"></div>
+                <div class="progress-row">
+                  <progress id="bar-investment" class="kpi-progress" max="100" value="0" data-testid="comparison-investment-progress"></progress>
+                  <span class="kpi-progress-label" id="bar-investment-label" data-testid="comparison-investment-label">۰٪</span>
                 </div>
-                <div class="bar-value" id="comparison-penalty-value" data-testid="comparison-penalty-value">—</div>
               </div>
-              <div class="bar-row ratio-row">
-                <div class="bar-label">نسبت جریمه/سرمایه</div>
-                <div class="bar-value" id="comparison-ratio" data-testid="comparison-ratio">—</div>
+              <div class="comparison-row">
+                <div class="comparison-header">
+                  <div class="bar-label">جریمه</div>
+                  <div class="bar-value" id="comparison-penalty-value" data-testid="comparison-penalty-value">—</div>
+                </div>
+                <div class="progress-row">
+                  <progress id="bar-penalty" class="kpi-progress secondary" max="100" value="0" data-testid="comparison-penalty-progress"></progress>
+                  <span class="kpi-progress-label" id="bar-penalty-label" data-testid="comparison-penalty-label">۰٪</span>
+                </div>
+              </div>
+              <div class="comparison-row ratio-row">
+                <div class="comparison-header">
+                  <div class="bar-label">نسبت جریمه/سرمایه</div>
+                  <div class="bar-value" id="comparison-ratio" data-testid="comparison-ratio">—</div>
+                </div>
               </div>
             </div>
           </div>
@@ -206,5 +214,6 @@
   <script type="module" src="../../assets/js/solar-plant-calc.js"></script>
 </body>
 </html>
+
 
 

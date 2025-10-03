@@ -36,8 +36,10 @@ const RESULT_IDS = {
 const COMPARISON_IDS = {
   investmentValue: "comparison-investment-value",
   penaltyValue: "comparison-penalty-value",
-  investmentBar: "bar-investment",
-  penaltyBar: "bar-penalty",
+  investmentProgress: "bar-investment",
+  investmentProgressLabel: "bar-investment-label",
+  penaltyProgress: "bar-penalty",
+  penaltyProgressLabel: "bar-penalty-label",
   ratioValue: "comparison-ratio"
 };
 
@@ -404,8 +406,10 @@ function cacheDomReferences(root) {
   state.comparison = {
     investmentValue: root.getElementById(COMPARISON_IDS.investmentValue) || null,
     penaltyValue: root.getElementById(COMPARISON_IDS.penaltyValue) || null,
-    investmentBar: root.getElementById(COMPARISON_IDS.investmentBar) || null,
-    penaltyBar: root.getElementById(COMPARISON_IDS.penaltyBar) || null,
+    investmentProgress: root.getElementById(COMPARISON_IDS.investmentProgress) || null,
+    investmentProgressLabel: root.getElementById(COMPARISON_IDS.investmentProgressLabel) || null,
+    penaltyProgress: root.getElementById(COMPARISON_IDS.penaltyProgress) || null,
+    penaltyProgressLabel: root.getElementById(COMPARISON_IDS.penaltyProgressLabel) || null,
     ratioValue: root.getElementById(COMPARISON_IDS.ratioValue) || null
   };
 }
@@ -532,14 +536,20 @@ function renderResults(result) {
 function renderComparison(metrics) {
   const investment = Number(metrics.totalCapex) || 0;
   const penalty = Number(metrics.totalPenalty) || 0;
-  const maxValue = Math.max(investment, penalty, 1);
 
   setComparisonText("investmentValue", formatCurrency(investment));
   setComparisonText("penaltyValue", formatCurrency(penalty));
-  setComparisonText("ratioValue", investment ? formatPercent(penalty / investment) : "—");
 
-  setBarWidth("investmentBar", (investment / maxValue) * 100);
-  setBarWidth("penaltyBar", (penalty / maxValue) * 100);
+  const investmentPercent = investment > 0 ? 100 : 0;
+  const penaltyPercent = investment > 0
+    ? (penalty > 0 ? (penalty / investment) * 100 : 0)
+    : penalty > 0 ? 100 : 0;
+
+  setComparisonProgress("investmentProgress", investmentPercent, "investmentProgressLabel");
+  setComparisonProgress("penaltyProgress", penaltyPercent, "penaltyProgressLabel");
+
+  const ratioText = investment > 0 ? formatPercent(penalty / investment) : "—";
+  setComparisonText("ratioValue", ratioText);
 }
 
 function setResultText(key, value) {
@@ -564,13 +574,33 @@ function setComparisonText(key, value) {
   node.textContent = value;
 }
 
-function setBarWidth(key, width) {
-  const node = state.comparison[key];
-  if (!node) {
-    return;
+function setComparisonProgress(progressKey, percent, labelKey) {
+  const progress = state.comparison[progressKey];
+  const label = labelKey ? state.comparison[labelKey] : null;
+  const clamped = clampPercent(percent);
+
+  if (progress) {
+    if (progress.max !== 100) {
+      progress.max = 100;
+    }
+    progress.value = clamped;
   }
-  const safeWidth = Math.max(0, Math.min(100, Number.isFinite(width) ? width : 0));
-  node.style.width = `${safeWidth}%`;
+
+  if (label) {
+    label.textContent = formatPercentLabel(clamped);
+  }
+}
+
+function clampPercent(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return 0;
+  }
+  return Math.max(0, Math.min(100, Math.round(numeric)));
+}
+
+function formatPercentLabel(percentValue) {
+  return `${percentFormatter.format(percentValue)}٪`;
 }
 
 function formatCurrency(value) {
@@ -604,9 +634,6 @@ function formatPercent(value) {
   }
   const display = numericValue * 100;
   return `${percentFormatter.format(display)}٪`;
-}
-  const numeric = typeof value === "number" && value <= 1 ? value * 100 : Number(value) * 100;
-  return `${percentFormatter.format(numeric)}٪`;
 }
 
 function fallbackNumber(value, fallback) {
@@ -696,7 +723,3 @@ if (typeof window !== "undefined") {
     initSolarPlantCalculator();
   });
 }
-
-
-
-

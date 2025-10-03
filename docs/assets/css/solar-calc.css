@@ -229,16 +229,20 @@ h3 {
   margin-top: 1.25rem;
 }
 
-.bar-row {
+.comparison-row {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
   gap: 0.75rem;
 }
 
-.bar-row.ratio-row {
-  grid-template-columns: auto auto;
+.comparison-header {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.comparison-row.ratio-row {
+  padding-block-start: 0.25rem;
 }
 
 .bar-label {
@@ -246,26 +250,51 @@ h3 {
   color: #1f2937;
 }
 
-.bar-track {
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kpi-progress {
   inline-size: 100%;
-  block-size: 0.75rem;
-  background: rgba(148, 163, 184, 0.25);
-  border-radius: 999px;
-  overflow: hidden;
+  block-size: 10px;
+  appearance: none;
+  background-color: transparent;
+  border-radius: 9999px;
 }
 
-.bar-fill {
-  block-size: 100%;
-  border-radius: inherit;
-  transition: inline-size 0.5s ease;
+.kpi-progress::-webkit-progress-bar {
+  background: var(--track, #e5e7eb);
+  border-radius: 9999px;
 }
 
-.bar-fill.investment {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+.kpi-progress::-webkit-progress-value {
+  background: var(--fill, #0ea5e9);
+  border-radius: 9999px;
+  transition: inline-size 0.4s ease;
 }
 
-.bar-fill.penalty {
-  background: linear-gradient(135deg, #f97316, #ea580c);
+.kpi-progress::-moz-progress-bar {
+  background: var(--fill, #0ea5e9);
+  border-radius: 9999px;
+  transition: inline-size 0.4s ease;
+}
+
+.kpi-progress.secondary {
+  --fill: #94a3b8;
+}
+
+.kpi-progress.secondary::-webkit-progress-value,
+.kpi-progress.secondary::-moz-progress-bar {
+  background: var(--fill2, #94a3b8);
+}
+
+.kpi-progress-label {
+  font-variant-numeric: tabular-nums;
+  margin-inline-start: 0.5rem;
+  color: #1f2933;
+  font-weight: 600;
 }
 
 .bar-value {
@@ -358,12 +387,20 @@ h3 {
     inline-size: 100%;
   }
 
-  .bar-row {
-    grid-template-columns: 1fr;
+  .comparison-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .bar-track {
-    inline-size: 100%;
+  .progress-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kpi-progress-label {
+    margin-inline-start: 0;
   }
 }
+
+
 
