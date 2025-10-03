@@ -1,0 +1,119 @@
+﻿:root {
+  --overlay: 0.35;
+}
+
+.hero,
+.parallax-section {
+  background-image: url("/assets/img/hero/hero-desktop.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: clamp(420px, 80vh, 920px);
+  position: relative;
+}
+
+.no-webp .hero,
+.no-webp .parallax-section {
+  background-image: url("/assets/hero2.jpg");
+}
+
+.hero::after,
+.parallax-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0 0 0 / var(--overlay, 0.35)) 0%, rgba(0 0 0 / 0.15) 40%, rgba(0 0 0 / 0.55) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 1rem 8vh;
+}
+
+.hero-title {
+  margin-top: 15vh;
+  font-size: 2rem;
+  line-height: 1.25;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.hero-content p {
+  margin-top: 0.75rem;
+  font-size: clamp(14px, 2.1vw, 18px);
+  opacity: 0.95;
+}
+
+.cards-section {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(210px, 1fr));
+  gap: 1.25rem;
+  max-width: 980px;
+  margin: -60px auto 48px;
+  padding: 0 16px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(2px);
+  padding: 18px 20px;
+  text-align: center;
+  transform: translateY(32px);
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.card.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 992px) {
+  .cards-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .parallax-section {
+    background-image: url("/assets/img/hero/hero-mobile.webp");
+    background-attachment: scroll;
+  }
+  .hero::after,
+  .parallax-section::after {
+    background: linear-gradient(to bottom, rgba(0 0 0 / 0.25) 0%, rgba(0 0 0 / 0.1) 50%, rgba(0 0 0 / 0.35) 100%);
+  }
+  .hero-title {
+    margin-top: 10vh;
+    font-size: 1.6rem;
+    padding-inline: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .cards-section {
+    grid-template-columns: 1fr;
+    margin-top: -30px;
+  }
+  .hero-content {
+    padding: 0 1rem 6vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
