@@ -47,7 +47,10 @@
     "audit:responsive": "playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
     "audit:responsive:all": "PW_ALL=1 playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
     "audit:responsive:apply": "PW_APPLY=1 playwright test -c tests/playwright.config.ts --project=desktop --reporter=list",
-    "serve:docs": "http-server docs -p 5050 -c-1 --silent"
+    "serve:docs": "http-server docs -p 5050 -c-1 --silent",
+    "audit:encoding": "node tools/audit-encoding.mjs",
+    "fix:text:core": "node tools/fix-mojibake.js --relax",
+    "fix:text:landing": "node tools/fix-mojibake.js --paths docs/index.html --force"
   },
   "keywords": [],
   "author": "",
