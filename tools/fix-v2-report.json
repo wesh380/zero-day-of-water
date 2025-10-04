@@ -1,0 +1,98 @@
+[
+  {
+    "path": "docs/amaayesh/index.html",
+    "touchedChunks": 5,
+    "tokensBefore": 140,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 178
+  },
+  {
+    "path": "docs/contact/thanks.html",
+    "touchedChunks": 0,
+    "tokensBefore": 133,
+    "tokensAfter": 133,
+    "faBefore": 0,
+    "faAfter": 134
+  },
+  {
+    "path": "docs/gas/energy.html",
+    "touchedChunks": 8,
+    "tokensBefore": 346,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 471
+  },
+  {
+    "path": "docs/gas/fuel-carbon.html",
+    "touchedChunks": 16,
+    "tokensBefore": 1873,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 1975
+  },
+  {
+    "path": "docs/index.html",
+    "touchedChunks": 47,
+    "tokensBefore": 4142,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 4382
+  },
+  {
+    "path": "docs/research/index.html",
+    "touchedChunks": 54,
+    "tokensBefore": 1933,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 2374
+  },
+  {
+    "path": "docs/responsible-disclosure/thanks.html",
+    "touchedChunks": 4,
+    "tokensBefore": 178,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 221
+  },
+  {
+    "path": "docs/security-policy/index.html",
+    "touchedChunks": 11,
+    "tokensBefore": 3429,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 3467
+  },
+  {
+    "path": "docs/solar/index.html",
+    "touchedChunks": 3,
+    "tokensBefore": 398,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 424
+  },
+  {
+    "path": "docs/test/water-cld.html",
+    "touchedChunks": 22,
+    "tokensBefore": 389,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 788
+  },
+  {
+    "path": "docs/water/cld/index.html",
+    "touchedChunks": 22,
+    "tokensBefore": 389,
+    "tokensAfter": 0,
+    "faBefore": 0,
+    "faAfter": 788
+  },
+  {
+    "path": "docs/water/cost-calculator.html",
+    "touchedChunks": 7,
+    "tokensBefore": 576,
+    "tokensAfter": 0,
+    "faBefore": 6,
+    "faAfter": 634
+  }
+]

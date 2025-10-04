@@ -7,9 +7,9 @@
   <meta property="og:image" content="https://wesh360.ir/page/landing/logo2.jfif" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="section" content="gas" />
-  <title>Ø¯Ø§Ø´Ø¨ÙˆØ±Ø¯ Ú¯Ø§Ø² Ùˆ ÙØ±Ø¢ÙˆØ±Ø¯Ù‡â€ŒÙ‡Ø§ÛŒ Ù†ÙØªÛŒ - wesh360</title>
+  <title>داشبورد گاز و فرآورده‌های نفتی - wesh360</title>
 
-  <!-- Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ù…Ø­Ù„ÛŒ Ù¾Ø±ÙˆÚ˜Ù‡ -->
+  <!-- استایل‌های محلی پروژه -->
   <link rel="stylesheet" href="../assets/tailwind.css" />
   <link rel="stylesheet" href="../assets/fonts.css" />
   <link rel="stylesheet" href="/assets/global-footer.css">
@@ -18,68 +18,68 @@
   <script defer src="/assets/global-footer.js"></script>
 </head>
 <body class="min-h-screen bg-slate-900 text-slate-200 antialiased">
-  <a class="skip-link" href="#main">Ù¾Ø±Ø´ Ø¨Ù‡ Ù…Ø­ØªÙˆØ§ÛŒ Ø§ØµÙ„ÛŒ</a>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     <header class="mb-8">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
-          <h1 class="text-3xl font-extrabold text-white">Ø¯Ø§Ø´Ø¨ÙˆØ±Ø¯ Ù…Ø¯ÛŒØ±ÛŒØª Ø§Ù†Ø±Ú˜ÛŒ</h1>
-          <p class="text-lg text-cyan-400 mt-1">Ø§Ø³ØªØ§Ù† Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ (Ù†Ù…Ø§ÛŒ Ø¹Ù…ÙˆÙ…ÛŒ)</p>
+          <h1 class="text-3xl font-extrabold text-white">داشبورد مدیریت انرژی</h1>
+          <p class="text-lg text-cyan-400 mt-1">استان خراسان رضوی (نمای عمومی)</p>
         </div>
-        <a href="../" class="text-sm text-cyan-300 hover:underline">Ø¨Ø§Ø²Ú¯Ø´Øª Ø¨Ù‡ Ú¯Ø§Ø²</a>
+        <a href="../" class="text-sm text-cyan-300 hover:underline">بازگشت به گاز</a>
       </div>
 
-      <!-- ÙÛŒÙ„ØªØ±Ù‡Ø§ -->
+      <!-- فیلترها -->
       <div class="mt-6 p-4 bg-slate-800/50 rounded-xl border border-slate-700 flex flex-wrap items-center justify-center gap-4">
         <select id="timeFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2">
-          <option value="daily">Ø±ÙˆØ²Ø§Ù†Ù‡</option>
-          <option value="weekly">Ù‡ÙØªÚ¯ÛŒ</option>
-          <option value="monthly" selected>Ù…Ø§Ù‡Ø§Ù†Ù‡</option>
-          <option value="seasonal">ÙØµÙ„ÛŒ</option>
+          <option value="daily">روزانه</option>
+          <option value="weekly">هفتگی</option>
+          <option value="monthly" selected>ماهانه</option>
+          <option value="seasonal">فصلی</option>
         </select>
         <select id="cityFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2"></select>
         <select id="productFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2">
-          <option value="all">Ù‡Ù…Ù‡ ÙØ±Ø¢ÙˆØ±Ø¯Ù‡â€ŒÙ‡Ø§</option>
-          <option value="gasoline">Ø¨Ù†Ø²ÛŒÙ†</option>
-          <option value="diesel">Ú¯Ø§Ø²ÙˆØ¦ÛŒÙ„</option>
-          <option value="lpg">Ú¯Ø§Ø² Ù…Ø§ÛŒØ¹</option>
+          <option value="all">همه فرآورده‌ها</option>
+          <option value="gasoline">بنزین</option>
+          <option value="diesel">گازوئیل</option>
+          <option value="lpg">گاز مایع</option>
         </select>
       </div>
     </header>
 
     <main id="main" class="space-y-8">
-      <!-- KPI Ù‡Ø§ -->
+      <!-- KPI ها -->
       <section id="kpi-section">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 text-center dash-card">
-            <h3 class="text-sm text-slate-400">ØªØ±Ø§Ø² Ú¯Ø§Ø² Ø¯ÛŒØ±ÙˆØ² (MCM)</h3>
-            <p id="kpi-gas-balance" class="text-2xl font-extrabold text-green-400 mt-2">+Û±.Ûµ</p>
+            <h3 class="text-sm text-slate-400">تراز گاز دیروز (MCM)</h3>
+            <p id="kpi-gas-balance" class="text-2xl font-extrabold text-green-400 mt-2">+۱.۵</p>
           </div>
           <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 text-center dash-card">
-            <h3 class="text-sm text-slate-400">Ù…ØµØ±Ù Ú©Ù„ Ú¯Ø§Ø² Ø¯ÛŒØ±ÙˆØ² (MCM)</h3>
-            <p id="kpi-gas-consumption" class="text-2xl font-extrabold text-cyan-400 mt-2">Û²Û².Ûµ</p>
+            <h3 class="text-sm text-slate-400">مصرف کل گاز دیروز (MCM)</h3>
+            <p id="kpi-gas-consumption" class="text-2xl font-extrabold text-cyan-400 mt-2">۲۲.۵</p>
           </div>
           <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 text-center dash-card">
-            <h3 class="text-sm text-slate-400">Ù¾ÛŒÚ© Ù…ØµØ±Ù Ú¯Ø§Ø² (MCM/h)</h3>
-            <p id="kpi-gas-peak" class="text-2xl font-extrabold text-white mt-2">Û±.Û² <span class="text-xs text-slate-500">@ Û²Û°:Û°Û°</span></p>
+            <h3 class="text-sm text-slate-400">پیک مصرف گاز (MCM/h)</h3>
+            <p id="kpi-gas-peak" class="text-2xl font-extrabold text-white mt-2">۱.۲ <span class="text-xs text-slate-500">@ ۲۰:۰۰</span></p>
           </div>
           <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 text-center dash-card">
-            <h3 class="text-sm text-slate-400">Ø°Ø®ÛŒØ±Ù‡ Ø¨Ù†Ø²ÛŒÙ† (Days of Cover)</h3>
-            <p id="kpi-gasoline-doc" class="text-2xl font-extrabold text-amber-400 mt-2">Û±Ûµ</p>
+            <h3 class="text-sm text-slate-400">ذخیره بنزین (Days of Cover)</h3>
+            <p id="kpi-gasoline-doc" class="text-2xl font-extrabold text-amber-400 mt-2">۱۵</p>
           </div>
           <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 text-center dash-card">
-            <h3 class="text-sm text-slate-400">Ø°Ø®ÛŒØ±Ù‡ Ú¯Ø§Ø²ÙˆØ¦ÛŒÙ„ (Days of Cover)</h3>
-            <p id="kpi-diesel-doc" class="text-2xl font-extrabold text-amber-400 mt-2">Û²Û±</p>
+            <h3 class="text-sm text-slate-400">ذخیره گازوئیل (Days of Cover)</h3>
+            <p id="kpi-diesel-doc" class="text-2xl font-extrabold text-amber-400 mt-2">۲۱</p>
           </div>
         </div>
       </section>
 
-      <!-- ÙˆØ¶Ø¹ÛŒØª Ø¹Ù…ÙˆÙ…ÛŒ + Ù†Ú©ØªÙ‡ Ø±ÙˆØ² -->
+      <!-- وضعیت عمومی + نکته روز -->
       <section id="public-info-section">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="bg-slate-800 p-5 rounded-lg border border-slate-700 dash-card">
-            <h2 class="text-lg font-bold mb-4">ÙˆØ¶Ø¹ÛŒØª Ø´Ø¨Ú©Ù‡ Ø§Ù†Ø±Ú˜ÛŒ Ø§Ù…Ø±ÙˆØ²</h2>
+            <h2 class="text-lg font-bold mb-4">وضعیت شبکه انرژی امروز</h2>
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <span id="light-green" class="inline-block w-5 h-5 rounded-full bg-slate-600"></span>
@@ -90,45 +90,45 @@
             </div>
           </div>
           <div class="bg-slate-800 p-5 rounded-lg border border-slate-700 dash-card">
-            <h2 class="text-lg font-bold mb-4">Ù†Ú©ØªÙ‡ Ø±ÙˆØ² Ø¨Ø±Ø§ÛŒ ØµØ±ÙÙ‡â€ŒØ¬ÙˆÛŒÛŒ</h2>
+            <h2 class="text-lg font-bold mb-4">نکته روز برای صرفه‌جویی</h2>
             <p id="saving-tip-text" class="text-slate-300 leading-relaxed"></p>
           </div>
         </div>
       </section>
 
-      <!-- Ù…Ø­Ø§Ø³Ø¨Ù‡â€ŒÚ¯Ø± Ù…ØµØ±Ù -->
+      <!-- محاسبه‌گر مصرف -->
       <section id="consumption-calculator-section" class="bg-slate-800 p-6 rounded-lg border border-slate-700 dash-card">
-        <h2 class="text-xl font-bold mb-4 text-center text-cyan-400">Ù…ØµØ±Ù Ú¯Ø§Ø² Ø®Ø§Ù†Ú¯ÛŒ Ø®ÙˆØ¯ Ø±Ø§ Ø¨Ø³Ù†Ø¬ÛŒØ¯</h2>
+        <h2 class="text-xl font-bold mb-4 text-center text-cyan-400">مصرف گاز خانگی خود را بسنجید</h2>
         <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-          <input type="number" id="user-consumption-input" placeholder="Ù…ØµØ±Ù Ú¯Ø§Ø² Ù…Ø§Ù‡Ø§Ù†Ù‡ (Ù…ØªØ± Ù…Ú©Ø¹Ø¨)" class="bg-slate-700 text-white border-slate-600 rounded-lg px-4 py-2 text-center w-full md:w-64 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-          <button id="calculate-btn" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg transition-colors w-full md:w-auto">Ù…Ø­Ø§Ø³Ø¨Ù‡ Ú©Ù†</button>
+          <input type="number" id="user-consumption-input" placeholder="مصرف گاز ماهانه (متر مکعب)" class="bg-slate-700 text-white border-slate-600 rounded-lg px-4 py-2 text-center w-full md:w-64 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+          <button id="calculate-btn" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg transition-colors w-full md:w-auto">محاسبه کن</button>
         </div>
         <div id="calculator-result" class="mt-5 text-center min-h-[50px]"></div>
       </section>
 
-      <!-- Ù†Ù…ÙˆØ¯Ø§Ø±Ù‡Ø§ -->
+      <!-- نمودارها -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold">Ù†Ù…ÙˆØ¯Ø§Ø± Ø¢Ø¨Ø´Ø§Ø±ÛŒ ØªØ±Ø§Ø² Ú¯Ø§Ø² (MCM)</h2>
+            <h2 class="text-lg font-bold">نمودار آبشاری تراز گاز (MCM)</h2>
           </div>
           <div class="h-80"><canvas id="gasBalanceWaterfallChart"></canvas></div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold">Ø³Ù‡Ù… Ø¨Ø®Ø´â€ŒÙ‡Ø§ Ø§Ø² Ù…ØµØ±Ù Ú¯Ø§Ø²</h2>
+            <h2 class="text-lg font-bold">سهم بخش‌ها از مصرف گاز</h2>
           </div>
           <div class="h-80"><canvas id="gasConsumptionShareChart"></canvas></div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold">ØªØ£Ù…ÛŒÙ† ÙØ±Ø¢ÙˆØ±Ø¯Ù‡â€ŒÙ‡Ø§ (Ù‡Ø²Ø§Ø± Ù„ÛŒØªØ±)</h2>
+            <h2 class="text-lg font-bold">تأمین فرآورده‌ها (هزار لیتر)</h2>
           </div>
           <div class="h-80"><canvas id="productSupplyChart"></canvas></div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold">Ø±ÙˆÙ†Ø¯ Ù…ØµØ±Ù Û²Û´ Ù…Ø§Ù‡ Ú¯Ø°Ø´ØªÙ‡</h2>
+            <h2 class="text-lg font-bold">روند مصرف ۲۴ ماه گذشته</h2>
           </div>
           <div class="h-80"><canvas id="longTermTrendChart"></canvas></div>
         </div>
@@ -137,7 +137,7 @@
 
   </div>
 
-  <!-- Ú©ØªØ§Ø¨Ø®Ø§Ù†Ù‡â€ŒÙ‡Ø§ Ùˆ Ø§Ø³Ú©Ø±ÛŒÙ¾Øªâ€ŒÙ‡Ø§ (Ù…Ø­Ù„ÛŒ) -->
+  <!-- کتابخانه‌ها و اسکریپت‌ها (محلی) -->
   <script defer src="../assets/vendor/chart.umd.min.js"></script>
   <script defer src="../assets/numfmt.js"></script>
   <script defer src="./energy.js"></script>
