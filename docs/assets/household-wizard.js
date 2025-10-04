@@ -1,1 +1,188 @@
-// stub: to be implemented in Prompt #3
+﻿(() => {
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  const qs = new URLSearchParams(location.search);
+  const state = {
+    utility: qs.get('utility') || 'water',
+    form: null,
+    results: null,
+    chart: null,
+    chartLib: null,
+    storageKey: 'wesh.household.v1'
+  };
+
+  // Targets & EF (provisional constants; do not modify global data)
+  // Units: water(L/day/person), electricity(kWh/day/person), gas(kWh/day/person)
+  const TARGETS = { water: 110, electricity: 3.2, gas: 18 }; // provisional=true
+  const EF = { electricity: 0.45, gas: 0.20, water: 0.0003 }; // kgCO2e per unit (provisional)
+
+  const unitFor = (u) => u==='water' ? 'L' : (u==='electricity' ? 'kWh' : 'm3');
+
+  function selectTab(utility){
+    state.utility = utility;
+    $$('.wiz-tabs .tab').forEach(btn => {
+      const isActive = btn.dataset.utility === utility;
+      btn.setAttribute('aria-selected', isActive ? 'true':'false');
+    });
+    // set unit dropdown
+    const unit = unitFor(utility);
+    const sel = $('[name="unit"]');
+    if (sel && sel.value !== unit){
+      // if user changed it manually, keep; otherwise default to utility's main unit
+      if (!qs.get('unit')) sel.value = unit;
+    }
+    // reflect in URL without reload
+    const url = new URL(location.href);
+    url.searchParams.set('utility', utility);
+    history.replaceState(null, '', url.toString());
+  }
+
+  function loadFromStorage(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(state.storageKey) || '{}');
+      if (!saved || typeof saved !== 'object') return;
+      for (const [k,v] of Object.entries(saved)){
+        const el = $(`[name="${k}"]`);
+        if (el && v != null) el.value = v;
+      }
+      if (saved.utility) selectTab(saved.utility);
+      if (['amount','usage','members','billingDays'].every(k => saved[k])){
+        // optional: pre-enable compute hint
+      }
+    }catch(_) {}
+  }
+
+  function saveToStorage(payload){
+    try{
+      localStorage.setItem(state.storageKey, JSON.stringify(payload));
+    }catch(_) {}
+  }
+
+  function resetStorage(){
+    localStorage.removeItem(state.storageKey);
+    state.form.reset();
+    $('#wiz-results').hidden = true;
+    $('#wiz-hint').textContent = 'برای دیدن نتایج، فرم را کامل کنید.';
+  }
+
+  function toNumber(v){ const n = Number(String(v).replace(/[^\d.]/g,'')); return Number.isFinite(n) ? n : NaN; }
+
+  function normalize({utility, usage, unit, members, billingDays}){
+    let u = usage;
+    // gas m3 → kWh (≈ 10.55 kWh/m3 typical); provisional
+    if (utility==='gas' && unit==='m3'){ u = u * 10.55; unit = 'kWh'; }
+    // target by utility
+    const target = TARGETS[utility];
+    const perCapita = u / (members * billingDays);
+    const delta = perCapita - target;
+    const percent = target ? (delta/target)*100 : 0;
+    const score = Math.max(0, Math.min(100, Math.round(100 - Math.abs(percent)))); // simple 0..100
+    const co2e = utility==='water' ? perCapita * EF.water : perCapita * (utility==='electricity' ? EF.electricity : EF.gas);
+    return { perCapita, target, delta, percent, score, co2e, provisional:true };
+  }
+
+  async function ensureChart(){
+    if (state.chartLib) return true;
+    try{
+      // lazy-load Chart.js if present in /vendor
+      state.chartLib = await import('/vendor/chart.umd.min.js');
+      return true;
+    }catch(_){
+      return false;
+    }
+  }
+
+  function renderNumbers(m){
+    $('#k-percapita').textContent = m.perCapita.toFixed(2);
+    $('#k-target').textContent = m.target.toFixed(2);
+    $('#k-delta').textContent = `${m.delta.toFixed(2)} (${m.percent.toFixed(1)}٪)`;
+    $('#k-score').textContent = String(m.score);
+    $('#k-co2e').textContent = m.co2e.toFixed(3) + ' kg';
+    const note = m.provisional ? 'مقادیر هدف و ضرایب انتشار به‌صورت موقت و پارامتریک هستند.' : '';
+    $('#wiz-note').textContent = note;
+  }
+
+  function renderTips(utility, percent){
+    const box = $('#wiz-tips'); box.innerHTML = '';
+    const tips = [];
+    if (utility==='water'){
+      tips.push('آب‌خورها را اصلاح و نشت‌ها را رفع کنید.');
+      tips.push('سرشیر کاهنده دبی نصب کنید.');
+    }else if (utility==='electricity'){
+      tips.push('تعویض لامپ‌ها با LED پر‌بازده.');
+      tips.push('وسایل پرمصرف را در ساعات کم‌بار مصرف کنید.');
+    }else{
+      tips.push('تنظیم شعله و سرویس سالانه پکیج/بخاری.');
+      tips.push('عایق‌کاری پنجره‌ها و درزها.');
+    }
+    tips.slice(0,5).forEach(t => { const li=document.createElement('li'); li.textContent=t; box.appendChild(li); });
+  }
+
+  async function renderChart(m){
+    if (!(await ensureChart())) return;
+    const ctx = $('#wiz-chart').getContext('2d');
+    if (state.chart) { state.chart.destroy(); state.chart = null; }
+    const unit = state.utility==='water' ? 'L' : 'kWh';
+    state.chart = new state.chartLib.Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['مصرف شما', 'هدف جهانی'],
+        datasets: [{ label: unit, data: [m.perCapita, m.target] }]
+      },
+      options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true } } }
+    });
+  }
+
+  function bindCardClicks(){
+    // On landing cards, prefer to intercept and focus wizard instead of navigating away:
+    document.querySelectorAll('.cards-section a[data-utility]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        selectTab(a.dataset.utility);
+        document.getElementById('household-wizard').scrollIntoView({behavior:'smooth', block:'start'});
+      }, {passive:false});
+    });
+  }
+
+  function init(){
+    // tabs
+    $$('.wiz-tabs .tab').forEach(btn => btn.addEventListener('click', () => selectTab(btn.dataset.utility)));
+    // form
+    state.form = $('#wiz-form');
+    state.results = $('#wiz-results');
+    $('#wiz-reset').addEventListener('click', resetStorage);
+
+    state.form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const fd = new FormData(state.form);
+      const payload = {
+        utility: state.utility,
+        amount: toNumber(fd.get('amount')),
+        usage: toNumber(fd.get('usage')),
+        unit: String(fd.get('unit') || ''),
+        members: toNumber(fd.get('members')),
+        billingDays: toNumber(fd.get('billingDays'))
+      };
+      // basic validation
+      const ok = ['amount','usage','members','billingDays'].every(k => Number.isFinite(payload[k]) && payload[k] > 0);
+      if (!ok) { $('#wiz-hint').textContent = 'لطفاً تمام فیلدها را با مقادیر معتبر تکمیل کنید.'; return; }
+
+      saveToStorage({...payload});
+      const m = normalize(payload);
+      renderNumbers(m);
+      renderTips(payload.utility, m.percent);
+      state.results.hidden = false;
+      await renderChart(m);
+    });
+
+    // default tab from URL
+    selectTab(state.utility);
+    // restore previous values
+    loadFromStorage();
+    // bind landing cards
+    bindCardClicks();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
