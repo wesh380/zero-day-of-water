@@ -117,6 +117,20 @@
     opacity: 1;
   }
 }
+
+.cards-section .card-sub {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+/* cards grid: allow 4 columns on wide screens */
+@media (min-width: 1140px) {
+  .cards-section {
+    grid-template-columns: repeat(4, minmax(210px, 1fr));
+  }
+}
 /* === Household Wizard (landing) === */
 .wizard { max-width: 980px; margin: 24px auto 12px; padding: 16px; }
 .wiz-head { text-align: center; color: #0f172a; }
