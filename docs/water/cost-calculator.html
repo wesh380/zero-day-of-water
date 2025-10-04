@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>ماشین‌حساب پیشرفته قیمت تمام‌شده آب در مشهد</title>
+  <meta charset="utf-8">
+  <title>Ù…Ø§Ø´ÛŒÙ†â€ŒØ­Ø³Ø§Ø¨ Ù¾ÛŒØ´Ø±ÙØªÙ‡ Ù‚ÛŒÙ…Øª ØªÙ…Ø§Ù…â€ŒØ´Ø¯Ù‡ Ø¢Ø¨ Ø¯Ø± Ù…Ø´Ù‡Ø¯</title>
   <link rel="stylesheet" href="../assets/tailwind.css">
   <link rel="stylesheet" href="../assets/fonts.css">
   <link rel="stylesheet" href="../assets/water-cost.css">
@@ -14,119 +14,119 @@
 </head>
 <body>
   <main class="container">
-  <h1 class="page-title">ماشین‌حساب پیشرفته قیمت تمام‌شده آب در مشهد</h1>
-  <div class="page-sub">شِمای تمیز و کادربندی‌شده؛ ورودی‌ها در راست، خروجی‌ها در چپ</div>
+  <h1 class="page-title">Ù…Ø§Ø´ÛŒÙ†â€ŒØ­Ø³Ø§Ø¨ Ù¾ÛŒØ´Ø±ÙØªÙ‡ Ù‚ÛŒÙ…Øª ØªÙ…Ø§Ù…â€ŒØ´Ø¯Ù‡ Ø¢Ø¨ Ø¯Ø± Ù…Ø´Ù‡Ø¯</h1>
+  <div class="page-sub">Ø´ÙÙ…Ø§ÛŒ ØªÙ…ÛŒØ² Ùˆ Ú©Ø§Ø¯Ø±Ø¨Ù†Ø¯ÛŒâ€ŒØ´Ø¯Ù‡Ø› ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§ Ø¯Ø± Ø±Ø§Ø³ØªØŒ Ø®Ø±ÙˆØ¬ÛŒâ€ŒÙ‡Ø§ Ø¯Ø± Ú†Ù¾</div>
 
   <section class="grid">
-    <!-- ستون چپ: خروجی‌های مدل -->
+    <!-- Ø³ØªÙˆÙ† Ú†Ù¾: Ø®Ø±ÙˆØ¬ÛŒâ€ŒÙ‡Ø§ÛŒ Ù…Ø¯Ù„ -->
     <div class="left">
       <div class="stat-wrap">
         <div class="stat badge-warn">
-          <div class="label">قیمت پیشنهادی واقعی (به ازای هر مترمکعب)</div>
-          <div id="true-price" class="value">—</div>
-          <span class="badge" id="true-price-unit">تومان</span>
+          <div class="label">Ù‚ÛŒÙ…Øª Ù¾ÛŒØ´Ù†Ù‡Ø§Ø¯ÛŒ ÙˆØ§Ù‚Ø¹ÛŒ (Ø¨Ù‡ Ø§Ø²Ø§ÛŒ Ù‡Ø± Ù…ØªØ±Ù…Ú©Ø¹Ø¨)</div>
+          <div id="true-price" class="value">â€”</div>
+          <span class="badge" id="true-price-unit">ØªÙˆÙ…Ø§Ù†</span>
         </div>
         <div class="stat badge-success">
-          <div class="label">قیمت نهایی برای مصرف‌کننده (پس از یارانه/تخفیف)</div>
-          <div id="final-price" class="value">—</div>
-          <span class="badge" id="final-price-unit">تومان</span>
+          <div class="label">Ù‚ÛŒÙ…Øª Ù†Ù‡Ø§ÛŒÛŒ Ø¨Ø±Ø§ÛŒ Ù…ØµØ±Ùâ€ŒÚ©Ù†Ù†Ø¯Ù‡ (Ù¾Ø³ Ø§Ø² ÛŒØ§Ø±Ø§Ù†Ù‡/ØªØ®ÙÛŒÙ)</div>
+          <div id="final-price" class="value">â€”</div>
+          <span class="badge" id="final-price-unit">ØªÙˆÙ…Ø§Ù†</span>
         </div>
       </div>
 
       <div class="card dash-card">
-        <h3>جدول سهم هر متغیر</h3>
+        <h3>Ø¬Ø¯ÙˆÙ„ Ø³Ù‡Ù… Ù‡Ø± Ù…ØªØºÛŒØ±</h3>
         <table class="tbl" aria-describedby="tbl-hint">
           <thead>
-            <tr><th>آیتم</th><th>سهم</th><th>پیشرفت</th><th>هزینه</th></tr>
+            <tr><th>Ø¢ÛŒØªÙ…</th><th>Ø³Ù‡Ù…</th><th>Ù¾ÛŒØ´Ø±ÙØª</th><th>Ù‡Ø²ÛŒÙ†Ù‡</th></tr>
           </thead>
           <tbody id="breakdown-body"><!-- filled by JS --></tbody>
         </table>
-        <div id="tbl-hint" class="hint mt-8">مقادیر با تغییر ورودی‌ها به‌روزرسانی می‌شوند.</div>
+        <div id="tbl-hint" class="hint mt-8">Ù…Ù‚Ø§Ø¯ÛŒØ± Ø¨Ø§ ØªØºÛŒÛŒØ± ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§ Ø¨Ù‡â€ŒØ±ÙˆØ²Ø±Ø³Ø§Ù†ÛŒ Ù…ÛŒâ€ŒØ´ÙˆÙ†Ø¯.</div>
       </div>
 
       <div class="card dash-card">
-        <h3>نمودار دونات سهم عوامل</h3>
+        <h3>Ù†Ù…ÙˆØ¯Ø§Ø± Ø¯ÙˆÙ†Ø§Øª Ø³Ù‡Ù… Ø¹ÙˆØ§Ù…Ù„</h3>
         <div class="chart-box"><canvas id="shareChart"></canvas></div>
       </div>
 
       <div class="card dash-card">
-        <h3>تحلیل حساسیت (±۱۰٪ در ورودی‌ها)</h3>
+        <h3>ØªØ­Ù„ÛŒÙ„ Ø­Ø³Ø§Ø³ÛŒØª (Â±Û±Û°Ùª Ø¯Ø± ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§)</h3>
         <ul id="sensitivity-list" class="list"><!-- li items by JS --></ul>
       </div>
 
       <div class="card dash-card note">
-        <h3>جمع‌بندی تحلیل</h3>
-        <div id="analysis-summary">—</div>
+        <h3>Ø¬Ù…Ø¹â€ŒØ¨Ù†Ø¯ÛŒ ØªØ­Ù„ÛŒÙ„</h3>
+        <div id="analysis-summary">â€”</div>
       </div>
     </div>
 
-    <!-- ستون راست: ورودی‌های مدل -->
+    <!-- Ø³ØªÙˆÙ† Ø±Ø§Ø³Øª: ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§ÛŒ Ù…Ø¯Ù„ -->
     <div class="right controls">
       <div class="card dash-card">
-        <h3>۱) عوامل فنی و زیربنایی</h3>
+        <h3>Û±) Ø¹ÙˆØ§Ù…Ù„ ÙÙ†ÛŒ Ùˆ Ø²ÛŒØ±Ø¨Ù†Ø§ÛŒÛŒ</h3>
         <div class="group">
-          <label for="cost_production">هزینه تولید هر مترمکعب (تومان)</label>
+          <label for="cost_production">Ù‡Ø²ÛŒÙ†Ù‡ ØªÙˆÙ„ÛŒØ¯ Ù‡Ø± Ù…ØªØ±Ù…Ú©Ø¹Ø¨ (ØªÙˆÙ…Ø§Ù†)</label>
           <div class="inline">
             <input id="cost_production" type="number" min="0" step="100" value="2000" aria-describedby="cost_production_r">
           </div>
           <input id="cost_production_r" type="range" min="0" max="10000" step="100" value="2000">
         </div>
         <div class="group">
-          <label for="cost_energy">هزینه انرژی (تومان)</label>
+          <label for="cost_energy">Ù‡Ø²ÛŒÙ†Ù‡ Ø§Ù†Ø±Ú˜ÛŒ (ØªÙˆÙ…Ø§Ù†)</label>
           <input id="cost_energy" type="number" min="0" step="50" value="2000">
           <input id="cost_energy_r" type="range" min="0" max="10000" step="50" value="2000">
         </div>
         <div class="group">
-          <label for="loss_network">درصد هدررفت شبکه (%)</label>
+          <label for="loss_network">Ø¯Ø±ØµØ¯ Ù‡Ø¯Ø±Ø±ÙØª Ø´Ø¨Ú©Ù‡ (%)</label>
           <input id="loss_network" type="number" min="0" max="100" step="1" value="20">
           <input id="loss_network_r" type="range" min="0" max="100" step="1" value="20">
         </div>
       </div>
 
       <div class="card dash-card">
-        <h3>۲) عوامل اقتصادی و مدیریتی</h3>
+        <h3>Û²) Ø¹ÙˆØ§Ù…Ù„ Ø§Ù‚ØªØµØ§Ø¯ÛŒ Ùˆ Ù…Ø¯ÛŒØ±ÛŒØªÛŒ</h3>
         <div class="group">
-          <label for="maintenance">هزینه نگهداری و تعمیرات (تومان)</label>
+          <label for="maintenance">Ù‡Ø²ÛŒÙ†Ù‡ Ù†Ú¯Ù‡Ø¯Ø§Ø±ÛŒ Ùˆ ØªØ¹Ù…ÛŒØ±Ø§Øª (ØªÙˆÙ…Ø§Ù†)</label>
           <input id="maintenance" type="number" min="0" step="50" value="1500">
           <input id="maintenance_r" type="range" min="0" max="10000" step="50" value="1500">
         </div>
         <div class="group">
-          <label for="hidden_subsidy">درصد یارانه پنهان (%)</label>
+          <label for="hidden_subsidy">Ø¯Ø±ØµØ¯ ÛŒØ§Ø±Ø§Ù†Ù‡ Ù¾Ù†Ù‡Ø§Ù† (%)</label>
           <input id="hidden_subsidy" type="number" min="0" max="100" step="1" value="25">
           <input id="hidden_subsidy_r" type="range" min="0" max="100" step="1" value="25">
         </div>
       </div>
 
       <div class="card dash-card">
-        <h3>۳) محیطی و اجتماعی</h3>
+        <h3>Û³) Ù…Ø­ÛŒØ·ÛŒ Ùˆ Ø§Ø¬ØªÙ…Ø§Ø¹ÛŒ</h3>
         <div class="group">
-          <label for="power_change">درصد تغییر قیمتی برق (%)</label>
+          <label for="power_change">Ø¯Ø±ØµØ¯ ØªØºÛŒÛŒØ± Ù‚ÛŒÙ…ØªÛŒ Ø¨Ø±Ù‚ (%)</label>
           <input id="power_change" type="number" min="-100" max="100" step="1" value="0">
           <input id="power_change_r" type="range" min="-100" max="100" step="1" value="0">
         </div>
       </div>
 
       <div class="card dash-card">
-        <h3>آزمون ورودی‌ها</h3>
+        <h3>Ø¢Ø²Ù…ÙˆÙ† ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§</h3>
         <div class="group">
-          <label for="chargeinput">شارژ</label>
+          <label for="chargeinput">Ø´Ø§Ø±Ú˜</label>
           <input id="chargeinput" type="text" />
         </div>
         <div class="group">
-          <label for="voteinput">رأی</label>
+          <label for="voteinput">Ø±Ø£ÛŒ</label>
           <input id="voteinput" type="text" />
         </div>
       </div>
 
       <div class="actions">
-        <button id="recalc" class="btn btn-primary" type="button">به‌روزرسانی محاسبات</button>
-        <a class="btn" href="../index.html">بازگشت</a>
+        <button id="recalc" class="btn btn-primary" type="button">Ø¨Ù‡â€ŒØ±ÙˆØ²Ø±Ø³Ø§Ù†ÛŒ Ù…Ø­Ø§Ø³Ø¨Ø§Øª</button>
+        <a class="btn" href="../index.html">Ø¨Ø§Ø²Ú¯Ø´Øª</a>
       </div>
     </div>
   </section>
 
-  <!-- فوتر فعلی سایت شما بدون تغییر بماند -->
-  <div class="footer-note">با هر تغییر در ورودی‌ها، نتایج به‌صورت زنده محاسبه می‌شوند.</div>
+  <!-- ÙÙˆØªØ± ÙØ¹Ù„ÛŒ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ø¨Ø¯ÙˆÙ† ØªØºÛŒÛŒØ± Ø¨Ù…Ø§Ù†Ø¯ -->
+  <div class="footer-note">Ø¨Ø§ Ù‡Ø± ØªØºÛŒÛŒØ± Ø¯Ø± ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§ØŒ Ù†ØªØ§ÛŒØ¬ Ø¨Ù‡â€ŒØµÙˆØ±Øª Ø²Ù†Ø¯Ù‡ Ù…Ø­Ø§Ø³Ø¨Ù‡ Ù…ÛŒâ€ŒØ´ÙˆÙ†Ø¯.</div>
 </main>
 
   <script src="../assets/vendor/chart.umd.min.js"></script>
