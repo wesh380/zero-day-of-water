@@ -62,6 +62,55 @@
        class="inline-flex items-center gap-2 px-4 py-2 my-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white">
       نقشه آمایش انرژی خراسان رضوی
     </a>
+    <section id="household-wizard" class="wizard container rtl" aria-labelledby="wiz-title">
+      <div class="wiz-head">
+        <h2 id="wiz-title" class="wiz-title">داشبورد مدیریتی خانوار</h2>
+        <p class="wiz-sub">ابتدا یکی از تب‌ها را انتخاب و فرم را کامل کنید؛ سپس نتایج نمایش داده می‌شود.</p>
+        <div class="wiz-tabs" role="tablist" aria-label="Utilities">
+          <button role="tab" data-utility="water" aria-selected="true" class="tab">آب</button>
+          <button role="tab" data-utility="electricity" aria-selected="false" class="tab">برق</button>
+          <button role="tab" data-utility="gas" aria-selected="false" class="tab">گاز</button>
+        </div>
+      </div>
+
+      <form class="wiz-form" id="wiz-form" novalidate>
+        <div class="field"><label>مبلغ قبض (تومان)</label><input name="amount" inputmode="numeric" required /></div>
+        <div class="field">
+          <label>میزان مصرف</label>
+          <div class="row">
+            <input name="usage" inputmode="numeric" required />
+            <select name="unit" aria-label="واحد">
+              <option value="L">L</option>
+              <option value="kWh">kWh</option>
+              <option value="m3">m³</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>تعداد اعضای خانوار</label><input name="members" inputmode="numeric" required /></div>
+        <div class="field"><label>دوره صورتحساب (روز)</label><input name="billingDays" inputmode="numeric" required /></div>
+        <div class="row actions">
+          <button type="submit" class="btn primary">محاسبه</button>
+          <button type="button" id="wiz-reset" class="btn ghost">حذف داده‌ها</button>
+        </div>
+        <p class="hint" id="wiz-hint">برای دیدن نتایج، فرم را کامل کنید.</p>
+      </form>
+
+      <div id="wiz-results" class="wiz-results" hidden>
+        <div class="cards">
+          <div class="kpi"><div class="k">مصرف سرانه/روز</div><div class="v" id="k-percapita">—</div></div>
+          <div class="kpi"><div class="k">هدف جهانی</div><div class="v" id="k-target">—</div></div>
+          <div class="kpi"><div class="k">Δ و ٪ اختلاف</div><div class="v" id="k-delta">—</div></div>
+          <div class="kpi"><div class="k">امتیاز</div><div class="v" id="k-score">—</div></div>
+          <div class="kpi"><div class="k">CO₂e</div><div class="v" id="k-co2e">—</div></div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="wiz-chart" width="420" height="220" aria-label="مقایسه مصرف سرانه با هدف"></canvas>
+        </div>
+        <ul id="wiz-tips" class="tips"></ul>
+        <p class="note" id="wiz-note"></p>
+      </div>
+    </section>
+
     <section id="entry-cards" class="cards-section" aria-label="navigation cards">
       <a href="/water/hub" class="card water" aria-label="ورود به داشبورد آب">
         <span class="icon" aria-hidden="true">💧</span>
@@ -217,6 +266,7 @@
   <script type="module" src="/index.js" defer charset="utf-8"></script>
   <script defer src="assets/numfmt.js?v=1"></script>
   <script defer src="./assets/cld-loader.js"></script>
+  <script defer src="./assets/household-wizard.js"></script>
 </body>
 </html>
 
