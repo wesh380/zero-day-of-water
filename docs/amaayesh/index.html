@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>نقشه آمایش انرژی — خراسان رضوی | WESH360</title>
+  <title>Ù†Ù‚Ø´Ù‡ Ø¢Ù…Ø§ÛŒØ´ Ø§Ù†Ø±Ú˜ÛŒ â€” Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ | WESH360</title>
   <link rel="icon" href="../page/landing/favicon.ico"/>
   <link rel="stylesheet" href="../assets/tailwind.css"/>
   <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css" />
@@ -14,48 +14,48 @@
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
   <header class="w-full px-4 py-3 flex items-center justify-between">
-    <h1 class="text-lg md:text-2xl font-bold">نقشه تعاملی آمایش انرژی — خراسان رضوی</h1>
-    <nav class="text-sm md:text-base"><a href="../index.html" class="underline decoration-dotted">صفحه اصلی</a></nav>
+    <h1 class="text-lg md:text-2xl font-bold">Ù†Ù‚Ø´Ù‡ ØªØ¹Ø§Ù…Ù„ÛŒ Ø¢Ù…Ø§ÛŒØ´ Ø§Ù†Ø±Ú˜ÛŒ â€” Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ</h1>
+    <nav class="text-sm md:text-base"><a href="../index.html" class="underline decoration-dotted">ØµÙØ­Ù‡ Ø§ØµÙ„ÛŒ</a></nav>
   </header>
 
   <main class="flex relative ama-main is-mobile">
-    <!-- ظرف نقشه: id باید «map» بماند -->
+    <!-- Ø¸Ø±Ù Ù†Ù‚Ø´Ù‡: id Ø¨Ø§ÛŒØ¯ Â«mapÂ» Ø¨Ù…Ø§Ù†Ø¯ -->
     <div id="map"></div>
 
-    <!-- پنل سمت راست -->
+    <!-- Ù¾Ù†Ù„ Ø³Ù…Øª Ø±Ø§Ø³Øª -->
     <aside id="ama-layer-dock" class="ama-panel map-panel ama-layer-dock">
       <div class="ama-panel-header">
-        <h2 class="ama-panel-title">لایه‌ها</h2>
-        <button aria-label="تنظیمات" class="ama-settings-btn">⚙️</button>
+        <h2 class="ama-panel-title">Ù„Ø§ÛŒÙ‡â€ŒÙ‡Ø§</h2>
+        <button aria-label="ØªÙ†Ø¸ÛŒÙ…Ø§Øª" class="ama-settings-btn">âš™ï¸</button>
       </div>
       <div class="ama-tabs">
-        <button id="tab-wind"  data-layer-toggle="wind"  class="ama-tab-btn ama-tab-active">باد</button>
-        <button id="tab-solar" data-layer-toggle="solar" class="ama-tab-btn ama-tab-inactive">خورشیدی</button>
-        <button id="tab-dams"  data-layer-toggle="dams"  class="ama-tab-btn ama-tab-inactive">آب</button>
+        <button id="tab-wind"  data-layer-toggle="wind"  class="ama-tab-btn ama-tab-active">Ø¨Ø§Ø¯</button>
+        <button id="tab-solar" data-layer-toggle="solar" class="ama-tab-btn ama-tab-inactive">Ø®ÙˆØ±Ø´ÛŒØ¯ÛŒ</button>
+        <button id="tab-dams"  data-layer-toggle="dams"  class="ama-tab-btn ama-tab-inactive">Ø¢Ø¨</button>
       </div>
       <div class="ama-checkbox-grid">
-        <label data-layer-toggle="wind"><input type="checkbox"> سایت‌های بادی (انرژی)</label>
-        <label data-layer-toggle="solar"><input type="checkbox"> سایت‌های خورشیدی</label>
-        <label data-layer-toggle="dams"><input type="checkbox"> سد</label>
+        <label data-layer-toggle="wind"><input type="checkbox"> Ø³Ø§ÛŒØªâ€ŒÙ‡Ø§ÛŒ Ø¨Ø§Ø¯ÛŒ (Ø§Ù†Ø±Ú˜ÛŒ)</label>
+        <label data-layer-toggle="solar"><input type="checkbox"> Ø³Ø§ÛŒØªâ€ŒÙ‡Ø§ÛŒ Ø®ÙˆØ±Ø´ÛŒØ¯ÛŒ</label>
+        <label data-layer-toggle="dams"><input type="checkbox"> Ø³Ø¯</label>
       </div>
     </aside>
 
-    <!-- پنل سمت چپ -->
+    <!-- Ù¾Ù†Ù„ Ø³Ù…Øª Ú†Ù¾ -->
     <aside id="ama-top-dock" class="ama-panel map-panel ama-top-dock">
       <div class="ama-panel-header">
-        <h2 class="ama-panel-title">برترین‌ها</h2>
+        <h2 class="ama-panel-title">Ø¨Ø±ØªØ±ÛŒÙ†â€ŒÙ‡Ø§</h2>
         <span class="ama-top-badge">Top 10</span>
       </div>
       <table class="ama-top-table">
         <thead class="ama-top-thead">
-          <tr><th class="ama-top-th">رتبه</th><th class="ama-top-th">شهرسان</th><th class="ama-top-th">پتانسیل (MW)</th></tr>
+          <tr><th class="ama-top-th">Ø±ØªØ¨Ù‡</th><th class="ama-top-th">Ø´Ù‡Ø±Ø³Ø§Ù†</th><th class="ama-top-th">Ù¾ØªØ§Ù†Ø³ÛŒÙ„ (MW)</th></tr>
         </thead>
         <tbody id="ama-top10"></tbody>
       </table>
     </aside>
   </main>
 
-  <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 • Energy Spatial Planning • Leaflet</footer>
+  <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 â€¢ Energy Spatial Planning â€¢ Leaflet</footer>
 
   <!-- supercluster optional (CDN removed due to CSP). Use local vendor if added. -->
   <script defer src="/assets/vendor/leaflet/leaflet.js"></script>
