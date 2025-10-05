@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const $ = (sel, root=document) => root.querySelector(sel);
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
   const isNewTabEvent = (e) => e.metaKey || e.ctrlKey || e.button === 1 || e.shiftKey || (e.currentTarget && e.currentTarget.target === "_blank");
@@ -141,8 +141,15 @@
     document.querySelectorAll('.cards-section a[data-utility]').forEach(a => {
       a.addEventListener('click', (e) => {
         if (isNewTabEvent(e)) return;
+
+        // If this card already has a real href, let the browser navigate.
+        const href = a.getAttribute('href') || '';
+        const hasRealHref = href && href !== '#';
+        if (hasRealHref) return;
+
         const done = document.body.dataset.wizDone === "1" || sessionStorage.getItem("wizDone") === "1";
         const resultsLocked = !done && !!document.querySelector('#wiz-results[hidden]');
+
         if (resultsLocked){
           e.preventDefault();
           const u = a.getAttribute('data-utility');
@@ -150,8 +157,9 @@
           wiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
           const invalid = document.querySelector('#wiz-form :invalid');
           if (invalid) invalid.focus({ preventScroll: true });
-        }else{
-          if ((!a.getAttribute('href') || a.getAttribute('href') === '#') && a.dataset.utility){
+        } else {
+          // Fallback route only when there is no real href
+          if (a.dataset.utility){
             a.href = `/household-dashboard?utility=${a.dataset.utility}`;
           }
         }
