@@ -11,15 +11,31 @@
   <!-- Base styles -->
   <link rel="stylesheet" href="/assets/tailwind.css" />
   <link rel="stylesheet" href="/assets/chart.autofix.css" />
+  <link rel="stylesheet" href="/assets/css/base.css">
 
   <!-- Bundled CLD styles -->
   <link rel="stylesheet" href="/assets/dist/water-cld.bundle.css" />
   <link rel="stylesheet" href="/assets/water-cld.css" />
   <link rel="stylesheet" href="/assets/inline-migration.css" />
 
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 
 <body class="rtl">
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <header class="site-topbar" role="banner">
+    <div class="site-topbar__inner">
+      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+        <span class="icon" aria-hidden="true">‹</span>
+        <span class="label">بازگشت</span>
+      </a>
+      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+        <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+        <span>wesh360</span>
+      </a>
+    </div>
+  </header>
+  <main id="main" role="main">
   <!-- ===== HERO KPI BAR (start) ===== -->
   <section id="hero-kpi" class="hero-kpi">
     <div class="hero-left">
@@ -237,6 +253,7 @@
   </div>
 
   <script defer src="/assets/vendor/cytoscape.min.js"></script>
+  </main>
   <script defer src="/assets/vendor/elk.bundled.js"></script>
   <script defer src="/assets/vendor/cytoscape-elk.js"></script>
   <script defer src="/assets/vendor/dagre.min.js"></script>

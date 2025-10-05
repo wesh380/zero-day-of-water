@@ -14,6 +14,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231f7aff'/%3E%3Cpath d='M20 36c8 4 16-4 24 0' stroke='white' stroke-width='4' fill='none'/%3E%3C/svg%3E" />
       <link rel="stylesheet" href="../assets/tailwind.css">
       <link rel="stylesheet" href="../assets/fonts.css">
+      <link rel="stylesheet" href="/assets/css/base.css">
 
   <link rel="stylesheet" href="water.css">
   <!-- Vazirmatn -->
@@ -22,13 +23,23 @@
   <link rel="stylesheet" href="../assets/inline-migration.css" />
   <script defer src="/assets/unified-badge.js"></script>
   <script defer src="/assets/global-footer.js"></script>
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 <body>
     <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-    <nav class="container mx-auto p-4 md:p-8 mb-4 text-sm text-slate-500">
-        <a href="./hub.html" class="hover:text-slate-700">بازگشت به انتخاب داشبورد</a>
-    </nav>
-    <main id="main" class="dashboard container mx-auto p-4 md:p-8">
+    <header class="site-topbar" role="banner">
+      <div class="site-topbar__inner">
+        <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+          <span class="icon" aria-hidden="true">‹</span>
+          <span class="label">بازگشت</span>
+        </a>
+        <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+          <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+          <span>wesh360</span>
+        </a>
+      </div>
+    </header>
+    <main id="main" role="main" class="dashboard container mx-auto p-4 md:p-8">
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-extrabold main-title">وضعیت بحرانی آب در مشهد</h1>
             <p class="text-slate-600 text-lg mt-4">آخرین بروزرسانی: شنبه 25مرداد ۱۴۰۴</p>

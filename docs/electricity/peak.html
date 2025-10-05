@@ -6,6 +6,7 @@
     <title>داشبورد مدیریت مصرف برق — استان خراسان رضوی</title>
     <meta name="section" content="electricity" />
     <link rel="stylesheet" href="../assets/fonts.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
     <link rel="stylesheet" href="../assets/tailwind.css">
     <link rel="stylesheet" href="/assets/global-footer.css">
     <link rel="stylesheet" href="/assets/unified-badge.css">
@@ -15,13 +16,27 @@
     <script src="../assets/electricity-management.js"></script>
     <script defer src="/assets/unified-badge.js"></script>
     <script defer src="/assets/global-footer.js"></script>
+    <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 <body class="bg-slate-100 text-slate-800">
+    <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+    <header class="site-topbar" role="banner">
+      <div class="site-topbar__inner">
+        <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+          <span class="icon" aria-hidden="true">‹</span>
+          <span class="label">بازگشت</span>
+        </a>
+        <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+          <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+          <span>wesh360</span>
+        </a>
+      </div>
+    </header>
     <div class="container mx-auto p-4 md:p-6 lg:p-8">
         <header class="mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900">داشبورد مدیریت مصرف برق — استان خراسان رضوی</h1>
         </header>
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <main id="main" role="main" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-6">
                 <section id="total-consumption" class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 dash-card">
                     <h2 class="text-xl font-semibold mb-4 border-b pb-3 border-slate-200">تقاضا و مصرف کل</h2>
