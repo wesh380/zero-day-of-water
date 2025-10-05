@@ -6,13 +6,30 @@
   <title>ماشین‌حساب فوتوکشت — wesh360</title>
   <!-- CSS -->
   <link rel="stylesheet" href="/assets/tailwind.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/site-overrides.css">
   <link rel="stylesheet" href="/assets/inline-migration.css">
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 <body>
-  <div id="root"></div>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <header class="site-topbar" role="banner">
+    <div class="site-topbar__inner">
+      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+        <span class="icon" aria-hidden="true">‹</span>
+        <span class="label">بازگشت</span>
+      </a>
+      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+        <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+        <span>wesh360</span>
+      </a>
+    </div>
+  </header>
+  <main id="main" role="main">
+    <div id="root"></div>
+  </main>
 
   <!-- vendor+app (local) -->
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/react.production.min.js"></script>

@@ -12,13 +12,27 @@
   <!-- استایل‌های محلی پروژه -->
   <link rel="stylesheet" href="../assets/tailwind.css" />
   <link rel="stylesheet" href="../assets/fonts.css" />
+  <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <script defer src="/assets/unified-badge.js"></script>
   <script defer src="/assets/global-footer.js"></script>
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 <body class="min-h-screen bg-slate-900 text-slate-200 antialiased">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <header class="site-topbar" role="banner">
+    <div class="site-topbar__inner">
+      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+        <span class="icon" aria-hidden="true">‹</span>
+        <span class="label">بازگشت</span>
+      </a>
+      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+        <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+        <span>wesh360</span>
+      </a>
+    </div>
+  </header>
 
   <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     <header class="mb-8">
@@ -27,7 +41,6 @@
           <h1 class="text-3xl font-extrabold text-white">داشبورد مدیریت انرژی</h1>
           <p class="text-lg text-cyan-400 mt-1">استان خراسان رضوی (نمای عمومی)</p>
         </div>
-        <a href="../" class="text-sm text-cyan-300 hover:underline">بازگشت به گاز</a>
       </div>
 
       <!-- فیلترها -->
@@ -48,7 +61,7 @@
       </div>
     </header>
 
-    <main id="main" class="space-y-8">
+    <main id="main" role="main" class="space-y-8">
       <!-- KPI ها -->
       <section id="kpi-section">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

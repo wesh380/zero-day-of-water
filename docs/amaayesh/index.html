@@ -6,19 +6,33 @@
   <title>نقشه آمایش انرژی — خراسان رضوی | WESH360</title>
   <link rel="icon" href="../page/landing/favicon.ico"/>
   <link rel="stylesheet" href="../assets/tailwind.css"/>
+  <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css" />
   <link rel="stylesheet" href="/assets/css/map-overrides.css" />
   <link rel="stylesheet" href="../assets/legend.css"/>
   <link rel="stylesheet" href="/assets/css/map-inline.css" />
+  <script src="/assets/js/nav-utils.js" defer></script>
   <meta name="build-id" content="ama-20250906">
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <header class="site-topbar" role="banner">
+    <div class="site-topbar__inner">
+      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+        <span class="icon" aria-hidden="true">‹</span>
+        <span class="label">بازگشت</span>
+      </a>
+      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+        <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+        <span>wesh360</span>
+      </a>
+    </div>
+  </header>
   <header class="w-full px-4 py-3 flex items-center justify-between">
     <h1 class="text-lg md:text-2xl font-bold">نقشه تعاملی آمایش انرژی — خراسان رضوی</h1>
-    <nav class="text-sm md:text-base"><a href="../index.html" class="underline decoration-dotted">صفحه اصلی</a></nav>
   </header>
 
-  <main class="flex relative ama-main is-mobile">
+  <main id="main" role="main" class="flex relative ama-main is-mobile">
     <!-- ظرف نقشه: id باید «map» بماند -->
     <div id="map"></div>
 

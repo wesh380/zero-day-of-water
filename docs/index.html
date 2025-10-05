@@ -12,6 +12,7 @@
   <title>wesh360</title>
   <script>if(!document.createElement('canvas').toDataURL('image/webp').includes('data:image/webp')){document.documentElement.classList.add('no-webp');}</script>
   <link rel="stylesheet" href="./assets/tailwind.css" />
+  <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
@@ -24,9 +25,22 @@
   <link rel="icon" type="image/x-icon" href="./page/landing/favicon.ico">
   <script defer src="./assets/unified-badge.js"></script>
   <script defer src="./assets/global-footer.js"></script>
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
   <body data-page="home" class="min-h-screen flex flex-col">
     <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+    <header class="site-topbar" role="banner">
+      <div class="site-topbar__inner">
+        <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+          <span class="icon" aria-hidden="true">‹</span>
+          <span class="label">بازگشت</span>
+        </a>
+        <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+          <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+          <span>wesh360</span>
+        </a>
+      </div>
+    </header>
     <header class="site-header relative flex justify-center items-center px-4">
       <a class="logo inline-flex items-center justify-center" href="/" aria-label="صفحه اصلی" rel="home" data-logo="home">
         <img src="page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
@@ -59,7 +73,7 @@
         <p>داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
       </div>
     </section>
-  <main id="main" class="flex-grow">
+  <main id="main" role="main" class="flex-grow">
     <a data-cta="amaayesh" href="./amaayesh/index.html"
        class="inline-flex items-center gap-2 px-4 py-2 my-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white">
       نقشه آمایش انرژی خراسان رضوی

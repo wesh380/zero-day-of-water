@@ -6,13 +6,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سیاست امنیت و حکمرانی داده • WESH360</title>
   <link rel="stylesheet" href="../assets/tailwind.css" />
+  <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="../assets/fonts.css" />
   <link rel="stylesheet" href="../assets/global-footer.css" />
   <link rel="stylesheet" href="../assets/unified-badge.css" />
   <link rel="icon" type="image/png" href="../Logo.png" />
+  <script src="/assets/js/nav-utils.js" defer></script>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+  <header class="site-topbar" role="banner">
+    <div class="site-topbar__inner">
+      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
+        <span class="icon" aria-hidden="true">‹</span>
+        <span class="label">بازگشت</span>
+      </a>
+      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
+        <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
+        <span>wesh360</span>
+      </a>
+    </div>
+  </header>
   <header class="bg-white border-b border-slate-200">
     <div class="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between gap-4">
       <a class="logo flex items-center gap-3 text-slate-800 font-semibold" href="/" aria-label="صفحه اصلی" rel="home" data-logo="home">
@@ -32,7 +46,7 @@
     </div>
   </header>
 
-  <main id="main" class="flex-grow">
+  <main id="main" role="main" class="flex-grow">
     <section class="bg-sky-900 text-white py-12">
       <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
         <p class="text-sm font-semibold tracking-wide uppercase">WESH360</p>
