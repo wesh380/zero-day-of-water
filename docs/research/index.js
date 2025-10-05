@@ -1,10 +1,5 @@
 'use strict';
 (function () {
-  const LAST_UPDATED = '۱۴۰۴/۰۵/۲۷';
-  document.querySelectorAll('[data-last-updated]').forEach(el => {
-    el.textContent = LAST_UPDATED;
-  });
-
   function openSheet(sheet) {
     if (!sheet) return;
     sheet.classList.remove('hidden');
