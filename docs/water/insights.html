@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="water">
 <head>
   <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="fa-IR">
@@ -15,12 +15,11 @@
       <link rel="stylesheet" href="../assets/tailwind.css">
       <link rel="stylesheet" href="../assets/fonts.css">
 
+  <link rel="stylesheet" href="../assets/css/responsive-baseline.css">
   <link rel="stylesheet" href="water.css">
   <!-- Vazirmatn -->
   <link rel="stylesheet" href="/assets/global-footer.css">
-  <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="../assets/inline-migration.css" />
-  <script defer src="/assets/unified-badge.js"></script>
   <script defer src="/assets/global-footer.js"></script>
 </head>
 <body>
@@ -34,140 +33,175 @@
             <p class="text-slate-600 text-lg mt-4">آخرین بروزرسانی: شنبه 25مرداد ۱۴۰۴</p>
         </header>
         <section class="cards mb-12">
-            <div class="card dash-card days-left-card md:col-span-2 flex flex-col justify-center items-center text-center p-8" data-fa-digits>
-                <span class="text-5xl mb-4 opacity-75" aria-hidden="true">⏳</span>
-                <h2 class="text-2xl font-bold mb-2">روزهای باقی‌مانده تا روز صفر آبی</h2>
-                <p class="text-8xl font-extrabold" id="days-left">32</p>
-                <p class="text-2xl font-bold">روز</p>
-                <p class="mt-4 text-lg opacity-90">این یک پیش‌بینی بر اساس حجم قابل استفاده فعلی سدها و میانگین مصرف روزانه است.</p>
-            </div>
-            <div class="card dash-card flex flex-col justify-center items-center" data-fa-digits>
-                <span class="text-5xl mb-4 text-blue-500" aria-hidden="true">🌧️</span>
-                <h2 class="text-xl font-bold text-slate-800 mb-6 text-center">مقایسه بارش امسال با میانگین بلندمدت</h2>
-                <div class="w-full flex justify-around items-end h-48">
-                    <div class="w-1/3 h-full flex flex-col justify-end items-center"><p class="font-bold text-blue-800 text-lg mb-1">123 <span class="text-sm">میلی‌متر</span></p><div class="rain-bar w-16"><div class="rain-bar-fill h-59p"></div></div><p class="mt-2 font-semibold text-slate-600">سال آبی جاری</p></div>
-                    <div class="w-1/3 h-full flex flex-col justify-end items-center"><p class="font-bold text-slate-500 text-lg mb-1">208 <span class="text-sm">میلی‌متر</span></p><div class="rain-bar w-16 bg-slate-300"><div class="rain-bar-fill bg-slate-500 h-100p"></div></div><p class="mt-2 font-semibold text-slate-600">میانگین بلندمدت</p></div>
+            <article class="card dash-card days-left-card md:col-span-2" data-fa-digits>
+                <div class="card-body flex flex-col justify-center items-center text-center p-8">
+                    <span class="text-5xl mb-4 opacity-75" aria-hidden="true">⏳</span>
+                    <h2 class="text-2xl font-bold mb-2">روزهای باقی‌مانده تا روز صفر آبی</h2>
+                    <p class="text-8xl font-extrabold" id="days-left">32</p>
+                    <p class="text-2xl font-bold">روز</p>
+                    <p class="mt-4 text-lg opacity-90">این یک پیش‌بینی بر اساس حجم قابل استفاده فعلی سدها و میانگین مصرف روزانه است.</p>
                 </div>
-            </div>
+            </article>
+            <article class="card dash-card" data-fa-digits>
+                <div class="card-body flex flex-col justify-center items-center text-center p-8">
+                    <span class="text-5xl mb-4 text-blue-500" aria-hidden="true">🌧️</span>
+                    <h2 class="text-xl font-bold text-slate-800 mb-6">مقایسه بارش امسال با میانگین بلندمدت</h2>
+                    <div class="w-full flex justify-around items-end h-48">
+                        <div class="w-1/3 h-full flex flex-col justify-end items-center"><p class="font-bold text-blue-800 text-lg mb-1">123 <span class="text-sm">میلی‌متر</span></p><div class="rain-bar w-16"><div class="rain-bar-fill h-59p"></div></div><p class="mt-2 font-semibold text-slate-600">سال آبی جاری</p></div>
+                        <div class="w-1/3 h-full flex flex-col justify-end items-center"><p class="font-bold text-slate-500 text-lg mb-1">208 <span class="text-sm">میلی‌متر</span></p><div class="rain-bar w-16 bg-slate-300"><div class="rain-bar-fill bg-slate-500 h-100p"></div></div><p class="mt-2 font-semibold text-slate-600">میانگین بلندمدت</p></div>
+                    </div>
+                </div>
+            </article>
         </section>
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-slate-800 text-center mb-8">پایش لحظه‌ای سدها</h2>
             <div class="cards">
-                <div class="card dash-card text-center" data-fa-digits>
-                    <h3 class="text-2xl font-bold text-slate-700 mb-4">سد دوستی</h3>
-                    <div class="waffle mb-4" id="waffle-doosti"></div>
-                    <div class="value text-5xl font-extrabold text-blue-600">۵٪</div>
-                    <p class="text-slate-500 mt-2">حجم: حدود ۶۳ میلیون متر مکعب</p>
-                    <div class="mt-4 p-3 bg-amber-100 text-amber-800 rounded-lg text-sm font-semibold border border-amber-200"><span class="mr-2" aria-hidden="true">⚠️</span>بخشی از این حجم متعلق به ترکمنستان است.</div>
-                </div>
-                <div class="card dash-card text-center" data-fa-digits>
-                    <h3 class="text-2xl font-bold text-slate-700 mb-4">سد طرق</h3>
-                    <div class="waffle mb-4" id="waffle-torogh"></div>
-                    <div class="value text-5xl font-extrabold text-blue-600">۶٪</div>
-                    <p class="text-slate-500 mt-2">حجم: حدود ۲ میلیون متر مکعب</p>
-                </div>
-                <div class="card dash-card text-center" data-fa-digits>
-                    <h3 class="text-2xl font-bold text-slate-700 mb-4">سد کارده</h3>
-                    <div class="waffle mb-4" id="waffle-kardeh"></div>
-                    <div class="value text-5xl font-extrabold text-blue-600">۰٪</div>
-                    <p class="text-slate-500 mt-2">حجم: حدود ۵ میلیون متر مکعب</p>
-                </div>
-                <div class="card dash-card text-center" data-fa-digits>
-                    <h3 class="text-2xl font-bold text-slate-700 mb-4">سد ارداک</h3>
-                    <div class="waffle mb-4" id="waffle-erak"></div>
-                    <div class="value text-5xl font-extrabold text-blue-600">۰٪</div>
-                    <p class="text-slate-500 mt-2">حجم: حدود ۴ میلیون متر مکعب</p>
-                </div>
+                <article class="card dash-card has-photo text-center" data-fa-digits>
+                    <div class="card-media">
+                        <img src="../assets/img/hero/hero-mobile.webp" alt="تصویر نمادین سد دوستی" loading="lazy" decoding="async" />
+                        <span class="last-updated" aria-label="آخرین به‌روزرسانی">آخرین به‌روزرسانی: ۲۶ مرداد ۱۴۰۴</span>
+                    </div>
+                    <div class="card-body space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-700">سد دوستی</h3>
+                        <div class="waffle" id="waffle-doosti"></div>
+                        <div class="value text-5xl font-extrabold text-blue-600">۵٪</div>
+                        <p class="text-slate-500">حجم: حدود ۶۳ میلیون متر مکعب</p>
+                        <div class="mt-2 p-3 bg-amber-100 text-amber-800 rounded-lg text-sm font-semibold border border-amber-200"><span class="mr-2" aria-hidden="true">⚠️</span>بخشی از این حجم متعلق به ترکمنستان است.</div>
+                    </div>
+                </article>
+                <article class="card dash-card has-photo text-center" data-fa-digits>
+                    <div class="card-media">
+                        <img src="../assets/img/hero/hero-mobile.webp" alt="تصویر نمادین سد طرق" loading="lazy" decoding="async" />
+                        <span class="last-updated" aria-label="آخرین به‌روزرسانی">آخرین به‌روزرسانی: ۲۶ مرداد ۱۴۰۴</span>
+                    </div>
+                    <div class="card-body space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-700">سد طرق</h3>
+                        <div class="waffle" id="waffle-torogh"></div>
+                        <div class="value text-5xl font-extrabold text-blue-600">۶٪</div>
+                        <p class="text-slate-500">حجم: حدود ۲ میلیون متر مکعب</p>
+                    </div>
+                </article>
+                <article class="card dash-card has-photo text-center" data-fa-digits>
+                    <div class="card-media">
+                        <img src="../assets/img/hero/hero-mobile.webp" alt="تصویر نمادین سد کارده" loading="lazy" decoding="async" />
+                        <span class="last-updated" aria-label="آخرین به‌روزرسانی">آخرین به‌روزرسانی: ۲۶ مرداد ۱۴۰۴</span>
+                    </div>
+                    <div class="card-body space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-700">سد کارده</h3>
+                        <div class="waffle" id="waffle-kardeh"></div>
+                        <div class="value text-5xl font-extrabold text-blue-600">۰٪</div>
+                        <p class="text-slate-500">حجم: حدود ۵ میلیون متر مکعب</p>
+                    </div>
+                </article>
+                <article class="card dash-card has-photo text-center" data-fa-digits>
+                    <div class="card-media">
+                        <img src="../assets/img/hero/hero-mobile.webp" alt="تصویر نمادین سد ارداک" loading="lazy" decoding="async" />
+                        <span class="last-updated" aria-label="آخرین به‌روزرسانی">آخرین به‌روزرسانی: ۲۶ مرداد ۱۴۰۴</span>
+                    </div>
+                    <div class="card-body space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-700">سد ارداک</h3>
+                        <div class="waffle" id="waffle-erak"></div>
+                        <div class="value text-5xl font-extrabold text-blue-600">۰٪</div>
+                        <p class="text-slate-500">حجم: حدود ۴ میلیون متر مکعب</p>
+                    </div>
+                </article>
             </div>
         </section>
         <section class="mb-12">
-            <div class="card dash-card footprint-card">
-                <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ ردپای پنهان آب: غذای شما چقدر آب می‌نوشد؟ ✨</h2>
-                <p class="text-center text-slate-600 mb-8">مواد غذایی یک وعده خود را وارد کنید...</p>
-                <div class="max-w-xl mx-auto">
-                    <div class="mb-4">
-                        <label for="food-input" class="font-semibold text-slate-700 block mb-2">مواد غذایی (با کاما جدا کنید):</label>
-                        <input type="text" id="food-input" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition" placeholder="مثال: نان، گوشت گاو، گوجه فرنگی">
-                    </div>
-                    <div class="text-center">
-                        <button id="calc-water-btn" type="button" class="btn-gemini bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">🌱</span><span>محاسبه ردپای آب</span></button>
-                        <div id="ai-thinking" class="mt-4 hidden">
-                            <div class="flex items-center justify-center gap-2 text-gray-700">
-                                <span class="text-xl">✨</span>
-                                <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
-                                <span class="flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                                </span>
-                            </div>
-                            <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
+            <article class="card dash-card footprint-card">
+                <div class="card-body">
+                    <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ ردپای پنهان آب: غذای شما چقدر آب می‌نوشد؟ ✨</h2>
+                    <p class="text-center text-slate-600 mb-8">مواد غذایی یک وعده خود را وارد کنید...</p>
+                    <div class="max-w-xl mx-auto">
+                        <div class="mb-4">
+                            <label for="food-input" class="font-semibold text-slate-700 block mb-2">مواد غذایی (با کاما جدا کنید):</label>
+                            <input type="text" id="food-input" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition" placeholder="مثال: نان، گوشت گاو، گوجه فرنگی">
                         </div>
+                        <div class="text-center">
+                            <button id="calc-water-btn" type="button" class="btn-gemini bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">🌱</span><span>محاسبه ردپای آب</span></button>
+                            <div id="ai-thinking" class="mt-4 hidden">
+                                <div class="flex items-center justify-center gap-2 text-gray-700">
+                                    <span class="text-xl">✨</span>
+                                    <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
+                                    <span class="flex items-center gap-1">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
+                                    </span>
+                                </div>
+                                <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
+                            </div>
+                        </div>
+                        <div id="water-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
+                        <div id="water-share" class="mt-2"></div>
                     </div>
-                    <div id="water-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
-                    <div id="water-share" class="mt-2"></div>
                 </div>
-            </div>
+            </article>
         </section>
         <section class="mb-12">
-            <div class="card dash-card simulator-card">
-                <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ شبیه‌ساز آینده آب مشهد ✨</h2>
-                <p class="text-center text-slate-600 mb-8">ببینید مشارکت شما و رحمت الهی چگونه می‌تواند آینده را تغییر دهد!</p>
-                <div class="max-w-2xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-                        <div><label for="cut-slider" class="font-semibold text-slate-700 block mb-2">کاهش مصرف همگانی:</label><input type="range" id="cut-slider" min="0" max="30" value="10" class="w-full" aria-describedby="cut-value"><div class="text-center font-bold text-xl text-blue-600 mt-2"><span id="cut-value" data-fa-digits>10</span>%</div></div>
-                        <div><label for="rain-slider" class="font-semibold text-slate-700 block mb-2">بارش باران در ماه آینده:</label><input type="range" id="rain-slider" min="0" max="50" value="5" class="w-full" aria-describedby="rain-value"><div class="text-center font-bold text-xl text-blue-600 mt-2"><span id="rain-value" data-fa-digits>5</span> میلی‌متر</div></div>
+            <article class="card dash-card simulator-card">
+                <div class="card-body">
+                    <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ شبیه‌ساز آینده آب مشهد ✨</h2>
+                    <p class="text-center text-slate-600 mb-8">ببینید مشارکت شما و رحمت الهی چگونه می‌تواند آینده را تغییر دهد!</p>
+                    <div class="max-w-2xl mx-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                            <div><label for="cut-slider" class="font-semibold text-slate-700 block mb-2">کاهش مصرف همگانی:</label><input type="range" id="cut-slider" min="0" max="30" value="10" class="w-full" aria-describedby="cut-value"><div class="text-center font-bold text-xl text-blue-600 mt-2"><span id="cut-value" data-fa-digits>10</span>%</div></div>
+                            <div><label for="rain-slider" class="font-semibold text-slate-700 block mb-2">بارش باران در ماه آینده:</label><input type="range" id="rain-slider" min="0" max="50" value="5" class="w-full" aria-describedby="rain-value"><div class="text-center font-bold text-xl text-blue-600 mt-2"><span id="rain-value" data-fa-digits>5</span> میلی‌متر</div></div>
+                        </div>
+                        <div class="text-center"><button id="simulate-btn" type="button" class="text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg bg-indigo-600 hover:bg-indigo-700"><span class="ml-2" aria-hidden="true">📈</span>آینده را شبیه‌سازی کن</button></div>
+                        <div id="simulate-thinking" class="mt-4 hidden">
+                          <div class="flex items-center gap-2 text-gray-700">
+                            <span class="text-xl">✨</span>
+                            <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
+                            <span class="flex items-center gap-1">
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
+                            </span>
+                          </div>
+                          <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
+                        </div>
+                        <div id="simulate-result" data-fa-digits class="mt-4" aria-live="polite" tabindex="-1"></div>
+                        <div id="simulate-share" class="mt-2"></div>
                     </div>
-                    <div class="text-center"><button id="simulate-btn" type="button" class="text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg bg-indigo-600 hover:bg-indigo-700"><span class="ml-2" aria-hidden="true">📈</span>آینده را شبیه‌سازی کن</button></div>
-                    <div id="simulate-thinking" class="mt-4 hidden">
-                      <div class="flex items-center gap-2 text-gray-700">
-                        <span class="text-xl">✨</span>
-                        <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
-                        <span class="flex items-center gap-1">
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                        </span>
-                      </div>
-                      <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
-                    </div>
-                    <div id="simulate-result" data-fa-digits class="mt-4" aria-live="polite" tabindex="-1"></div>
-                    <div id="simulate-share" class="mt-2"></div>
                 </div>
-            </div>
+            </article>
         </section>
         <section class="mb-12">
-            <div class="card dash-card bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-blue-200">
-                <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ راهکارهای هوشمند برای شما ✨</h2>
-                <p class="text-center text-slate-600 mb-8">با پاسخ به چند سوال ساده...</p>
-                <div class="max-w-xl mx-auto">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                        <div><label for="family-input" class="font-semibold text-slate-700 block mb-2">تعداد اعضای خانواده:</label><input type="number" id="family-input" value="4" inputmode="numeric" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></div>
-                        <div><label for="shower-input" class="font-semibold text-slate-700 block mb-2">مدت زمان حمام (دقیقه):</label><input type="number" id="shower-input" value="10" inputmode="numeric" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></div>
+            <article class="card dash-card bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 border-2 border-blue-200">
+                <div class="card-body">
+                    <h2 class="text-3xl font-bold text-slate-800 text-center mb-2">✨ راهکارهای هوشمند برای شما ✨</h2>
+                    <p class="text-center text-slate-600 mb-8">با پاسخ به چند سوال ساده...</p>
+                    <div class="max-w-xl mx-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div><label for="family-input" class="font-semibold text-slate-700 block mb-2">تعداد اعضای خانواده:</label><input type="number" id="family-input" value="4" inputmode="numeric" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></div>
+                            <div><label for="shower-input" class="font-semibold text-slate-700 block mb-2">مدت زمان حمام (دقیقه):</label><input type="number" id="shower-input" value="10" inputmode="numeric" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></div>
+                        </div>
+                        <div class="text-center"><button id="solution-btn" type="button" class="btn-gemini text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">✨</span>برایم راهکار بساز</button></div>
+                        <div id="solution-thinking" class="mt-4 hidden">
+                          <div class="flex items-center gap-2 text-gray-700">
+                            <span class="text-xl">✨</span>
+                            <span class="text-sm">در حال پردازش و ساخت راهکارها…</span>
+                            <span class="flex items-center gap-1">
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
+                              <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
+                            </span>
+                          </div>
+                          <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-blue-400 animate-spin mx-auto"></div>
+                        </div>
+                        <div id="solution-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
+                        <div id="solution-share" class="mt-2"></div>
                     </div>
-                    <div class="text-center"><button id="solution-btn" type="button" class="btn-gemini text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">✨</span>برایم راهکار بساز</button></div>
-                    <div id="solution-thinking" class="mt-4 hidden">
-                      <div class="flex items-center gap-2 text-gray-700">
-                        <span class="text-xl">✨</span>
-                        <span class="text-sm">در حال پردازش و ساخت راهکارها…</span>
-                        <span class="flex items-center gap-1">
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                        </span>
-                      </div>
-                      <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-blue-400 animate-spin mx-auto"></div>
-                    </div>
-                    <div id="solution-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
-                    <div id="solution-share" class="mt-2"></div>
                 </div>
-            </div>
+            </article>
         </section>
         <section class="mb-12">
             <div class="cards">
-                <div class="card dash-card stats-card" data-fa-digits>
-                    <h2 class="text-2xl font-bold text-slate-800 text-center mb-6">آب ما کجا مصرف می‌شود؟</h2>
-                    <div class="space-y-5">
+                <article class="card dash-card stats-card" data-fa-digits>
+                    <div class="card-body">
+                        <h2 class="text-2xl font-bold text-slate-800 text-center mb-6">آب ما کجا مصرف می‌شود؟</h2>
+                        <div class="space-y-5">
                         <div class="flex items-center">
                             <div class="w-16 text-center"><span class="text-green-500 text-3xl" aria-hidden="true">🍃</span></div>
                             <div class="flex-1 mx-4">
@@ -196,17 +230,20 @@
                                 <div class="w-full bg-gray-200 rounded-full h-4"><div class="bg-slate-500 h-4 rounded-full w-3p"></div></div>
                             </div>
                         </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card dash-card tips-card">
-                    <h2 class="text-2xl font-bold text-blue-800 text-center mb-6">چگونه می‌توانیم کمک کنیم؟</h2>
-                    <ul class="space-y-4 text-slate-700">
+                </article>
+                <article class="card dash-card tips-card">
+                    <div class="card-body">
+                        <h2 class="text-2xl font-bold text-blue-800 text-center mb-6">چگونه می‌توانیم کمک کنیم؟</h2>
+                        <ul class="space-y-4 text-slate-700">
                         <li class="flex items-start"><span class="text-blue-500 mt-1 ml-4" aria-hidden="true">🚰</span><span><strong>شیرهای آب چکه کن را تعمیر کنیم.</strong> یک چکه کوچک می‌تواند روزانه ده‌ها لیتر آب را هدر دهد.</span></li>
                         <li class="flex items-start"><span class="text-blue-500 mt-1 ml-4" aria-hidden="true">🚿</span><span><strong>زمان حمام را کوتاه کنیم.</strong> هر دقیقه دوش گرفتن کمتر، به معنی صرفه‌جویی در مصرف آب است.</span></li>
                         <li class="flex items-start"><span class="text-blue-500 mt-1 ml-4" aria-hidden="true">🚗</span><span><strong>برای شستن ماشین از سطل آب استفاده کنیم.</strong> شستشو با شلنگ آب زیادی را هدر می‌دهد.</span></li>
                         <li class="flex items-start"><span class="text-blue-500 mt-1 ml-4" aria-hidden="true">🦷</span><span><strong>هنگام مسواک زدن شیر آب را ببندیم.</strong> این کار ساده در هر بار مسواک زدن چندین لیتر آب ذخیره می‌کند.</span></li>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                </article>
             </div>
         </section>
         <p class="text-center mt-12 text-slate-500 text-sm">منبع داده‌ها: گزارش رسمی شرکت آب منطقه‌ای خراسان رضوی (سال ۱۴۰۴)</p>
