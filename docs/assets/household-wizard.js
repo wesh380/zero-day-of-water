@@ -15,8 +15,22 @@
 
   // Targets & EF (provisional constants; do not modify global data)
   // Units: water(L/day/person), electricity(kWh/day/person), gas(kWh/day/person)
+  /*
+   * TODO(wesh360): Replace provisional TARGETS with sourced global benchmarks.
+   * Current placeholders (water=110 L/d/p, electricity=3.2 kWh/d/p, gas=18 kWh/d/p)
+   * are used for prototyping and must be updated once validated references are available.
+   */
   const TARGETS = { water: 110, electricity: 3.2, gas: 18 }; // provisional=true
   const EF = { electricity: 0.45, gas: 0.20, water: 0.0003 }; // kgCO2e per unit (provisional)
+
+  const LABEL_THRESHOLDS = { low: 0.90, high: 1.10 }; // 90% and 110%
+  function classify(perCapita, target){
+    if (!target || !Number.isFinite(perCapita)) return { key:'na', text:'—', level:'na' };
+    const ratio = perCapita / target;
+    if (ratio > LABEL_THRESHOLDS.high) return { key:'high', text:'پرمصرف', level:'high' };
+    if (ratio < LABEL_THRESHOLDS.low)  return { key:'low',  text:'کم‌مصرف', level:'low'  };
+    return { key:'mid', text:'نزدیکِ میانگین جهانی', level:'mid' };
+  }
 
   const unitFor = (u) => u==='water' ? 'L' : (u==='electricity' ? 'kWh' : 'm3');
 
@@ -100,6 +114,12 @@
     $('#k-delta').textContent = `${m.delta.toFixed(2)} (${m.percent.toFixed(1)}٪)`;
     $('#k-score').textContent = String(m.score);
     $('#k-co2e').textContent = m.co2e.toFixed(3) + ' kg';
+    const chip = document.getElementById('k-label');
+    if (chip){
+      const label = classify(m.perCapita, m.target);
+      chip.textContent = label.text;
+      chip.dataset.level = label.level;
+    }
     const note = m.provisional ? 'مقادیر هدف و ضرایب انتشار به‌صورت موقت و پارامتریک هستند.' : '';
     $('#wiz-note').textContent = note;
   }
