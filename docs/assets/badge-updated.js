@@ -25,18 +25,8 @@ import { setClass } from './css-classes.js';
     '[data-badge]'     // اگر کارت‌ها نشانه‌گذاری شده باشند
   ].join(',');
 
-  function makeBadge(text) {
-    const span = document.createElement('span');
-    span.className = [
-      'inline-flex','items-center','gap-1',
-      'rounded-full','border','border-gray-300/60',
-      'px-2','py-0.5','text-xs','font-medium',
-      'bg-white/60','backdrop-blur','text-gray-700',
-      'rtl'
-    ].join(' ');
-    span.setAttribute('dir', 'rtl');
-    span.innerHTML = `آخرین به‌روزرسانی: <time>${text}</time>`;
-    return span;
+  function makeBadge() {
+    return null;
   }
 
   function injectBadges(labelText) {
@@ -49,6 +39,7 @@ import { setClass } from './css-classes.js';
         : null;
 
       const badge = makeBadge(ownText || labelText);
+      if (!badge) return;
 
       // جای‌گذاری: گوشه‌ی بالا-چپ یا داخل هدر کارت اگر وجود داشت
       const header = card.querySelector('.card-header, header, .head, [data-card-header]');
