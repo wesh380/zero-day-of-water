@@ -162,6 +162,23 @@
 .wiz-results .kpi .k { font-size:12px; color:#64748b; }
 .wiz-results .kpi .v { font-size:18px; font-weight:800; color:#0f172a; }
 
+.chip {
+  display: inline-block;
+  padding: .25rem .5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+.chip[data-level="high"] { background:#fee2e2; color:#991b1b; border-color:#fecaca; }
+.chip[data-level="mid"]  { background:#e5e7eb; color:#111827; border-color:#d1d5db; }
+.chip[data-level="low"]  { background:#dcfce7; color:#065f46; border-color:#bbf7d0; }
+@media (prefers-color-scheme: dark){
+  .chip[data-level="high"] { background:#7f1d1d; color:#fecaca; border-color:#991b1b; }
+  .chip[data-level="mid"]  { background:#374151; color:#e5e7eb; border-color:#4b5563; }
+  .chip[data-level="low"]  { background:#064e3b; color:#bbf7d0; border-color:#065f46; }
+}
+
 .chart-wrap { margin: 12px auto; max-width: 560px; }
 .tips { margin: 8px 0 0; padding-inline-start: 18px; }
 .note { margin-top: 6px; font-size: 12px; color:#475569; }
