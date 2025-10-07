@@ -11,6 +11,17 @@
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/site-overrides.css">
+  <link rel="stylesheet" href="water.css">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-desktop-1280.webp"
+        imagesrcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+        imagesizes="100vw"
+        media="(min-width:1024px)">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-mobile.webp"
+        imagesrcset="/assets/img/hero/hero-mobile.webp 828w"
+        imagesizes="100vw"
+        media="(max-width:1023.98px)">
   <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
   <script charset="utf-8" defer src="/assets/global-footer.js"></script>
   <script src="/assets/js/nav-utils.js" defer></script>
@@ -38,6 +49,24 @@
       </a>
     </div>
   </header>
+  <section class="hero">
+    <div class="media">
+      <picture class="hero-picture">
+        <source type="image/webp" media="(min-width:1024px)"
+                srcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+                sizes="100vw">
+        <img class="hero-img"
+             src="/assets/img/hero/hero-mobile.webp"
+             alt=""
+             decoding="async"
+             fetchpriority="high"
+             width="1920" height="1080">
+      </picture>
+    </div>
+    <div class="hero-content" aria-hidden="true">
+      <p class="hero-tagline">پلتفرم تخصصی آب wesh360</p>
+    </div>
+  </section>
   <main id="main" role="main" class="max-w-6xl mx-auto px-4 py-10 md:py-14">
     <h1 class="text-2xl md:text-3xl font-bold text-slate-800 text-center">یک داشبورد انتخاب کنید</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-10">
