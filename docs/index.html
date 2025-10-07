@@ -81,7 +81,27 @@
         <div class="md:hidden" data-mobile-actions-container></div>
       </div>
     </header>
-    <section class="hero parallax-section" aria-label="hero">
+    <section class="hero">
+      <div class="media">
+        <picture class="hero-picture">
+          <!-- desktop -->
+          <source media="(min-width:1024px)" type="image/avif"
+                  srcset="/page/landing/hero/hero-wide-1920.avif?v=20251007 1920w,
+                          /page/landing/hero/hero-wide-1280.avif?v=20251007 1280w"
+                  sizes="100vw">
+          <source media="(min-width:1024px)" type="image/webp"
+                  srcset="/page/landing/hero/hero-wide-1920.webp?v=20251007 1920w,
+                          /page/landing/hero/hero-wide-1280.webp?v=20251007 1280w"
+                  sizes="100vw">
+          <!-- mobile -->
+          <source type="image/avif"
+                  srcset="/page/landing/hero/hero-tall-828.avif?v=20251007 828w,
+                          /page/landing/hero/hero-tall-576.avif?v=20251007 576w"
+                  sizes="100vw">
+          <img src="/page/landing/hero/hero-tall-828.webp?v=20251007"
+               alt="" width="1920" height="1080" decoding="async" fetchpriority="high" class="hero-img">
+        </picture>
+      </div>
       <div class="hero-content">
         <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز در خراسان رضوی</h1>
         <p>داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>

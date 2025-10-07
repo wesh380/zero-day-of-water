@@ -1,6 +1,6 @@
 (function(){
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hero = document.querySelector('.parallax-section');
+  const hero = document.querySelector('.hero');
   if (!hero) return;
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
