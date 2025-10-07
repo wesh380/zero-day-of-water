@@ -11,6 +11,7 @@
     chart: null,
     chartLib: null,
     chartObserver: null,
+    chartObserverTarget: null,
     storageKey: 'wesh.household.v1'
   };
 
@@ -146,7 +147,10 @@
     const canvas = $('#wiz-chart');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    if (state.chart) { state.chart.destroy(); state.chart = null; }
+    if (state.chart) {
+      state.chart.destroy();
+      state.chart = null;
+    }
     const unit = state.utility==='water' ? 'L' : 'kWh';
     state.chart = new state.chartLib.Chart(ctx, {
       type: 'bar',
@@ -169,7 +173,13 @@
             state.chart.resize();
           }
         });
+      }
+      if (state.chartObserverTarget && state.chartObserverTarget !== wrap) {
+        state.chartObserver.unobserve(state.chartObserverTarget);
+      }
+      if (state.chartObserverTarget !== wrap) {
         state.chartObserver.observe(wrap);
+        state.chartObserverTarget = wrap;
       }
     }
   }
