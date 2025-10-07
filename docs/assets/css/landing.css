@@ -1,31 +1,42 @@
-﻿:root {
-  --overlay: 0.35;
-}
-
-.hero,
-.parallax-section {
-  background-image: url("/assets/img/hero/hero-desktop.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: clamp(420px, 80vh, 920px);
+.site-header {
   position: relative;
+  z-index: 30;
 }
 
-.no-webp .hero,
-.no-webp .parallax-section {
-  background-image: url("/assets/hero2.jpg");
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(60vh, 70svh, 80svh);
+  overflow: hidden;
 }
 
-.hero::after,
-.parallax-section::after {
+.hero .media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero .hero-picture,
+.hero .hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero .hero-img {
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.35)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 60%);
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0 0 0 / var(--overlay, 0.35)) 0%, rgba(0 0 0 / 0.15) 40%, rgba(0 0 0 / 0.55) 100%);
+  z-index: 1;
 }
 
 .hero-content {
@@ -84,14 +95,9 @@
 }
 
 @media (max-width: 768px) {
-  .hero,
-  .parallax-section {
-    background-image: url("/assets/img/hero/hero-mobile.webp");
+  .hero {
     background-attachment: scroll;
-  }
-  .hero::after,
-  .parallax-section::after {
-    background: linear-gradient(to bottom, rgba(0 0 0 / 0.25) 0%, rgba(0 0 0 / 0.1) 50%, rgba(0 0 0 / 0.35) 100%);
+    min-height: min(100svh, 85vh);
   }
   .hero-title {
     margin-top: 10vh;
