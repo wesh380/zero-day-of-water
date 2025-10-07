@@ -52,7 +52,9 @@
     "fix:text:core": "node tools/fix-mojibake.js --relax",
     "fix:text:landing": "node tools/fix-mojibake.js --paths docs/index.html --force",
     "gen:logo": "node scripts/gen-logo-assets.mjs",
-    "assert:assets": "node scripts/assert-assets.mjs"
+    "assert:assets": "node scripts/assert-assets.mjs",
+    "verify:screens": "node scripts/verify/verify.mjs",
+    "verify:smoke": "SMOKE=1 node scripts/verify/verify.mjs"
   },
   "keywords": [],
   "author": "",

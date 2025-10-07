@@ -24,3 +24,8 @@ backend/.env
 /playwright-report/
 /blob-report/
 
+
+# QA visual artifacts
+docs/tests/screenshots/
+docs/tests/report-responsive.json
+.verify-artifacts/

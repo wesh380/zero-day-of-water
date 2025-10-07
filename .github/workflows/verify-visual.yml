@@ -1,0 +1,30 @@
+name: Visual Verify
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'scripts/verify/**'
+      - 'package.json'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm run serve:docs & sleep 2
+      - run: npm run verify:smoke
+        env:
+          ARTIFACT_DIR: .verify-artifacts
+      - name: Upload visual artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-screens
+          path: |
+            .verify-artifacts/screenshots/**
+            .verify-artifacts/report-responsive.json
+          if-no-files-found: ignore
