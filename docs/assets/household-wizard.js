@@ -10,6 +10,7 @@
     results: null,
     chart: null,
     chartLib: null,
+    chartObserver: null,
     storageKey: 'wesh.household.v1'
   };
 
@@ -142,7 +143,9 @@
 
   async function renderChart(m){
     if (!(await ensureChart())) return;
-    const ctx = $('#wiz-chart').getContext('2d');
+    const canvas = $('#wiz-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     if (state.chart) { state.chart.destroy(); state.chart = null; }
     const unit = state.utility==='water' ? 'L' : 'kWh';
     state.chart = new state.chartLib.Chart(ctx, {
@@ -151,8 +154,24 @@
         labels: ['مصرف شما', 'هدف جهانی'],
         datasets: [{ label: unit, data: [m.perCapita, m.target] }]
       },
-      options: { responsive:true, plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true } } }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
     });
+    const wrap = canvas.closest('.chart-wrap');
+    if (wrap && typeof ResizeObserver !== 'undefined') {
+      if (!state.chartObserver) {
+        state.chartObserver = new ResizeObserver(() => {
+          if (state.chart) {
+            state.chart.resize();
+          }
+        });
+        state.chartObserver.observe(wrap);
+      }
+    }
   }
 
   function bindCardClicks(){

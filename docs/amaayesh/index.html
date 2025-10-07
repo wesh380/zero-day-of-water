@@ -78,5 +78,19 @@
   <script type="module" src="/assets/js/amaayesh-map.js"></script>
   <script defer src="/assets/js/panel-direct-wire.js"></script>
   <script defer src="/assets/js/ama-diag.js"></script>
+  <script>
+    (function(){
+      const mapEl = document.getElementById('map');
+      if (!mapEl || typeof ResizeObserver === 'undefined') return;
+      const ensureMapRef = () => {
+        if (!window.myLeafletMap && window.__AMA_MAP && typeof window.__AMA_MAP.invalidateSize === 'function') {
+          window.myLeafletMap = window.__AMA_MAP;
+        }
+        window.myLeafletMap?.invalidateSize();
+      };
+      ensureMapRef();
+      new ResizeObserver(ensureMapRef).observe(mapEl);
+    })();
+  </script>
 </body>
 </html>
