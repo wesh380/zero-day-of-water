@@ -36,14 +36,23 @@
           <span class="label">بازگشت</span>
         </a>
         <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
-          <img src="/page/landing/logo2.webp" alt="لوگوی wesh360" loading="lazy" decoding="async">
-          <span>wesh360</span>
+          <picture class="site-topbar__brand">
+            <source type="image/avif"
+              srcset="/page/landing/logo2-160.avif 160w, /page/landing/logo2-240.avif 240w, /page/landing/logo2.avif 357w"
+              sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
+            <source type="image/webp"
+              srcset="/page/landing/logo2-160.webp 160w, /page/landing/logo2-240.webp 240w, /page/landing/logo2.webp 357w"
+              sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
+            <img src="/page/landing/logo2.webp"
+                 width="357" height="357" style="height:auto"
+                 alt="خانه هم‌افزایی انرژی و آب" decoding="async" fetchpriority="high">
+          </picture>
         </a>
       </div>
     </header>
     <header class="site-header relative flex justify-center items-center px-4">
       <a class="logo inline-flex items-center justify-center" href="/" aria-label="صفحه اصلی" rel="home" data-logo="home">
-        <img src="page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
+        <img src="/page/landing/logo2.webp" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
       </a>
       <div class="absolute top-4 right-4 flex items-center gap-2">
         <a href="/security-policy" class="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" title="سیاست امنیت و حکمرانی داده">

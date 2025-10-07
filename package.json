@@ -50,7 +50,9 @@
     "serve:docs": "http-server docs -p 5050 -c-1 --silent",
     "audit:encoding": "node tools/audit-encoding.mjs",
     "fix:text:core": "node tools/fix-mojibake.js --relax",
-    "fix:text:landing": "node tools/fix-mojibake.js --paths docs/index.html --force"
+    "fix:text:landing": "node tools/fix-mojibake.js --paths docs/index.html --force",
+    "gen:logo": "node scripts/gen-logo-assets.mjs",
+    "assert:assets": "node scripts/assert-assets.mjs"
   },
   "keywords": [],
   "author": "",
@@ -71,6 +73,7 @@
     "glob": "^11.0.3",
     "http-server": "^14.1.1",
     "puppeteer": "^24.20.0",
+    "sharp": "^0.34.4",
     "supercluster": "^7.1.5",
     "tailwindcss": "^3.4.17",
     "terser": "^5.43.1",

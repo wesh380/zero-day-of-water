@@ -1,13 +1,16 @@
 /* ===== Base (desktop) styles ===== */
 body { background-color: #f0f4f8; }
 
-.main-title { font-weight: 800; color: #1e3a8a; }
+.main-title { font-weight: 800; color: #1e3a8a; font-size: var(--font-h1); line-height: 1.2; }
 
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
+
+.cards h2 { font-size: var(--font-h2); }
+.cards h3 { font-size: var(--font-h3); }
 
 .cards {
   display: grid;
@@ -41,6 +44,7 @@ body { background-color: #f0f4f8; }
   position: relative;
   width: 150px;
   height: 150px;
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
 }
 
@@ -132,7 +136,7 @@ input[type=range]::-moz-range-thumb {
 #solution-result {
   margin-top: .75rem;
   line-height: 1.9;
-  font-size: .9rem;
+  font-size: var(--font-body);
 }
 
 .site-logo {
@@ -141,6 +145,7 @@ input[type=range]::-moz-range-thumb {
   right: 10px;
   width: 150px;
   height: auto;
+  aspect-ratio: 1 / 1;
   max-width: 150px;
   max-height: 150px;
   z-index: 1000;
