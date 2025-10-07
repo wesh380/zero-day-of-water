@@ -17,8 +17,11 @@
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
   <link rel="stylesheet" href="./assets/footer.css">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width: 769px)">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width: 768px)">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-mobile.webp"
+        imagesrcset="/assets/img/hero/hero-mobile.webp 828w"
+        imagesizes="100vw"
+        media="(max-width:1023.98px)">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/css/site.css">
@@ -39,7 +42,7 @@
         <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
           <picture class="site-topbar__brand">
             <source type="image/avif"
-              srcset="/page/landing/logo2-160.avif 160w, /page/landing/logo2-240.avif 240w, /page/landing/logo2.avif 357w"
+              srcset="/page/landing/logo2.avif 357w"
               sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
             <source type="image/webp"
               srcset="/page/landing/logo2-160.webp 160w, /page/landing/logo2-240.webp 240w, /page/landing/logo2.webp 357w"
@@ -66,7 +69,11 @@
             <span>محیط زیست و پسماند</span>
           </a>
           <a href="/responsible-disclosure" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
-            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88" /><path d="M14.12 3.88 16 2" /><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.76-6 6" /><path d="M12 20v-9" /><path d="M6.53 9C4.6 8.8 3 7.1 3 5" /><path d="M6 13H2" /><path d="M3 21c0-2.1 1.7-3.9 3.8-4" /><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /><path d="M22 13h-4" /><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></svg>
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="10" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              <path d="M12 16v2" />
+            </svg>
             <span>ارتباط با ما</span>
           </a>
           <a href="/research/" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white/80 px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500" aria-label="پژوهشگران" title="پژوهشگران">
@@ -84,21 +91,7 @@
     <section class="hero">
       <div class="media">
         <picture class="hero-picture">
-          <!-- desktop -->
-          <source media="(min-width:1024px)" type="image/avif"
-                  srcset="/page/landing/hero/hero-wide-1920.avif?v=20251007 1920w,
-                          /page/landing/hero/hero-wide-1280.avif?v=20251007 1280w"
-                  sizes="100vw">
-          <source media="(min-width:1024px)" type="image/webp"
-                  srcset="/page/landing/hero/hero-wide-1920.webp?v=20251007 1920w,
-                          /page/landing/hero/hero-wide-1280.webp?v=20251007 1280w"
-                  sizes="100vw">
-          <!-- mobile -->
-          <source type="image/avif"
-                  srcset="/page/landing/hero/hero-tall-828.avif?v=20251007 828w,
-                          /page/landing/hero/hero-tall-576.avif?v=20251007 576w"
-                  sizes="100vw">
-          <img src="/page/landing/hero/hero-tall-828.webp?v=20251007"
+          <img src="/assets/img/hero/hero-mobile.webp"
                alt="" width="1920" height="1080" decoding="async" fetchpriority="high" class="hero-img">
         </picture>
       </div>

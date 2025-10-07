@@ -1,6 +1,65 @@
 /* ===== Base (desktop) styles ===== */
 body { background-color: #f0f4f8; }
 
+.hero {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(40vh, 60vh, 72vh);
+  overflow: hidden;
+}
+
+.hero .media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero .hero-picture,
+.hero .hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hero .hero-img {
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(6, 41, 82, 0.55), rgba(9, 105, 172, 0.35) 45%, rgba(12, 74, 110, 0.6)),
+              linear-gradient(to top, rgba(6, 41, 82, 0.45), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #f8fafc;
+  padding: clamp(2rem, 6vw, 4rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-tagline {
+  font-size: clamp(1.125rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: min(100svh, 72vh);
+  }
+  .hero-content {
+    padding: clamp(1.5rem, 8vw, 3rem);
+  }
+}
+
 .main-title { font-weight: 800; color: #1e3a8a; font-size: var(--font-h1); line-height: 1.2; }
 
 .dashboard {

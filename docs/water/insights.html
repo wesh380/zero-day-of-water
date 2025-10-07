@@ -17,6 +17,16 @@
       <link rel="stylesheet" href="/assets/css/base.css">
 
   <link rel="stylesheet" href="water.css">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-desktop-1280.webp"
+        imagesrcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+        imagesizes="100vw"
+        media="(min-width:1024px)">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-mobile.webp"
+        imagesrcset="/assets/img/hero/hero-mobile.webp 828w"
+        imagesizes="100vw"
+        media="(max-width:1023.98px)">
   <!-- Vazirmatn -->
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
@@ -39,6 +49,24 @@
         </a>
       </div>
     </header>
+    <section class="hero">
+      <div class="media">
+        <picture class="hero-picture">
+          <source type="image/webp" media="(min-width:1024px)"
+                  srcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+                  sizes="100vw">
+          <img class="hero-img"
+               src="/assets/img/hero/hero-mobile.webp"
+               alt=""
+               decoding="async"
+               fetchpriority="high"
+               width="1920" height="1080">
+        </picture>
+      </div>
+      <div class="hero-content" aria-hidden="true">
+        <p class="hero-tagline">داشبورد وضعیت آب مشهد</p>
+      </div>
+    </section>
     <main id="main" role="main" class="dashboard container mx-auto p-4 md:p-8">
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-extrabold main-title">وضعیت بحرانی آب در مشهد</h1>

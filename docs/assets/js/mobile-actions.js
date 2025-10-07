@@ -2,16 +2,93 @@
   const containers = document.querySelectorAll('[data-mobile-actions-container]');
   if(!containers.length) return;
 
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function makeChevronLeft(){
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox','0 0 24 24');
+    svg.setAttribute('width','20');
+    svg.setAttribute('height','20');
+    svg.setAttribute('aria-hidden','true');
+    svg.setAttribute('focusable','false');
+    svg.classList.add('mobile-actions__trigger-icon');
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('fill','currentColor');
+    path.setAttribute('d','M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z');
+    svg.appendChild(path);
+    return svg;
+  }
+
   let partialPromise;
+  let partialErrorLogged = false;
+  const logPartialIssue = ()=>{
+    if(partialErrorLogged) return;
+    partialErrorLogged = true;
+    console.warn('mobile-actions: unable to load partial, using fallback');
+  };
+
   const loadPartial = ()=>{
     if(!partialPromise){
-      partialPromise = fetch('/assets/partials/mobile-actions.html', { credentials: 'same-origin' })
-        .then((response)=>{
-          if(!response.ok) throw new Error('Failed to load mobile actions partial');
-          return response.text();
-        });
+      partialPromise = (async ()=>{
+        try{
+          const response = await fetch('/assets/partials/mobile-actions.html', { credentials: 'same-origin' });
+          if(!response.ok){
+            logPartialIssue();
+            return null;
+          }
+          const text = await response.text();
+          if(!text.trim()){
+            logPartialIssue();
+            return null;
+          }
+          return text;
+        }catch{
+          logPartialIssue();
+          return null;
+        }
+      })();
     }
     return partialPromise;
+  };
+
+  const createFallback = ()=>{
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mobile-actions';
+    wrapper.setAttribute('data-mobile-actions-root', '');
+
+    const trigger = document.createElement('button');
+    trigger.id = 'mobileActionsBtn';
+    trigger.className = 'mobile-actions__trigger';
+    trigger.type = 'button';
+    trigger.setAttribute('aria-controls', 'mobileActions');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    const label = document.createElement('span');
+    label.className = 'mobile-actions__trigger-label';
+    label.textContent = 'منوی ناوبری';
+
+    trigger.appendChild(label);
+    trigger.appendChild(makeChevronLeft());
+
+    const panel = document.createElement('div');
+    panel.id = 'mobileActions';
+    panel.className = 'mobile-actions__popover';
+    panel.hidden = true;
+
+    const nav = document.createElement('nav');
+    nav.setAttribute('aria-label', 'منوی موبایل');
+
+    const list = document.createElement('ul');
+    list.className = 'mobile-actions__list';
+    list.setAttribute('data-mobile-actions-list', '');
+
+    nav.appendChild(list);
+    panel.appendChild(nav);
+
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(panel);
+
+    return wrapper;
   };
 
   const copyLinkAttributes = (source, target)=>{
@@ -45,8 +122,16 @@
 
   containers.forEach((container)=>{
     loadPartial().then((html)=>{
-      container.innerHTML = html;
-      const root = container.querySelector('[data-mobile-actions-root]') || container;
+      let root;
+      if(html){
+        container.innerHTML = html;
+        root = container.querySelector('[data-mobile-actions-root]') || container;
+      } else {
+        const fallback = createFallback();
+        container.innerHTML = '';
+        container.appendChild(fallback);
+        root = fallback;
+      }
       populateLinks(root, container);
 
       const trigger = root.querySelector('#mobileActionsBtn');
@@ -92,8 +177,6 @@
           closePanel();
         }
       });
-    }).catch((error)=>{
-      console.error(error);
     });
   });
 })();

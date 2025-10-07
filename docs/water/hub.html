@@ -11,6 +11,17 @@
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/site-overrides.css">
+  <link rel="stylesheet" href="water.css">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-desktop-1280.webp"
+        imagesrcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+        imagesizes="100vw"
+        media="(min-width:1024px)">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-mobile.webp"
+        imagesrcset="/assets/img/hero/hero-mobile.webp 828w"
+        imagesizes="100vw"
+        media="(max-width:1023.98px)">
   <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
   <script charset="utf-8" defer src="/assets/global-footer.js"></script>
   <script src="/assets/js/nav-utils.js" defer></script>
@@ -38,6 +49,24 @@
       </a>
     </div>
   </header>
+  <section class="hero">
+    <div class="media">
+      <picture class="hero-picture">
+        <source type="image/webp" media="(min-width:1024px)"
+                srcset="/assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop-1920.webp 1920w"
+                sizes="100vw">
+        <img class="hero-img"
+             src="/assets/img/hero/hero-mobile.webp"
+             alt=""
+             decoding="async"
+             fetchpriority="high"
+             width="1920" height="1080">
+      </picture>
+    </div>
+    <div class="hero-content" aria-hidden="true">
+      <p class="hero-tagline">پلتفرم تخصصی آب wesh360</p>
+    </div>
+  </section>
   <main id="main" role="main" class="max-w-6xl mx-auto px-4 py-10 md:py-14">
     <h1 class="text-2xl md:text-3xl font-bold text-slate-800 text-center">یک داشبورد انتخاب کنید</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-10">
@@ -45,7 +74,7 @@
       <article class="relative rounded-2xl p-6 md:p-8 bg-white/80 backdrop-blur shadow-lg hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-1 dash-card">
         <div class="flex items-start gap-4">
           <span class="shrink-0 grid place-items-center w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 text-white">
-            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.25C9 6 6.75 8.6 6.75 11.25a5.25 5.25 0 1010.5 0c0-2.65-2.25-5.25-4.5-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2.25c-3 3.75-5.25 6.35-5.25 9a5.25 5.25 0 1010.5 0c0-2.65-2.25-5.25-5.25-9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
           <div>
             <h2 class="text-lg md:text-xl font-semibold text-slate-900">داشبورد وضعیت و تحلیل آب</h2>
