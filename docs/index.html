@@ -17,8 +17,11 @@
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
   <link rel="stylesheet" href="./assets/footer.css">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width: 769px)">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width: 768px)">
+  <link rel="preload" as="image"
+        href="/assets/img/hero/hero-mobile.webp"
+        imagesrcset="/assets/img/hero/hero-mobile.webp 828w"
+        imagesizes="100vw"
+        media="(max-width:1023.98px)">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/css/site.css">
@@ -39,7 +42,7 @@
         <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
           <picture class="site-topbar__brand">
             <source type="image/avif"
-              srcset="/page/landing/logo2-160.avif 160w, /page/landing/logo2-240.avif 240w, /page/landing/logo2.avif 357w"
+              srcset="/page/landing/logo2.avif 357w"
               sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
             <source type="image/webp"
               srcset="/page/landing/logo2-160.webp 160w, /page/landing/logo2-240.webp 240w, /page/landing/logo2.webp 357w"
@@ -84,21 +87,7 @@
     <section class="hero">
       <div class="media">
         <picture class="hero-picture">
-          <!-- desktop -->
-          <source media="(min-width:1024px)" type="image/avif"
-                  srcset="/page/landing/hero/hero-wide-1920.avif?v=20251007 1920w,
-                          /page/landing/hero/hero-wide-1280.avif?v=20251007 1280w"
-                  sizes="100vw">
-          <source media="(min-width:1024px)" type="image/webp"
-                  srcset="/page/landing/hero/hero-wide-1920.webp?v=20251007 1920w,
-                          /page/landing/hero/hero-wide-1280.webp?v=20251007 1280w"
-                  sizes="100vw">
-          <!-- mobile -->
-          <source type="image/avif"
-                  srcset="/page/landing/hero/hero-tall-828.avif?v=20251007 828w,
-                          /page/landing/hero/hero-tall-576.avif?v=20251007 576w"
-                  sizes="100vw">
-          <img src="/page/landing/hero/hero-tall-828.webp?v=20251007"
+          <img src="/assets/img/hero/hero-mobile.webp"
                alt="" width="1920" height="1080" decoding="async" fetchpriority="high" class="hero-img">
         </picture>
       </div>
