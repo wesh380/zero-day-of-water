@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../assets/unified-badge.css" />
   <link rel="icon" type="image/png" href="../Logo.png" />
   <script src="/assets/js/nav-utils.js" defer></script>
+  <script src="/assets/js/mobile-actions.js" defer></script>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
@@ -35,7 +36,7 @@
         <img src="../page/landing/logo2.webp" alt="نشان وِش۳۶۰" class="w-16 h-auto" loading="lazy" decoding="async" />
         <span class="text-base md:text-lg">WESH360</span>
       </a>
-      <nav class="hidden md:flex items-center gap-3 text-sm">
+      <nav class="hidden md:flex items-center gap-3 text-sm" data-mobile-actions-source>
         <a href="/security-policy" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
           <span>سیاست امنیت و گزارش‌گری</span>
@@ -53,6 +54,7 @@
           <span>پژوهش</span>
         </a>
       </nav>
+      <div class="md:hidden" data-mobile-actions-container></div>
     </div>
   </header>
 
