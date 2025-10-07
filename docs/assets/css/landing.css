@@ -147,13 +147,19 @@
 .wiz-title { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; }
 .wiz-sub { margin-top: 6px; opacity: .9; }
 
-.wiz-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 14px 0 4px; }
+.wiz-tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:14px 0 4px; }
 .wiz-tabs .tab {
   appearance: none; border: 1px solid #cbd5e1; background: #fff; color:#0f172a;
   padding: 8px 12px; border-radius: 999px; cursor: pointer; font-weight:600;
-  text-align: center; white-space: normal;
+  white-space: normal; text-align:center; min-height:44px;
+  /* distribute on small screens */
+  flex: 1 1 clamp(9rem, 45%, 14rem);
 }
 .wiz-tabs .tab[aria-selected="true"] { background: #0ea5e9; color:#04121f; border-color:#0ea5e9; }
+
+@media (max-width:414px){
+  .wiz-tabs{ justify-content:center; }
+}
 
 .wiz-form { display:grid; gap:12px; grid-template-columns: 1fr 1fr; align-items:end; }
 .wiz-form .field { display:flex; flex-direction:column; gap:6px; }
