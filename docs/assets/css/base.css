@@ -85,3 +85,111 @@ html[dir="rtl"] .site-topbar__inner{
     --border:#374151;
   }
 }
+
+.mobile-actions{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+}
+
+.mobile-actions__trigger{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  border-radius:.75rem;
+  border:1px solid rgba(148,163,184,.5);
+  background-color:rgba(255,255,255,.9);
+  color:#0f172a;
+  font-weight:600;
+  min-block-size:44px;
+  padding-block:.5rem;
+  padding-inline:1rem;
+  box-shadow:0 1px 2px rgba(15,23,42,.08);
+  transition:background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.mobile-actions__trigger:hover{
+  background-color:#e2e8f0;
+  box-shadow:0 4px 12px rgba(15,23,42,.08);
+}
+
+.mobile-actions__trigger:focus-visible{
+  outline:3px solid #0ea5e9;
+  outline-offset:3px;
+  box-shadow:0 0 0 4px rgba(14,165,233,.2);
+}
+
+.mobile-actions__trigger-icon{
+  inline-size:1.5rem;
+  block-size:1.5rem;
+}
+
+.mobile-actions__popover{
+  position:absolute;
+  inset-inline-end:0;
+  margin-block-start:.75rem;
+  inline-size:min(85vw, 20rem);
+  border-radius:1rem;
+  border:1px solid rgba(148,163,184,.4);
+  background-color:#fff;
+  box-shadow:0 30px 60px rgba(15,23,42,.18);
+  padding-block:1rem;
+  padding-inline:1rem;
+  z-index:60;
+}
+
+.mobile-actions__list{
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.mobile-actions__item{
+  margin:0;
+  padding:0;
+}
+
+.mobile-actions__link{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:.75rem;
+  border-radius:.75rem;
+  border:1px solid rgba(148,163,184,.4);
+  background-color:#f8fafc;
+  color:#0f172a;
+  text-decoration:none;
+  font-weight:600;
+  min-block-size:44px;
+  padding-block:.5rem;
+  padding-inline:1rem;
+  box-shadow:0 1px 2px rgba(148,163,184,.16);
+  transition:background-color .2s ease, transform .2s ease;
+}
+
+.mobile-actions__link:hover{
+  background-color:#e0f2fe;
+  transform:translateY(-1px);
+}
+
+.mobile-actions__link:focus-visible{
+  outline:3px solid #0ea5e9;
+  outline-offset:3px;
+  background-color:#e0f2fe;
+}
+
+.mobile-actions__link svg{
+  inline-size:1.25rem;
+  block-size:1.25rem;
+  flex-shrink:0;
+}
+
+@media (min-width:768px){
+  .mobile-actions__popover{
+    display:none;
+  }
+}
