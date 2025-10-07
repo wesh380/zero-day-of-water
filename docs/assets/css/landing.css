@@ -40,14 +40,14 @@
 
 .hero-title {
   margin-top: 15vh;
-  font-size: 2rem;
+  font-size: var(--font-h1);
   line-height: 1.25;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .hero-content p {
   margin-top: 0.75rem;
-  font-size: clamp(14px, 2.1vw, 18px);
+  font-size: var(--font-body);
   opacity: 0.95;
 }
 
@@ -95,7 +95,7 @@
   }
   .hero-title {
     margin-top: 10vh;
-    font-size: 1.6rem;
+    font-size: var(--font-h2);
     padding-inline: 16px;
   }
 }
@@ -118,9 +118,13 @@
   }
 }
 
+.cards-section h3 {
+  font-size: var(--font-h3);
+}
+
 .cards-section .card-sub {
   margin-top: 0.75rem;
-  font-size: 0.95rem;
+  font-size: var(--font-body);
   line-height: 1.7;
   color: #334155;
 }
