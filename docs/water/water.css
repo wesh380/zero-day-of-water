@@ -14,8 +14,9 @@ body { background-color: #f0f4f8; }
 
 .cards {
   display: grid;
+  gap: var(--space-5, 1.5rem);
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  align-items: stretch;
 }
 
 .card {

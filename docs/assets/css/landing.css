@@ -62,10 +62,15 @@
   opacity: 0.95;
 }
 
+.cards-grid,
 .cards-section {
   display: grid;
-  grid-template-columns: repeat(3, minmax(210px, 1fr));
-  gap: 1.25rem;
+  gap: var(--space-5, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: stretch;
+}
+
+.cards-section {
   max-width: 980px;
   margin: -60px auto 48px;
   padding: 0 16px;
@@ -88,12 +93,6 @@
   opacity: 1;
 }
 
-@media (max-width: 992px) {
-  .cards-section {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 @media (max-width: 768px) {
   .hero {
     background-attachment: scroll;
@@ -108,7 +107,6 @@
 
 @media (max-width: 640px) {
   .cards-section {
-    grid-template-columns: 1fr;
     margin-top: -30px;
   }
   .hero-content {
@@ -135,12 +133,6 @@
   color: #334155;
 }
 
-/* cards grid: allow 4 columns on wide screens */
-@media (min-width: 1140px) {
-  .cards-section {
-    grid-template-columns: repeat(4, minmax(210px, 1fr));
-  }
-}
 /* === Household Wizard (landing) === */
 .wizard { max-width: 980px; margin: 24px auto 12px; padding: 16px; }
 .wiz-head { text-align: center; color: #0f172a; }
