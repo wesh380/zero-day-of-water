@@ -18,6 +18,18 @@ iframe { max-width: 100%; }
 @media (min-width: 768px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
 /* Fix common table overflow */
 .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+.chart-wrap > canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+@media (max-width: 640px){
+  .chart-wrap { height: 240px; }
+}
 table { width: 100%; border-collapse: collapse; }
 /* Buttons/inputs min-tap-target */
 button, .btn, input, select { min-height: 40px; }
