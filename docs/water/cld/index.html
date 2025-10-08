@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/assets/tailwind.css" />
   <link rel="stylesheet" href="/assets/chart.autofix.css" />
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
 
   <!-- Bundled CLD styles -->
   <link rel="stylesheet" href="/assets/dist/water-cld.bundle.css" />
@@ -104,7 +105,9 @@
         </div>
 
         <div id="sim-panel" class="mt-12">
-          <canvas id="sim-chart"></canvas>
+          <div class="scroll-x">
+            <div class="chart-wrap"><canvas id="sim-chart"></canvas></div>
+          </div>
         </div>
 
         <div id="scenario-panel" class="mt-12">
@@ -114,12 +117,14 @@
             <button id="sc-load" class="btn outline">Load</button>
             <button id="sc-delete" class="btn outline">Delete</button>
           </div>
-          <table id="sc-table">
-            <thead>
-              <tr><th>نام</th><th>eff</th><th>dem</th><th>delay</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <div class="scroll-x">
+            <table id="sc-table">
+              <thead>
+                <tr><th>نام</th><th>eff</th><th>dem</th><th>delay</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
 
         <div id="sens-panel" class="mt-12">

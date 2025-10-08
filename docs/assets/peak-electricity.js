@@ -60,6 +60,8 @@
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         parsing: false,
         animation: false,
         scales: {
@@ -95,6 +97,8 @@
       },
       options: {
         indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: { ticks: { rtl: true } },
           x: {
@@ -124,6 +128,8 @@
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         parsing: false,
         scales: {
           x: {

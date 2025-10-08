@@ -43,6 +43,6 @@
 
 .note{background:#F1F5F9; border:1px solid var(--border); border-radius:12px; padding:12px; font-size:.9rem;}
 .list{margin:8px 0 0 0; padding:0 18px; line-height:1.9;}
-.chart-box{height:300px;}
-@media (max-width:768px){ .chart-box{height:240px;} }
+.chart-wrap{height:300px;}
+@media (max-width:768px){ .chart-wrap{height:240px;} }
 .footer-note{color:var(--muted); text-align:center; margin-top:18px; font-size:.9rem;}

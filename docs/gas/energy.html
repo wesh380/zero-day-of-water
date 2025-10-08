@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../assets/tailwind.css" />
   <link rel="stylesheet" href="../assets/fonts.css" />
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
   <script defer src="/assets/unified-badge.js"></script>
@@ -125,25 +126,33 @@
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-bold">نمودار آبشاری تراز گاز (MCM)</h2>
           </div>
-          <div class="h-80"><canvas id="gasBalanceWaterfallChart"></canvas></div>
+          <div class="scroll-x">
+            <div class="chart-wrap h-80"><canvas id="gasBalanceWaterfallChart"></canvas></div>
+          </div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-bold">سهم بخش‌ها از مصرف گاز</h2>
           </div>
-          <div class="h-80"><canvas id="gasConsumptionShareChart"></canvas></div>
+          <div class="scroll-x">
+            <div class="chart-wrap h-80"><canvas id="gasConsumptionShareChart"></canvas></div>
+          </div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-bold">تأمین فرآورده‌ها (هزار لیتر)</h2>
           </div>
-          <div class="h-80"><canvas id="productSupplyChart"></canvas></div>
+          <div class="scroll-x">
+            <div class="chart-wrap h-80"><canvas id="productSupplyChart"></canvas></div>
+          </div>
         </div>
         <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 dash-card">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-bold">روند مصرف ۲۴ ماه گذشته</h2>
           </div>
-          <div class="h-80"><canvas id="longTermTrendChart"></canvas></div>
+          <div class="scroll-x">
+            <div class="chart-wrap h-80"><canvas id="longTermTrendChart"></canvas></div>
+          </div>
         </div>
       </div>
     </main>

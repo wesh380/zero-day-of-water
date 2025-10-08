@@ -15,6 +15,7 @@
     <!-- فونت محلی Vazirmatn -->
   <link rel="stylesheet" href="../assets/fonts.css">
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
 
     <style>
         body {
@@ -101,8 +102,10 @@
                 <!-- Trend Chart -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4 text-gray-300">روند ۱۲ ماهه SAIDI و SAIFI</h4>
-                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 h-96">
-                        <canvas id="trendChart"></canvas>
+                    <div class="scroll-x">
+                        <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 chart-wrap">
+                            <canvas id="trendChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -120,7 +123,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="overflow-x-auto">
+                <div class="scroll-x">
                     <table class="w-full text-right">
                         <thead class="border-b border-gray-600 text-sm text-gray-400">
                             <tr>
@@ -144,11 +147,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="text-center">
                             <h4 class="font-medium mb-2">تفکیک نوع قطعی</h4>
-                            <div class="relative h-64 w-64 mx-auto"><canvas id="causesDonutChart"></canvas></div>
+                            <div class="scroll-x">
+                                <div class="relative mx-auto chart-wrap h-64 w-64"><canvas id="causesDonutChart"></canvas></div>
+                            </div>
                         </div>
                         <div class="text-center">
                             <h4 class="font-medium mb-2">علت‌های متداول (غیربرنامه‌ای)</h4>
-                            <div class="relative h-64"><canvas id="commonCausesBarChart"></canvas></div>
+                            <div class="scroll-x">
+                                <div class="relative chart-wrap h-64"><canvas id="commonCausesBarChart"></canvas></div>
+                            </div>
                         </div>
                     </div>
                 </div>
