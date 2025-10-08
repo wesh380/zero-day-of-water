@@ -12,6 +12,7 @@
   <meta name="twitter:image" content="https://wesh360.ir/page/landing/logo2.webp">
   <title>برق - wesh360</title>
   <meta name="section" content="electricity" />
+  <link rel="stylesheet" href="/assets/css/tailwind.css">
   <link rel="stylesheet" href="/assets/fonts.css">
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/electricity-theme.css">
@@ -43,31 +44,31 @@
       </a>
     </div>
   </header>
-  <main id="main" role="main" class="container">
+  <main id="main" role="main" class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="page-title">⚡ صفحه برق</h1>
 
-    <section class="grid" aria-label="Electricity dashboards">
-      <article class="card dash-card">
+    <section class="grid grid-cols-1 gap-6 lg:grid-cols-3" aria-label="Electricity dashboards">
+      <article class="card dash-card flex flex-col gap-4 text-center">
         <h3>داشبورد کیفیت توزیع برق</h3>
         <p>شاخص‌های قابلیت اطمینان، خاموشی، و پروفایل کیفیت</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="./quality.html" aria-label="رفتن به داشبورد کیفیت توزیع برق">ورود به داشبورد</a>
+        <div class="actions flex flex-wrap justify-center gap-3 mt-3">
+          <a class="btn btn-primary inline-flex items-center justify-center gap-2 px-4 py-3 font-extrabold" href="./quality.html" aria-label="رفتن به داشبورد کیفیت توزیع برق">ورود به داشبورد</a>
         </div>
       </article>
 
-      <article class="card dash-card">
+      <article class="card dash-card flex flex-col gap-4 text-center">
         <h3>داشبورد تحلیل شاخص برق</h3>
         <p>روندها، همبستگی‌ها و تحلیل شاخص‌ها</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="./power-tariff.html" aria-label="رفتن به داشبورد تحلیل شاخص برق">ورود به داشبورد</a>
+        <div class="actions flex flex-wrap justify-center gap-3 mt-3">
+          <a class="btn btn-primary inline-flex items-center justify-center gap-2 px-4 py-3 font-extrabold" href="./power-tariff.html" aria-label="رفتن به داشبورد تحلیل شاخص برق">ورود به داشبورد</a>
         </div>
       </article>
 
-      <article class="card dash-card">
+      <article class="card dash-card flex flex-col gap-4 text-center">
         <h3>داشبورد مدیریت مصرف</h3>
         <p>پیک روزانه/ساعتی، هشدار پیک و مدیریت بار</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="./peak.html" aria-label="رفتن به داشبورد مدیریت مصرف">ورود به داشبورد</a>
+        <div class="actions flex flex-wrap justify-center gap-3 mt-3">
+          <a class="btn btn-primary inline-flex items-center justify-center gap-2 px-4 py-3 font-extrabold" href="./peak.html" aria-label="رفتن به داشبورد مدیریت مصرف">ورود به داشبورد</a>
         </div>
       </article>
     </section>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ماشین‌حساب پیشرفته قیمت تمام‌شده آب در مشهد</title>
-  <link rel="stylesheet" href="../assets/tailwind.css">
+  <link rel="stylesheet" href="/assets/css/tailwind.css">
   <link rel="stylesheet" href="../assets/fonts.css">
   <link rel="stylesheet" href="/assets/css/base.css">
   <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
@@ -33,14 +33,14 @@
       </a>
     </div>
   </header>
-  <main id="main" role="main" class="container">
+  <main id="main" role="main" class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
   <h1 class="page-title">ماشین‌حساب پیشرفته قیمت تمام‌شده آب در مشهد</h1>
   <div class="page-sub">شِمای تمیز و کادربندی‌شده؛ ورودی‌ها در راست، خروجی‌ها در چپ</div>
 
-  <section class="grid">
+  <section class="grid grid-cols-1 gap-6 lg:[grid-template-columns:1.35fr_.95fr]">
     <!-- ستون چپ: خروجی‌های مدل -->
-    <div class="left">
-      <div class="stat-wrap">
+    <div class="left space-y-6">
+      <div class="stat-wrap grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="stat badge-warn">
           <div class="label">قیمت پیشنهادی واقعی (به ازای هر مترمکعب)</div>
           <div id="true-price" class="value">—</div>
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-4">
         <h3>جدول سهم هر متغیر</h3>
         <div class="scroll-x">
           <table class="tbl" aria-describedby="tbl-hint">
@@ -66,84 +66,84 @@
         <div id="tbl-hint" class="hint mt-8">مقادیر با تغییر ورودی‌ها به‌روزرسانی می‌شوند.</div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-4">
         <h3>نمودار دونات سهم عوامل</h3>
         <div class="scroll-x">
           <div class="chart-wrap"><canvas id="shareChart"></canvas></div>
         </div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-4">
         <h3>تحلیل حساسیت (±۱۰٪ در ورودی‌ها)</h3>
         <ul id="sensitivity-list" class="list"><!-- li items by JS --></ul>
       </div>
 
-      <div class="card dash-card note">
+      <div class="card dash-card note space-y-3">
         <h3>جمع‌بندی تحلیل</h3>
         <div id="analysis-summary">—</div>
       </div>
     </div>
 
     <!-- ستون راست: ورودی‌های مدل -->
-    <div class="right controls">
-      <div class="card dash-card">
+    <div class="right controls space-y-6">
+      <div class="card dash-card space-y-5">
         <h3>۱) عوامل فنی و زیربنایی</h3>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="cost_production">هزینه تولید هر مترمکعب (تومان)</label>
-          <div class="inline">
+          <div class="inline flex items-center gap-2.5">
             <input id="cost_production" type="number" min="0" step="100" value="2000" aria-describedby="cost_production_r">
           </div>
           <input id="cost_production_r" type="range" min="0" max="10000" step="100" value="2000">
         </div>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="cost_energy">هزینه انرژی (تومان)</label>
           <input id="cost_energy" type="number" min="0" step="50" value="2000">
           <input id="cost_energy_r" type="range" min="0" max="10000" step="50" value="2000">
         </div>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="loss_network">درصد هدررفت شبکه (%)</label>
           <input id="loss_network" type="number" min="0" max="100" step="1" value="20">
           <input id="loss_network_r" type="range" min="0" max="100" step="1" value="20">
         </div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-5">
         <h3>۲) عوامل اقتصادی و مدیریتی</h3>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="maintenance">هزینه نگهداری و تعمیرات (تومان)</label>
           <input id="maintenance" type="number" min="0" step="50" value="1500">
           <input id="maintenance_r" type="range" min="0" max="10000" step="50" value="1500">
         </div>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="hidden_subsidy">درصد یارانه پنهان (%)</label>
           <input id="hidden_subsidy" type="number" min="0" max="100" step="1" value="25">
           <input id="hidden_subsidy_r" type="range" min="0" max="100" step="1" value="25">
         </div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-5">
         <h3>۳) محیطی و اجتماعی</h3>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="power_change">درصد تغییر قیمتی برق (%)</label>
           <input id="power_change" type="number" min="-100" max="100" step="1" value="0">
           <input id="power_change_r" type="range" min="-100" max="100" step="1" value="0">
         </div>
       </div>
 
-      <div class="card dash-card">
+      <div class="card dash-card space-y-5">
         <h3>آزمون ورودی‌ها</h3>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="chargeinput">شارژ</label>
           <input id="chargeinput" type="text" />
         </div>
-        <div class="group">
+        <div class="group space-y-2.5">
           <label for="voteinput">رأی</label>
           <input id="voteinput" type="text" />
         </div>
       </div>
 
-      <div class="actions">
-        <button id="recalc" class="btn btn-primary" type="button">به‌روزرسانی محاسبات</button>
+      <div class="actions flex justify-center gap-2.5 mt-3">
+        <button id="recalc" class="btn btn-primary inline-flex items-center justify-center gap-2 px-4 py-3 text-base font-extrabold" type="button">به‌روزرسانی محاسبات</button>
       </div>
     </div>
   </section>

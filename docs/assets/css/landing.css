@@ -53,7 +53,7 @@
   margin-top: 15vh;
   font-size: var(--font-h1);
   line-height: 1.25;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 .125rem .375rem rgba(0, 0, 0, 0.35);
 }
 
 .hero-content p {
@@ -66,24 +66,24 @@
 .cards-section {
   display: grid;
   gap: var(--space-5, 1.5rem);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
   align-items: stretch;
 }
 
 .cards-section {
-  max-width: 980px;
-  margin: -60px auto 48px;
-  padding: 0 16px;
+  max-width: 61.25rem;
+  margin: -3.75rem auto 3rem;
+  padding: 0 1rem;
 }
 
 .card {
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(2px);
-  padding: 18px 20px;
+  border-radius: 1rem;
+  box-shadow: 0 .625rem 1.875rem rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(.125rem);
+  padding: 1.125rem 1.25rem;
   text-align: center;
-  transform: translateY(32px);
+  transform: translateY(2rem);
   opacity: 0;
   transition: transform 0.8s ease, opacity 0.8s ease;
 }
@@ -93,7 +93,7 @@
   opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .hero {
     background-attachment: scroll;
     min-height: min(100svh, 85vh);
@@ -101,13 +101,13 @@
   .hero-title {
     margin-top: 10vh;
     font-size: var(--font-h2);
-    padding-inline: 16px;
+    padding-inline: 1rem;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .cards-section {
-    margin-top: -30px;
+    margin-top: -1.875rem;
   }
   .hero-content {
     padding: 0 1rem 6vh;
@@ -134,50 +134,50 @@
 }
 
 /* === Household Wizard (landing) === */
-.wizard { max-width: 980px; margin: 24px auto 12px; padding: 16px; }
+.wizard { max-width: 61.25rem; margin: 1.5rem auto .75rem; padding: 1rem; }
 .wiz-head { text-align: center; color: #0f172a; }
-.wiz-title { font-size: clamp(20px, 2.4vw, 28px); font-weight: 800; }
-.wiz-sub { margin-top: 6px; opacity: .9; }
+.wiz-title { font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 800; }
+.wiz-sub { margin-top: .375rem; opacity: .9; }
 
-.wiz-tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:14px 0 4px; }
+.wiz-tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; margin:.875rem 0 .25rem; }
 .wiz-tabs .tab {
-  appearance: none; border: 1px solid #cbd5e1; background: #fff; color:#0f172a;
-  padding: 8px 12px; border-radius: 999px; cursor: pointer; font-weight:600;
-  white-space: normal; text-align:center; min-height:44px;
+  appearance: none; border: .0625rem solid #cbd5e1; background: #fff; color:#0f172a;
+  padding: .5rem .75rem; border-radius: 62.4375rem; cursor: pointer; font-weight:600;
+  white-space: normal; text-align:center; min-height:2.75rem;
   /* distribute on small screens */
   flex: 1 1 clamp(9rem, 45%, 14rem);
 }
 .wiz-tabs .tab[aria-selected="true"] { background: #0ea5e9; color:#04121f; border-color:#0ea5e9; }
 
-@media (max-width:414px){
+@media (max-width:25.875rem){
   .wiz-tabs{ justify-content:center; }
 }
 
-.wiz-form { display:grid; gap:12px; grid-template-columns: 1fr 1fr; align-items:end; }
-.wiz-form .field { display:flex; flex-direction:column; gap:6px; }
-.wiz-form .row { display:flex; gap:8px; align-items:center; }
+.wiz-form { display:grid; gap:.75rem; grid-template-columns: 1fr 1fr; align-items:end; }
+.wiz-form .field { display:flex; flex-direction:column; gap:.375rem; }
+.wiz-form .row { display:flex; gap:.5rem; align-items:center; }
 .wiz-form input, .wiz-form select {
-  width:100%; height:44px; border:1px solid #cbd5e1; border-radius:10px; padding:0 10px; background:#fff;
+  width:100%; height:2.75rem; border:.0625rem solid #cbd5e1; border-radius:.625rem; padding:0 .625rem; background:#fff;
 }
-.wiz-form .actions { grid-column: 1 / -1; display:flex; gap:8px; }
-#household-wizard .btn { height:44px; padding:0 14px; border-radius:10px; border:1px solid #0ea5e9; cursor:pointer; }
+.wiz-form .actions { grid-column: 1 / -1; display:flex; gap:.5rem; }
+#household-wizard .btn { height:2.75rem; padding:0 .875rem; border-radius:.625rem; border:.0625rem solid #0ea5e9; cursor:pointer; }
 #household-wizard .btn.primary { background:#0ea5e9; color:#04121f; }
 #household-wizard .btn.ghost { background:#fff; color:#0f172a; border-color:#cbd5e1; }
 
-.hint { grid-column: 1 / -1; color:#334155; font-size:14px; }
-.wiz-results { margin-top: 12px; }
-.wiz-results .cards { display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; }
-.wiz-results .kpi { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:10px; text-align:center; }
-.wiz-results .kpi .k { font-size:12px; color:#64748b; }
-.wiz-results .kpi .v { font-size:18px; font-weight:800; color:#0f172a; }
+.hint { grid-column: 1 / -1; color:#334155; font-size:.875rem; }
+.wiz-results { margin-top: .75rem; }
+.wiz-results .cards { display:grid; grid-template-columns: repeat(5, 1fr); gap:.625rem; }
+.wiz-results .kpi { background:#fff; border:.0625rem solid #e2e8f0; border-radius:.75rem; padding:.625rem; text-align:center; }
+.wiz-results .kpi .k { font-size:.75rem; color:#64748b; }
+.wiz-results .kpi .v { font-size:1.125rem; font-weight:800; color:#0f172a; }
 
 .chip {
   display: inline-block;
   padding: .25rem .5rem;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   font-weight: 600;
   line-height: 1;
-  border: 1px solid transparent;
+  border: .0625rem solid transparent;
 }
 .chip[data-level="high"] { background:#fee2e2; color:#991b1b; border-color:#fecaca; }
 .chip[data-level="mid"]  { background:#e5e7eb; color:#111827; border-color:#d1d5db; }
@@ -188,18 +188,18 @@
   .chip[data-level="low"]  { background:#064e3b; color:#bbf7d0; border-color:#065f46; }
 }
 
-.chart-wrap{ margin:12px auto; max-width:560px; height:clamp(200px, 35vh, 360px); }
+.chart-wrap{ margin:.75rem auto; max-width:35rem; height:clamp(12.5rem, 35vh, 22.5rem); }
 .wiz-chart{ width:100%; aspect-ratio: 21/11; display:block; }
-.tips { margin: 8px 0 0; padding-inline-start: 18px; }
-.note { margin-top: 6px; font-size: 12px; color:#475569; }
+.tips { margin: .5rem 0 0; padding-inline-start: 1.125rem; }
+.note { margin-top: .375rem; font-size: .75rem; color:#475569; }
 
-@media (max-width: 992px){
+@media (max-width: 62rem){
   .wiz-form { grid-template-columns: 1fr; }
   .wiz-results .cards { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 414px) {
+@media (max-width: 25.875rem) {
   .wiz-tabs { justify-content: center; }
-  .wiz-tabs .tab { flex: 1 1 clamp(9rem, 45%, 14rem); min-height: 44px; }
+  .wiz-tabs .tab { flex: 1 1 clamp(9rem, 45%, 14rem); min-height: 2.75rem; }
 }
 

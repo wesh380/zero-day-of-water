@@ -1,4 +1,4 @@
 module.exports = {
-  content: ['./docs/**/*.html', './docs/**/*.js'],
+  content: ['./docs/**/*.html', './docs/assets/js/**/*.js'],
   safelist: [/curtain/, 'open', 'left', 'right']
 };
