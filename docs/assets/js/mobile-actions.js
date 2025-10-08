@@ -36,8 +36,12 @@
       item.className = 'mobile-actions__item';
       const anchor = document.createElement('a');
       anchor.className = 'mobile-actions__link';
-      anchor.innerHTML = link.innerHTML;
+      // clone children to preserve SVG namespace and attributes:
+      link.childNodes.forEach((n)=> anchor.appendChild(n.cloneNode(true)));
       copyLinkAttributes(link, anchor);
+      if(anchor.getAttribute('target') === '_blank'){
+        anchor.setAttribute('rel','noopener noreferrer');
+      }
       item.appendChild(anchor);
       list.appendChild(item);
     });
