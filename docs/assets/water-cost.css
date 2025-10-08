@@ -9,7 +9,7 @@
 .page-sub{color:var(--muted); text-align:center; margin-top:-6px; margin-bottom:14px; font-size:.95rem;}
 
 .grid{display:grid; grid-template-columns:1.35fr .95fr; gap:var(--g);}
-@media (max-width:1000px){ .grid{grid-template-columns:1fr; } }
+@media (max-width:1024px){ .grid{grid-template-columns:1fr; } }
 
 .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:var(--pad); box-shadow:var(--shadow);}
 .card h3{margin:0 0 10px; font-size:1.05rem; font-weight:800;}
@@ -44,5 +44,5 @@
 .note{background:#F1F5F9; border:1px solid var(--border); border-radius:12px; padding:12px; font-size:.9rem;}
 .list{margin:8px 0 0 0; padding:0 18px; line-height:1.9;}
 .chart-box{height:300px;}
-@media (max-width:600px){ .chart-box{height:240px;} }
+@media (max-width:768px){ .chart-box{height:240px;} }
 .footer-note{color:var(--muted); text-align:center; margin-top:18px; font-size:.9rem;}
