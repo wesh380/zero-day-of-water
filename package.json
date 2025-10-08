@@ -10,7 +10,7 @@
   "scripts": {
     "prebuild": "node tools/build-wind-weights.mjs",
     "fix:text": "node tools/fix-mojibake.js",
-    "build:css": "tailwindcss -i docs/assets/tailwind.input.css -o docs/assets/tailwind.css --minify",
+    "build:css": "tailwindcss -i docs/assets/tailwind.input.css -o docs/assets/css/tailwind.css --minify",
     "build": "npm run build:css && npm run build:agri && npm run prepare:agri",
     "test": "node tests/mapper.test.js && node tests/e2e-cld.test.js && node tests/e2e-water-cld.behaviors.test.js",
     "flag:test": "node scripts/check-flag.js",
