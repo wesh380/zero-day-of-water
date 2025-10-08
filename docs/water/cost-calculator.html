@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="../assets/tailwind.css">
   <link rel="stylesheet" href="../assets/fonts.css">
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/responsive-baseline.css">
   <link rel="stylesheet" href="../assets/water-cost.css">
   <link rel="stylesheet" href="/assets/global-footer.css">
   <link rel="stylesheet" href="/assets/unified-badge.css">
@@ -50,18 +51,22 @@
 
       <div class="card dash-card">
         <h3>جدول سهم هر متغیر</h3>
-        <table class="tbl" aria-describedby="tbl-hint">
-          <thead>
-            <tr><th>آیتم</th><th>سهم</th><th>پیشرفت</th><th>هزینه</th></tr>
-          </thead>
-          <tbody id="breakdown-body"><!-- filled by JS --></tbody>
-        </table>
+        <div class="scroll-x">
+          <table class="tbl" aria-describedby="tbl-hint">
+            <thead>
+              <tr><th>آیتم</th><th>سهم</th><th>پیشرفت</th><th>هزینه</th></tr>
+            </thead>
+            <tbody id="breakdown-body"><!-- filled by JS --></tbody>
+          </table>
+        </div>
         <div id="tbl-hint" class="hint mt-8">مقادیر با تغییر ورودی‌ها به‌روزرسانی می‌شوند.</div>
       </div>
 
       <div class="card dash-card">
         <h3>نمودار دونات سهم عوامل</h3>
-        <div class="chart-box"><canvas id="shareChart"></canvas></div>
+        <div class="scroll-x">
+          <div class="chart-wrap"><canvas id="shareChart"></canvas></div>
+        </div>
       </div>
 
       <div class="card dash-card">

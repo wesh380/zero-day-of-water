@@ -81,6 +81,8 @@
     const values = data.map(i => i.value);
     const colors = ['#3b82f6', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'];
     const options = {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { position: 'bottom', labels: { usePointStyle: true } },
         tooltip: {
@@ -155,6 +157,8 @@
           type: 'bar',
           data: { labels, datasets: [{ data }] },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             indexAxis: 'y',
             plugins: { legend: { display: false } }
           }
