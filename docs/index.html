@@ -17,8 +17,8 @@
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
   <link rel="stylesheet" href="./assets/footer.css">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width:1024px)">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width:1023px)">
+  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width: 768px)">
+  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width: 767px)">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
   <link rel="stylesheet" href="/assets/css/site.css">
@@ -37,14 +37,9 @@
           <span class="label">بازگشت</span>
         </a>
         <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
-          <picture class="site-topbar__brand">
-            <source type="image/avif" srcset="/page/landing/logo2.avif"
-              sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
-            <source type="image/webp" srcset="/page/landing/logo2.webp"
-              sizes="(min-width:1024px) 64px, (min-width:640px) 56px, 48px">
-            <img src="/logo.png"
-                 width="357" height="357" class="h-auto aspect-square"
-                 alt="خانه هم‌افزایی انرژی و آب" decoding="async" fetchpriority="high">
+          <picture>
+            <source type="image/avif" srcset="/page/landing/logo2.avif">
+            <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
           </picture>
         </a>
       </div>
@@ -53,8 +48,7 @@
       <a class="logo inline-flex items-center justify-center" href="/" aria-label="صفحه اصلی" rel="home" data-logo="home">
         <picture>
           <source type="image/avif" srcset="/page/landing/logo2.avif">
-          <source type="image/webp" srcset="/page/landing/logo2.webp">
-          <img src="/logo.png" alt="لوگوی خانه هم‌افزایی انرژی و آب" loading="lazy" decoding="async" class="h-12 md:h-16 w-auto" />
+          <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
         </picture>
       </a>
       <div class="absolute top-4 right-4 flex items-center gap-2">
@@ -86,15 +80,8 @@
     <section class="hero">
       <div class="media">
         <picture class="hero-picture">
-          <source media="(min-width:1024px)" type="image/webp"
-                  srcset="/assets/img/hero/hero-desktop.webp"
-                  sizes="100vw">
-          <source type="image/webp"
-                  srcset="/assets/img/hero/hero-mobile.webp"
-                  sizes="100vw">
-          <source type="image/jpeg"
-                  srcset="/assets/hero2.jpg"
-                  sizes="100vw">
+          <source media="(min-width: 768px)" type="image/webp" srcset="/assets/img/hero/hero-desktop.webp">
+          <source media="(max-width: 767px)" type="image/webp" srcset="/assets/img/hero/hero-mobile.webp">
           <img src="/assets/img/hero/hero-mobile.webp"
                alt="" width="1920" height="1080" decoding="async" fetchpriority="high" class="hero-img">
         </picture>
