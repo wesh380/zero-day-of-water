@@ -33,3 +33,12 @@ iframe { max-width: 100%; }
 table { width: 100%; border-collapse: collapse; }
 /* Buttons/inputs min-tap-target */
 button, .btn, input, select { min-height: 40px; }
+/* P0: iOS form auto-zoom */
+input, select, textarea { font-size: 16px; }  /* 1rem اگر ریشه 16px */
+@media (hover:none) and (pointer:coarse) {
+  input, select, textarea { font-size: 16px; }
+}
+@media (max-width: 390px) {
+  :where(input, select, textarea) { font-size: 16px !important; }
+}
+/* اگر جایی برای input فونت کوچک تعریف شده، در ≤390px آن را به 16px برگردان */
