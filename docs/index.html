@@ -18,8 +18,9 @@
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/global-footer.css">
   <link rel="stylesheet" href="./assets/footer.css">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-desktop.webp" imagesrcset="/assets/img/hero/hero-desktop.webp" media="(min-width: 768px)">
-  <link rel="preload" as="image" href="/assets/img/hero/hero-mobile.webp" imagesrcset="/assets/img/hero/hero-mobile.webp" media="(max-width: 767px)">
+  <link rel="preload" as="image"
+        imagesrcset="/assets/img/hero/hero-1440.webp 1440w, /assets/img/hero/hero-1920.webp 1920w"
+        imagesizes="(max-width:768px) 100vw, 1440px">
   <link rel="stylesheet" href="./assets/fonts.css">
   <link rel="stylesheet" href="./assets/unified-badge.css">
   <link rel="icon" type="image/x-icon" href="./page/landing/favicon.ico">
@@ -80,10 +81,19 @@
     <section class="hero">
       <div class="media">
         <picture class="hero-picture">
-          <source media="(min-width: 768px)" type="image/webp" srcset="/assets/img/hero/hero-desktop.webp">
-          <source media="(max-width: 767px)" type="image/webp" srcset="/assets/img/hero/hero-mobile.webp">
-          <img src="/assets/img/hero/hero-mobile.webp"
-               alt="" width="1920" height="1080" decoding="async" fetchpriority="high" class="hero-img">
+          <source type="image/webp"
+            srcset="/assets/img/hero/hero-768.webp 768w,
+                    /assets/img/hero/hero-1440.webp 1440w,
+                    /assets/img/hero/hero-1920.webp 1920w"
+            sizes="(max-width:768px) 100vw, 1440px">
+          <img class="hero-img" alt=""
+            src="/assets/img/hero/hero-1440.jpg"
+            srcset="/assets/img/hero/hero-768.jpg 768w,
+                    /assets/img/hero/hero-1440.jpg 1440w,
+                    /assets/img/hero/hero-1920.jpg 1920w"
+            sizes="(max-width:768px) 100vw, 1440px"
+            width="1920" height="1080"
+            style="object-fit:cover;width:100%;height:auto">
         </picture>
       </div>
       <div class="hero-content">
