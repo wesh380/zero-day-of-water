@@ -45,8 +45,8 @@ input, select, textarea { font-size: 16px; }  /* 1rem اگر ریشه 16px */
 }
 /* اگر جایی برای input فونت کوچک تعریف شده، در ≤390px آن را به 16px برگردان */
 
-.full-viewport,
-.hero {
+.full-viewport {
+  /* keep viewport utility independent; hero min-height lives in landing.css */
   min-height: 100vh; /* fallback */
   min-height: 100svh;
   min-height: 100dvh;
