@@ -1,3 +1,4 @@
+/* Canonical landing stylesheet */
 .site-header {
   position: relative;
   z-index: 30;
@@ -201,5 +202,16 @@
 @media (max-width: 25.875rem) {
   .wiz-tabs { justify-content: center; }
   .wiz-tabs .tab { flex: 1 1 clamp(9rem, 45%, 14rem); min-height: 2.75rem; }
+}
+
+@media (max-width: 22.5rem) {
+  .wiz-form,
+  #wiz-form { padding-inline: 12px; }
+  .wiz-form .form-row,
+  .wiz-form .row { margin-inline: 0; flex-direction: column; align-items: stretch; }
+  .wiz-form input,
+  .wiz-form select,
+  .wiz-form button { width: 100%; max-width: 100%; }
+  .wiz-form .actions { width: 100%; }
 }
 
