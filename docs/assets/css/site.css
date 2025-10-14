@@ -31,3 +31,23 @@ html.dev-show-experimental .easter-hotspot:focus {
   outline-offset: 2px;
   opacity: .1;
 }
+
+nav .nav-links {
+  display: flex;
+  gap: .25rem;
+}
+
+nav .nav-link {
+  padding-inline: .75rem;
+  line-height: 48px;
+}
+
+/* Offset anchor scrolling to avoid sticky header overlap */
+[id] {
+  scroll-margin-top: 64px;
+}
+
+.main,
+.page-wrap {
+  padding-top: 64px;
+}
