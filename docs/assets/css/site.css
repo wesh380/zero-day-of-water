@@ -32,6 +32,26 @@ html.dev-show-experimental .easter-hotspot:focus {
   opacity: .1;
 }
 
+:root {
+  font-size: 16px;
+}
+
+button,
+.btn {
+  min-height: 48px;
+  padding: .5rem 1rem;
+}
+
+/* اختیاری: */
+h1 {
+  font-size: clamp(1.5rem, 1.2rem + 2vw, 2.25rem);
+}
+
+html[dir="rtl"] .icon-chevron-left,
+html[dir="rtl"] .icon-arrow-left {
+  transform: scaleX(-1);
+}
+
 nav .nav-links {
   display: flex;
   gap: .25rem;
