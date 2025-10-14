@@ -1,5 +1,7 @@
-﻿html { box-sizing: border-box; }
+html { box-sizing: border-box; }
 *, *::before, *::after { box-sizing: inherit; }
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+a:focus-visible, button:focus-visible { border-radius: .5rem; }
 img, svg, video, canvas { max-width: 100%; height: auto; }
 iframe { max-width: 100%; }
 .logo { display: inline-flex; align-items: center; text-decoration: none; }

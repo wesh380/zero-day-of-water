@@ -69,6 +69,24 @@
   align-items: stretch;
 }
 
+.cards {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .cards-section {
   max-width: 61.25rem;
   margin: -3.75rem auto 3rem;
@@ -85,6 +103,7 @@
   transform: translateY(2rem);
   opacity: 0;
   transition: transform 0.8s ease, opacity 0.8s ease;
+  min-height: 12rem;
 }
 
 .card.visible {
@@ -188,6 +207,7 @@
 }
 
 .chart-wrap{ margin:.75rem auto; max-width:35rem; height:clamp(12.5rem, 35vh, 22.5rem); }
+.chart-canvas{ aspect-ratio:16/9; width:100%; }
 .wiz-chart{ width:100%; aspect-ratio: 21/11; display:block; }
 .tips { margin: .5rem 0 0; padding-inline-start: 1.125rem; }
 .note { margin-top: .375rem; font-size: .75rem; color:#475569; }
