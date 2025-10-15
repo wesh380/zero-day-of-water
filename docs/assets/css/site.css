@@ -44,12 +44,26 @@ button,
   font-weight: 600;
 }
 
-.cta-calculators {
+.cta-row {
   display: flex;
   gap: .75rem;
   justify-content: center;
   flex-wrap: wrap;
   margin-block: 1rem;
+}
+
+.link-ghost {
+  padding: .6rem .9rem;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  font-weight: 600;
+  color: #0b2540;
+}
+
+.link-ghost:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
 }
 
 .btn-primary {
