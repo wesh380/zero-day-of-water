@@ -19,16 +19,36 @@
   padding-inline: 1rem;
 }
 
-.site-header__brand {
-  display: inline-flex;
+.brand {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
   text-decoration: none;
 }
 
-.site-header__logo {
-  height: 2rem;
+.brand img {
+  display: block;
+  height: 36px;
   width: auto;
+  max-inline-size: 180px;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+@media (max-width: 768px) {
+  .brand img {
+    height: 28px;
+  }
+}
+
+.site-header .brand {
+  padding: 0;
+  margin: 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-toggle {
