@@ -10,4 +10,4 @@ Use this checklist to track responsive fixes across the landing, electricity, ga
 
 ## Notes
 - به‌روزرسانی ترتیب بارگذاری استایل‌های landing برای جلوگیری از تداخل.
-- هیرو landing: دارایی‌های معتبر در `/assets/img/hero/` شامل `hero-mobile.webp`, `hero-desktop-1280.webp`, `hero-desktop.webp`, `hero-desktop-1920.webp` (fallback: `/assets/hero2.jpg`). الگوی `<picture class="hero-media">…</picture>` در `docs/index.html` مرجع کاننیکال است.
+- هیرو landing: دارایی‌های معتبر در `/assets/img/hero/` شامل `hero-mobile.webp`, `hero-desktop-1280.webp`, `hero-desktop.webp`, `hero-desktop-1920.webp` (fallback: `/assets/img/hero/hero-desktop-1440.jpg`). الگوی `<picture class="hero-media">…</picture>` در `docs/index.html` مرجع کاننیکال است.

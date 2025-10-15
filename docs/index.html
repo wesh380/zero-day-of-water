@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Language" content="fa-IR" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:image" content="./assets/hero2.jpg" />
+  <meta property="og:image" content="/assets/img/hero/social-share-1200x630.jpg">
   <meta property="og:image:alt" content="wesh360 – تصویر شاخص صفحه" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="./assets/hero2.jpg" />
+  <meta name="twitter:image" content="/assets/img/hero/social-share-1200x630.jpg">
   <meta name="section" content="site" />
   <title>wesh360</title>
   <script>if(!document.createElement('canvas').toDataURL('image/webp').includes('data:image/webp')){document.documentElement.classList.add('no-webp');}</script>
@@ -86,7 +86,6 @@
       </div>
     </header>
     <section class="hero">
-      <!-- hero image: align to dedicated hero asset set with jpg fallback -->
       <picture class="hero-media">
         <source type="image/webp"
                 srcset="/assets/img/hero/hero-mobile.webp 768w,
@@ -95,10 +94,11 @@
                         /assets/img/hero/hero-desktop-1920.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 1440px">
         <img class="hero-img" alt=""
-             src="/assets/hero2.jpg"
-             sizes="(max-width: 768px) 100vw, 1440px"
+             src="/assets/img/hero/hero-desktop-1440.jpg"
+             width="1440" height="810"
              loading="eager" decoding="async" fetchpriority="high">
       </picture>
+      <!-- متن/CTA موجود هیرو دست‌نخورده بماند -->
       <div class="content">
         <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز در خراسان رضوی</h1>
         <p>داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
