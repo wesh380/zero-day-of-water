@@ -39,7 +39,33 @@ html.dev-show-experimental .easter-hotspot:focus {
 button,
 .btn {
   min-height: 48px;
-  padding: .5rem 1rem;
+  padding: .6rem 1.1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.cta-calculators {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block: 1rem;
+}
+
+.btn-primary {
+  background: #0ea5e9;
+  color: #fff;
+}
+
+.btn-outline {
+  border: 1px solid rgba(0, 0, 0, .15);
+  color: #0b2540;
+  background: #fff;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
 }
 
 /* اختیاری: */
