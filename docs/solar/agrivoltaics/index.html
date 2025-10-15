@@ -32,7 +32,66 @@
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/react-dom.production.min.js"></script>
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/qrcode.js"></script>
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/jspdf.umd.min.js"></script>
-  <script type="module" charset="utf-8" defer src="/solar/agrivoltaics/app.js"></script>
+  <script type="module">
+    const defaults = { baseUrl: "", hmac: { enabled: false } };
+    window.APP_CONFIG = defaults;
+
+    async function loadConfigOptional() {
+      const candidates = [
+        "/config/api_local.json",
+        "/config/api.json",
+        "/config/api.local.json"
+      ];
+      for (const url of candidates) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (response.ok) {
+            const data = await response.json();
+            return { ...defaults, ...data };
+          }
+          if (response.status === 404) {
+            continue;
+          }
+        } catch (_) {
+          // ignore individual fetch failures
+        }
+      }
+      console.warn("Config not found → using defaults for agrovoltaics.");
+      return defaults;
+    }
+
+    function revealMain() {
+      const main = document.querySelector("main");
+      if (!main) return;
+      main.classList.remove("hidden");
+      main.removeAttribute("hidden");
+    }
+
+    const configPromise = (async () => {
+      const cfg = await loadConfigOptional();
+      const normalizedBase = typeof cfg.baseUrl === "string" ? cfg.baseUrl.replace(/\/+$/, "") : "";
+      window.APP_CONFIG = { ...defaults, ...cfg, baseUrl: normalizedBase };
+      window.__API_BASE_URL = normalizedBase;
+      return window.APP_CONFIG;
+    })();
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      revealMain();
+      await configPromise;
+      try {
+        const Calc = await import("/solar/agrivoltaics/app.js");
+        if (typeof Calc.init === "function") {
+          try {
+            await Calc.init(window.APP_CONFIG);
+          } catch (error) {
+            console.warn("Agrovoltaics init failed (non-blocking):", error);
+          }
+        }
+      } catch (error) {
+        console.warn("Agrovoltaics module failed to load (non-blocking):", error);
+      }
+    });
+  </script>
 
   <!-- shared site scripts -->
   <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
