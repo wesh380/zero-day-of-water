@@ -52,6 +52,141 @@ html[dir="rtl"] .icon-arrow-left {
   transform: scaleX(-1);
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  backdrop-filter: saturate(160%) blur(8px);
+  background: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-block: 0.75rem;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-header .brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-header .brand img {
+  display: block;
+  height: 2.75rem;
+  width: auto;
+}
+
+.nav-desktop ul {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-desktop a {
+  color: #0b2540;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.nav-desktop a:hover,
+.nav-desktop a:focus-visible {
+  color: #0369a1;
+}
+
+.actions-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site-header .btn {
+  min-height: 40px;
+  padding-inline: 1.25rem;
+  border-radius: 999px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-header .btn-primary {
+  background: #0ea5e9;
+  color: #fff;
+  border: 1px solid #0284c7;
+  box-shadow: 0 4px 18px rgba(14, 165, 233, 0.35);
+}
+
+.site-header .btn-primary:hover,
+.site-header .btn-primary:focus-visible {
+  background: #0284c7;
+}
+
+.site-header .btn-outline {
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #0b2540;
+}
+
+.site-header .btn-outline:hover,
+.site-header .btn-outline:focus-visible {
+  border-color: rgba(2, 132, 199, 0.55);
+  color: #0369a1;
+}
+
+.site-header a,
+.site-header button {
+  color: #0b2540;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+@media (max-width: 1023px) {
+  .nav-desktop,
+  .actions-desktop {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-desktop,
+  .actions-desktop {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+}
+
 nav .nav-links {
   display: flex;
   gap: .25rem;
