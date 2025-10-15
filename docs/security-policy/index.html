@@ -12,49 +12,12 @@
   <link rel="stylesheet" href="../assets/unified-badge.css" />
   <link rel="icon" type="image/png" href="../Logo.png" />
   <script src="/assets/js/nav-utils.js" defer></script>
-  <script src="/assets/js/mobile-actions.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/header.css">
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-  <header class="site-topbar" role="banner">
-    <div class="site-topbar__inner">
-      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
-        <span class="icon" aria-hidden="true">‹</span>
-        <span class="label">بازگشت</span>
-      </a>
-      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
-        <picture>
-          <source type="image/avif" srcset="/page/landing/logo2.avif">
-          <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
-        </picture>
-        <span>wesh360</span>
-      </a>
-    </div>
-  </header>
-  <header class="bg-white border-b border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between gap-4">
-      <a class="logo flex items-center gap-3 text-slate-800 font-semibold" href="/" aria-label="صفحه اصلی" rel="home" data-logo="home">
-        <picture>
-          <source type="image/avif" srcset="/page/landing/logo2.avif">
-          <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
-        </picture>
-        <span class="text-base md:text-lg">خانه هم‌افزایی انرژی و آب</span>
-      </a>
-      <nav class="hidden md:flex items-center gap-3 text-sm" data-mobile-actions-source>
-        <a href="/security-policy" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
-          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
-          <span>سیاست امنیت و حکمرانی داده</span>
-        </a>
-        <a href="/research/" class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-medium text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
-          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /><path d="M6.453 15h11.094" /><path d="M8.5 2h7" /></svg>
-          <span>پژوهشگران</span>
-        </a>
-      </nav>
-      <div class="md:hidden" data-mobile-actions-container></div>
-    </div>
-  </header>
 
-  <main id="main" role="main" class="flex-grow">
+<main id="main" role="main" class="flex-grow">
     <section class="bg-sky-900 text-white py-12">
       <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
         <p class="text-sm font-semibold tracking-wide uppercase">WESH360</p>
@@ -141,5 +104,6 @@
 
   <footer class="mt-auto" data-component="global-footer"></footer>
   <script defer src="../assets/global-footer.js"></script>
+  <script src="/assets/js/header.js" defer></script>
 </body>
 </html>

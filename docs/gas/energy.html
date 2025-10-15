@@ -19,53 +19,13 @@
   <script defer src="/assets/unified-badge.js"></script>
   <script defer src="/assets/global-footer.js"></script>
   <script src="/assets/js/nav-utils.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/header.css">
 </head>
 <body class="min-h-screen bg-slate-900 text-slate-200 antialiased">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-  <header class="site-topbar" role="banner">
-    <div class="site-topbar__inner">
-      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
-        <span class="icon" aria-hidden="true">‹</span>
-        <span class="label">بازگشت</span>
-      </a>
-      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
-        <picture>
-          <source type="image/avif" srcset="/page/landing/logo2.avif">
-          <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
-        </picture>
-        <span>wesh360</span>
-      </a>
-    </div>
-  </header>
-
-  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <header class="mb-8">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-        <div>
-          <h1 class="text-3xl font-extrabold text-white">داشبورد مدیریت انرژی</h1>
-          <p class="text-lg text-cyan-400 mt-1">استان خراسان رضوی (نمای عمومی)</p>
-        </div>
-      </div>
-
-      <!-- فیلترها -->
-      <div class="mt-6 p-4 bg-slate-800/50 rounded-xl border border-slate-700 flex flex-wrap items-center justify-center gap-4">
-        <select id="timeFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2">
-          <option value="daily">روزانه</option>
-          <option value="weekly">هفتگی</option>
-          <option value="monthly" selected>ماهانه</option>
-          <option value="seasonal">فصلی</option>
-        </select>
-        <select id="cityFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2"></select>
-        <select id="productFilter" class="filter-select bg-slate-700 text-white border-slate-600 rounded-lg px-3 py-2">
-          <option value="all">همه فرآورده‌ها</option>
-          <option value="gasoline">بنزین</option>
-          <option value="diesel">گازوئیل</option>
-          <option value="lpg">گاز مایع</option>
-        </select>
-      </div>
-    </header>
-
-    <main id="main" role="main" class="space-y-8">
+<div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    
+<main id="main" role="main" class="space-y-8">
       <!-- KPI ها -->
       <section id="kpi-section">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -167,5 +127,6 @@
   <script defer src="../assets/numfmt.js"></script>
   <script defer src="./energy.js"></script>
   <script defer src="../assets/badge-updated.js"></script>
+  <script src="/assets/js/header.js" defer></script>
 </body>
 </html>
