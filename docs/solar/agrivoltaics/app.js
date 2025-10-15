@@ -7,7 +7,18 @@ const MAX_ATTEMPTS = 30;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const getConfiguredBaseUrl = () => {
+  const raw = window.APP_CONFIG?.baseUrl;
+  if (typeof raw !== "string") return "";
+  return raw.replace(/\/+$/, "");
+};
+
+const hasConfiguredBaseUrl = () => getConfiguredBaseUrl().length > 0;
+
 export async function runJob(payload) {
+  if (!hasConfiguredBaseUrl()) {
+    throw new Error("API base URL not configured for agrovoltaics.");
+  }
   const submitResponse = await apiFetch("/api/submit", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -131,15 +142,27 @@ const KV = ({
   className: "text-sm md:text-base font-semibold text-gray-100 mt-0.5"
 }, v));
 async function saveScenario(state, setShareLink) {
-  const res = await apiFetch("/api/save-scenario", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      state
-    })
-  });
+  if (!hasConfiguredBaseUrl()) {
+    console.warn("Agrovoltaics save skipped: API base URL missing.");
+    alert("برای ذخیره‌سازی سناریو باید به سرور متصل باشیم. بعداً دوباره امتحان کن.");
+    return;
+  }
+  let res;
+  try {
+    res = await apiFetch("/api/save-scenario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        state
+      })
+    });
+  } catch (error) {
+    console.warn("Agrovoltaics save failed before request completion:", error);
+    alert("ذخیره نشد؛ بعداً دوباره امتحان کن.");
+    return;
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     alert(err.message || "ذخیره نشد؛ بعداً دوباره امتحان کن.");
@@ -153,7 +176,19 @@ async function saveScenario(state, setShareLink) {
 }
 async function loadScenarioById(id, setState) {
   if (!id) return;
-  const res = await apiFetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
+  if (!hasConfiguredBaseUrl()) {
+    console.warn("Agrovoltaics load skipped: API base URL missing.");
+    alert("برای خواندن سناریو باید به سرور متصل باشیم. بعداً دوباره امتحان کن.");
+    return;
+  }
+  let res;
+  try {
+    res = await apiFetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
+  } catch (error) {
+    console.warn("Agrovoltaics load failed before request completion:", error);
+    alert("خواندن نشد؛ بعداً دوباره امتحان کن.");
+    return;
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     alert(err.message || "خواندن نشد؛ بعداً دوباره امتحان کن.");
@@ -165,6 +200,7 @@ async function loadScenarioById(id, setState) {
 function AgrivoltaicsKhorasan() {
   const [simple, setSimple] = useState(true);
   const [shareLink, setShareLink] = React.useState("");
+  const isOffline = useMemo(() => !hasConfiguredBaseUrl(), []);
 
   // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
@@ -599,7 +635,9 @@ function AgrivoltaicsKhorasan() {
     className: "text-sm md:text-base text-gray-300 mt-2"
   }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
     className: "mt-2 text-xs text-gray-400 space-y-1"
-  }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."), isOffline && /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-amber-300 mt-2"
+  }, "حالت آفلاین: ذخیره و بازیابی سناریو غیرفعال است.")), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 flex-wrap"
   }, /*#__PURE__*/React.createElement("button", {
     className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
@@ -612,14 +650,20 @@ function AgrivoltaicsKhorasan() {
     className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
   }, "\u062F\u0627\u0646\u0644\u0648\u062F PDF"), /*#__PURE__*/React.createElement("button", {
     onClick: () => saveScenario(s, setShareLink),
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 text-gray-100" + (isOffline ? " opacity-50 cursor-not-allowed" : " hover:bg-neutral-700"),
+    disabled: isOffline
   }, "\u0630\u062E\u06CC\u0631\u0647 \u0633\u0646\u0627\u0631\u06CC\u0648"), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
+      if (isOffline) {
+        alert("برای خواندن سناریو باید به سرور متصل باشیم. بعداً دوباره امتحان کن.");
+        return;
+      }
       const id = prompt("کُد/لینک را وارد کنید:");
       const onlyId = (id || "").split("id=").pop();
       loadScenarioById(onlyId, setS);
     },
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 text-gray-100" + (isOffline ? " opacity-50 cursor-not-allowed" : " hover:bg-neutral-700"),
+    disabled: isOffline
   }, "\u0628\u0627\u0632\u06A9\u0631\u062F\u0646 \u0627\u0632 \u0644\u06CC\u0646\u06A9"))), /*#__PURE__*/React.createElement("main", {
     className: "max-w-7xl mx-auto space-y-6 md:space-y-8"
   }, /*#__PURE__*/React.createElement("section", {
