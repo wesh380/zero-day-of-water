@@ -18,26 +18,12 @@
   <link rel="stylesheet" href="../assets/inline-migration.css" />
 
   <script src="/assets/js/nav-utils.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/header.css">
 </head>
 
 <body class="rtl">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-  <header class="site-topbar" role="banner">
-    <div class="site-topbar__inner">
-      <a class="back-btn" href="/" rel="prev" aria-label="بازگشت" data-back-button>
-        <span class="icon" aria-hidden="true">‹</span>
-        <span class="label">بازگشت</span>
-      </a>
-      <a class="site-topbar__brand" href="/" aria-label="صفحه اصلی">
-        <picture>
-          <source type="image/avif" srcset="/page/landing/logo2.avif">
-          <img src="/page/landing/logo2.webp" alt="wesh360" class="h-10 w-auto md:h-12">
-        </picture>
-        <span>wesh360</span>
-      </a>
-    </div>
-  </header>
-  <main id="main" role="main">
+<main id="main" role="main">
   <!-- ===== HERO KPI BAR (start) ===== -->
   <section id="hero-kpi" class="hero-kpi">
     <div class="hero-left">
@@ -313,5 +299,6 @@
   </script>
 
   <!-- Direct CLD bundle (after core is ready) -->
-  </body>
+    <script src="/assets/js/header.js" defer></script>
+</body>
   </html>
