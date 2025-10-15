@@ -1,40 +1,9 @@
 (function(){
   const HEADER_ID = 'site-header';
-  const PARTIAL_URL = '/assets/partials/header.html';
   const supportsMatchMedia = typeof window.matchMedia === 'function';
   const DESKTOP_MEDIA = supportsMatchMedia ? window.matchMedia('(min-width: 1024px)') : null;
 
   const isDesktop = ()=> DESKTOP_MEDIA ? DESKTOP_MEDIA.matches : window.innerWidth >= 1024;
-
-  const placeHeader = (header, existing)=>{
-    const body = document.body;
-    if(!body || !header){
-      return null;
-    }
-
-    if(existing && existing !== header){
-      existing.replaceWith(header);
-      return header;
-    }
-
-    const skipLink = body.querySelector('.skip-link');
-    if(skipLink && skipLink.parentNode === body){
-      body.insertBefore(header, skipLink.nextSibling);
-    } else {
-      body.insertBefore(header, body.firstChild);
-    }
-    return header;
-  };
-
-  const createHeaderFromHTML = (html)=>{
-    const template = document.createElement('template');
-    template.innerHTML = html.trim();
-    const headerEl = template.content.querySelector('header');
-    if(!headerEl){
-      return null;
-    }
-    return headerEl.cloneNode(true);
-  };
 
   const closeMenu = (header, toggle, menu)=>{
     header.classList.remove('is-open');
@@ -119,35 +88,9 @@
   };
 
   const init = ()=>{
-    const existing = document.getElementById(HEADER_ID);
-    const needsLoad = !existing || existing.children.length === 0;
-
-    const afterSetup = (header)=>{
-      if(header){
-        enhanceHeader(header);
-      }
-    };
-
-    if(needsLoad){
-      fetch(PARTIAL_URL, { credentials: 'same-origin' })
-        .then((response)=>{
-          if(!response.ok){
-            throw new Error('Failed to load header partial');
-          }
-          return response.text();
-        })
-        .then((html)=>{
-          const header = createHeaderFromHTML(html);
-          const current = document.getElementById(HEADER_ID);
-          const inserted = placeHeader(header, current);
-          afterSetup(inserted || document.getElementById(HEADER_ID));
-        })
-        .catch((error)=>{
-          console.warn('site-header: unable to load header partial', error);
-          afterSetup(document.getElementById(HEADER_ID));
-        });
-    } else {
-      afterSetup(existing);
+    const header = document.getElementById(HEADER_ID) || document.querySelector('.site-header');
+    if(header){
+      enhanceHeader(header);
     }
   };
 
