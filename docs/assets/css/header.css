@@ -7,6 +7,8 @@
   color: var(--header-fg, #0f172a);
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
   box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
+  min-height: 64px;
+  overflow: visible;
 }
 
 .site-header__inner {
@@ -20,23 +22,27 @@
 }
 
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  line-height: 1;
+  overflow: visible;
 }
 
 .brand img {
   display: block;
-  height: 36px;
+  height: 40px;
   width: auto;
   max-inline-size: 180px;
   image-rendering: -webkit-optimize-contrast;
+  object-fit: contain;
+  overflow: visible;
 }
 
 @media (max-width: 768px) {
   .brand img {
-    height: 28px;
+    height: 32px;
   }
 }
 
