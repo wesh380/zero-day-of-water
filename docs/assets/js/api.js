@@ -62,4 +62,10 @@ export async function devPingHealth(){
     }
   }catch(e){ console.warn('health failed',e); }
 }
-if (/(localhost|netlify\.app)/.test(location.host)) setTimeout(devPingHealth, 800);
+if (typeof location !== 'undefined') {
+  const host = location.hostname || '';
+  const isPreview = /\.netlify\.app$/.test(host);
+  if (!isPreview && /localhost/.test(host)) {
+    setTimeout(devPingHealth, 800);
+  }
+}
