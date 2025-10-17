@@ -1,51 +1,145 @@
-const MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest';
-const API = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+const DEFAULT_HEADERS = {
+  "access-control-allow-origin": "*",
+  "cache-control": "no-store",
+};
 
-export async function handler(event) {
-  const key = process.env.GEMINI_API_KEY || '';
-  if (!key) return send(500, { error: 'missing_api_key' });
+function jsonResponse(statusCode, body) {
+  return {
+    statusCode,
+    headers: {
+      ...DEFAULT_HEADERS,
+      "content-type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify(body),
+  };
+}
 
-  let bodyIn = {};
-  try { bodyIn = JSON.parse(event.body || '{}'); } catch {}
-  const { prompt, json } = bodyIn;
-  if (!prompt || String(prompt).trim().length < 3) {
-    return send(400, { error: 'empty_prompt' });
+function sanitizePrompt(input) {
+  if (typeof input === "string") return input;
+  return "";
+}
+
+exports.handler = async function handler(event) {
+  if (event.httpMethod && event.httpMethod.toUpperCase() === "OPTIONS") {
+    return {
+      statusCode: 204,
+      headers: {
+        ...DEFAULT_HEADERS,
+        "access-control-allow-methods": "POST,OPTIONS",
+        "access-control-allow-headers": "content-type",
+      },
+      body: "",
+    };
   }
 
-  const body = {
-    contents: [{ parts: [{ text: String(prompt) }]}],
-    ...(json ? { generationConfig: { response_mime_type: 'application/json' } } : {})
-  };
+  try {
+    const KEY = process.env.GEMINI_API_KEY;
+    const MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash-latest";
 
-  const r = await fetch(`${API}?key=${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  });
+    if (!KEY) {
+      return jsonResponse(500, { code: "missing_api_key" });
+    }
 
-  const data = await r.json().catch(()=> ({}));
-  if (!r.ok) {
-    return send(r.status, {
-      error: 'upstream',
-      status: r.status,
-      model: MODEL,
-      detail: sanitize(data)
+    let payloadIn = {};
+    try {
+      payloadIn = JSON.parse(event.body || "{}");
+    } catch (_) {
+      payloadIn = {};
+    }
+
+    const prompt = sanitizePrompt(payloadIn.q ?? payloadIn.prompt ?? "");
+    const wantsJson = Boolean(payloadIn.json);
+
+    if (!prompt || prompt.trim().length < 3) {
+      return jsonResponse(400, { code: "empty_prompt" });
+    }
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`;
+
+    const requestBody = {
+      contents: [{ parts: [{ text: prompt }]}],
+      generationConfig: {
+        temperature: 0.3,
+        ...(wantsJson ? { responseMimeType: "application/json" } : {}),
+      },
+    };
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 30000);
+
+    let response;
+    let lastError;
+
+    try {
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          response = await fetch(url, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(requestBody),
+            signal: controller.signal,
+          });
+
+          if (response.ok || ![500, 503, 504].includes(response.status)) {
+            break;
+          }
+        } catch (error) {
+          if (error && error.name === "AbortError") {
+            throw error;
+          }
+          lastError = error;
+        }
+
+        if (attempt < 2) {
+          const delay = 250 * Math.pow(2, attempt + 1);
+          await new Promise((resolve) => setTimeout(resolve, delay));
+        }
+      }
+    } finally {
+      clearTimeout(timer);
+    }
+
+    if (!response) {
+      throw lastError || new Error("no_response_from_gemini");
+    }
+
+    const raw = await response.text();
+
+    if (!response.ok) {
+      return {
+        statusCode: response.status,
+        headers: {
+          ...DEFAULT_HEADERS,
+          "content-type": "application/json; charset=utf-8",
+        },
+        body: raw || JSON.stringify({ code: "upstream", status: response.status }),
+      };
+    }
+
+    let output = raw;
+    try {
+      const parsed = JSON.parse(raw);
+      const text = parsed?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (typeof text === "string" && text.length > 0) {
+        output = text;
+      }
+    } catch (_) {
+      // If parsing fails, fall back to the raw upstream text.
+    }
+
+    return {
+      statusCode: 200,
+      headers: {
+        ...DEFAULT_HEADERS,
+        "content-type": wantsJson ? "application/json; charset=utf-8" : "text/plain; charset=utf-8",
+      },
+      body: output,
+    };
+  } catch (error) {
+    const statusCode = error && error.name === "AbortError" ? 504 : 500;
+    return jsonResponse(statusCode, {
+      code: "upstream",
+      detail: error && typeof error.message === "string" ? error.message : "unexpected_error",
     });
   }
-
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
-  return send(200, { text, model: MODEL });
-}
-
-function send(status, obj) {
-  return {
-    statusCode: status,
-    headers: {
-      'content-type': 'application/json',
-      'access-control-allow-origin': '*',
-      'cache-control': 'no-store'
-    },
-    body: JSON.stringify(obj)
-  }
-}
-function sanitize(d){ const m=d?.error?.message||d?.message||''; const code=d?.error?.code||d?.code; const st=d?.error?.status||d?.status; return {code,status:st,message:(m||'').slice(0,500)} }
+};

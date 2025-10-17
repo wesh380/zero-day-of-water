@@ -57,6 +57,72 @@
     }
   }
 
+  const aiClient = (typeof window !== 'undefined' && typeof window.askAI === 'function')
+    ? window.askAI
+    : (typeof askAI === 'function' ? askAI : null);
+
+  function createAiError(code, extras = {}) {
+    const err = new Error(code);
+    err.code = code;
+    return Object.assign(err, extras);
+  }
+
+  function mapAiErrorMessage(error) {
+    const code = (error && (error.code || error.message)) ? String(error.code || error.message) : '';
+    if (code === 'missing_api_key') return 'کلید سرویس در محیط جاری تنظیم نیست.';
+    if (code === 'AI_HTTP_429') return 'سهمیه مصرف شده؛ بعداً تلاش کنید.';
+    if (code === 'NETWORK_ERROR' || /AI_HTTP_(500|503|504)/.test(code)) return 'اختلال موقتی سرویس؛ دوباره تلاش شود.';
+    if (/AI_HTTP_(400|403|404)/.test(code)) return 'پیکربندی/مدل نامعتبر.';
+    if (code === 'EMPTY_PROMPT') return 'لطفاً ورودی را تکمیل کنید.';
+    if (code === 'AI_UNAVAILABLE') return 'سرویس هوش مصنوعی در دسترس نیست.';
+    return '⚠️ خطای ناشناخته؛ کمی بعد دوباره تلاش کنید.';
+  }
+
+  function renderAiError(target, error) {
+    if (!target) return;
+    const message = mapAiErrorMessage(error);
+    target.textContent = message;
+    target.focus();
+    if (window.__CLD_DEBUG__) {
+      console.warn('[AI error]', error);
+    }
+  }
+
+  function extractJsonBlock(text) {
+    if (typeof text !== 'string') {
+      throw createAiError('AI_INVALID_JSON');
+    }
+    const trimmed = text.trim();
+    if (!trimmed) {
+      throw createAiError('AI_INVALID_JSON');
+    }
+    const fence = trimmed.match(/```(?:json)?([\s\S]*?)```/i);
+    const candidate = fence ? fence[1] : trimmed;
+    const start = candidate.indexOf('{');
+    const end = candidate.lastIndexOf('}');
+    if (start === -1 || end === -1 || end <= start) {
+      throw createAiError('AI_INVALID_JSON');
+    }
+    return candidate.slice(start, end + 1);
+  }
+
+  function parseAiJson(text) {
+    try {
+      const block = extractJsonBlock(text);
+      return JSON.parse(block);
+    } catch (err) {
+      if (err && err.code === 'AI_INVALID_JSON') throw err;
+      throw createAiError('AI_INVALID_JSON', { cause: err });
+    }
+  }
+
+  async function callAi(prompt, options = {}) {
+    if (!aiClient) {
+      throw createAiError('AI_UNAVAILABLE');
+    }
+    return aiClient(prompt, options);
+  }
+
   // 1) ردپای پنهان آبِ غذا
   (function wireFootprint(){
     const btn = document.getElementById('btn-footprint');
@@ -64,6 +130,12 @@
     const out = document.getElementById('out-footprint');
     const thinking = document.getElementById('ai-thinking');
     if (!btn || !inp || !out || !thinking) return;
+
+    if (!aiClient) {
+      out.textContent = mapAiErrorMessage({ code: 'AI_UNAVAILABLE' });
+      btn.disabled = true;
+      return;
+    }
 
     function renderSkeleton(){
       out.innerHTML = '<div class="space-y-2 animate-pulse"><div class="h-4 bg-gray-200 rounded"></div><div class="h-4 bg-gray-200 rounded w-5/6"></div><div class="h-4 bg-gray-200 rounded w-4/6"></div></div>';
@@ -109,19 +181,10 @@ Your output MUST be a JSON object with this structure:
 All numbers must be numeric (no units attached in JSON).
 `;
 
-        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { model: 'gemini-2.0-flash' });
+        const text = await callAi(`${basePrompt}\nFood list: ${foods}`, { json: true });
         if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
-        const clean = text.replace(/```json|```/g, '').trim();
 
-        let data;
-        try {
-          data = JSON.parse(clean);
-        } catch (e) {
-          clearSkeleton();
-          out.textContent = '⚠️ پاسخ نامعتبر';
-          console.warn('Invalid JSON');
-          return;
-        }
+        const data = parseAiJson(text);
         if (
           typeof data.total_liters !== 'number' ||
           !Array.isArray(data.details) ||
@@ -164,9 +227,12 @@ All numbers must be numeric (no units attached in JSON).
 
       } catch(e){
         clearSkeleton();
-        out.textContent = '⚠️ خطا در محاسبه.';
-        out.focus();
-        console.warn(e.message);
+        if (e && e.code === 'AI_INVALID_JSON') {
+          out.textContent = '⚠️ پاسخ نامعتبر';
+          out.focus();
+        } else {
+          renderAiError(out, e);
+        }
       } finally {
         hideThinkingUI();
       }
@@ -180,6 +246,12 @@ All numbers must be numeric (no units attached in JSON).
     const cut  = document.getElementById('cut-slider');
     const out  = document.getElementById('out-sim');
     if (!btn || !rain || !cut || !out) return;
+
+    if (!aiClient) {
+      out.textContent = mapAiErrorMessage({ code: 'AI_UNAVAILABLE' });
+      btn.disabled = true;
+      return;
+    }
 
     btn.addEventListener('click', async () => {
       try {
@@ -197,8 +269,15 @@ All numbers must be numeric (no units attached in JSON).
   "impact_index":عدد,
   "note_fa":"متن"
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        const text = await callAi(prompt, { json: true });
+        let data;
+        try {
+          data = parseAiJson(text);
+        } catch (err) {
+          out.textContent = '⚠️ پاسخ نامعتبر.';
+          out.focus();
+          return;
+        }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(b => {
@@ -214,7 +293,7 @@ All numbers must be numeric (no units attached in JSON).
         note.className = 'mt-1';
         note.textContent = data.note_fa || '';
         out.replaceChildren(ul, impact, note);
-      } catch(e){ out.textContent = '⚠️ خطا در شبیه‌سازی.'; console.warn(e.message); }
+      } catch(e){ renderAiError(out, e); }
       finally { setLoading(btn, false); }
     });
   })();
@@ -226,6 +305,12 @@ All numbers must be numeric (no units attached in JSON).
     const shw = document.getElementById('shower-input') || document.querySelector('[name="showerMins"]');
     const out = document.getElementById('out-tips');
     if (!btn || !fam || !shw || !out) return;
+
+    if (!aiClient) {
+      out.textContent = mapAiErrorMessage({ code: 'AI_UNAVAILABLE' });
+      btn.disabled = true;
+      return;
+    }
 
     btn.addEventListener('click', async () => {
       try {
@@ -240,8 +325,15 @@ All numbers must be numeric (no units attached in JSON).
 {
   "bullets_fa":[{"tip":"متن","liters_per_day":عدد}]
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        const text = await callAi(prompt, { json: true });
+        let data;
+        try {
+          data = parseAiJson(text);
+        } catch (_) {
+          out.textContent = '⚠️ پاسخ نامعتبر.';
+          out.focus();
+          return;
+        }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(t => {
@@ -255,7 +347,7 @@ All numbers must be numeric (no units attached in JSON).
           ul.appendChild(li);
         });
         out.replaceChildren(ul);
-      } catch(e){ out.textContent = '⚠️ خطا در تولید راهکار.'; console.warn(e.message); }
+      } catch(e){ renderAiError(out, e); }
       finally { setLoading(btn, false); }
     });
   })();

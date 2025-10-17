@@ -36,9 +36,9 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://api.wesh360.ir/:splat"
+  to   = "/.netlify/functions/:splat"
   status = 200
-  force = true
+  force  = true
 
 # --- Ensure SPA rewrite does not catch data files ---
 # If there is a catch-all like /* -> /index.html 200, keep it LAST,
