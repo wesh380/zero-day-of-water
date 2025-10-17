@@ -10,8 +10,8 @@
 
 (function(){
   function initSimulatorUI(){
-    const cs = document.getElementById('cut-slider');
-    const rs = document.getElementById('rain-slider');
+    const cs = document.getElementById('sim-consumption');
+    const rs = document.getElementById('sim-rainfall');
     const cv = document.getElementById('cut-value');
     const rv = document.getElementById('rain-value');
     if(!cs || !rs || !cv || !rv) return; // DOM not ready or ids wrong
@@ -55,6 +55,36 @@
         delete el.dataset.prev;
       }
     }
+  }
+
+  function parseAiJson(text) {
+    if (typeof text !== 'string') return null;
+    const trimmed = text.trim();
+    if (!trimmed) return null;
+    try {
+      return JSON.parse(trimmed);
+    } catch {
+      return null;
+    }
+  }
+
+  function friendlyAiError(err, fallback = '⚠️ خطای نامشخص در ارتباط با هوش مصنوعی.') {
+    const code = (err?.code || '').toString().toUpperCase();
+    if (code.includes('MISSING_API_KEY')) return 'کلید سرویس هوش مصنوعی پیکربندی نشده است.';
+    if (code === 'RATE_LIMIT') return 'سرویس هوش مصنوعی شلوغ است؛ لطفاً کمی بعد دوباره تلاش کنید.';
+    if (code === 'NETWORK_ERROR') return 'ارتباط با سرویس هوش مصنوعی برقرار نشد.';
+    if (code === 'AI_HTTP_504') return 'مهلت پاسخ‌گویی سرویس به پایان رسید. لطفاً دوباره تلاش کنید.';
+    if (code === 'AI_HTTP_503') return 'سرویس هوش مصنوعی موقتاً در دسترس نیست.';
+    if (code.startsWith('AI_HTTP_')) return 'سرویس هوش مصنوعی با خطای داخلی روبه‌رو شد.';
+    if (code === 'INVALID_REQUEST' || code === 'EMPTY_PROMPT') return 'ورودی ارسال‌شده معتبر نبود.';
+    if (code === 'INVALID_API_KEY' || code === 'PERMISSION_DENIED') return 'دسترسی به سرویس هوش مصنوعی مجاز نیست.';
+    if (code === 'MODEL_NOT_FOUND') return 'مدل هوش مصنوعی در این محیط در دسترس نیست.';
+    if (code === 'INVALID_RESPONSE' || code === 'INVALID_JSON') return 'پاسخ هوش مصنوعی قابل استفاده نبود.';
+    const detailMsg = (err?.detail?.detail?.message || err?.detail?.message || err?.message || '').trim();
+    if (detailMsg && !/^AI_HTTP_/i.test(detailMsg)) {
+      return detailMsg.startsWith('⚠️') ? detailMsg : `⚠️ ${detailMsg}`;
+    }
+    return fallback;
   }
 
   // 1) ردپای پنهان آبِ غذا
@@ -109,14 +139,11 @@ Your output MUST be a JSON object with this structure:
 All numbers must be numeric (no units attached in JSON).
 `;
 
-        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { model: 'gemini-2.0-flash' });
+        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { json: true });
         if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
-        const clean = text.replace(/```json|```/g, '').trim();
 
-        let data;
-        try {
-          data = JSON.parse(clean);
-        } catch (e) {
+        const data = parseAiJson(text);
+        if (!data) {
           clearSkeleton();
           out.textContent = '⚠️ پاسخ نامعتبر';
           console.warn('Invalid JSON');
@@ -164,9 +191,9 @@ All numbers must be numeric (no units attached in JSON).
 
       } catch(e){
         clearSkeleton();
-        out.textContent = '⚠️ خطا در محاسبه.';
+        out.textContent = friendlyAiError(e, '⚠️ خطا در محاسبه.');
         out.focus();
-        console.warn(e.message);
+        console.warn(e);
       } finally {
         hideThinkingUI();
       }
@@ -197,8 +224,9 @@ All numbers must be numeric (no units attached in JSON).
   "impact_index":عدد,
   "note_fa":"متن"
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        const text = await askAI(prompt, { json: true });
+        const data = parseAiJson(text);
+        if (!data) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(b => {
@@ -214,7 +242,7 @@ All numbers must be numeric (no units attached in JSON).
         note.className = 'mt-1';
         note.textContent = data.note_fa || '';
         out.replaceChildren(ul, impact, note);
-      } catch(e){ out.textContent = '⚠️ خطا در شبیه‌سازی.'; console.warn(e.message); }
+      } catch(e){ out.textContent = friendlyAiError(e, '⚠️ خطا در شبیه‌سازی.'); console.warn(e); }
       finally { setLoading(btn, false); }
     });
   })();
@@ -240,8 +268,9 @@ All numbers must be numeric (no units attached in JSON).
 {
   "bullets_fa":[{"tip":"متن","liters_per_day":عدد}]
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        const text = await askAI(prompt, { json: true });
+        const data = parseAiJson(text);
+        if (!data) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(t => {
@@ -255,9 +284,9 @@ All numbers must be numeric (no units attached in JSON).
           ul.appendChild(li);
         });
         out.replaceChildren(ul);
-      } catch(e){ out.textContent = '⚠️ خطا در تولید راهکار.'; console.warn(e.message); }
+      } catch(e){ out.textContent = friendlyAiError(e, '⚠️ خطا در تولید راهکار.'); console.warn(e); }
       finally { setLoading(btn, false); }
     });
   })();
 
-    
+
