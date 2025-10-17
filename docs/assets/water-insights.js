@@ -10,8 +10,8 @@
 
 (function(){
   function initSimulatorUI(){
-    const cs = document.getElementById('cut-slider');
-    const rs = document.getElementById('rain-slider');
+    const cs = document.getElementById('sim-consumption');
+    const rs = document.getElementById('sim-rainfall');
     const cv = document.getElementById('cut-value');
     const rv = document.getElementById('rain-value');
     if(!cs || !rs || !cv || !rv) return; // DOM not ready or ids wrong

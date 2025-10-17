@@ -46,29 +46,132 @@ const footprintResultContainer = document.getElementById('water-result');
 const footprintResultDiv = document.getElementById('water-result');
 
 // شبیه‌ساز ---------------------------------------------------------------
-async function handleSimulation() {
-  const consumptionReduction = consumptionSlider.value;
-  const futureRainfall = rainfallSlider.value;
-  // Show a loading state and clear any previous result
-  setLoading(simulateBtn, true);
-  simulationLoader.classList.remove('hidden');
-  simulationResultDiv.textContent = '⏳';
-  simulationResultContainer.classList.remove('hidden');
+document.addEventListener('DOMContentLoaded', () => {
+  const $btn = document.querySelector('#simulate-btn');
+  $btn?.addEventListener('click', handleSimulation);
+});
 
-  const prompt = `
-You are a water crisis analyst for the city of Mashhad. Your task is to simulate the effect of citizen actions and rainfall on the city's "Day Zero" (the day water runs out).
+async function handleSimulation(e) {
+  e?.preventDefault?.();
+
+  const $cons = document.querySelector('#sim-consumption');
+  const $rain = document.querySelector('#sim-rainfall');
+  const $loader = document.querySelector('#simulate-thinking');
+  const $result = document.querySelector('#simulate-result');
+  const $error = document.querySelector('[data-sim-error]');
+
+  if ($error) $error.textContent = '';
+
+  if (!$cons || !$rain) {
+    console.error('Simulation inputs not found');
+    showSimError('ورودی‌های شبیه‌ساز پیدا نشد.');
+    return;
+  }
+
+  const consumption = Number($cons.value);
+  const rainfall = Number($rain.value);
+
+  if (Number.isNaN(consumption) || Number.isNaN(rainfall)) {
+    showSimError('مقادیر نامعتبر است.');
+    return;
+  }
+
+  setSimLoading(true);
+  if ($loader) $loader.classList.remove('hidden');
+  if ($result) {
+    $result.classList.remove('hidden');
+    $result.textContent = '⏳';
+  }
+
+  try {
+    const ask = typeof askAI === 'function'
+      ? askAI
+      : (typeof window !== 'undefined' && typeof window.askAI === 'function' ? window.askAI : null);
+
+    if (typeof ask !== 'function') {
+      const err = new Error('AI client unavailable');
+      err.code = 'unavailable';
+      throw err;
+    }
+
+    const prompt = buildSimulationPrompt(consumption, rainfall);
+    const raw = await ask(prompt, { json: true });
+    const data = safeJSON(raw);
+
+    if (!data || typeof data !== 'object') {
+      const err = new Error('invalid_json');
+      err.code = 'invalid_json';
+      throw err;
+    }
+
+    if (typeof data.new_day_zero !== 'number' || typeof data.explanation !== 'string') {
+      const err = new Error('missing_fields');
+      err.code = 'invalid_json';
+      throw err;
+    }
+
+    renderSimulation(data);
+  } catch (err) {
+    console.error('Simulation error:', err);
+    const msg = friendlySimError(err);
+    showSimError(msg);
+    if ($result) $result.textContent = '';
+  } finally {
+    if ($loader) $loader.classList.add('hidden');
+    setSimLoading(false);
+  }
+}
+
+function safeJSON(txt) {
+  if (typeof txt !== 'string') {
+    return typeof txt === 'object' ? txt : {};
+  }
+  const cleaned = txt
+    .replace(/```json/gi, '')
+    .replace(/```/g, '')
+    .trim();
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    return {};
+  }
+}
+
+function setSimLoading(on) {
+  const $btn = document.querySelector('#simulate-btn');
+  if (!$btn) return;
+  $btn.disabled = !!on;
+  $btn.classList.toggle('opacity-60', !!on);
+}
+
+function showSimError(msg) {
+  const el = document.querySelector('[data-sim-error]');
+  if (el) el.textContent = msg;
+}
+
+function friendlySimError(err) {
+  const code = (err?.code || err?.message || '').toString().toLowerCase();
+  if (code.includes('missing_api_key')) return 'کلید سرویس هوش مصنوعی پیکربندی نشده است.';
+  if (code.includes('empty_prompt')) return 'ورودی مدل معتبر نبود.';
+  if (code.includes('upstream') || code.includes('network') || code.includes('unavailable')) return 'ارتباط با سرویس هوش مصنوعی برقرار نشد.';
+  if (code.includes('invalid_json')) return 'پاسخ هوش مصنوعی قابل استفاده نبود.';
+  return 'پاسخ هوش مصنوعی نامعتبر بود یا ارتباط برقرار نشد.';
+}
+
+function buildSimulationPrompt(consumption, rainfall) {
+  return `You are a water crisis analyst for the city of Mashhad. Your task is to simulate the effect of citizen actions and rainfall on the city's "Day Zero" (the day water runs out).
 Current status:
 - Days until Day Zero: 32 days.
 - Total usable water in dams: 30.5 Million Cubic Meters (MCM).
 - Current daily consumption: 0.953 MCM (30.5 / 32).
 
 User's simulation inputs:
-- Assumed city-wide consumption reduction: ${consumptionReduction}%.
-- Assumed rainfall in the next 30 days: ${futureRainfall} mm.
+- Assumed city-wide consumption reduction: ${consumption}%.
+- Assumed rainfall in the next 30 days: ${rainfall} mm.
 
 Calculation model:
-1) NewDaily = 0.953 * (1 - ${consumptionReduction} / 100)
-2) AddedFromRain = ${futureRainfall} * 0.5  (1mm rain adds 0.5 MCM)
+1) NewDaily = 0.953 * (1 - ${consumption} / 100)
+2) AddedFromRain = ${rainfall} * 0.5  (1mm rain adds 0.5 MCM)
 3) NewTotal = 30.5 + AddedFromRain
 4) NewDayZero = round( NewTotal / NewDaily )
 
@@ -76,52 +179,36 @@ Return ONLY valid JSON (no markdown) with this exact shape:
 {
   "new_day_zero": <number>,
   "explanation": "<short Persian paragraph for non-expert users>"
+}`.trim();
 }
-`.trim();
 
-  // Helper واحد برای فراخوانی AI
-  const callAI = typeof askAI === 'function'
-    ? (p) => askAI(p, { json: true })
-    : (p) => callGeminiAPI(p, true);
+function renderSimulation(data) {
+  const $result = document.querySelector('#simulate-result');
+  const $error = document.querySelector('[data-sim-error]');
+  if ($error) $error.textContent = '';
+  if (!$result) return;
 
-  try {
-    const raw = await callAI(prompt);
-
-    // پاکسازی احتمالی backticks و parse امن
-    const cleaned = String(raw).trim().replace(/^```json\s*|\s*```$/g, '');
-    const result = JSON.parse(cleaned);
-
-    if (typeof result?.new_day_zero !== 'number' || typeof result?.explanation !== 'string') {
-      throw new Error('AI response missing required fields');
-    }
-
-    const baseDays = 32;
-    const diff = result.new_day_zero - baseDays;
-
-    let diffHTML = '';
-    if (diff > 0) {
-      diffHTML = `<span class="text-green-600 font-bold">(+${diff.toLocaleString('fa-IR')} روز)</span>`;
-    } else if (diff < 0) {
-      diffHTML = `<span class="text-red-600 font-bold">(${diff.toLocaleString('fa-IR')} روز)</span>`;
-    }
-
-    simulationResultDiv.innerHTML = `
-      <p class="text-slate-600 mb-2">روز صفر جدید:</p>
-      <p class="text-6xl font-extrabold text-blue-600 mb-3">
-        ${Number(result.new_day_zero).toLocaleString('fa-IR')}
-        <span class="text-2xl">روز</span>
-        ${diffHTML}
-      </p>
-      <p class="text-slate-700 text-lg">${result.explanation}</p>
-    `;
-  } catch (error) {
-    console.error('Gemini API Error (Simulator):', error);
-    showErrorModal('پاسخ هوش مصنوعی قابل استفاده نبود. لطفاً دوباره تلاش کنید.');
-    simulationResultContainer.classList.add('hidden');
-  } finally {
-    simulationLoader.classList.add('hidden');
-    setLoading(simulateBtn, false);
+  const baseDays = 32;
+  const diff = Number(data.new_day_zero) - baseDays;
+  let diffHTML = '';
+  if (Number.isFinite(diff) && diff > 0) {
+    diffHTML = `<span class="text-green-600 font-bold">(+${diff.toLocaleString('fa-IR')} روز)</span>`;
+  } else if (Number.isFinite(diff) && diff < 0) {
+    diffHTML = `<span class="text-red-600 font-bold">(${diff.toLocaleString('fa-IR')} روز)</span>`;
   }
+
+  const dayZero = Number(data.new_day_zero);
+  const explanation = data.explanation || '';
+
+  $result.innerHTML = `
+    <p class="text-slate-600 mb-2">روز صفر جدید:</p>
+    <p class="text-6xl font-extrabold text-blue-600 mb-3">
+      ${Number.isFinite(dayZero) ? dayZero.toLocaleString('fa-IR') : '--'}
+      <span class="text-2xl">روز</span>
+      ${diffHTML}
+    </p>
+    <p class="text-slate-700 text-lg">${explanation}</p>
+  `;
 }
 
 
@@ -345,6 +432,5 @@ async function handleCalculateFootprint() {
   }
 }
 
-document.getElementById('simulate-btn')?.addEventListener('click', handleSimulation);
 document.getElementById('solution-btn')?.addEventListener('click', handleGenerateTips);
 document.getElementById('calc-water-btn')?.addEventListener('click', handleCalculateFootprint);
