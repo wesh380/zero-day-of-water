@@ -17,24 +17,34 @@ export async function handler(event) {
     ...(json ? { generationConfig: { response_mime_type: 'application/json' } } : {})
   };
 
-  const r = await fetch(`${API}?key=${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-  });
+  try {
+    const r = await fetch(`${API}?key=${encodeURIComponent(key)}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body)
+    });
 
-  const data = await r.json().catch(()=> ({}));
-  if (!r.ok) {
-    return send(r.status, {
-      error: 'upstream',
-      status: r.status,
-      model: MODEL,
-      detail: sanitize(data)
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      return send(r.status, {
+        error: 'upstream',
+        status: r.status,
+        model: MODEL,
+        detail: sanitize(data)
+      });
+    }
+
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    return send(200, { text, model: MODEL });
+  } catch (e) {
+    return send(500, {
+      error: 'network_error',
+      detail: {
+        message: e.message,
+        stack: e.stack,
+      }
     });
   }
-
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
-  return send(200, { text, model: MODEL });
 }
 
 function send(status, obj) {
