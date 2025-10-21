@@ -1,4 +1,7 @@
       const hasChart = !!window.Chart;
+      // تعریف NumberFormat برای اعداد فارسی
+      const nf = new Intl.NumberFormat('fa-IR');
+
       document.addEventListener('DOMContentLoaded', () => {
         // همه ایموجی‌ها را به SVG توییتر تبدیل کن (از جمله 🇮🇷)
         if (window.twemoji) {
@@ -59,9 +62,9 @@
 
   // 1) ردپای پنهان آبِ غذا
   (function wireFootprint(){
-    const btn = document.getElementById('btn-footprint');
+    const btn = document.getElementById('calc-water-btn');
     const inp = document.getElementById('food-input');
-    const out = document.getElementById('out-footprint');
+    const out = document.getElementById('water-result');
     const thinking = document.getElementById('ai-thinking');
     if (!btn || !inp || !out || !thinking) return;
 
@@ -175,10 +178,10 @@ All numbers must be numeric (no units attached in JSON).
 
   // 2) شبیه‌ساز آینده آب
   (function wireSimulator(){
-    const btn = document.getElementById('btn-simulate');
+    const btn = document.getElementById('simulate-btn');
     const rain = document.getElementById('rain-slider');
     const cut  = document.getElementById('cut-slider');
-    const out  = document.getElementById('out-sim');
+    const out  = document.getElementById('simulate-result');
     if (!btn || !rain || !cut || !out) return;
 
     btn.addEventListener('click', async () => {
@@ -221,10 +224,10 @@ All numbers must be numeric (no units attached in JSON).
 
   // 3) راهکارهای هوشمند شخصی‌سازی‌شده
   (function wireTips(){
-    const btn = document.getElementById('btn-tips');
+    const btn = document.getElementById('solution-btn');
     const fam = document.getElementById('family-input') || document.querySelector('[name="familySize"]');
     const shw = document.getElementById('shower-input') || document.querySelector('[name="showerMins"]');
-    const out = document.getElementById('out-tips');
+    const out = document.getElementById('solution-result');
     if (!btn || !fam || !shw || !out) return;
 
     btn.addEventListener('click', async () => {

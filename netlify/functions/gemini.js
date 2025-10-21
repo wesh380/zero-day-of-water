@@ -1,5 +1,5 @@
-const MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash-latest';
-const API = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+// استفاده از مدل جدید Gemini - مدل‌های 1.5 از آوریل 2025 منسوخ شده‌اند
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp';
 
 export async function handler(event) {
   const key = process.env.GEMINI_API_KEY || '';
@@ -7,10 +7,14 @@ export async function handler(event) {
 
   let bodyIn = {};
   try { bodyIn = JSON.parse(event.body || '{}'); } catch {}
-  const { prompt, json } = bodyIn;
+  const { prompt, json, model } = bodyIn;
   if (!prompt || String(prompt).trim().length < 3) {
     return send(400, { error: 'empty_prompt' });
   }
+
+  // استفاده از model ارسال شده یا مدل پیش‌فرض
+  const selectedModel = model || DEFAULT_MODEL;
+  const API = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent`;
 
   const body = {
     contents: [{ parts: [{ text: String(prompt) }]}],
@@ -34,7 +38,7 @@ export async function handler(event) {
   }
 
   const text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
-  return send(200, { text, model: MODEL });
+  return send(200, { text, model: selectedModel });
 }
 
 function send(status, obj) {
