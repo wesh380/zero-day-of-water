@@ -1,4 +1,7 @@
       const hasChart = !!window.Chart;
+      // تعریف NumberFormat برای اعداد فارسی
+      const nf = new Intl.NumberFormat('fa-IR');
+
       document.addEventListener('DOMContentLoaded', () => {
         // همه ایموجی‌ها را به SVG توییتر تبدیل کن (از جمله 🇮🇷)
         if (window.twemoji) {
@@ -59,9 +62,9 @@
 
   // 1) ردپای پنهان آبِ غذا
   (function wireFootprint(){
-    const btn = document.getElementById('btn-footprint');
+    const btn = document.getElementById('calc-water-btn');
     const inp = document.getElementById('food-input');
-    const out = document.getElementById('out-footprint');
+    const out = document.getElementById('water-result');
     const thinking = document.getElementById('ai-thinking');
     if (!btn || !inp || !out || !thinking) return;
 
@@ -109,7 +112,8 @@ Your output MUST be a JSON object with this structure:
 All numbers must be numeric (no units attached in JSON).
 `;
 
-        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { model: 'gemini-2.0-flash' });
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { json: true });
         if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
         const clean = text.replace(/```json|```/g, '').trim();
 
@@ -175,15 +179,18 @@ All numbers must be numeric (no units attached in JSON).
 
   // 2) شبیه‌ساز آینده آب
   (function wireSimulator(){
-    const btn = document.getElementById('btn-simulate');
+    const btn = document.getElementById('simulate-btn');
     const rain = document.getElementById('rain-slider');
     const cut  = document.getElementById('cut-slider');
-    const out  = document.getElementById('out-sim');
+    const out  = document.getElementById('simulate-result');
+    const thinking = document.getElementById('simulate-thinking');
     if (!btn || !rain || !cut || !out) return;
 
     btn.addEventListener('click', async () => {
       try {
-        setLoading(btn, true); out.textContent = '⏳';
+        setLoading(btn, true);
+        out.textContent = '⏳';
+        if (thinking) thinking.classList.remove('hidden');
         const rainVal = rain.value || rain.getAttribute('value') || '0';
         const cutVal  = cut.value  || cut.getAttribute('value')  || '0';
         const prompt =
@@ -197,8 +204,17 @@ All numbers must be numeric (no units attached in JSON).
   "impact_index":عدد,
   "note_fa":"متن"
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(prompt, { json: true });
+        if (window.__CLD_DEBUG__) console.log("Simulator response:", text);
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch(e) {
+          out.textContent = '⚠️ پاسخ نامعتبر.';
+          console.warn('JSON parse error (Simulator):', e.message, 'Raw:', text);
+          return;
+        }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(b => {
@@ -214,22 +230,31 @@ All numbers must be numeric (no units attached in JSON).
         note.className = 'mt-1';
         note.textContent = data.note_fa || '';
         out.replaceChildren(ul, impact, note);
-      } catch(e){ out.textContent = '⚠️ خطا در شبیه‌سازی.'; console.warn(e.message); }
-      finally { setLoading(btn, false); }
+      } catch(e){
+        out.textContent = '⚠️ خطا در شبیه‌سازی.';
+        console.warn('Simulation error:', e.message);
+      }
+      finally {
+        setLoading(btn, false);
+        if (thinking) thinking.classList.add('hidden');
+      }
     });
   })();
 
   // 3) راهکارهای هوشمند شخصی‌سازی‌شده
   (function wireTips(){
-    const btn = document.getElementById('btn-tips');
+    const btn = document.getElementById('solution-btn');
     const fam = document.getElementById('family-input') || document.querySelector('[name="familySize"]');
     const shw = document.getElementById('shower-input') || document.querySelector('[name="showerMins"]');
-    const out = document.getElementById('out-tips');
+    const out = document.getElementById('solution-result');
+    const thinking = document.getElementById('solution-thinking');
     if (!btn || !fam || !shw || !out) return;
 
     btn.addEventListener('click', async () => {
       try {
-        setLoading(btn, true); out.textContent = '⏳';
+        setLoading(btn, true);
+        out.textContent = '⏳';
+        if (thinking) thinking.classList.remove('hidden');
         const members = fam.value || '4';
         const shower  = shw.value || '10';
         const prompt =
@@ -240,8 +265,17 @@ All numbers must be numeric (no units attached in JSON).
 {
   "bullets_fa":[{"tip":"متن","liters_per_day":عدد}]
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
-        let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(prompt, { json: true });
+        if (window.__CLD_DEBUG__) console.log("Tips response:", text);
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch(e) {
+          out.textContent = '⚠️ پاسخ نامعتبر.';
+          console.warn('JSON parse error (Tips):', e.message, 'Raw:', text);
+          return;
+        }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
         (data.bullets_fa || []).forEach(t => {
@@ -255,8 +289,14 @@ All numbers must be numeric (no units attached in JSON).
           ul.appendChild(li);
         });
         out.replaceChildren(ul);
-      } catch(e){ out.textContent = '⚠️ خطا در تولید راهکار.'; console.warn(e.message); }
-      finally { setLoading(btn, false); }
+      } catch(e){
+        out.textContent = '⚠️ خطا در تولید راهکار.';
+        console.warn('Tips generation error:', e.message);
+      }
+      finally {
+        setLoading(btn, false);
+        if (thinking) thinking.classList.add('hidden');
+      }
     });
   })();
 

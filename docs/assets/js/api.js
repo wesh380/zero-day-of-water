@@ -26,7 +26,12 @@ function isServerFailure(response){
 }
 
 export async function apiFetch(path, init={}){
-  if (path.startsWith('/api/gemini')) return fetch(path, init);
+  // Netlify Functions باید از مسیر /.netlify/functions/ استفاده کنند
+  // چون /api/* به سرور خارجی redirect می‌شود
+  if (path.startsWith('/api/gemini')) {
+    const functionPath = path.replace('/api/gemini', '/.netlify/functions/gemini');
+    return fetch(functionPath, init);
+  }
   const base = await resolveBaseUrl();
   const url = new URL(path, base).toString();
   const cldAction = isCldActionPath(path);

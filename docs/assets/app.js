@@ -47,6 +47,19 @@ const footprintResultDiv = document.getElementById('water-result');
 
 // شبیه‌ساز ---------------------------------------------------------------
 async function handleSimulation() {
+  // تعریف المنت‌های DOM
+  const consumptionSlider = document.getElementById('cut-slider');
+  const rainfallSlider = document.getElementById('rain-slider');
+  const simulateBtn = document.getElementById('simulate-btn');
+  const simulationLoader = document.getElementById('simulate-thinking');
+  const simulationResultDiv = document.getElementById('simulate-result');
+  const simulationResultContainer = document.getElementById('simulate-result');
+
+  if (!consumptionSlider || !rainfallSlider || !simulateBtn || !simulationLoader || !simulationResultDiv) {
+    console.error('Required DOM elements not found for simulation');
+    return;
+  }
+
   const consumptionReduction = consumptionSlider.value;
   const futureRainfall = rainfallSlider.value;
   // Show a loading state and clear any previous result

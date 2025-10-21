@@ -1,14 +1,19 @@
 import { apiFetch, getBaseUrl } from "/assets/js/api.js";
 void getBaseUrl();
-export async function askAI(prompt, { json = false } = {}) {
+export async function askAI(prompt, { json = false, model = null } = {}) {
   if (!prompt || String(prompt).trim().length < 3) {
     // Prevent sending empty prompts
     throw new Error('EMPTY_PROMPT');
   }
+  const requestBody = { prompt, json: !!json };
+  // اضافه کردن model به request در صورت وجود
+  if (model) {
+    requestBody.model = model;
+  }
   const res = await apiFetch('/api/gemini', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ prompt, json: !!json })
+    body: JSON.stringify(requestBody)
   });
   const text = await res.text();
   if (!res.ok) {
