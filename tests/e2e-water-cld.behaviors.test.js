@@ -75,7 +75,7 @@ async function getSamplePositions(page, count = 6){
   // 1) Positive-edge filter: hide negative edges, ensure only positives visible
   await page.waitForSelector('#f-neg', { timeout: 10000 });
   await page.click('#f-neg');           // toggle OFF negatives
-  await page.waitForTimeout(150);
+  await page.waitForSelector('#dummy-selector', { timeout: 150 }).catch(() => {});
   let s1 = await getCyStats(page);
   assert(s1.posVis > 0, 'positive edges should be visible');
   assert.strictEqual(s1.negVis, 0, 'negative edges must be hidden after clicking #f-neg');
@@ -83,10 +83,10 @@ async function getSamplePositions(page, count = 6){
   // 2) Negative-edge filter: now hide positives and show negatives
   await page.waitForSelector('#f-pos', { timeout: 10000 });
   await page.click('#f-pos');           // toggle OFF positives (now both off)
-  await page.waitForTimeout(150);
+  await page.waitForSelector('#dummy-selector', { timeout: 150 }).catch(() => {});
   // Re-enable negatives by clicking #f-neg again
   await page.click('#f-neg');           // toggle ON negatives
-  await page.waitForTimeout(150);
+  await page.waitForSelector('#dummy-selector', { timeout: 150 }).catch(() => {});
   let s2 = await getCyStats(page);
   assert(s2.negVis > 0, 'negative edges should be visible');
   assert.strictEqual(s2.posVis, 0, 'positive edges must be hidden');
@@ -95,7 +95,7 @@ async function getSamplePositions(page, count = 6){
   await page.waitForSelector('#q', { timeout: 10000 });
   await page.focus('#q');
   await page.keyboard.type('آب', { delay: 40 });
-  await page.waitForTimeout(200);
+  await page.waitForSelector('#dummy-selector', { timeout: 200 }).catch(() => {});
   let s3 = await getCyStats(page);
   assert(s3.highlighted > 0, 'at least one node should be highlighted for search');
   assert(s3.fadedEdges >= 0, 'faded edge count should be measurable (>=0)');

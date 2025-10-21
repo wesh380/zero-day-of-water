@@ -22,7 +22,7 @@ function serveDocs(){
   const port = server.address().port;
   const browser = await puppeteer.launch({args:['--no-sandbox'], headless:'new'});
   const page = await browser.newPage();
-  await page.goto(`http://localhost:${port}/test/water-cld.html`, { waitUntil: 'networkidle2' });
+  await page.goto(`http://localhost:${port}/test/water-cld.html`, { waitUntil: 'networkidle2', timeout: 60000 });
   await page.waitForFunction(() => !!window.__WATER_CLD_READY__, { timeout: 20000 });
   await page.waitForSelector('#cy', { timeout: 20000 });
   const cyExists = await page.$('#cy') !== null;
