@@ -112,7 +112,8 @@ Your output MUST be a JSON object with this structure:
 All numbers must be numeric (no units attached in JSON).
 `;
 
-        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { model: 'gemini-2.0-flash' });
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { json: false });
         if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
         const clean = text.replace(/```json|```/g, '').trim();
 
@@ -200,7 +201,8 @@ All numbers must be numeric (no units attached in JSON).
   "impact_index":عدد,
   "note_fa":"متن"
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(prompt, { json: false });
         let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
@@ -243,7 +245,8 @@ All numbers must be numeric (no units attached in JSON).
 {
   "bullets_fa":[{"tip":"متن","liters_per_day":عدد}]
 }`;
-        const text = await askAI(prompt, { model: 'gemini-2.0-flash' });
+        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
+        const text = await askAI(prompt, { json: false });
         let data; try { data = JSON.parse(text); } catch(_) { out.textContent = '⚠️ پاسخ نامعتبر.'; return; }
         const ul = document.createElement('ul');
         ul.className = 'list-disc pr-4';
