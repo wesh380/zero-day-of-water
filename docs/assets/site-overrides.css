@@ -2,7 +2,7 @@
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
 /* From electricity/peak.html */
-body {
+[data-page="electricity-peak"] body {
     font-family: 'Vazirmatn', sans-serif;
     background-color: #f1f5f9;
 }
@@ -15,5 +15,13 @@ body {
 
 /* From agrivoltaics/index.dev.html */
 /* استایل پشتیبان در صورت در دسترس نبودن Tailwind */
-body{font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:#0a0a0a; color:#eee}
-a{color:#6ee7b7}
+html[data-page="agrovoltaics"] body,
+html[data-page="agrivoltaics-dev"] body {
+    font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    background:#0a0a0a;
+    color:#eee;
+}
+html[data-page="agrovoltaics"] a,
+html[data-page="agrivoltaics-dev"] a {
+    color:#6ee7b7;
+}
