@@ -26,6 +26,10 @@
 
   <script src="/assets/js/nav-utils.js" defer></script>
   <link rel="stylesheet" href="/assets/css/header.css">
+  <script>
+    /* Suppress Cloudflare Beacon Errors */
+    window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('cloudflareinsights.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
+  </script>
 </head>
 
 <body class="rtl">

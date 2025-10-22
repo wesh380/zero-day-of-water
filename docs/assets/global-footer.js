@@ -1,3 +1,29 @@
+/**
+ * Suppress Cloudflare Beacon Loading Errors
+ * این کد خطاهای مربوط به بارگذاری beacon.min.js را در کنسول پنهان می‌کند
+ * این خطاها معمولاً توسط ad-blocker ها ایجاد می‌شوند و مشکلی برای عملکرد سایت ندارند
+ */
+(function() {
+  'use strict';
+
+  // مدیریت خطاهای network در سطح window برای اسکریپت‌های Cloudflare
+  window.addEventListener('error', function(e) {
+    // اگر خطا مربوط به بارگذاری beacon است
+    if (e.target && e.target.src &&
+        (e.target.src.includes('cloudflareinsights.com') ||
+         e.target.src.includes('beacon.min.js'))) {
+      // جلوگیری از نمایش خطا در کنسول
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, true);
+
+})();
+
+/**
+ * Global Footer Management
+ */
 (function () {
   const FLAG_PATH = "/assets/IRAN-FLAG.png"; // موجود در مخزن؛ فایل جدید نساز!
 
