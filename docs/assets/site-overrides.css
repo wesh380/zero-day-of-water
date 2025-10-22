@@ -25,3 +25,26 @@ html[data-page="agrovoltaics"] a,
 html[data-page="agrivoltaics-dev"] a {
     color:#6ee7b7;
 }
+
+/* استایل‌های input و select برای agrovoltaics */
+html[data-page="agrovoltaics"] input::placeholder,
+html[data-page="agrivoltaics-dev"] input::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+html[data-page="agrovoltaics"] select,
+html[data-page="agrivoltaics-dev"] select {
+    color: #f3f4f6;
+}
+
+html[data-page="agrovoltaics"] select option,
+html[data-page="agrivoltaics-dev"] select option {
+    background-color: #171717;
+    color: #f3f4f6;
+}
+
+html[data-page="agrovoltaics"] input[type="number"],
+html[data-page="agrivoltaics-dev"] input[type="number"] {
+    color: #f3f4f6;
+}

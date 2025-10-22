@@ -88,7 +88,7 @@ const NumberInput = ({
   step: step,
   value: value,
   onChange: e => onChange(Number(e.target.value)),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
 }));
 const Select = ({
   label,
@@ -102,10 +102,11 @@ const Select = ({
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100"
+  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
-  value: o.value
+  value: o.value,
+  className: "bg-neutral-900 text-gray-100"
 }, o.label))));
 const KPI = ({
   title,
