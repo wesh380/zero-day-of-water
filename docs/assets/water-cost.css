@@ -20,14 +20,15 @@
 
 .tbl{width:100%; border-collapse:separate; border-spacing:0 .5rem; font-size:.92rem;}
 .tbl th{color:var(--muted); font-weight:700; text-align:right; padding:0 .5rem .375rem;}
-.tbl td{background:#F8FAFC; border:.0625rem solid var(--border); padding:.625rem .75rem; border-radius:.625rem;}
+.tbl td{background:#F8FAFC; border:.0625rem solid var(--border); padding:.625rem .75rem; border-radius:.625rem; color:#0F172A;}
 .progress{height:.5rem; background:#E5E7EB; border-radius:62.4375rem; overflow:hidden;}
 .progress > span{display:block; height:100%; background:linear-gradient(90deg,var(--primary),var(--accent));}
 
 .controls .group{display:grid; margin-bottom:0;}
 .controls label{font-weight:700; font-size:.95rem;}
 .controls .hint{color:var(--muted); font-size:.86rem;}
-.controls input[type="number"]{width:100%; padding:.6rem .7rem; border:.0625rem solid var(--border); border-radius:.625rem; background:#fff;}
+.controls input[type="number"]{width:100%; padding:.6rem .7rem; border:.0625rem solid var(--border); border-radius:.625rem; background:#fff; color:#0F172A;}
+.controls input[type="number"]::placeholder{color:#64748B; opacity:1;}
 .controls input[type="range"]{width:100%;}
 .inline{display:flex; gap:.625rem; align-items:center;}
 .badge{display:inline-block; background:#EFF6FF; color:#1E40AF; border:.0625rem solid #DBEAFE; padding:.2rem .45rem; border-radius:62.4375rem; font-weight:800; font-size:.78rem;}
