@@ -154,12 +154,13 @@
     .tabs{display:flex;gap:8px;margin-bottom:10px;}
     .tab.active{background:var(--accent);}
     #panel-formula textarea{width:100%;height:80px;margin-top:8px;background:var(--bg);color:var(--text);border:1px solid var(--muted);border-radius:8px;padding:6px;font-family:monospace;}
+    #panel-formula textarea::placeholder{color:#9fb3ad;opacity:0.7;}
     #panel-formula select{width:100%;}
     .slider{margin-bottom:12px;}
     .slider label{display:flex;justify-content:space-between;font-weight:600;}
     .actions{display:flex;gap:8px;margin-top:8px;}
     #sc-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px;}
-    #sc-table th,#sc-table td{border:1px solid var(--muted);padding:4px;text-align:center;}
+    #sc-table th,#sc-table td{border:1px solid var(--muted);padding:4px;text-align:center;color:var(--text,#e6f1ef);}
     #sc-table tr.selected{background:var(--muted);}
     .hidden{display:none;}
     #right-panel{overflow:hidden;}
