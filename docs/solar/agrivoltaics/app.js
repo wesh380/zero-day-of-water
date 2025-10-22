@@ -88,7 +88,8 @@ const NumberInput = ({
   step: step,
   value: value,
   onChange: e => onChange(Number(e.target.value)),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500",
+  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
 }));
 const Select = ({
   label,
@@ -102,11 +103,13 @@ const Select = ({
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
+  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
   value: o.value,
-  className: "bg-neutral-900 text-gray-100"
+  className: "bg-neutral-900 text-white",
+  style: {color: '#ffffff', backgroundColor: '#171717'}
 }, o.label))));
 const KPI = ({
   title,

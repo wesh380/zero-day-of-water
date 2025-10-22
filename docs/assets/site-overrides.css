@@ -29,22 +29,39 @@ html[data-page="agrivoltaics-dev"] a {
 /* استایل‌های input و select برای agrovoltaics */
 html[data-page="agrovoltaics"] input::placeholder,
 html[data-page="agrivoltaics-dev"] input::placeholder {
-    color: #9ca3af;
-    opacity: 1;
+    color: #d1d5db !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #d1d5db !important;
 }
 
 html[data-page="agrovoltaics"] select,
 html[data-page="agrivoltaics-dev"] select {
-    color: #f3f4f6;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-page="agrovoltaics"] select option,
 html[data-page="agrivoltaics-dev"] select option {
-    background-color: #171717;
-    color: #f3f4f6;
+    background-color: #171717 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 
 html[data-page="agrovoltaics"] input[type="number"],
 html[data-page="agrivoltaics-dev"] input[type="number"] {
-    color: #f3f4f6;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+html[data-page="agrovoltaics"] input[type="text"],
+html[data-page="agrovoltaics-dev"] input[type="text"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* تقویت رنگ متن برای همه input‌ها */
+html[data-page="agrovoltaics"] input,
+html[data-page="agrovoltaics-dev"] input {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
