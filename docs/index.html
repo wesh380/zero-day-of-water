@@ -299,6 +299,27 @@
   addEventListener('resize', setHF);
 })();
 </script>
+  <script>
+    // Global error handler to suppress third-party script errors
+    window.addEventListener('error', function(e) {
+      // Suppress errors from external scripts (Porsline, Cloudflare, etc.)
+      if (e.filename && (
+        e.filename.includes('porsline.ir') ||
+        e.filename.includes('cloudflareinsights.com') ||
+        e.filename.includes('cdn.porsline.ir')
+      )) {
+        e.preventDefault();
+        console.warn('External script error suppressed:', e.message);
+        return true;
+      }
+      // Suppress specific known errors from third-party libraries
+      if (e.message && e.message.includes('handleTextInputStart')) {
+        e.preventDefault();
+        console.warn('Third-party library error suppressed:', e.message);
+        return true;
+      }
+    }, true);
+  </script>
   <script defer src="/assets/js/easter.js"></script>
   <script defer src="./assets/parallax.js"></script>
   <script type="module" src="/index.js" defer charset="utf-8"></script>
@@ -311,29 +332,40 @@
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9e1a59b59254492b858c1d1d730c72c7"}'></script>
   <!-- دکمه ثبت بازخورد Porsline -->
   <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
+    onclick="clzdTiLuIp('porsline-side-tab-iframe');typeof showSideTab==='function'&&showSideTab()">
     بازخورد دهید
   </a>
   <script>
     (function() {
-      var js,q,d=document,
-        gi=d.getElementById,
-        ifid='porsline-side-tab-iframe',
-        ce=d.createElement,
-        gt=d.getElementsByTagName,
-        id="porsline-share",
-        b="https://cdn.porsline.ir/static/panel/v2/statics/";
-      if(!gi.call(d,id)) {
-        js=ce.call(d,"script");
-        js.id = id;js.setAttribute("data-position","right");js.src=b+"side-tab.js";
-        q=gt.call(d,"script")[0];
-        q.parentNode.insertBefore(js,q)
+      try {
+        var js,q,d=document,
+          gi=d.getElementById,
+          ifid='porsline-side-tab-iframe',
+          ce=d.createElement,
+          gt=d.getElementsByTagName,
+          id="porsline-share",
+          b="https://cdn.porsline.ir/static/panel/v2/statics/";
+        if(!gi.call(d,id)) {
+          js=ce.call(d,"script");
+          js.id = id;js.setAttribute("data-position","right");js.src=b+"side-tab.js";
+          js.onerror = function() { console.warn('Porsline script failed to load'); };
+          q=gt.call(d,"script")[0];
+          q.parentNode.insertBefore(js,q)
+        }
+      } catch(e) {
+        console.warn('Porsline initialization error:', e.message);
       }
     })();
     var clzdTiLuIp = function (ifid) {
-      document.getElementById(ifid).fetchPriority = 'high';
-      document.getElementById(ifid).src =
-        "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0"
+      try {
+        var el = document.getElementById(ifid);
+        if (el) {
+          el.fetchPriority = 'high';
+          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0"
+        }
+      } catch(e) {
+        console.warn('Porsline iframe error:', e.message);
+      }
     }
   </script>
 </body>
