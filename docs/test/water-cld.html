@@ -333,5 +333,32 @@
     <script defer src="/assets/js/ui-prune-ctas.js"></script>
     <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
+  <!-- دکمه ثبت بازخورد Porsline -->
+  <a class="porsline-button-wrapper" href="#porsline-side-tab"
+    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
+    بازخورد دهید
+  </a>
+  <script>
+    (function() {
+      var js,q,d=document,
+        gi=d.getElementById,
+        ifid='porsline-side-tab-iframe',
+        ce=d.createElement,
+        gt=d.getElementsByTagName,
+        id="porsline-share",
+        b="https://cdn.porsline.ir/static/panel/v2/statics/";
+      if(!gi.call(d,id)) {
+        js=ce.call(d,"script");
+        js.id = id;js.setAttribute("data-position","right");js.src=b+"side-tab.js";
+        q=gt.call(d,"script")[0];
+        q.parentNode.insertBefore(js,q)
+      }
+    })();
+    var clzdTiLuIp = function (ifid) {
+      document.getElementById(ifid).fetchPriority = 'high';
+      document.getElementById(ifid).src =
+        "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0"
+    }
+  </script>
 </body>
   </html>
