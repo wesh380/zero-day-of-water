@@ -103,7 +103,9 @@
     if (state.chartLib) return true;
     try{
       // lazy-load Chart.js if present in /vendor
-      state.chartLib = await import('/vendor/chart.umd.min.js');
+      const chartModule = await import('/vendor/chart.umd.min.js');
+      // Chart.js UMD exports as default
+      state.chartLib = chartModule.default || chartModule;
       return true;
     }catch(_){
       return false;
@@ -152,7 +154,9 @@
       state.chart = null;
     }
     const unit = state.utility==='water' ? 'L' : 'kWh';
-    state.chart = new state.chartLib.Chart(ctx, {
+    // Use Chart.js constructor (works for both default export and named export)
+    const Chart = state.chartLib.Chart || state.chartLib;
+    state.chart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['مصرف شما', 'هدف جهانی'],
