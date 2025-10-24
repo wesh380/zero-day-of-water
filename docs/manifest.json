@@ -1,0 +1,150 @@
+{
+  "name": "Wesh360 - سیستم مدیریت آب و برق",
+  "short_name": "Wesh360",
+  "description": "پلتفرم جامع مدیریت و نظارت بر مصرف آب و برق با داشبوردهای تحلیلی پیشرفته",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/assets/images/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": [
+    "utilities",
+    "productivity",
+    "business"
+  ],
+  "shortcuts": [
+    {
+      "name": "داشبورد آب",
+      "short_name": "آب",
+      "description": "مشاهده مصرف آب",
+      "url": "/water/insights.html",
+      "icons": [
+        {
+          "src": "/assets/images/shortcut-water.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "داشبورد برق",
+      "short_name": "برق",
+      "description": "مشاهده مصرف برق",
+      "url": "/electricity/peak.html",
+      "icons": [
+        {
+          "src": "/assets/images/shortcut-electricity.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "گزارش‌ها",
+      "short_name": "گزارش",
+      "description": "مشاهده گزارش‌های ماهانه",
+      "url": "/reports/",
+      "icons": [
+        {
+          "src": "/assets/images/shortcut-reports.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share/",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "file",
+          "accept": [
+            "image/*",
+            "application/pdf"
+          ]
+        }
+      ]
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+wesh",
+      "url": "/handler?url=%s"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
