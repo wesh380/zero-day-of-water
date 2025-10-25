@@ -63,38 +63,15 @@
 .h-auto{ height:auto; }
 .aspect-square{ aspect-ratio: 1 / 1; }
 
-/* Porsline feedback button */
+/* Porsline feedback button - minimal override for colors only */
 .porsline-button-wrapper {
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: #ffffff;
-  font-family: Vazirmatn, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 16px 10px;
-  border: none;
-  border-radius: 0 8px 8px 0;
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-  cursor: pointer;
-  text-decoration: none;
-  z-index: 1000;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, box-shadow;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease !important;
 }
 
 .porsline-button-wrapper:hover {
-  background: linear-gradient(135deg, #0284c7 0%, #075985 100%);
-  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
-  transform: translateY(-50%) translateX(2px);
-}
-
-.porsline-button-wrapper:active {
-  transform: translateY(-50%) translateX(0px) scale(0.98);
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+  background: linear-gradient(135deg, #0284c7 0%, #075985 100%) !important;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4) !important;
 }
 

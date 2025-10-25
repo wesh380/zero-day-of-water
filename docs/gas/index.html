@@ -81,55 +81,29 @@
     بازخورد دهید
   </a>
   <script>
-    // Optimized lazy-loading Porsline feedback script
+    // Load Porsline script immediately with async for better performance
     (function() {
-      let porslineLoaded = false;
-      let porslineScriptLoading = false;
-
-      function loadPorslineScript() {
-        if (porslineLoaded || porslineScriptLoading) return;
-        porslineScriptLoading = true;
-
-        try {
-          const d = document;
-          const id = "porsline-share";
-
-          if (!d.getElementById(id)) {
-            const js = d.createElement("script");
-            js.id = id;
-            js.setAttribute("data-position", "right");
-            js.src = "https://cdn.porsline.ir/static/panel/v2/statics/side-tab.js";
-            js.async = true;
-            js.onerror = function() {
-              console.warn('Porsline script failed to load');
-              porslineScriptLoading = false;
-            };
-            js.onload = function() {
-              porslineLoaded = true;
-            };
-
-            const firstScript = d.getElementsByTagName("script")[0];
-            firstScript.parentNode.insertBefore(js, firstScript);
-          }
-        } catch(e) {
-          console.warn('Porsline initialization error:', e.message);
-          porslineScriptLoading = false;
+      try {
+        var js,q,d=document,
+          gi=d.getElementById,
+          ce=d.createElement,
+          gt=d.getElementsByTagName,
+          id="porsline-share",
+          b="https://cdn.porsline.ir/static/panel/v2/statics/";
+        if(!gi.call(d,id)) {
+          js=ce.call(d,"script");
+          js.id = id;
+          js.setAttribute("data-position","right");
+          js.src=b+"side-tab.js";
+          js.async = true;
+          js.onerror = function() {
+            console.warn('Porsline script failed to load');
+          };
+          q=gt.call(d,"script")[0];
+          q.parentNode.insertBefore(js,q);
         }
-      }
-
-      // Load script on first interaction with feedback button
-      const feedbackBtn = document.querySelector('.porsline-button-wrapper');
-      if (feedbackBtn) {
-        feedbackBtn.addEventListener('mouseenter', loadPorslineScript, { once: true });
-        feedbackBtn.addEventListener('touchstart', loadPorslineScript, { once: true });
-        feedbackBtn.addEventListener('focus', loadPorslineScript, { once: true });
-      }
-
-      // Fallback: load after idle time
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => loadPorslineScript(), { timeout: 3000 });
-      } else {
-        setTimeout(loadPorslineScript, 3000);
+      } catch(e) {
+        console.warn('Porsline initialization error:', e.message);
       }
     })();
 
