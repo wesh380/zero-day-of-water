@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Language" content="fa-IR">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نمایشگر UI جدید Wesh360</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg" />
+  <link rel="stylesheet" href="/assets/css/tailwind.css">
+  <link rel="stylesheet" href="/assets/fonts.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/ui-enhancements.css">
+  <link rel="stylesheet" href="/water/water.css">
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <script defer src="/assets/js/ui-enhancements.js"></script>
+  <script src="/assets/js/nav-utils.js" defer></script>
+  <style>
+    .showcase-section {
+      margin-bottom: 4rem;
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .showcase-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+      margin-bottom: 1rem;
+      border-bottom: 3px solid var(--color-accent-blue);
+      padding-bottom: 0.5rem;
+    }
+
+    .showcase-subtitle {
+      font-size: 1.2rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .demo-card {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .color-box {
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      color: white;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+    }
+
+    .button-showcase {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+  <header id="site-header" class="site-header" dir="rtl" role="banner" aria-label="سربرگ سایت">
+    <div class="site-header__inner container">
+      <a class="brand brand--rtl" href="/" aria-label="خانه هم‌افزایی انرژی و آب">
+        <img src="/assets/img/logo/wesh360.svg" alt="WESH360" decoding="async" fetchpriority="high" />
+      </a>
+      <button class="nav-toggle" type="button" aria-label="نمایش منو" aria-expanded="false" aria-controls="site-header-menu">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+      </button>
+      <div id="site-header-menu" class="site-header__menu" data-header-menu aria-hidden="true">
+        <nav class="site-header__nav" aria-label="ناوبری اصلی">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="/">خانه</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="/water/hub">داشبورد آب</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="/dashboards/">داشبوردها</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" role="main" class="dashboard container mx-auto p-4 md:p-8">
+    <header class="text-center mb-12">
+      <h1 class="text-5xl font-extrabold mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        ✨ نمایشگر UI جدید Wesh360 ✨
+      </h1>
+      <p class="text-xl text-slate-600">کشف کنید چه بهبودهایی به سایت اضافه شده است</p>
+    </header>
+
+    <!-- Theme Toggle Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">🌓 سیستم دارک مود</h2>
+      <p class="showcase-subtitle">دکمه بالا سمت چپ صفحه را امتحان کنید تا بین تم روشن و تاریک جابجا شوید!</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="card-glass p-6">
+          <h3 class="text-xl font-bold mb-2">✨ ویژگی‌ها:</h3>
+          <ul class="text-right list-disc pr-6 space-y-2">
+            <li>ذخیره خودکار ترجیح کاربر</li>
+            <li>پشتیبانی از تنظیمات سیستم</li>
+            <li>انتقال نرم و زیبا</li>
+            <li>بهینه‌سازی برای خواندن در شب</li>
+          </ul>
+        </div>
+        <div class="card-glass p-6">
+          <h3 class="text-xl font-bold mb-2">🎨 رنگ‌های متناسب:</h3>
+          <div class="color-palette">
+            <div class="color-box" style="background: var(--color-bg-primary)">پس‌زمینه</div>
+            <div class="color-box" style="background: var(--color-accent-blue)">آکسنت آبی</div>
+            <div class="color-box" style="background: var(--color-accent-purple)">آکسنت بنفش</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glassmorphism Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">🪟 افکت شیشه‌ای (Glassmorphism)</h2>
+      <p class="showcase-subtitle">کارت‌های زیبا با افکت شیشه‌ای و blur پس‌زمینه</p>
+      <div class="component-grid">
+        <div class="card-glass demo-card glow-hover">
+          <span style="font-size: 3rem;">💧</span>
+          <h3 class="text-xl font-bold mt-4">کارت آب</h3>
+          <p class="mt-2 text-slate-600">Hover کنید!</p>
+        </div>
+        <div class="card-glass demo-card glow-hover">
+          <span style="font-size: 3rem;">⚡</span>
+          <h3 class="text-xl font-bold mt-4">کارت برق</h3>
+          <p class="mt-2 text-slate-600">Hover کنید!</p>
+        </div>
+        <div class="card-glass demo-card glow-hover">
+          <span style="font-size: 3rem;">🔥</span>
+          <h3 class="text-xl font-bold mt-4">کارت گاز</h3>
+          <p class="mt-2 text-slate-600">Hover کنید!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">🔘 دکمه‌های پیشرفته</h2>
+      <p class="showcase-subtitle">دکمه‌ها با انیمیشن‌های جذاب و ripple effect</p>
+      <div class="button-showcase">
+        <button class="btn-modern">دکمه اصلی</button>
+        <button class="btn-modern" style="background: linear-gradient(135deg, #10b981, #059669);">دکمه سبز</button>
+        <button class="btn-modern" style="background: linear-gradient(135deg, #f59e0b, #d97706);">دکمه نارنجی</button>
+        <button class="btn-modern" style="background: linear-gradient(135deg, #ef4444, #dc2626);">دکمه قرمز</button>
+        <button class="btn-modern ripple" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">با Ripple</button>
+      </div>
+    </section>
+
+    <!-- Progress Indicators Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">📊 نشانگرهای پیشرفت</h2>
+      <p class="showcase-subtitle">Progress circles مدرن برای نمایش درصدها</p>
+      <div class="component-grid">
+        <div class="demo-card">
+          <div class="progress-circle mx-auto" style="--progress: 75">
+            <div class="progress-circle-text">75%</div>
+          </div>
+          <p class="mt-4 font-bold">مصرف آب</p>
+        </div>
+        <div class="demo-card">
+          <div class="progress-circle mx-auto" style="--progress: 45; --color-accent-blue: #10b981;">
+            <div class="progress-circle-text">45%</div>
+          </div>
+          <p class="mt-4 font-bold">صرفه‌جویی</p>
+        </div>
+        <div class="demo-card">
+          <div class="progress-circle mx-auto" style="--progress: 90; --color-accent-blue: #ef4444;">
+            <div class="progress-circle-text">90%</div>
+          </div>
+          <p class="mt-4 font-bold">بحران آب</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tooltips Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">💬 Tooltips هوشمند</h2>
+      <p class="showcase-subtitle">راهنماهای زیبا با hover</p>
+      <div class="text-center space-x-4 space-x-reverse">
+        <span class="tooltip">
+          <button class="btn-modern">Hover کنید
+          <span class="tooltip-content">این یک tooltip زیباست!</span>
+          </button>
+        </span>
+        <span class="tooltip">
+          <button class="btn-modern" style="background: var(--color-accent-green);">راهنمای من
+          <span class="tooltip-content">اطلاعات بیشتر در اینجا</span>
+          </button>
+        </span>
+      </div>
+    </section>
+
+    <!-- Loading Skeleton Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">⏳ Loading States</h2>
+      <p class="showcase-subtitle">Skeleton screens برای بهبود تجربه کاربر</p>
+      <div class="component-grid">
+        <div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text" style="width: 70%;"></div>
+        </div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Gradient Backgrounds Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">🌈 گرادیانت‌های مدرن</h2>
+      <p class="showcase-subtitle">پالت رنگ‌های زیبا برای کارت‌ها</p>
+      <div class="component-grid">
+        <div class="gradient-bg-blue p-8 rounded-2xl text-white text-center font-bold shadow-xl">
+          گرادیانت آبی
+        </div>
+        <div class="gradient-bg-green p-8 rounded-2xl text-white text-center font-bold shadow-xl">
+          گرادیانت سبز
+        </div>
+        <div class="gradient-bg-purple p-8 rounded-2xl text-white text-center font-bold shadow-xl">
+          گرادیانت بنفش
+        </div>
+        <div class="gradient-bg-sunset p-8 rounded-2xl text-white text-center font-bold shadow-xl">
+          گرادیانت غروب
+        </div>
+        <div class="gradient-bg-ocean p-8 rounded-2xl text-white text-center font-bold shadow-xl">
+          گرادیانت اقیانوس
+        </div>
+      </div>
+    </section>
+
+    <!-- Wave Animation Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">🌊 انیمیشن موج</h2>
+      <p class="showcase-subtitle">افکت موج برای نمایش آب</p>
+      <div class="wave-container" style="height: 150px;">
+        <div class="wave"></div>
+      </div>
+    </section>
+
+    <!-- Accessibility Section -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">♿ دسترسی‌پذیری</h2>
+      <p class="showcase-subtitle">Focus states بهبود یافته برای کیبورد ناوبری</p>
+      <div class="space-y-4">
+        <p>کلید Tab را فشار دهید تا focus states زیبا را ببینید:</p>
+        <div class="space-x-4 space-x-reverse">
+          <button class="btn-modern">دکمه 1</button>
+          <button class="btn-modern" style="background: var(--color-accent-green);">دکمه 2</button>
+          <button class="btn-modern" style="background: var(--color-accent-purple);">دکمه 3</button>
+        </div>
+        <input type="text" placeholder="فیلد ورودی" class="w-full max-w-md p-3 rounded-lg border-2" />
+      </div>
+    </section>
+
+    <!-- Floating Action Button Info -->
+    <section class="showcase-section">
+      <h2 class="showcase-title">⚡ دکمه شناور (FAB)</h2>
+      <p class="showcase-subtitle">دکمه پایین سمت چپ صفحه را کلیک کنید!</p>
+      <div class="card-glass p-6">
+        <h3 class="text-xl font-bold mb-2">✨ ویژگی‌ها:</h3>
+        <ul class="text-right list-disc pr-6 space-y-2">
+          <li>دسترسی سریع به بخش‌های مختلف سایت</li>
+          <li>انیمیشن چرخشی جذاب</li>
+          <li>منوی radial با لینک‌های مفید</li>
+          <li>بسته شدن خودکار هنگام کلیک خارج از منو</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Custom Scrollbar Info -->
+    <section class="showcase-section" style="height: 400px; overflow-y: scroll;">
+      <h2 class="showcase-title">📜 اسکرول‌بار سفارشی</h2>
+      <p class="showcase-subtitle">این بخش را اسکرول کنید تا scrollbar زیبا را ببینید</p>
+      <div class="space-y-4">
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...</p>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="showcase-section text-center">
+      <h2 class="showcase-title">🎉 خلاصه بهبودهای UI</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <div class="card-glass p-6">
+          <div class="text-5xl mb-4">🎨</div>
+          <h3 class="text-xl font-bold mb-2">طراحی مدرن</h3>
+          <p class="text-slate-600">Glassmorphism، گرادیانت‌ها، و رنگ‌های هارمونیک</p>
+        </div>
+        <div class="card-glass p-6">
+          <div class="text-5xl mb-4">⚡</div>
+          <h3 class="text-xl font-bold mb-2">تعاملات جذاب</h3>
+          <p class="text-slate-600">Micro-interactions، انیمیشن‌ها، و افکت‌های hover</p>
+        </div>
+        <div class="card-glass p-6">
+          <div class="text-5xl mb-4">♿</div>
+          <h3 class="text-xl font-bold mb-2">دسترسی‌پذیر</h3>
+          <p class="text-slate-600">Focus states، ARIA labels، و کیبورد ناوبری</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/nav-prune.js" defer></script>
+</body>
+</html>
