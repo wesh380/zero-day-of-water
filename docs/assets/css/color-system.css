@@ -1,0 +1,388 @@
+/* ========================================
+   Advanced Color System for Wesh360
+   ======================================== */
+
+/* ===== 1. Enhanced Theme Variables ===== */
+:root {
+  /* Primary Colors - Light Theme */
+  --color-bg-primary: #f0f4f8;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f8fafc;
+  --color-bg-elevated: #ffffff;
+
+  /* Text Colors - Light Theme */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #ffffff;
+  --color-text-on-accent: #ffffff;
+
+  /* Border Colors - Light Theme */
+  --color-border: #e2e8f0;
+  --color-border-hover: #cbd5e1;
+  --color-border-focus: #3b82f6;
+
+  /* Accent Colors - Consistent across themes */
+  --color-accent-blue: #3b82f6;
+  --color-accent-blue-hover: #2563eb;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-purple-hover: #7c3aed;
+  --color-accent-green: #10b981;
+  --color-accent-green-hover: #059669;
+  --color-accent-red: #ef4444;
+  --color-accent-red-hover: #dc2626;
+  --color-accent-amber: #f59e0b;
+  --color-accent-amber-hover: #d97706;
+
+  /* Semantic Colors - Light Theme */
+  --color-success: #10b981;
+  --color-success-bg: #d1fae5;
+  --color-success-border: #6ee7b7;
+
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fef3c7;
+  --color-warning-border: #fcd34d;
+
+  --color-error: #ef4444;
+  --color-error-bg: #fee2e2;
+  --color-error-border: #fca5a5;
+
+  --color-info: #3b82f6;
+  --color-info-bg: #dbeafe;
+  --color-info-border: #93c5fd;
+
+  /* Surface Colors - Light Theme */
+  --color-card-bg: #ffffff;
+  --color-card-border: #e2e8f0;
+  --color-card-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+
+  --color-footprint-bg: #fffbea;
+  --color-footprint-border: #f5eac2;
+  --color-footprint-text: #92400e;
+
+  --color-simulator-bg: #e6faf0;
+  --color-simulator-border: #c8eeda;
+  --color-simulator-text: #065f46;
+
+  --color-days-left-bg: linear-gradient(135deg, #ef4444, #b91c1c);
+  --color-days-left-text: #ffffff;
+
+  /* Interactive Elements - Light Theme */
+  --color-input-bg: #ffffff;
+  --color-input-border: #e2e8f0;
+  --color-input-text: #1e293b;
+  --color-input-placeholder: #94a3b8;
+
+  --color-button-primary-bg: #3b82f6;
+  --color-button-primary-text: #ffffff;
+  --color-button-primary-hover: #2563eb;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* ===== 2. Dark Theme Colors ===== */
+[data-theme="dark"] {
+  /* Primary Colors - Dark Theme */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-elevated: #1e293b;
+
+  /* Text Colors - Dark Theme */
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #0f172a;
+  --color-text-on-accent: #ffffff;
+
+  /* Border Colors - Dark Theme */
+  --color-border: #334155;
+  --color-border-hover: #475569;
+  --color-border-focus: #60a5fa;
+
+  /* Semantic Colors - Dark Theme */
+  --color-success: #34d399;
+  --color-success-bg: #064e3b;
+  --color-success-border: #059669;
+
+  --color-warning: #fbbf24;
+  --color-warning-bg: #78350f;
+  --color-warning-border: #d97706;
+
+  --color-error: #f87171;
+  --color-error-bg: #7f1d1d;
+  --color-error-border: #dc2626;
+
+  --color-info: #60a5fa;
+  --color-info-bg: #1e3a8a;
+  --color-info-border: #3b82f6;
+
+  /* Surface Colors - Dark Theme */
+  --color-card-bg: #1e293b;
+  --color-card-border: #334155;
+  --color-card-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+  --color-footprint-bg: #422006;
+  --color-footprint-border: #78350f;
+  --color-footprint-text: #fbbf24;
+
+  --color-simulator-bg: #064e3b;
+  --color-simulator-border: #065f46;
+  --color-simulator-text: #6ee7b7;
+
+  --color-days-left-bg: linear-gradient(135deg, #dc2626, #991b1b);
+  --color-days-left-text: #ffffff;
+
+  /* Interactive Elements - Dark Theme */
+  --color-input-bg: #1e293b;
+  --color-input-border: #334155;
+  --color-input-text: #f1f5f9;
+  --color-input-placeholder: #64748b;
+
+  --color-button-primary-bg: #3b82f6;
+  --color-button-primary-text: #ffffff;
+  --color-button-primary-hover: #2563eb;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ===== 3. Apply Color System ===== */
+
+/* Body */
+body {
+  background-color: var(--color-bg-primary) !important;
+  color: var(--color-text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary) !important;
+}
+
+.main-title {
+  color: var(--color-accent-blue) !important;
+}
+
+/* Cards */
+.card,
+.dash-card {
+  background: var(--color-card-bg) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-card-border) !important;
+  box-shadow: var(--color-card-shadow) !important;
+  transition: all 0.3s ease;
+}
+
+.card:hover,
+.dash-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+/* Special Cards */
+.footprint-card {
+  background-color: var(--color-footprint-bg) !important;
+  border-color: var(--color-footprint-border) !important;
+  color: var(--color-footprint-text) !important;
+}
+
+.simulator-card {
+  background-color: var(--color-simulator-bg) !important;
+  border-color: var(--color-simulator-border) !important;
+  color: var(--color-simulator-text) !important;
+}
+
+.days-left-card {
+  background: var(--color-days-left-bg) !important;
+  color: var(--color-days-left-text) !important;
+}
+
+/* Stats Card */
+.stats-card {
+  background: var(--color-card-bg) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.tips-card {
+  background: var(--color-card-bg) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Input Fields */
+input:not([type="range"]),
+select,
+textarea {
+  background: var(--color-input-bg) !important;
+  color: var(--color-input-text) !important;
+  border-color: var(--color-input-border) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-input-placeholder) !important;
+}
+
+input:focus:not([type="range"]),
+select:focus,
+textarea:focus {
+  border-color: var(--color-border-focus) !important;
+}
+
+/* Buttons */
+.btn-gemini {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  color: var(--color-text-on-accent) !important;
+}
+
+[data-theme="dark"] .btn-gemini {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+/* Text Colors */
+.text-slate-600,
+.text-slate-700,
+.text-slate-800 {
+  color: var(--color-text-secondary) !important;
+}
+
+.text-blue-600,
+.text-blue-700,
+.text-blue-800 {
+  color: var(--color-accent-blue) !important;
+}
+
+/* Success/Error States */
+.text-green-600 {
+  color: var(--color-success) !important;
+}
+
+.text-red-600 {
+  color: var(--color-error) !important;
+}
+
+.text-amber-800 {
+  color: var(--color-warning) !important;
+}
+
+/* Background Utilities */
+.bg-white {
+  background: var(--color-bg-secondary) !important;
+}
+
+.bg-slate-50 {
+  background: var(--color-bg-tertiary) !important;
+}
+
+.bg-amber-100 {
+  background: var(--color-warning-bg) !important;
+  color: var(--color-warning) !important;
+}
+
+/* Border Utilities */
+.border-slate-300 {
+  border-color: var(--color-border) !important;
+}
+
+.border-amber-200 {
+  border-color: var(--color-warning-border) !important;
+}
+
+/* ===== 4. Enhanced Components ===== */
+
+/* Progress Bars with better contrast */
+.rain-bar {
+  background-color: var(--color-info-bg);
+}
+
+.rain-bar-fill {
+  background-color: var(--color-info);
+}
+
+/* Range Inputs */
+input[type=range] {
+  background: var(--color-border);
+}
+
+input[type=range]::-webkit-slider-thumb {
+  background: var(--color-accent-blue);
+  border-color: var(--color-bg-secondary);
+}
+
+input[type=range]::-moz-range-thumb {
+  background: var(--color-accent-blue);
+  border-color: var(--color-bg-secondary);
+}
+
+/* ===== 5. Semantic Color Classes ===== */
+
+/* Success */
+.color-success {
+  background: var(--color-success-bg) !important;
+  color: var(--color-success) !important;
+  border-color: var(--color-success-border) !important;
+}
+
+/* Warning */
+.color-warning {
+  background: var(--color-warning-bg) !important;
+  color: var(--color-warning) !important;
+  border-color: var(--color-warning-border) !important;
+}
+
+/* Error */
+.color-error {
+  background: var(--color-error-bg) !important;
+  color: var(--color-error) !important;
+  border-color: var(--color-error-border) !important;
+}
+
+/* Info */
+.color-info {
+  background: var(--color-info-bg) !important;
+  color: var(--color-info) !important;
+  border-color: var(--color-info-border) !important;
+}
+
+/* ===== 6. High Contrast Mode ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: #000000;
+    --color-text-primary: #000000;
+  }
+
+  [data-theme="dark"] {
+    --color-border: #ffffff;
+    --color-text-primary: #ffffff;
+  }
+}
+
+/* ===== 7. Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== 8. Print Styles ===== */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+  }
+}
