@@ -100,7 +100,7 @@
 
   <main id="main" role="main" class="dashboard container mx-auto p-4 md:p-8">
     <header class="text-center mb-12">
-      <h1 class="text-5xl font-extrabold mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+      <h1 class="text-5xl font-extrabold mb-4 gradient-text-purple">
         ✨ نمایشگر UI جدید Wesh360 ✨
       </h1>
       <p class="text-xl text-slate-600">کشف کنید چه بهبودهایی به سایت اضافه شده است</p>
@@ -123,9 +123,9 @@
         <div class="card-glass p-6">
           <h3 class="text-xl font-bold mb-2">🎨 رنگ‌های متناسب:</h3>
           <div class="color-palette">
-            <div class="color-box" style="background: var(--color-bg-primary)">پس‌زمینه</div>
-            <div class="color-box" style="background: var(--color-accent-blue)">آکسنت آبی</div>
-            <div class="color-box" style="background: var(--color-accent-purple)">آکسنت بنفش</div>
+            <div class="color-box bg-primary">پس‌زمینه</div>
+            <div class="color-box bg-accent-blue">آکسنت آبی</div>
+            <div class="color-box bg-accent-purple">آکسنت بنفش</div>
           </div>
         </div>
       </div>
@@ -137,17 +137,17 @@
       <p class="showcase-subtitle">کارت‌های زیبا با افکت شیشه‌ای و blur پس‌زمینه</p>
       <div class="component-grid">
         <div class="card-glass demo-card glow-hover">
-          <span style="font-size: 3rem;">💧</span>
+          <span class="icon-large">💧</span>
           <h3 class="text-xl font-bold mt-4">کارت آب</h3>
           <p class="mt-2 text-slate-600">Hover کنید!</p>
         </div>
         <div class="card-glass demo-card glow-hover">
-          <span style="font-size: 3rem;">⚡</span>
+          <span class="icon-large">⚡</span>
           <h3 class="text-xl font-bold mt-4">کارت برق</h3>
           <p class="mt-2 text-slate-600">Hover کنید!</p>
         </div>
         <div class="card-glass demo-card glow-hover">
-          <span style="font-size: 3rem;">🔥</span>
+          <span class="icon-large">🔥</span>
           <h3 class="text-xl font-bold mt-4">کارت گاز</h3>
           <p class="mt-2 text-slate-600">Hover کنید!</p>
         </div>
@@ -160,10 +160,10 @@
       <p class="showcase-subtitle">دکمه‌ها با انیمیشن‌های جذاب و ripple effect</p>
       <div class="button-showcase">
         <button class="btn-modern">دکمه اصلی</button>
-        <button class="btn-modern" style="background: linear-gradient(135deg, #10b981, #059669);">دکمه سبز</button>
-        <button class="btn-modern" style="background: linear-gradient(135deg, #f59e0b, #d97706);">دکمه نارنجی</button>
-        <button class="btn-modern" style="background: linear-gradient(135deg, #ef4444, #dc2626);">دکمه قرمز</button>
-        <button class="btn-modern ripple" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">با Ripple</button>
+        <button class="btn-modern btn-green">دکمه سبز</button>
+        <button class="btn-modern btn-orange">دکمه نارنجی</button>
+        <button class="btn-modern btn-red">دکمه قرمز</button>
+        <button class="btn-modern btn-purple ripple">با Ripple</button>
       </div>
     </section>
 
@@ -173,19 +173,19 @@
       <p class="showcase-subtitle">Progress circles مدرن برای نمایش درصدها</p>
       <div class="component-grid">
         <div class="demo-card">
-          <div class="progress-circle mx-auto" style="--progress: 75">
+          <div class="progress-circle mx-auto" data-progress="75">
             <div class="progress-circle-text">75%</div>
           </div>
           <p class="mt-4 font-bold">مصرف آب</p>
         </div>
         <div class="demo-card">
-          <div class="progress-circle mx-auto" style="--progress: 45; --color-accent-blue: #10b981;">
+          <div class="progress-circle mx-auto" data-progress="45" data-accent-color="green">
             <div class="progress-circle-text">45%</div>
           </div>
           <p class="mt-4 font-bold">صرفه‌جویی</p>
         </div>
         <div class="demo-card">
-          <div class="progress-circle mx-auto" style="--progress: 90; --color-accent-blue: #ef4444;">
+          <div class="progress-circle mx-auto" data-progress="90" data-accent-color="red">
             <div class="progress-circle-text">90%</div>
           </div>
           <p class="mt-4 font-bold">بحران آب</p>
@@ -204,7 +204,7 @@
           </button>
         </span>
         <span class="tooltip">
-          <button class="btn-modern" style="background: var(--color-accent-green);">راهنمای من
+          <button class="btn-modern bg-accent-green">راهنمای من
           <span class="tooltip-content">اطلاعات بیشتر در اینجا</span>
           </button>
         </span>
@@ -220,7 +220,7 @@
           <div class="skeleton skeleton-title"></div>
           <div class="skeleton skeleton-text"></div>
           <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text" style="width: 70%;"></div>
+          <div class="skeleton skeleton-text w-70p"></div>
         </div>
         <div class="skeleton skeleton-card"></div>
       </div>
@@ -253,7 +253,7 @@
     <section class="showcase-section">
       <h2 class="showcase-title">🌊 انیمیشن موج</h2>
       <p class="showcase-subtitle">افکت موج برای نمایش آب</p>
-      <div class="wave-container" style="height: 150px;">
+      <div class="wave-container h-150">
         <div class="wave"></div>
       </div>
     </section>
@@ -266,8 +266,8 @@
         <p>کلید Tab را فشار دهید تا focus states زیبا را ببینید:</p>
         <div class="space-x-4 space-x-reverse">
           <button class="btn-modern">دکمه 1</button>
-          <button class="btn-modern" style="background: var(--color-accent-green);">دکمه 2</button>
-          <button class="btn-modern" style="background: var(--color-accent-purple);">دکمه 3</button>
+          <button class="btn-modern bg-accent-green">دکمه 2</button>
+          <button class="btn-modern bg-accent-purple">دکمه 3</button>
         </div>
         <input type="text" placeholder="فیلد ورودی" class="w-full max-w-md p-3 rounded-lg border-2" />
       </div>
@@ -289,7 +289,7 @@
     </section>
 
     <!-- Custom Scrollbar Info -->
-    <section class="showcase-section" style="height: 400px; overflow-y: scroll;">
+    <section class="showcase-section h-400 overflow-y-scroll">
       <h2 class="showcase-title">📜 اسکرول‌بار سفارشی</h2>
       <p class="showcase-subtitle">این بخش را اسکرول کنید تا scrollbar زیبا را ببینید</p>
       <div class="space-y-4">

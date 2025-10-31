@@ -75,3 +75,43 @@
   box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4) !important;
 }
 
+/* UI Enhancements CSP-compliant classes */
+.theme-transitioning { transition: background-color 0.35s ease, color 0.35s ease; }
+.fab-menu-open { transform: scale(1.1) rotate(135deg); }
+.fade-hidden { opacity: 0; }
+.sr-only { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Showcase page styles */
+.gradient-text-purple {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.bg-primary { background: var(--color-bg-primary); }
+.bg-accent-blue { background: var(--color-accent-blue); }
+.bg-accent-purple { background: var(--color-accent-purple); }
+.bg-accent-green { background: var(--color-accent-green); }
+.icon-large { font-size: 3rem; }
+.btn-green { background: linear-gradient(135deg, #10b981, #059669); }
+.btn-orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.btn-purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+.w-70p { width: 70%; }
+.h-150 { height: 150px; }
+.h-400 { height: 400px; }
+.overflow-y-scroll { overflow-y: scroll; }
+
+/* Progress circle values - common percentages */
+[data-progress="75"] { --progress: 75; }
+[data-progress="45"] { --progress: 45; }
+[data-progress="90"] { --progress: 90; }
+[data-progress="100"] { --progress: 100; }
+[data-progress="50"] { --progress: 50; }
+[data-progress="25"] { --progress: 25; }
+[data-progress="10"] { --progress: 10; }
+[data-progress="0"] { --progress: 0; }
+
+[data-accent-color="green"] { --color-accent-blue: #10b981; }
+[data-accent-color="red"] { --color-accent-blue: #ef4444; }
+

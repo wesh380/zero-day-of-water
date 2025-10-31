@@ -38,9 +38,9 @@
       const icon = this.button.querySelector('.theme-toggle-icon');
 
       if (animate) {
-        html.style.transition = 'background-color 0.35s ease, color 0.35s ease';
+        html.classList.add('theme-transitioning');
         setTimeout(() => {
-          html.style.transition = '';
+          html.classList.remove('theme-transitioning');
         }, 350);
       }
 
@@ -116,9 +116,11 @@
 
     toggleMenu() {
       this.menu.classList.toggle('active');
-      this.fab.style.transform = this.menu.classList.contains('active')
-        ? 'scale(1.1) rotate(135deg)'
-        : '';
+      if (this.menu.classList.contains('active')) {
+        this.fab.classList.add('fab-menu-open');
+      } else {
+        this.fab.classList.remove('fab-menu-open');
+      }
     },
 
     bindEvents() {
@@ -128,7 +130,7 @@
       document.addEventListener('click', (e) => {
         if (!this.fab.contains(e.target) && !this.menu.contains(e.target)) {
           this.menu.classList.remove('active');
-          this.fab.style.transform = '';
+          this.fab.classList.remove('fab-menu-open');
         }
       });
     }
@@ -157,7 +159,7 @@
 
       // Observe cards
       document.querySelectorAll('.card, .dash-card').forEach(card => {
-        card.style.opacity = '0';
+        card.classList.add('fade-hidden');
         observer.observe(card);
       });
     }
@@ -233,7 +235,7 @@
     create(value, label = '') {
       const circle = document.createElement('div');
       circle.className = 'progress-circle';
-      circle.style.setProperty('--progress', value);
+      circle.setAttribute('data-progress', value);
 
       const text = document.createElement('div');
       text.className = 'progress-circle-text';
@@ -305,7 +307,6 @@
       announcer.setAttribute('aria-live', 'polite');
       announcer.setAttribute('aria-atomic', 'true');
       announcer.className = 'sr-only';
-      announcer.style.cssText = 'position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;';
       document.body.appendChild(announcer);
       this.announcer = announcer;
     },
