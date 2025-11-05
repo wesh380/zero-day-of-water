@@ -1,0 +1,11 @@
+/* ========================================
+   LAYOUT BUNDLE - برای layout و UI مشترک
+   Generated: Phase 2 CSS Bundling
+   ======================================== */
+
+/* Import common layout styles */
+@import url("../css/header.css");
+@import url("../fonts.css");
+@import url("../global-footer.css");
+@import url("../unified-badge.css");
+@import url("../inline-migration.css");
