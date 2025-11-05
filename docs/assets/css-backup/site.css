@@ -1,0 +1,80 @@
+﻿/* --- experimental soft-hide on HOME only --- */
+body[data-page="home"] [data-cta="amaayesh"],
+body[data-page="home"] [data-cta="water-lab"] {
+  display: none !important;
+}
+
+/* Secret portals (clickable but invisible) */
+.easter-hotspot {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  top: 0;
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.easter-top-left {
+  left: 0;
+}
+.easter-top-right {
+  right: 0;
+}
+
+/* Developer reveal */
+html.dev-show-experimental body[data-page="home"] [data-cta] {
+  display: initial !important;
+}
+/* Optional: when focused by keyboard during dev-reveal, show a faint outline */
+html.dev-show-experimental .easter-hotspot:focus {
+  outline: 2px dashed;
+  outline-offset: 2px;
+  opacity: .1;
+}
+
+:root {
+  font-size: 16px;
+}
+
+button,
+.btn {
+  min-height: 48px;
+  padding: .6rem 1.1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.cta-calculators {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block: 1rem;
+}
+
+.btn-primary {
+  background: #0ea5e9;
+  color: #fff;
+}
+
+.btn-outline {
+  border: 1px solid rgba(0, 0, 0, .15);
+  color: #0b2540;
+  background: #fff;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+/* اختیاری: */
+h1 {
+  font-size: clamp(1.5rem, 1.2rem + 2vw, 2.25rem);
+}
+
+html[dir="rtl"] .icon-chevron-left,
+html[dir="rtl"] .icon-arrow-left {
+  transform: scaleX(-1);
+}
+
