@@ -1,12 +1,18 @@
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
   inset-inline: 0;
+  width: 100%;
   z-index: 1000;
   background: var(--surface, #ffffff);
   color: var(--header-fg, #0f172a);
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
   box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* Add padding to body to prevent content from going under fixed header */
+body {
+  padding-top: 70px; /* Adjust based on actual header height */
 }
 
 .site-header__inner {
