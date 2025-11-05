@@ -1,6 +1,7 @@
 /**
  * WESH360 Micro-interactions
  * Advanced animations and interactions
+ * CSP-compliant version (no inline styles)
  */
 
 (function() {
@@ -35,6 +36,7 @@
 
   /**
    * Stagger animation for card grids
+   * Uses CSS custom property instead of inline style
    */
   function initStaggerAnimation() {
     if (prefersReducedMotion) return;
@@ -46,7 +48,8 @@
 
       cards.forEach((card, index) => {
         card.classList.add('stagger-item');
-        card.style.animationDelay = `${index * 0.1}s`;
+        // Use CSS custom property instead of inline style
+        card.setAttribute('data-stagger-index', index);
       });
     });
   }
@@ -100,7 +103,8 @@
   }
 
   /**
-   * Add ripple effect to buttons
+   * Add ripple effect to buttons (CSP-compliant)
+   * Simple center-based ripple without dynamic positioning
    */
   function initRippleEffect() {
     if (prefersReducedMotion) return;
@@ -109,27 +113,17 @@
       const target = e.target.closest('.ripple');
       if (!target) return;
 
-      const rect = target.getBoundingClientRect();
       const ripple = document.createElement('span');
-
-      ripple.style.position = 'absolute';
-      ripple.style.borderRadius = '50%';
-      ripple.style.background = 'rgba(255, 255, 255, 0.5)';
-      ripple.style.width = ripple.style.height = '100px';
-      ripple.style.left = `${e.clientX - rect.left - 50}px`;
-      ripple.style.top = `${e.clientY - rect.top - 50}px`;
-      ripple.style.pointerEvents = 'none';
-      ripple.style.transform = 'scale(0)';
-      ripple.style.transition = 'transform 0.6s ease-out, opacity 0.6s ease-out';
-      ripple.style.opacity = '1';
+      ripple.className = 'ripple-effect';
 
       target.appendChild(ripple);
 
+      // Trigger animation by adding class
       requestAnimationFrame(() => {
-        ripple.style.transform = 'scale(4)';
-        ripple.style.opacity = '0';
+        ripple.classList.add('ripple-active');
       });
 
+      // Cleanup after animation
       setTimeout(() => ripple.remove(), 600);
     });
   }
@@ -165,14 +159,13 @@
   function showSkeleton(container) {
     const skeleton = document.createElement('div');
     skeleton.className = 'skeleton';
-    skeleton.style.width = '100%';
-    skeleton.style.height = '100px';
     container.appendChild(skeleton);
     return skeleton;
   }
 
   /**
-   * Animate progress bars
+   * Animate progress bars (CSP-compliant)
+   * Uses CSS custom property instead of inline style
    */
   function initProgressBars() {
     const progressBars = document.querySelectorAll('.progress-bar-fill[data-progress]');
@@ -184,10 +177,13 @@
 
           if (!prefersReducedMotion) {
             setTimeout(() => {
-              entry.target.style.width = `${progress}%`;
+              // Use data attribute to trigger CSS animation
+              entry.target.setAttribute('data-animated', 'true');
+              entry.target.setAttribute('data-width', progress);
             }, 100);
           } else {
-            entry.target.style.width = `${progress}%`;
+            entry.target.setAttribute('data-animated', 'true');
+            entry.target.setAttribute('data-width', progress);
           }
 
           observer.unobserve(entry.target);
@@ -286,7 +282,7 @@
       document.body.classList.add('page-transition');
     }
 
-    console.log('✨ WESH360 Micro-interactions initialized');
+    console.log('✨ WESH360 Micro-interactions initialized (CSP-compliant)');
   }
 
   // Auto-initialize

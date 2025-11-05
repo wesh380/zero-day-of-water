@@ -196,13 +196,35 @@ a:hover {
   animation: glow 2s ease-in-out infinite;
 }
 
-/* ===== 7. Ripple Effect ===== */
+/* ===== 7. Ripple Effect (CSP-compliant) ===== */
 
 .ripple {
   position: relative;
   overflow: hidden;
 }
 
+/* Ripple effect element created by JavaScript - centered */
+.ripple-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  opacity: 1;
+}
+
+/* Active state triggers animation */
+.ripple-effect.ripple-active {
+  transform: translate(-50%, -50%) scale(4);
+  opacity: 0;
+}
+
+/* Fallback for ::after pseudo-element */
 .ripple::after {
   content: '';
   position: absolute;
@@ -306,7 +328,7 @@ a:hover {
   animation: tooltipFadeIn 0.3s ease-out;
 }
 
-/* ===== 11. Progress Bars ===== */
+/* ===== 11. Progress Bars (CSP-compliant) ===== */
 
 .progress-bar {
   position: relative;
@@ -320,8 +342,25 @@ a:hover {
   height: 100%;
   background: linear-gradient(90deg, var(--color-accent-blue), var(--color-accent-purple));
   border-radius: var(--radius-full);
+  width: 0%;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Data-driven width via attributes */
+.progress-bar-fill[data-animated="true"][data-width="0"] { width: 0%; }
+.progress-bar-fill[data-animated="true"][data-width="10"] { width: 10%; }
+.progress-bar-fill[data-animated="true"][data-width="20"] { width: 20%; }
+.progress-bar-fill[data-animated="true"][data-width="25"] { width: 25%; }
+.progress-bar-fill[data-animated="true"][data-width="30"] { width: 30%; }
+.progress-bar-fill[data-animated="true"][data-width="40"] { width: 40%; }
+.progress-bar-fill[data-animated="true"][data-width="50"] { width: 50%; }
+.progress-bar-fill[data-animated="true"][data-width="60"] { width: 60%; }
+.progress-bar-fill[data-animated="true"][data-width="65"] { width: 65%; }
+.progress-bar-fill[data-animated="true"][data-width="70"] { width: 70%; }
+.progress-bar-fill[data-animated="true"][data-width="75"] { width: 75%; }
+.progress-bar-fill[data-animated="true"][data-width="80"] { width: 80%; }
+.progress-bar-fill[data-animated="true"][data-width="90"] { width: 90%; }
+.progress-bar-fill[data-animated="true"][data-width="100"] { width: 100%; }
 
 @keyframes progressShine {
   0% {
@@ -390,6 +429,19 @@ a:hover {
 
 /* ===== 15. Stagger Animation for Lists ===== */
 
+/* Using data-stagger-index for CSP compliance */
+.stagger-item[data-stagger-index="0"] { animation-delay: 0.05s; }
+.stagger-item[data-stagger-index="1"] { animation-delay: 0.1s; }
+.stagger-item[data-stagger-index="2"] { animation-delay: 0.15s; }
+.stagger-item[data-stagger-index="3"] { animation-delay: 0.2s; }
+.stagger-item[data-stagger-index="4"] { animation-delay: 0.25s; }
+.stagger-item[data-stagger-index="5"] { animation-delay: 0.3s; }
+.stagger-item[data-stagger-index="6"] { animation-delay: 0.35s; }
+.stagger-item[data-stagger-index="7"] { animation-delay: 0.4s; }
+.stagger-item[data-stagger-index="8"] { animation-delay: 0.45s; }
+.stagger-item[data-stagger-index="9"] { animation-delay: 0.5s; }
+
+/* Fallback for nth-child (for static content) */
 .stagger-item:nth-child(1) { animation-delay: 0.05s; }
 .stagger-item:nth-child(2) { animation-delay: 0.1s; }
 .stagger-item:nth-child(3) { animation-delay: 0.15s; }
