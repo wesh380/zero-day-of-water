@@ -1,0 +1,121 @@
+/* Fix for horizontal scroll issues */
+
+/* Prevent horizontal overflow on root elements */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ensure all direct children of body respect viewport boundaries */
+body > * {
+  max-width: 100%;
+}
+
+/* Fix for containers that might overflow */
+.container,
+.site-header__inner,
+.hero,
+.cards-section,
+.wizard {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure images and media don't cause overflow */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix for any elements using viewport width */
+*[style*="100vw"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Fix for the hero section */
+.hero {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.hero-media,
+.hero-img {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Fix for site header */
+.site-header {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.site-header__inner {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure all sections respect viewport */
+section {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Fix for cards section with negative margins */
+.cards-section {
+  max-width: min(61.25rem, calc(100% - 2rem));
+  margin-inline: auto;
+  overflow-x: visible; /* Allow shadow overflow but not content */
+}
+
+/* Fix for wizard form */
+.wizard {
+  max-width: min(61.25rem, calc(100% - 2rem));
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* Ensure form elements don't overflow */
+.wiz-form {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fix for dialogs and modals */
+.fixed {
+  max-width: 100vw;
+}
+
+/* Fix for absolute positioned elements */
+.absolute {
+  max-width: 100%;
+}
+
+/* Responsive fix for small screens */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden !important;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  .hero,
+  .hero-media,
+  .site-header,
+  section,
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Additional safety for RTL layouts */
+html[dir="rtl"] body,
+html[dir="rtl"] {
+  overflow-x: hidden;
+}
