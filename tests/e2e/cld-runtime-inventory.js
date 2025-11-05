@@ -18,7 +18,7 @@ function waitFor(url, ms=30000){
 }
 
 async function probe(url){
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args:['--no-sandbox', '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'] });
   const page = await browser.newPage();
   const requests = [];
   const respTasks = [];

@@ -157,7 +157,7 @@ async function settle(page) {
 (async () => {
   await ensureDir(shotDir);
   const server = await startServerIfNeeded();
-  const browser = await puppeteer.launch({ headless: "new", defaultViewport: null, args: ["--no-sandbox"] });
+  const browser = await puppeteer.launch({ headless: "new", defaultViewport: null, args: ["--no-sandbox", "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"] });
 
   const results = {
     generatedAt: new Date().toISOString(),
