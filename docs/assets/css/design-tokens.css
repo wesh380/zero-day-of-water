@@ -100,6 +100,27 @@
   --color-button-primary-bg: #3b82f6;
   --color-button-primary-text: #ffffff;
   --color-button-primary-hover: #2563eb;
+
+  /* Energy-specific Colors */
+  --energy-water-primary: #0077BE;
+  --energy-water-light: #4A9FD8;
+  --energy-water-dark: #005A8F;
+  --energy-water-bg: rgba(0, 119, 190, 0.1);
+
+  --energy-electricity-primary: #FDB913;
+  --energy-electricity-light: #FFCE56;
+  --energy-electricity-dark: #D49A0A;
+  --energy-electricity-bg: rgba(253, 185, 19, 0.1);
+
+  --energy-gas-primary: #FF6B35;
+  --energy-gas-light: #FF8C64;
+  --energy-gas-dark: #E64F1F;
+  --energy-gas-bg: rgba(255, 107, 53, 0.1);
+
+  --energy-renewable-primary: #00A86B;
+  --energy-renewable-light: #2DC992;
+  --energy-renewable-dark: #008556;
+  --energy-renewable-bg: rgba(0, 168, 107, 0.1);
 }
 
 /* ===== 5. Glassmorphism ===== */

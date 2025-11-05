@@ -1,0 +1,364 @@
+/* ========================================
+   WESH360 Data Cards - Professional Components
+   ======================================== */
+
+/* ===== 1. Base Card Styles ===== */
+.data-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.data-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-accent-blue);
+}
+
+.data-card:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 4px;
+}
+
+/* ===== 2. Card Header ===== */
+.data-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.data-card-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.data-card:hover .data-card-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Icon wrapper variants */
+.data-card-icon-wrapper.water {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.15), rgba(0, 119, 190, 0.05));
+  border: 2px solid rgba(0, 119, 190, 0.3);
+}
+
+.data-card-icon-wrapper.electricity {
+  background: linear-gradient(135deg, rgba(253, 185, 19, 0.15), rgba(253, 185, 19, 0.05));
+  border: 2px solid rgba(253, 185, 19, 0.3);
+}
+
+.data-card-icon-wrapper.gas {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 107, 53, 0.05));
+  border: 2px solid rgba(255, 107, 53, 0.3);
+}
+
+.data-card-icon-wrapper.environment {
+  background: linear-gradient(135deg, rgba(0, 168, 107, 0.15), rgba(0, 168, 107, 0.05));
+  border: 2px solid rgba(0, 168, 107, 0.3);
+}
+
+/* Badge */
+.data-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.badge-public {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid var(--color-info-border);
+}
+
+.badge-internal {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning-border);
+}
+
+.badge-soon {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+/* ===== 3. Card Body ===== */
+.data-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.data-card-title {
+  font-size: var(--font-h3);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.data-card-description {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Value display */
+.data-card-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: var(--space-2);
+}
+
+.data-card-value .value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.data-card-value .unit {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* Trend indicator */
+.data-card-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: var(--space-2);
+}
+
+.data-card-trend.trend-up {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.data-card-trend.trend-down {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.data-card-trend.trend-neutral {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+}
+
+/* ===== 4. Card Footer ===== */
+.data-card-footer {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Sparkline container */
+.data-card-sparkline {
+  height: 60px;
+  width: 100%;
+  position: relative;
+}
+
+.data-card-sparkline canvas {
+  max-height: 60px;
+}
+
+/* Stats row */
+.data-card-stats {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.data-card-stat {
+  flex: 1;
+}
+
+.data-card-stat-label {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.data-card-stat-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* ===== 5. Action Button ===== */
+.data-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-base);
+  margin-top: var(--space-3);
+}
+
+.data-card-action-primary {
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
+}
+
+.data-card-action-primary:hover {
+  background: var(--color-button-primary-hover);
+  transform: translateX(-2px);
+}
+
+.data-card-action-outline {
+  background: transparent;
+  color: var(--color-accent-blue);
+  border: 2px solid var(--color-accent-blue);
+}
+
+.data-card-action-outline:hover {
+  background: var(--color-accent-blue);
+  color: white;
+}
+
+/* ===== 6. Loading State ===== */
+.data-card.loading {
+  pointer-events: none;
+}
+
+.data-card.loading .data-card-body {
+  opacity: 0.5;
+}
+
+.data-card-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-tertiary) 0%,
+    var(--color-bg-secondary) 20%,
+    var(--color-bg-tertiary) 40%,
+    var(--color-bg-tertiary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+  height: 1rem;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ===== 7. Utility Variants ===== */
+.data-card.water:hover {
+  border-color: #0077BE;
+  box-shadow: 0 10px 30px rgba(0, 119, 190, 0.2);
+}
+
+.data-card.electricity:hover {
+  border-color: #FDB913;
+  box-shadow: 0 10px 30px rgba(253, 185, 19, 0.2);
+}
+
+.data-card.gas:hover {
+  border-color: #FF6B35;
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+}
+
+.data-card.environment:hover {
+  border-color: #00A86B;
+  box-shadow: 0 10px 30px rgba(0, 168, 107, 0.2);
+}
+
+/* ===== 8. Dark Theme Support ===== */
+[data-theme="dark"] .data-card {
+  background: var(--color-card-bg);
+  border-color: var(--color-card-border);
+}
+
+[data-theme="dark"] .data-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ===== 9. Responsive Design ===== */
+@media (max-width: 768px) {
+  .data-card {
+    padding: var(--space-5);
+  }
+
+  .data-card-icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .data-card-value .value {
+    font-size: 2rem;
+  }
+
+  .data-card-stats {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+/* ===== 10. Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  .data-card,
+  .data-card-icon-wrapper,
+  .data-card-action {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .data-card:hover {
+    transform: none;
+  }
+
+  .data-card:hover .data-card-icon-wrapper {
+    transform: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .data-card {
+    border-width: 2px;
+  }
+
+  .data-card:hover {
+    border-width: 3px;
+  }
+}
