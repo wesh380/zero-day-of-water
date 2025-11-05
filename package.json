@@ -14,6 +14,8 @@
     "optimize:css": "postcss docs/assets/css/*.css --base docs/assets/css --dir docs/assets/css-dist --config postcss.config.js",
     "optimize:css:watch": "postcss docs/assets/css/*.css --base docs/assets/css --dir docs/assets/css-dist --watch",
     "minify:css": "npm run optimize:css && echo '✓ CSS optimized successfully'",
+    "bundle:css": "postcss docs/assets/css-bundles/*.css --base docs/assets/css-bundles --dir docs/assets/css-bundles-dist --config postcss.config.js",
+    "bundle:css:watch": "postcss docs/assets/css-bundles/*.css --base docs/assets/css-bundles --dir docs/assets/css-bundles-dist --watch",
     "build": "npm run build:css && npm run build:agri && npm run prepare:agri",
     "test": "node tests/mapper.test.js && node tests/e2e-cld.test.js && node tests/e2e-water-cld.behaviors.test.js",
     "flag:test": "node scripts/check-flag.js",

@@ -30,3 +30,4 @@ docs/tests/screenshots/
 docs/tests/report-responsive.json
 .verify-artifacts/
 docs/assets/css-dist/
+# docs/assets/css-bundles-dist/ - NOT ignored, needed for production

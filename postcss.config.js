@@ -5,7 +5,7 @@ module.exports = {
   plugins: [
     // Import resolver - برای پردازش @import
     require('postcss-import')({
-      path: ['docs/assets/css']
+      path: ['docs/assets/css', 'docs/assets/css-bundles', 'docs/assets']
     }),
 
     // Autoprefixer - اضافه کردن vendor prefixes
