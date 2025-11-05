@@ -1,0 +1,215 @@
+/* ========================================
+   WESH360 Icon System - SVG Icons
+   ======================================== */
+
+/* ===== 1. Icon Base Styles ===== */
+.icon {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Icon sizes */
+.icon-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-md {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon-lg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-xl {
+  width: 3rem;
+  height: 3rem;
+}
+
+.icon-2xl {
+  width: 4rem;
+  height: 4rem;
+}
+
+/* ===== 2. Utility-specific Icon Styles ===== */
+
+/* Water Icon */
+.icon-water {
+  color: #0077BE;
+  fill: rgba(0, 119, 190, 0.1);
+}
+
+.icon-water:hover {
+  color: #005A8F;
+  fill: rgba(0, 119, 190, 0.2);
+}
+
+/* Electricity Icon */
+.icon-electricity {
+  color: #FDB913;
+  fill: rgba(253, 185, 19, 0.1);
+}
+
+.icon-electricity:hover {
+  color: #D49A0A;
+  fill: rgba(253, 185, 19, 0.2);
+}
+
+/* Gas Icon */
+.icon-gas {
+  color: #FF6B35;
+  fill: rgba(255, 107, 53, 0.1);
+}
+
+.icon-gas:hover {
+  color: #E64F1F;
+  fill: rgba(255, 107, 53, 0.2);
+}
+
+/* Environment Icon */
+.icon-environment {
+  color: #00A86B;
+  fill: rgba(0, 168, 107, 0.1);
+}
+
+.icon-environment:hover {
+  color: #008556;
+  fill: rgba(0, 168, 107, 0.2);
+}
+
+/* ===== 3. Status Icons ===== */
+.icon-status-normal {
+  color: var(--color-success);
+}
+
+.icon-status-warning {
+  color: var(--color-warning);
+}
+
+.icon-status-critical {
+  color: var(--color-error);
+}
+
+/* ===== 4. Icon Animations ===== */
+@keyframes icon-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.icon-animated {
+  animation: icon-pulse 2s ease-in-out infinite;
+}
+
+/* Icon bounce on hover */
+.icon-bounce:hover {
+  animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Icon rotate */
+.icon-rotate {
+  transition: transform 0.3s ease;
+}
+
+.icon-rotate:hover {
+  transform: rotate(15deg);
+}
+
+/* ===== 5. Icon Container for Cards ===== */
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.icon-container:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Icon container variants */
+.icon-container-water {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 119, 190, 0.05));
+  border: 2px solid rgba(0, 119, 190, 0.2);
+}
+
+.icon-container-electricity {
+  background: linear-gradient(135deg, rgba(253, 185, 19, 0.1), rgba(253, 185, 19, 0.05));
+  border: 2px solid rgba(253, 185, 19, 0.2);
+}
+
+.icon-container-gas {
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 107, 53, 0.05));
+  border: 2px solid rgba(255, 107, 53, 0.2);
+}
+
+.icon-container-environment {
+  background: linear-gradient(135deg, rgba(0, 168, 107, 0.1), rgba(0, 168, 107, 0.05));
+  border: 2px solid rgba(0, 168, 107, 0.2);
+}
+
+/* ===== 6. Dark Theme Support ===== */
+[data-theme="dark"] .icon-container {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .icon-container:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 7. Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  .icon-animated,
+  .icon-bounce,
+  .icon-rotate {
+    animation: none !important;
+  }
+
+  .icon-container {
+    transition: none !important;
+  }
+}
+
+/* ===== 8. Responsive Sizing ===== */
+@media (max-width: 768px) {
+  .icon-container {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .icon-xl {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

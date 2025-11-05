@@ -29,6 +29,12 @@
   <link rel="stylesheet" href="/assets/css/landing.css">
   <link rel="stylesheet" href="./assets/footer.css">
   <link rel="stylesheet" href="/assets/css/overflow-fix.css">
+  <!-- Icon System -->
+  <link rel="stylesheet" href="/assets/css/icons.css">
+  <!-- Data Cards -->
+  <link rel="stylesheet" href="/assets/css/data-cards.css">
+  <!-- Micro-interactions -->
+  <link rel="stylesheet" href="/assets/css/micro-interactions.css">
   <!-- preload hero image: keep srcset consistent with picture -->
   <link rel="preload" as="image"
         href="/assets/img/hero/hero-desktop.webp"
@@ -177,22 +183,69 @@
     </section>
 
     <section id="entry-cards" class="cards-section" aria-label="navigation cards">
-      <a href="/water/hub" data-utility="water" class="card water" aria-label="ورود به داشبورد آب">
-        <span class="icon" aria-hidden="true">💧</span>
-        <h3>آب</h3>
+      <!-- Water Card -->
+      <a href="/water/hub" data-utility="water" class="data-card water" aria-label="ورود به داشبورد آب">
+        <div class="data-card-header">
+          <div class="data-card-icon-wrapper water">
+            <svg class="icon icon-water icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <span class="data-card-badge badge-public">فعال</span>
+        </div>
+        <div class="data-card-body">
+          <h3 class="data-card-title">آب</h3>
+          <p class="data-card-description">داشبورد مدیریت و پایش منابع آب</p>
+        </div>
       </a>
-      <a href="/electricity/" data-utility="electricity" class="card electricity" aria-label="ورود به داشبورد برق">
-        <span class="icon" aria-hidden="true">⚡</span>
-        <h3>برق</h3>
+
+      <!-- Electricity Card -->
+      <a href="/electricity/" data-utility="electricity" class="data-card electricity" aria-label="ورود به داشبورد برق">
+        <div class="data-card-header">
+          <div class="data-card-icon-wrapper electricity">
+            <svg class="icon icon-electricity icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
+            </svg>
+          </div>
+          <span class="data-card-badge badge-public">فعال</span>
+        </div>
+        <div class="data-card-body">
+          <h3 class="data-card-title">برق</h3>
+          <p class="data-card-description">تحلیل پیک، کیفیت و مدیریت مصرف</p>
+        </div>
       </a>
-      <a href="/gas/" data-utility="gas" class="card gas" aria-label="ورود به داشبورد گاز و فرآورده‌های نفتی">
-        <span class="icon" aria-hidden="true">🔥</span>
-        <h3>گاز و فرآورده‌های نفتی</h3>
+
+      <!-- Gas Card -->
+      <a href="/gas/" data-utility="gas" class="data-card gas" aria-label="ورود به داشبورد گاز و فرآورده‌های نفتی">
+        <div class="data-card-header">
+          <div class="data-card-icon-wrapper gas">
+            <svg class="icon icon-gas icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+            </svg>
+          </div>
+          <span class="data-card-badge badge-public">فعال</span>
+        </div>
+        <div class="data-card-body">
+          <h3 class="data-card-title">گاز و فرآورده‌های نفتی</h3>
+          <p class="data-card-description">پایش توزیع و شدت کربن</p>
+        </div>
       </a>
-      <a href="/environment/" class="card environment" aria-label="ورود به بخش محیط زیست و پسماند">
-        <span class="icon" aria-hidden="true">🌿</span>
-        <h3>محیط زیست و پسماند</h3>
-        <p class="card-sub">پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند (به‌زودی)</p>
+
+      <!-- Environment Card -->
+      <a href="/environment/" class="data-card environment" aria-label="ورود به بخش محیط زیست و پسماند">
+        <div class="data-card-header">
+          <div class="data-card-icon-wrapper environment">
+            <svg class="icon icon-environment icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </div>
+          <span class="data-card-badge badge-soon">به‌زودی</span>
+        </div>
+        <div class="data-card-body">
+          <h3 class="data-card-title">محیط زیست و پسماند</h3>
+          <p class="data-card-description">پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند</p>
+        </div>
       </a>
     </section>
     <section class="flex justify-center py-6">
@@ -353,6 +406,10 @@
   </script>
   <script defer src="/assets/js/easter.js"></script>
   <script defer src="./assets/parallax.js"></script>
+  <!-- Icon System -->
+  <script defer src="/assets/js/icons.js"></script>
+  <!-- Micro-interactions -->
+  <script defer src="/assets/js/micro-interactions.js"></script>
   <script type="module" src="/index.js" defer charset="utf-8"></script>
   <script defer src="assets/numfmt.js?v=1"></script>
   <script defer src="./assets/cld-loader.js"></script>
