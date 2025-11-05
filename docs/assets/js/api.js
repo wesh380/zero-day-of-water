@@ -35,6 +35,13 @@ export async function apiFetch(path, init={}){
   const base = await resolveBaseUrl();
   const url = new URL(path, base).toString();
   const cldAction = isCldActionPath(path);
+
+  // Add User-Agent for cross-origin requests if not in browser context
+  if (!init.headers) init.headers = {};
+  if (typeof window === 'undefined' && !init.headers['User-Agent']) {
+    init.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  }
+
   try {
     const response = await fetch(url, init);
     if (cldAction) {

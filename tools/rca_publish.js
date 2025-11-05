@@ -22,11 +22,14 @@ const base = baseRaw.replace(/\/$/, '');
 
 async function check(path){
   let method = 'HEAD';
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+  };
   try{
-    let res = await fetch(base + path, { method, cache: 'no-store' });
+    let res = await fetch(base + path, { method, cache: 'no-store', headers });
     if(res.status === 405){
       method = 'GET';
-      res = await fetch(base + path, { method, cache: 'no-store' });
+      res = await fetch(base + path, { method, cache: 'no-store', headers });
     }
     return { path, method, status: res.status, ok: res.ok, redirected: res.redirected };
   }catch(e){

@@ -18,7 +18,12 @@ async function waitForServer(url, timeoutMs = 15000) {
   let lastErr;
   while (Date.now() - start < timeoutMs) {
     try {
-      const res = await fetch(url, { method: 'GET' });
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+      });
       if (res.ok) return true;
     } catch (e) { lastErr = e; }
     await sleep(200);
@@ -79,7 +84,7 @@ async function main() {
     throw e;
   });
 
-  const launchArgs = ['--disable-dev-shm-usage'];
+  const launchArgs = ['--disable-dev-shm-usage', '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'];
   if (process.env.CI === 'true' || process.platform === 'linux') {
     launchArgs.push('--no-sandbox', '--disable-setuid-sandbox');
   }

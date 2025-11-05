@@ -16,7 +16,12 @@ const base = process.env.VERIFY_BASE || 'http://localhost:8888';
 async function check(p){
   const full = /^https?:/i.test(p) ? p : base.replace(/\/$/, '') + p;
   try{
-    const res = await fetch(full, { method:'HEAD' });
+    const res = await fetch(full, {
+      method: 'HEAD',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
     return { url: full, status: res.status, ok: res.ok };
   }catch(e){
     return { url: full, status: 'ERR', ok: false };
