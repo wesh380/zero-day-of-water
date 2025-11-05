@@ -1,0 +1,15 @@
+# robots.txt for wesh360.ir
+# Generated: 2025-11-05
+
+User-agent: *
+Allow: /
+Disallow: /test/
+Disallow: /assets/vendor/
+Disallow: /assets/partials/
+Disallow: /*.dev.html$
+
+# Sitemaps
+Sitemap: https://wesh360.ir/sitemap.xml
+
+# Crawl-delay (optional, helps with server load)
+Crawl-delay: 1
