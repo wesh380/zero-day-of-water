@@ -1,0 +1,53 @@
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+a:focus-visible, button:focus-visible { border-radius: .5rem; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+.logo { display: inline-flex; align-items: center; text-decoration: none; }
+.logo img, .logo svg {
+  height: auto;
+  max-height: 3rem;
+}
+@media (min-width: 768px) {
+  .logo img, .logo svg {
+    max-height: 4rem;
+  }
+}
+.container { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: 1rem; }
+/* RTL-safe grid helpers */
+.grid-2 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 768px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
+/* Fix common table overflow */
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+.chart-wrap > canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+@media (max-width: 640px){
+  .chart-wrap { height: 240px; }
+}
+table { width: 100%; border-collapse: collapse; }
+/* Buttons/inputs min-tap-target */
+button, .btn, input, select { min-height: 40px; }
+/* P0: iOS form auto-zoom */
+input, select, textarea { font-size: 16px; }  /* 1rem اگر ریشه 16px */
+@media (hover:none) and (pointer:coarse) {
+  input, select, textarea { font-size: 16px; }
+}
+@media (max-width: 390px) {
+  :where(input, select, textarea) { font-size: 16px !important; }
+}
+/* اگر جایی برای input فونت کوچک تعریف شده، در ≤390px آن را به 16px برگردان */
+
+.full-viewport {
+  /* keep viewport utility independent; hero min-height lives in landing.css */
+  min-height: 100vh; /* fallback */
+  min-height: 100svh;
+  min-height: 100dvh;
+}

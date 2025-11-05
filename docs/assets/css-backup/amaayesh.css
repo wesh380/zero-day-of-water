@@ -1,0 +1,145 @@
+.map-panel{background:rgba(10,15,28,.88);color:#fff;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2);font-size:14px}
+.legend-dock{max-width:320px;color:#000;background:rgba(255,255,255,.9)}
+.legend-dock .legend-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.legend-dock .chip{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
+.legend-dock .chip.muted{opacity:.65}
+.legend-dock .chip .info{margin-right:4px;cursor:help;font-size:12px;opacity:.8}
+.legend-dock .chip.active{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
+.legend-dock .legend-head{display:flex;gap:8px;align-items:center;margin:6px 0 8px}
+.legend-dock .unit{opacity:.85}
+.legend-dock ul.swatches{list-style:none;margin:0;padding:0}
+.legend-dock ul.swatches li{display:flex;align-items:center;gap:8px;padding:6px;border-radius:8px;cursor:pointer}
+.legend-dock ul.swatches li:hover{background:rgba(255,255,255,.06)}
+.legend-dock ul.swatches li.active{background:rgba(255,255,255,.12)}
+.legend-dock .sw{width:28px;height:14px;border-radius:4px;display:inline-block;border:1px solid rgba(255,255,255,.25)}
+.legend-dock .bubbles{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-top:6px}
+.legend-dock .bubble{display:inline-block;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35)}
+.legend-dock .legend-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;opacity:.8}
+.legend-dock .subhead{font-size:12px;opacity:.9;margin:2px 0 6px}
+
+/* Legend collapse state */
+.legend-dock.collapsed{width:auto;padding:8px 10px}
+.legend-dock .legend-body{max-height:1000px;overflow:hidden;transition:max-height .3s ease,margin .3s ease,padding .3s ease}
+.legend-dock.collapsed .legend-body{max-height:0;margin:0;padding:0}
+
+.is-disabled{opacity:.5;pointer-events:none}
+
+/* === Tool Dock === */
+.tool-dock{display:flex;flex-direction:column;gap:12px}
+.tool-dock .dock-btn{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:9999px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tool-dock .dock-btn:hover{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
+.tool-dock .dock-reset{margin-top:auto}
+
+/* === Layers Dock === */
+.layers-dock{max-width:320px}
+.layers-dock .ld-tabs{display:flex;gap:8px}
+.layers-dock .ld-tabs button{flex:1;background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer}
+.layers-dock .ld-tabs button.active{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
+.layers-dock .ld-body{margin-top:8px}
+.layers-dock .ld-pane label{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer;min-height:44px}
+.layers-dock .ld-pane label:hover{background:rgba(255,255,255,.06)}
+.layers-dock .ld-pane label.is-disabled{cursor:not-allowed;pointer-events:auto}
+
+/* Avoid control overlap: stack with gaps per corner */
+.leaflet-top.leaflet-right,
+.leaflet-top.leaflet-left,
+.leaflet-bottom.leaflet-right,
+.leaflet-bottom.leaflet-left{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.leaflet-top.leaflet-left,
+.leaflet-bottom.leaflet-left{align-items:flex-start}
+
+
+/* === KPI switcher === */
+.ama-kpi-switch{display:flex;gap:6px}
+.ama-kpi-switch label{display:flex;align-items:center;position:relative}
+.ama-kpi-switch input{position:absolute;opacity:0}
+.ama-kpi-switch .chip{background:#0b1220;color:#e5e7eb;border:1px solid #324155;border-radius:16px;padding:10px 12px;cursor:pointer;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+.ama-kpi-switch input:checked+.chip{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
+
+/* === Sidepanel === */
+.ama-sidepanel{position:fixed;right:16px;top:96px;bottom:16px;max-width:360px;width:calc(100% - 32px);z-index:1000;padding:20px;overflow:auto;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:none}
+.ama-sidepanel.open{display:block}
+.ama-sidepanel header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.ama-sidepanel .close-btn{cursor:pointer;font-size:20px;line-height:1}
+.ama-sidepanel .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.ama-sidepanel ul.sp-sites{list-style:none;margin:4px 0;padding:0}
+.ama-sidepanel ul.sp-sites li{margin-bottom:6px}
+.ama-sidepanel ul.sp-sites li button{margin-top:4px}
+
+/* Legend warning */
+.ama-legend-warning{background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:6px;font-size:12px;margin-top:6px;text-align:center}
+
+/* === Top-10 panel === */
+.ama-panel{width:320px}
+.ama-panel-hd{font-weight:700;margin-bottom:8px;}
+.ama-panel-hd .sort{cursor:pointer;margin-right:6px;user-select:none;}
+.ama-panel-bd{max-height:300px;overflow-y:auto;}
+.ama-row{display:grid;grid-template-columns:30px 1fr 1fr 1fr 1fr;gap:6px;padding:4px;border-radius:6px;cursor:pointer;}
+.ama-row.ama-head{font-weight:700;}
+.ama-row:hover{background:rgba(255,255,255,.06);}
+.ama-actions{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;}
+.ama-actions a{cursor:pointer;text-decoration:underline;}
+.ama-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1001;display:flex;align-items:center;justify-content:center;}
+.ama-modal .ama-modal-content{background:#0b1220;color:#e5e7eb;padding:20px;max-height:80vh;overflow:auto;border-radius:12px;width:90%;max-width:480px;}
+
+/* loading badge */
+.ama-loading{font-size:12px;text-align:center;opacity:.8;padding:4px;}
+
+/* KPI legend */
+.ama-kpi-legend{font-size:12px}
+.ama-kpi-legend .lg{display:flex;align-items:center;gap:6px;margin:2px 0}
+.ama-kpi-legend .sw{width:20px;height:12px;border-radius:4px;display:inline-block;border:1px solid rgba(255,255,255,.25)}
+
+/* === Reset control === */
+.ama-reset{background:rgba(10,15,28,.88);color:#e5e7eb;border:1px solid #324155;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);cursor:pointer;height:44px;padding:0 10px;margin:4px;display:flex;align-items:center;justify-content:center;}
+.ama-reset:hover{background:#0ea5e9;color:#04121f;border-color:#0ea5e9}
+
+/* site labels */
+.site-label{background:transparent;border:none;color:#e5e7eb;font-size:12px;text-shadow:0 0 2px #000;}
+
+.ama-dock { display:flex; flex-direction:column; gap:12px; background:#0b1220cc; padding:10px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,.25); }
+.ama-dock .btn { width:44px; height:44px; border-radius:10px; background:#111827; color:#e5e7eb; border:1px solid #374151; font-size:18px; display:grid; place-items:center; cursor:pointer; }
+.ama-dock .btn:hover { background:#1f2937; }
+.ama-dock .btn:active { transform: translateY(1px); }
+
+/* Zoom control tweaks */
+.leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
+.leaflet-control-zoom a{border-radius:0}
+/* === Force dark (black) theme for guidance panels === */
+.map-panel {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #324155 !important;
+}
+
+/* Buttons/Chips/Tabs inside panels */
+.legend-dock .chip,
+.layers-dock .ld-tabs button,
+.ama-kpi-switch .chip {
+  background: #111 !important;
+  color: #e5e7eb !important;
+  border: 1px solid #324155 !important;
+}
+.legend-dock .chip.active,
+.layers-dock .ld-tabs button.active,
+.ama-kpi-switch input:checked + .chip {
+  background: #0ea5e9 !important;
+  color: #04121f !important;
+  border-color: #0ea5e9 !important;
+}
+
+/* Hover states readable on dark */
+.legend-dock ul.swatches li:hover,
+.layers-dock .ld-pane label:hover {
+  background: rgba(255,255,255,.06) !important;
+}
+.legend-dock ul.swatches li.active {
+  background: rgba(255,255,255,.12) !important;
+}
+
+/* Panel bodies remain transparent over black container */
+.legend-dock .legend-body,
+.ama-panel-bd { background: transparent !important; }
+
+/* Optional: darker overlay for sidepanel */
+#ama-sp-overlay { background: rgba(0,0,0,.3) !important; }

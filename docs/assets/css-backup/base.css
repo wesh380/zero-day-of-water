@@ -1,5 +1,5 @@
-@import url("./tokens.css");
-@import url("../inline-migration.css");
+@import url("/assets/css/tokens.css");
+@import url("/assets/inline-migration.css");
 .skip-link{
   position:absolute;
   top:auto;
