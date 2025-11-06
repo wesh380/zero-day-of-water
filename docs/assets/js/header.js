@@ -1,9 +1,9 @@
 (function(){
   const HEADER_ID = 'site-header';
   const supportsMatchMedia = typeof window.matchMedia === 'function';
-  const DESKTOP_MEDIA = supportsMatchMedia ? window.matchMedia('(min-width: 1024px)') : null;
+  const DESKTOP_MEDIA = supportsMatchMedia ? window.matchMedia('(min-width: 768px)') : null;
 
-  const isDesktop = ()=> DESKTOP_MEDIA ? DESKTOP_MEDIA.matches : window.innerWidth >= 1024;
+  const isDesktop = ()=> DESKTOP_MEDIA ? DESKTOP_MEDIA.matches : window.innerWidth >= 768;
 
   const closeMenu = (header, toggle, menu)=>{
     header.classList.remove('is-open');
