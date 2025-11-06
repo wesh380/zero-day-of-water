@@ -26,16 +26,17 @@
   top: 10px;
   right: 10px;
   z-index: 5;
-  max-width: 280px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(17, 24, 39, 0.72);           /* کارت نیمه‌شفاف تیره */
-  border: 1px solid rgba(229, 231, 235, 0.18);  /* خط حاشیه ظریف */
-  color: #e5e7eb;                                /* خاکستری روشن */
-  font-size: 12px;
-  line-height: 1.65;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  max-width: 320px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(17, 24, 39, 0.88);           /* کارت نیمه‌شفاف تیره‌تر برای کنتراست بهتر */
+  border: 1px solid rgba(229, 231, 235, 0.25);  /* خط حاشیه واضح‌تر */
+  color: #f3f4f6;                                /* سفید روشن‌تر برای خوانایی بهتر */
+  font-size: 13px;
+  line-height: 1.75;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);   /* سایه برای جدایی بهتر */
 }
 
 #cld-legend .legend-row {
@@ -51,13 +52,13 @@
 /* نمونه‌خط‌ها */
 #cld-legend .legend-line {
   display: inline-block;
-  width: 44px;
+  width: 48px;
   height: 0;
-  border-top: 3px solid #9ca3af; /* default preview */
+  border-top: 4px solid #9ca3af; /* default preview - ضخیم‌تر برای دیده شدن بهتر */
 }
 
-#cld-legend .line-pos   { border-top-color: #16a34a; } /* سبز مثبت */
-#cld-legend .line-neg   { border-top-color: #dc2626; } /* قرمز منفی */
+#cld-legend .line-pos   { border-top-color: #28a745; } /* سبز مثبت - کنتراست بهبود یافته */
+#cld-legend .line-neg   { border-top-color: #dc3545; } /* قرمز منفی - کنتراست بهبود یافته */
 #cld-legend .line-delay {
   border-top-color: #a3a3a3;
   border-top-style: dashed; 
@@ -107,8 +108,8 @@
   --text-lo: #9fb3c8;
   --accent: #22c55e;     /* سبز اکسنـت */
   --accent-2: #60a5fa;   /* آبی اکسنـت */
-  --pos: #16a34a;        /* یال مثبت */
-  --neg: #dc2626;        /* یال منفی */
+  --pos: #28a745;        /* یال مثبت - کنتراست 4.5:1 */
+  --neg: #dc3545;        /* یال منفی - کنتراست 4.5:1 */
   --delay: #a3a3a3;      /* dashed */
   --node-fill: #f8fafc;  /* باکس گره */
   --node-border: #94a3b8;
@@ -121,7 +122,7 @@
 /* From test/water-cld.html */
     :root{
       --bg:#0b1d1a; --card:#122825; --muted:#1a3430; --text:#e6f1ef; --accent:#58a79a; --line:#2f6158;
-      --pos:#16a34a; --neg:#dc2626;
+      --pos:#28a745; --neg:#dc3545;
     }
     body{background:var(--bg);color:var(--text);font-family:Vazirmatn,Tahoma,sans-serif;}
     .rtl{direction:rtl}
@@ -142,9 +143,12 @@
     /* اسلایدرها و دکمه‌ها لمسی‌تر */
     .controls input[type="range"]{accent-color:var(--accent);}
     input[type="range"]{height:30px;touch-action:pan-y;}
-    .btn{min-height:36px;padding:8px 12px;border-radius:10px;border:1px solid var(--muted);background:var(--muted);color:var(--text);cursor:pointer;}
+    .btn{min-height:36px;padding:8px 12px;border-radius:10px;border:1px solid var(--muted);background:var(--muted);color:var(--text);cursor:pointer;transition:all 0.2s ease;font-weight:500;}
+    .btn:hover{opacity:0.9;transform:translateY(-1px);}
     .btn.outline{background:transparent;}
-    .btn.off{opacity:.5;}
+    .btn.outline:hover{background:var(--muted);opacity:0.8;}
+    .btn.off{opacity:.5;cursor:not-allowed;}
+    .btn.off:hover{transform:none;}
     .select, select{min-height:36px;}
     label.ctrl{display:flex;align-items:center;gap:8px;}
     label.ctrl span{opacity:.9;font-size:.92rem;}
