@@ -129,10 +129,12 @@
     .board{display:grid;grid-template-columns:360px 1fr;gap:16px;}
     @media (max-width:1024px){ .board{ grid-template-columns:1fr; } }
     .card{background:var(--card, #122825);border:1px solid var(--muted, #1a3430);border-radius:16px;padding:12px;}
-    /* ظرف گراف امن */
-    #cy-wrap{min-height:560px;}
-    #cy{width:100%;min-height:520px;height:calc(100vh - 240px);border:1px solid var(--muted, #1a3430);border-radius:14px;}
-    #cy.cy-force-size{min-height:520px;}
+    /* ظرف گراف امن - بهبود یافته */
+    #cy-wrap{min-height:600px;}
+    #cy{width:100%;min-height:560px;height:calc(100vh - 220px);border:2px solid var(--muted, #1a3430);border-radius:16px;background:linear-gradient(135deg, #0b1d1a 0%, #0f2421 100%);}
+    #cy.cy-force-size{min-height:560px;}
+    /* بهبود نمایش گراف */
+    #cy canvas{image-rendering:crisp-edges;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
     @media (max-width:640px){
       .controls, .filters{ gap:10px; }
       #cy-wrap{min-height:420px;}
