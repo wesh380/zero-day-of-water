@@ -7,6 +7,11 @@
 
 /data/*
   Cache-Control: public, max-age=600
+
+# Better caching for CLD model JSON files
+/data/water-cld*.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Vary: Accept-Encoding
 /data/*.geojson
   Content-Type: application/geo+json; charset=utf-8
 /data/*.csv
@@ -33,6 +38,28 @@
   Cache-Control: public, max-age=60
 
 /assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Pre-compressed assets (gzip)
+/assets/dist/*.js.gz
+  Content-Type: application/javascript
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/dist/*.css.gz
+  Content-Type: text/css
+  Content-Encoding: gzip
+  Cache-Control: public, max-age=31536000, immutable
+
+# Pre-compressed assets (brotli)
+/assets/dist/*.js.br
+  Content-Type: application/javascript
+  Content-Encoding: br
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/dist/*.css.br
+  Content-Type: text/css
+  Content-Encoding: br
   Cache-Control: public, max-age=31536000, immutable
 
 /*.html

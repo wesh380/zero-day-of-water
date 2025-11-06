@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Metrics API - Mock Endpoint</title>
+</head>
+<body>
+  <h1>Performance Metrics API</h1>
+  <p>This is a mock endpoint for development. In production, replace with actual backend.</p>
+  <pre id="lastMetrics">No metrics received yet.</pre>
+
+  <script>
+    // Mock API endpoint that logs metrics to console
+    // In production, this should be a real backend endpoint
+
+    // Listen for POST requests (via fetch)
+    // Since we can't actually intercept HTTP in static HTML,
+    // this is just for documentation
+
+    // Log message
+    console.log('[Metrics API] Mock endpoint ready');
+    console.log('[Metrics API] Send POST requests to /api/metrics with JSON body');
+    console.log('[Metrics API] Expected format:', {
+      timestamp: 1234567890,
+      page: '/water/cld/',
+      navigation: { ttfb: 123, loadComplete: 456 },
+      paint: { fcp: 789 },
+      resources: { script: { count: 5, totalSize: 12345 } },
+      environment: { userAgent: '...', viewport: { width: 1920, height: 1080 } }
+    });
+
+    // Store in sessionStorage for demo
+    if (window.location.search.includes('test=1')) {
+      document.getElementById('lastMetrics').textContent = 'Test mode: Metrics will be logged to console';
+    }
+  </script>
+</body>
+</html>
