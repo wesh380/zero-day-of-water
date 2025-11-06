@@ -23,6 +23,9 @@
   <link rel="mask-icon" href="/assets/img/logo/wesh360.svg" color="#0ea5e9" />
   <meta name="theme-color" content="#0ea5e9" />
 
+  <!-- Preload critical font to avoid 404 from relative paths in CSS bundle -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/vazirmatn/Vazirmatn[wght].woff2" crossorigin>
+
   <!-- Base styles -->
   <link rel="stylesheet" href="/assets/chart.autofix.css" />
 

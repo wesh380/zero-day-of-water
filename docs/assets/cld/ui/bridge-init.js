@@ -52,7 +52,17 @@
     })();
   }
   function trySetModelWithRetry(max){
-    var m = pickModel(); if(!m){ console.warn('[CLD bridge] no model detected'); return; }
+    // Check if model already loaded via other mechanisms
+    var cy = safeGetCy();
+    if (cy && cy.nodes().length > 0) {
+      if (window.__CLD_DEBUG__) console.log('[CLD bridge] model already loaded, skipping');
+      return;
+    }
+    var m = pickModel();
+    if(!m){
+      if (window.__CLD_DEBUG__) console.warn('[CLD bridge] no model detected');
+      return;
+    }
     var n=0;(function tick(){
       n++;
       try{
