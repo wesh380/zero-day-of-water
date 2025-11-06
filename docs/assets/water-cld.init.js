@@ -368,8 +368,10 @@ if (typeof MutationObserver !== 'undefined') {
         sw.addEventListener('change', function(){ loadModelAndMount(selectedUrl()); });
         sw.__CLD_PATCHED__ = true;
       }
+      // Skip auto-load if data-no-auto-load is set (for test pages)
+      if (sw.dataset.noAutoLoad === 'true') return;
       var initUrl = selectedUrl();
-      if (initUrl) loadModelAndMount(initUrl);
+      if (initUrl && initUrl !== '/' && initUrl !== '?v=1') loadModelAndMount(initUrl);
     }catch(_){ }
   }
   if (document.readyState === 'loading'){
