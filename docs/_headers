@@ -13,8 +13,9 @@
   Content-Type: text/csv; charset=utf-8
 
 # Loosen style-src-elem only for CLD test pages to allow Cytoscape inline <style>
+# Also allow inline scripts for debug code in test pages
 /test/*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; script-src 'self'; connect-src 'self'; style-src-elem 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'self'; style-src-elem 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'
 
 /assets/cld/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
