@@ -340,11 +340,11 @@ function cldToCyElements(graph){ return toCyElements(graph); }
   }
 
   function measureAndResizeNodes(cy, opts = {}) {
-    const fontSize = opts.fontSize || 15;
-    const padding = typeof opts.padding === 'number' ? opts.padding : 18;
-    const maxTextWidth = opts.maxWidth || opts.maxTextWidth || 260;
-    const minWidth = opts.minWidth || 100;
-    const minHeight = opts.minHeight || 48;
+    const fontSize = opts.fontSize || 18;
+    const padding = typeof opts.padding === 'number' ? opts.padding : 24;
+    const maxTextWidth = opts.maxWidth || opts.maxTextWidth || 300;
+    const minWidth = opts.minWidth || 140;
+    const minHeight = opts.minHeight || 64;
     const container = cy.container();
     const comp = window.getComputedStyle(container);
     const fontFamily = comp && comp.fontFamily ? comp.fontFamily : 'sans-serif';
@@ -592,14 +592,14 @@ function cldToCyElements(graph){ return toCyElements(graph); }
         const algo = window?.cldLayoutName || 'dagre';
         const base = { name: algo, fit: true, animate: false };
         if (algo === 'dagre') {
-          Object.assign(base, { rankDir: 'LR', nodeSep: 60, rankSep: 90, edgeSep: 24, spacingFactor: 1.12, padding: 30 });
+          Object.assign(base, { rankDir: 'LR', nodeSep: 100, rankSep: 140, edgeSep: 40, spacingFactor: 1.3, padding: 50 });
         } else if (algo === 'elk') {
           base.elk = {
             'elk.direction': 'RIGHT',
-            'elk.spacing.nodeNode': 60,
-            'elk.spacing.edgeEdge': 16,
-            'elk.spacing.edgeNode': 24,
-            'elk.layered.spacing.baseValue': 60,
+            'elk.spacing.nodeNode': 100,
+            'elk.spacing.edgeEdge': 30,
+            'elk.spacing.edgeNode': 40,
+            'elk.layered.spacing.baseValue': 100,
             'elk.alignment': 'CENTER',
             'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX'
           };
@@ -672,12 +672,12 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     const colorText = rootStyle.getPropertyValue('--text').trim() || '#e6f1ef';
 
     const baseStyle = [
-      { selector: 'node', style: { 'background-color': '#f8faf9', 'border-width': 2 } },
-      { selector: 'node[label][!isGroup]', style: { 'label': 'data(label)', 'font-family': 'Vazirmatn, sans-serif', 'text-wrap': 'wrap', 'text-max-width': 280, 'font-size': 16, 'font-weight': 600, 'color': '#1a2a27', 'text-valign': 'center', 'text-halign': 'center', 'text-margin-y': 0, 'text-outline-width': 0, 'background-color': '#ffffff', 'shape': 'round-rectangle', 'padding': '14px 20px', 'border-width': 2, 'border-color': '#cbd5e1', 'min-zoomed-font-size': 10, 'text-outline-color': '#ffffff', 'text-outline-opacity': 0.8 } },
+      { selector: 'node', style: { 'background-color': '#f8faf9', 'border-width': 3 } },
+      { selector: 'node[label][!isGroup]', style: { 'label': 'data(label)', 'font-family': 'Vazirmatn, sans-serif', 'text-wrap': 'wrap', 'text-max-width': 300, 'font-size': 18, 'font-weight': 700, 'color': '#0f1419', 'text-valign': 'center', 'text-halign': 'center', 'text-margin-y': 0, 'text-outline-width': 3, 'background-color': '#ffffff', 'shape': 'round-rectangle', 'padding': '20px 24px', 'border-width': 3, 'border-color': '#3b82f6', 'min-zoomed-font-size': 12, 'text-outline-color': '#ffffff', 'text-outline-opacity': 1, 'min-width': 140, 'min-height': 64, 'width': 'label', 'height': 'label', 'box-shadow': '0 2px 8px rgba(0,0,0,0.15)' } },
       { selector: 'node.compound', style: { 'shape': 'round-rectangle', 'background-color': '#ffffff', 'background-opacity': 0.12, 'border-color': '#2b3c39', 'border-width': 1.5, 'label': 'data(label)', 'text-valign': 'top', 'text-halign': 'center', 'font-size': 12, 'color': '#cfe7e2', 'padding': 24, 'font-family': 'Vazirmatn, sans-serif' } },
-      { selector: 'edge', style: { 'curve-style': 'bezier', 'width': ele => 2 + (ele.data('weight') || 0), 'line-style': ele => ele.data('delayYears') > 0 ? 'dashed' : 'solid', 'line-dash-pattern': ele => ele.data('delayYears') > 0 ? [8,6] : [0], 'target-arrow-shape': 'triangle', 'arrow-scale': 1.2, 'line-color': colorLine, 'target-arrow-color': colorLine, 'source-arrow-color': colorLine, 'label': 'data(label)', 'text-rotation': 'autorotate', 'text-background-color': 'rgba(0,0,0,0.35)', 'text-background-opacity': 1, 'text-background-padding': 1, 'text-wrap': 'wrap', 'text-max-width': 100, 'font-family': 'Vazirmatn, sans-serif', 'font-size': 12, 'color': colorText } },
-      { selector: 'edge.pos', style: { 'line-color': colorPos, 'target-arrow-color': colorPos, 'source-arrow-color': colorPos } },
-      { selector: 'edge.neg', style: { 'line-color': colorNeg, 'target-arrow-color': colorNeg, 'source-arrow-color': colorNeg } },
+      { selector: 'edge', style: { 'curve-style': 'bezier', 'width': ele => 3 + (ele.data('weight') || 0) * 1.5, 'line-style': ele => ele.data('delayYears') > 0 ? 'dashed' : 'solid', 'line-dash-pattern': ele => ele.data('delayYears') > 0 ? [10,8] : [0], 'target-arrow-shape': 'triangle', 'arrow-scale': 1.4, 'line-color': colorLine, 'target-arrow-color': colorLine, 'source-arrow-color': colorLine, 'label': 'data(label)', 'text-rotation': 'autorotate', 'text-background-color': 'rgba(15, 20, 25, 0.85)', 'text-background-opacity': 1, 'text-background-padding': 4, 'text-wrap': 'wrap', 'text-max-width': 120, 'font-family': 'Vazirmatn, sans-serif', 'font-size': 14, 'font-weight': 600, 'color': '#ffffff', 'text-outline-width': 0 } },
+      { selector: 'edge.pos', style: { 'line-color': colorPos, 'target-arrow-color': colorPos, 'source-arrow-color': colorPos, 'width': ele => 4 + (ele.data('weight') || 0) * 1.5 } },
+      { selector: 'edge.neg', style: { 'line-color': colorNeg, 'target-arrow-color': colorNeg, 'source-arrow-color': colorNeg, 'width': ele => 4 + (ele.data('weight') || 0) * 1.5 } },
       { selector: '.hidden', style: { 'display': 'none' } },
       { selector: '.faded', style: { 'opacity': 0.1 } },
       { selector: '.highlighted', style: { 'border-color': '#facc15', 'border-width': 3 } },
