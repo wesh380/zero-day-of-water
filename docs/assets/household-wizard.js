@@ -36,7 +36,7 @@
 
   const unitFor = (u) => u==='water' ? 'L' : (u==='electricity' ? 'kWh' : 'm3');
 
-  function selectTab(utility){
+  function selectTab(utility, updateURL = false){
     state.utility = utility;
     $$('.wiz-tabs .tab').forEach(btn => {
       const isActive = btn.dataset.utility === utility;
@@ -49,10 +49,12 @@
       // if user changed it manually, keep; otherwise default to utility's main unit
       if (!qs.get('unit')) sel.value = unit;
     }
-    // reflect in URL without reload
-    const url = new URL(location.href);
-    url.searchParams.set('utility', utility);
-    history.replaceState(null, '', url.toString());
+    // reflect in URL without reload (only when user explicitly clicks tab)
+    if (updateURL){
+      const url = new URL(location.href);
+      url.searchParams.set('utility', utility);
+      history.replaceState(null, '', url.toString());
+    }
   }
 
   function loadFromStorage(){
@@ -222,7 +224,7 @@
 
   function init(){
     // tabs
-    $$('.wiz-tabs .tab').forEach(btn => btn.addEventListener('click', () => selectTab(btn.dataset.utility)));
+    $$('.wiz-tabs .tab').forEach(btn => btn.addEventListener('click', () => selectTab(btn.dataset.utility, true)));
     // form
     state.form = $('#wiz-form');
     state.results = $('#wiz-results');
