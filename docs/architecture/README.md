@@ -10,15 +10,22 @@
 **مشاهده:** فایل را مستقیماً در GitHub باز کنید تا دیاگرام‌ها رندر شوند.
 
 ### 2. `system_architecture.py`
-اسکریپت Python برای تولید دیاگرام معماری با استفاده از کتابخانه `diagrams`.
+اسکریپت Python برای تولید دیاگرام کامل معماری سیستم با جزئیات.
 
-**پیش‌نیازها:**
+**خروجی:** دیاگرام کامل با تمام کامپوننت‌ها
+
+### 3. `system_architecture_simplified.py`
+اسکریپت Python برای تولید دیاگرام ساده و خلاصه معماری.
+
+**خروجی:** نمای کلی سیستم
+
+**پیش‌نیازهای هر دو اسکریپت:**
 - Python 3.7+
 - Graphviz
 - کتابخانه diagrams
 
-### 3. `Dockerfile`
-فایل Docker برای اجرای راحت اسکریپت Python بدون نیاز به نصب دستی dependencies.
+### 4. `Dockerfile`
+فایل Docker برای اجرای راحت اسکریپت‌های Python بدون نیاز به نصب دستی dependencies.
 
 ## 🚀 روش‌های استفاده
 
@@ -56,8 +63,13 @@ brew install graphviz
 # نصب Python package
 pip install diagrams
 
-# اجرای اسکریپت
-python system_architecture.py
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
 ```
 
 #### Ubuntu/Debian
@@ -69,8 +81,13 @@ sudo apt-get install graphviz
 # نصب Python package
 pip install diagrams
 
-# اجرای اسکریپت
-python system_architecture.py
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
 ```
 
 #### Windows (با Chocolatey)
@@ -81,15 +98,28 @@ choco install graphviz
 # نصب Python package
 pip install diagrams
 
-# اجرای اسکریپت
-python system_architecture.py
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
 ```
 
 ---
 
 ## 📊 خروجی
 
-اجرای موفق اسکریپت Python یک فایل `wesh360_architecture.png` تولید می‌کند که شامل دیاگرام کامل معماری سیستم است.
+### دیاگرام کامل (system_architecture.py)
+- `wesh360_architecture.png` - دیاگرام کامل با تمام جزئیات
+- `wesh360_architecture.svg` - نسخه وکتور (با `--all` یا `--format svg`)
+- `wesh360_architecture.pdf` - نسخه PDF (با `--all` یا `--format pdf`)
+
+### دیاگرام ساده (system_architecture_simplified.py)
+- `wesh360_overview.png` - نمای کلی سیستم
+- `wesh360_overview.svg` - نسخه وکتور (با `--all` یا `--format svg`)
+- `wesh360_overview.pdf` - نسخه PDF (با `--all` یا `--format pdf`)
 
 ---
 

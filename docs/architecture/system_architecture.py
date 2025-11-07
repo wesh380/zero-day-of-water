@@ -2,8 +2,14 @@
 """
 WESH360 System Architecture Diagram
 تولید دیاگرام معماری سیستم با استفاده از Diagrams
+
+استفاده:
+    python system_architecture.py           # تولید PNG
+    python system_architecture.py --all     # تولید همه فرمت‌ها (PNG, SVG, PDF)
+    python system_architecture.py --format svg  # تولید فرمت خاص
 """
 
+import sys
 from diagrams import Diagram, Cluster, Edge
 from diagrams.onprem.client import Users
 from diagrams.onprem.compute import Server
@@ -19,30 +25,46 @@ from diagrams.generic.storage import Storage
 from diagrams.saas.analytics import GoogleAnalytics
 from diagrams.generic.blank import Blank
 
+# پردازش آرگومان‌های خط فرمان
+output_formats = ["png"]  # پیش‌فرض
+if len(sys.argv) > 1:
+    if sys.argv[1] == "--all":
+        output_formats = ["png", "svg", "pdf"]
+    elif sys.argv[1] == "--format" and len(sys.argv) > 2:
+        output_formats = [sys.argv[2]]
+
 # تنظیمات دیاگرام
 graph_attr = {
     "fontsize": "16",
+    "fontname": "Arial",
     "bgcolor": "white",
     "pad": "0.5",
     "splines": "ortho",
     "nodesep": "0.8",
-    "ranksep": "1.2"
+    "ranksep": "1.2",
+    "dpi": "300"  # کیفیت بالا
 }
 
 node_attr = {
     "fontsize": "13",
+    "fontname": "Arial",
     "height": "1.5",
     "width": "1.5"
 }
 
 edge_attr = {
-    "penwidth": "2.0"
+    "penwidth": "2.0",
+    "fontsize": "11",
+    "fontname": "Arial"
 }
+
+print(f"🎨 در حال تولید دیاگرام با فرمت(های): {', '.join(output_formats)}")
 
 with Diagram(
     "WESH360 System Architecture",
     filename="wesh360_architecture",
     direction="TB",
+    outformat=output_formats,
     graph_attr=graph_attr,
     node_attr=node_attr,
     edge_attr=edge_attr,
@@ -142,5 +164,13 @@ with Diagram(
     # Data Layer to Backend
     json_data >> Edge(label="Validation Schema", style="dashed") >> signature_validator
 
-print("✅ دیاگرام معماری با موفقیت تولید شد!")
-print("📄 فایل خروجی: wesh360_architecture.png")
+# پیام‌های موفقیت
+print("\n✅ دیاگرام معماری با موفقیت تولید شد!")
+print(f"📄 فایل‌های خروجی:")
+for fmt in output_formats:
+    print(f"   - wesh360_architecture.{fmt}")
+print("\n💡 نکته: می‌توانید از آرگومان‌های زیر استفاده کنید:")
+print("   python system_architecture.py           # PNG فقط")
+print("   python system_architecture.py --all     # PNG, SVG, PDF")
+print("   python system_architecture.py --format svg")
+print()
