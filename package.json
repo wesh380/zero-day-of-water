@@ -96,6 +96,8 @@
   "dependencies": {
     "@netlify/blobs": "^10.0.8",
     "@netlify/functions": "^4.2.1",
+    "@supabase/supabase-js": "^2.80.0",
+    "ajv": "^8.17.1",
     "jspdf": "^3.0.1",
     "node-fetch": "^3.3.2",
     "qrcode-generator": "^2.0.4",
