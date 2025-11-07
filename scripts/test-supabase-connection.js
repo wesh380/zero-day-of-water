@@ -32,7 +32,7 @@ if (!SUPABASE_ANON_KEY) {
 
 // 2. تست اتصال
 console.log('\n2️⃣ تست اتصال به Supabase:');
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createClient(https://fviewmsgmqdjsekuazdn.supabase.co, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2aWV3bXNnbXFkanNla3VhemRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0NzgxNjksImV4cCI6MjA3ODA1NDE2OX0.i9bkVYThgdeCC4pVU_6XNU08T_8vh7e-RBok7neLD28);
 
 // 3. تست query ساده
 (async () => {
