@@ -280,8 +280,7 @@
           'min-height': '72px',
           'shape': 'round-rectangle',
           'text-valign': 'center',
-          'text-halign': 'center',
-          'box-shadow': '0 2px 8px rgba(0,0,0,0.15)'
+          'text-halign': 'center'
         }
       },
       // یال‌ها: ضخیم‌تر و با کنتراست بهتر
@@ -362,8 +361,17 @@
       }
     ];
 
-    // اعمال استایل‌ها
-    cy.style().fromJson(styles).update();
+    // اعمال استایل‌ها به روش صحیح
+    try {
+      const stylesheet = cy.style();
+      styles.forEach(function(styleObj) {
+        stylesheet.selector(styleObj.selector).style(styleObj.style);
+      });
+      stylesheet.update();
+      console.log('[CLD Diagram Controls] Styles applied successfully');
+    } catch (e) {
+      console.error('[CLD Diagram Controls] Failed to apply styles:', e);
+    }
   }
 
   /**

@@ -31,8 +31,8 @@
 /water/cld*
   X-Content-Type-Options: nosniff
   # Cytoscape injects <style> at runtime; relax CSP for production CLD page
-  # Allow Cloudflare Analytics (beacon.min.js) and inline styles from Cytoscape
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src-elem 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'
+  # Allow Cloudflare Analytics (beacon.min.js), Porsline feedback, and inline styles from Cytoscape
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self' data:; script-src 'self' https://static.cloudflareinsights.com https://cdn.porsline.ir; connect-src 'self' https://cloudflareinsights.com https://survey.porsline.ir; style-src-elem 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'; frame-src https://survey.porsline.ir
 
 /config/*
   Cache-Control: public, max-age=60
