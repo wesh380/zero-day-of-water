@@ -672,17 +672,17 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     const colorText = rootStyle.getPropertyValue('--text').trim() || '#e6f1ef';
 
     const baseStyle = [
-      { selector: 'node', style: { 'background-color': '#f8faf9', 'border-width': 3 } },
-      { selector: 'node[label][!isGroup]', style: { 'label': 'data(label)', 'font-family': 'Vazirmatn, sans-serif', 'text-wrap': 'wrap', 'text-max-width': 300, 'font-size': 18, 'font-weight': 700, 'color': '#0f1419', 'text-valign': 'center', 'text-halign': 'center', 'text-margin-y': 0, 'text-outline-width': 3, 'background-color': '#ffffff', 'shape': 'round-rectangle', 'padding': '20px 24px', 'border-width': 3, 'border-color': '#3b82f6', 'min-zoomed-font-size': 12, 'text-outline-color': '#ffffff', 'text-outline-opacity': 1, 'min-width': 140, 'min-height': 64, 'width': 'label', 'height': 'label', 'box-shadow': '0 2px 8px rgba(0,0,0,0.15)' } },
-      { selector: 'node.compound', style: { 'shape': 'round-rectangle', 'background-color': '#ffffff', 'background-opacity': 0.12, 'border-color': '#2b3c39', 'border-width': 1.5, 'label': 'data(label)', 'text-valign': 'top', 'text-halign': 'center', 'font-size': 12, 'color': '#cfe7e2', 'padding': 24, 'font-family': 'Vazirmatn, sans-serif' } },
-      { selector: 'edge', style: { 'curve-style': 'bezier', 'width': ele => 3 + (ele.data('weight') || 0) * 1.5, 'line-style': ele => ele.data('delayYears') > 0 ? 'dashed' : 'solid', 'line-dash-pattern': ele => ele.data('delayYears') > 0 ? [10,8] : [0], 'target-arrow-shape': 'triangle', 'arrow-scale': 1.4, 'line-color': colorLine, 'target-arrow-color': colorLine, 'source-arrow-color': colorLine, 'label': 'data(label)', 'text-rotation': 'autorotate', 'text-background-color': 'rgba(15, 20, 25, 0.85)', 'text-background-opacity': 1, 'text-background-padding': 4, 'text-wrap': 'wrap', 'text-max-width': 120, 'font-family': 'Vazirmatn, sans-serif', 'font-size': 14, 'font-weight': 600, 'color': '#ffffff', 'text-outline-width': 0 } },
-      { selector: 'edge.pos', style: { 'line-color': colorPos, 'target-arrow-color': colorPos, 'source-arrow-color': colorPos, 'width': ele => 4 + (ele.data('weight') || 0) * 1.5 } },
-      { selector: 'edge.neg', style: { 'line-color': colorNeg, 'target-arrow-color': colorNeg, 'source-arrow-color': colorNeg, 'width': ele => 4 + (ele.data('weight') || 0) * 1.5 } },
+      { selector: 'node', style: { 'background-color': '#f0f4f8', 'border-width': 3, 'border-color': '#64748b' } },
+      { selector: 'node[label][!isGroup]', style: { 'label': 'data(label)', 'font-family': 'Vazirmatn, sans-serif', 'text-wrap': 'wrap', 'text-max-width': 320, 'font-size': 18, 'font-weight': 700, 'color': '#0f172a', 'text-valign': 'center', 'text-halign': 'center', 'text-margin-y': 0, 'text-outline-width': 0, 'background-color': '#f0f4f8', 'shape': 'round-rectangle', 'padding': '24px', 'border-width': 3, 'border-color': '#64748b', 'min-zoomed-font-size': 14, 'min-width': 160, 'min-height': 72, 'width': 'label', 'height': 'label', 'box-shadow': '0 2px 10px rgba(0,0,0,0.2)' } },
+      { selector: 'node.compound', style: { 'shape': 'round-rectangle', 'background-color': '#ffffff', 'background-opacity': 0.12, 'border-color': '#64748b', 'border-width': 2, 'label': 'data(label)', 'text-valign': 'top', 'text-halign': 'center', 'font-size': 14, 'color': '#e2e8f0', 'padding': 28, 'font-family': 'Vazirmatn, sans-serif' } },
+      { selector: 'edge', style: { 'curve-style': 'bezier', 'width': ele => 3.5 + (ele.data('weight') || 0) * 2, 'line-style': ele => ele.data('delayYears') > 0 ? 'dashed' : 'solid', 'line-dash-pattern': ele => ele.data('delayYears') > 0 ? [10,8] : [0], 'target-arrow-shape': 'triangle', 'arrow-scale': 1.6, 'line-color': colorLine, 'target-arrow-color': colorLine, 'source-arrow-color': colorLine, 'label': 'data(label)', 'text-rotation': 'autorotate', 'text-background-color': 'rgba(15, 23, 42, 0.92)', 'text-background-opacity': 1, 'text-background-padding': 5, 'text-background-shape': 'roundrectangle', 'text-wrap': 'wrap', 'text-max-width': 140, 'font-family': 'Vazirmatn, sans-serif', 'font-size': 14, 'font-weight': 600, 'color': '#ffffff', 'text-outline-width': 0 } },
+      { selector: 'edge.pos, edge[sign = "+"]', style: { 'line-color': '#16a34a', 'target-arrow-color': '#16a34a', 'source-arrow-color': '#16a34a', 'width': ele => 4.5 + (ele.data('weight') || 0) * 2 } },
+      { selector: 'edge.neg, edge[sign = "-"]', style: { 'line-color': '#dc2626', 'target-arrow-color': '#dc2626', 'source-arrow-color': '#dc2626', 'width': ele => 4.5 + (ele.data('weight') || 0) * 2 } },
       { selector: '.hidden', style: { 'display': 'none' } },
-      { selector: '.faded', style: { 'opacity': 0.1 } },
-      { selector: '.highlighted', style: { 'border-color': '#facc15', 'border-width': 3 } },
-      { selector: '.highlight', style: { 'border-color': colorAccent, 'border-width': 3 } },
-      { selector: 'edge.highlight', style: { 'line-color': colorAccent, 'target-arrow-color': colorAccent, 'source-arrow-color': colorAccent, 'width': 4 } }
+      { selector: '.faded', style: { 'opacity': 0.15 } },
+      { selector: '.highlighted', style: { 'border-color': '#facc15', 'border-width': 4 } },
+      { selector: '.highlight', style: { 'border-color': '#60a5fa', 'border-width': 4 } },
+      { selector: 'edge.highlight', style: { 'line-color': '#60a5fa', 'target-arrow-color': '#60a5fa', 'source-arrow-color': '#60a5fa', 'width': 5 } }
     ];
     cy.style().fromJson(baseStyle).update();
     if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
@@ -745,61 +745,66 @@ function cldToCyElements(graph){ return toCyElements(graph); }
     // ---- Modern Cytoscape styling: card-like nodes & readable edge labels ----
     window.__WATER_CLD_READY__.then(function(){
       cy.style()
-        // Nodes: card-like
+        // Nodes: card-like با اندازه بزرگ‌تر و فونت خوانا
         .selector('node')
         .style({
           'width': 'label',
           'height': 'label',
           'text-wrap': 'wrap',
-          'text-max-width': 240,
-          'padding': '16px',
-          'font-size': 15,
-          'font-weight': 600,
-          'color': '#0a0f0e',
-          'background-color': '#f8fafc',   // NOTE: Cytoscape از CSS var پشتیبانی مستقیم ندارد
-          'border-color': '#94a3b8',
-          'border-width': 1,
-          'shape': 'round-rectangle'
+          'text-max-width': 300,
+          'padding': '22px',
+          'font-size': 18,
+          'font-weight': 700,
+          'color': '#0f172a',
+          'background-color': '#f0f4f8',
+          'border-color': '#64748b',
+          'border-width': 3,
+          'shape': 'round-rectangle',
+          'min-width': '160px',
+          'min-height': '72px',
+          'text-outline-width': 0
         })
         .selector('node.compound')
-        .style({ 'width': 'auto', 'height': 'auto' })
+        .style({ 'width': 'auto', 'height': 'auto', 'border-width': 2, 'border-color': '#64748b' })
 
-        // Edges: base
+        // Edges: base با عرض بیشتر و فونت بزرگ‌تر
         .selector('edge')
         .style({
           'curve-style': 'bezier',
-          'width': 'mapData(weight, 0, 1.2, 2, 6)',
+          'width': 'mapData(weight, 0, 1.2, 3.5, 7)',
           'target-arrow-shape': 'triangle',
+          'arrow-scale': 1.6,
           'line-cap': 'round',
           'label': 'data(label)',
           'text-rotation': 'autorotate',
-          'font-size': 11,
-          'text-background-color': 'rgba(11,18,32,.65)',
+          'font-size': 14,
+          'font-weight': 600,
+          'text-background-color': 'rgba(15, 23, 42, 0.92)',
           'text-background-opacity': 1,
           'text-background-shape': 'roundrectangle',
-          'text-background-padding': 3,
-          'color': '#e6f1ff'
+          'text-background-padding': 5,
+          'color': '#ffffff'
         })
 
-        // Edge color by sign (categorical)
+        // Edge color by sign (categorical) با کنتراست بهتر
         .selector('edge[sign = "+"]')
-        .style({ 'line-color': '#16a34a', 'target-arrow-color': '#16a34a' })
+        .style({ 'line-color': '#16a34a', 'target-arrow-color': '#16a34a', 'width': 4.5 })
         .selector('edge[sign = "-"]')
-        .style({ 'line-color': '#dc2626', 'target-arrow-color': '#dc2626' })
+        .style({ 'line-color': '#dc2626', 'target-arrow-color': '#dc2626', 'width': 4.5 })
 
         // Dashed if delayed
         .selector('edge[delayYears > 0]')
-        .style({ 'line-style': 'dashed', 'line-dash-pattern': [8,6] })
+        .style({ 'line-style': 'dashed', 'line-dash-pattern': [10, 8] })
 
         .update();
 
       // Re-measure after layout & fonts load so labels never clip
       cy.on('layoutstop', function(){
-        if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth:240, padding:16});
+        if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth:300, padding:22, fontSize:18, minWidth:160, minHeight:72});
       });
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function(){
-          if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth:240, padding:16});
+          if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth:300, padding:22, fontSize:18, minWidth:160, minHeight:72});
         });
       }
 
@@ -1573,7 +1578,7 @@ function cldToCyElements(graph){ return toCyElements(graph); }
           }
 
           cy.once('layoutstop', function(){
-            if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth: 240, padding: 16});
+            if (window.measureAndResizeNodes) window.measureAndResizeNodes(cy, {maxWidth: 300, padding: 22, fontSize: 18, minWidth: 160, minHeight: 72});
             requestAnimationFrame(() => window.__cldSafeFit(cy));
           });
         };
