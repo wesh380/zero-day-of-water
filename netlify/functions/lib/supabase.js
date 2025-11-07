@@ -6,6 +6,8 @@
  * Environment Variables مورد نیاز:
  * - SUPABASE_URL: URL پروژه Supabase
  * - SUPABASE_ANON_KEY: Public anon key
+ *
+ * تاریخ: 2025-11-07
  */
 
 const { createClient } = require('@supabase/supabase-js');
