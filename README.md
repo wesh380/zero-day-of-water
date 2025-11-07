@@ -1,6 +1,22 @@
-# Water Dashboard
+# 💧 wesh360.ir - Agrivoltaics Platform
 
-This repository hosts a simple dashboard served from the `/docs` directory and a proxy for Gemini API requests.
+پلتفرم تحلیل و شبیه‌سازی سیستم‌های Agrivoltaics (کشاورزی + انرژی خورشیدی)
+
+**🌐 Live Demo**: [wesh360.ir](https://wesh360.ir)
+**📚 API Docs**: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+**🚀 Deployment Guide**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+---
+
+## 🏗️ Architecture
+
+این پروژه شامل:
+- **Frontend**: Static dashboard served from `/docs` (GitHub Pages)
+- **Backend**: Serverless functions on Netlify
+- **Database**: PostgreSQL on Supabase (Free tier)
+- **AI Integration**: Gemini API proxy
+
+---
 
 ## Dash application
 
@@ -62,9 +78,117 @@ curl -i -X POST http://localhost:8888/api/gemini \
   --data '{"q":"ping"}'
 ```
 
+## 🔗 API Endpoints
+
+Backend serverless functions روی Netlify:
+
+- `POST /save-scenario` - ذخیره scenario در Supabase
+- `GET /get-scenario?id={uuid}` - دریافت scenario
+- `GET /get-tariff` - دریافت آخرین نرخ‌های برق
+- `POST /cld-submit` - ارسال Causal Loop Diagram برای پردازش
+- `GET /cld-result?job_id={uuid}` - دریافت نتیجه job
+- `POST /api/gemini` - Proxy برای Gemini AI
+
+📖 **مستندات کامل**: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+
+---
+
+## 💾 Database Schema (Supabase)
+
+| Table | Description |
+|-------|-------------|
+| `scenarios` | ذخیره scenario های کاربران (JSONB) |
+| `tariffs` | نرخ‌های برق (ppa, buy, sell) |
+| `cld_jobs` | Job queue برای Causal Loop Diagrams |
+| `cld_results` | نتایج پردازش شده jobs |
+
+---
+
+## 🚀 Quick Start
+
+### پیش‌نیازها
+- Node.js 18+
+- حساب Netlify (رایگان)
+- حساب Supabase (رایگان)
+
+### نصب و راه‌اندازی
+
+```bash
+# Clone repository
+git clone https://github.com/sajjadzea/zero-day-of-water2.git
+cd zero-day-of-water2
+
+# نصب dependencies
+npm install
+
+# ساخت فایل‌های dashboard
+npm run build:agri && npm run prepare:agri
+
+# ساخت CLD bundle
+node scripts/build-cld.js
+
+# اجرا در local (با Netlify Dev)
+netlify dev
+```
+
+🔧 **Setup کامل**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+---
+
+## 🧪 Testing
+
+### تست Local Functions
+
+```bash
+# Save scenario
+curl -X POST http://localhost:8888/.netlify/functions/save-scenario \
+  -H "Content-Type: application/json" \
+  -d '{"state":{"test":"data"}}'
+
+# Get tariff
+curl http://localhost:8888/.netlify/functions/get-tariff
+```
+
+### تست Production
+
+```bash
+# Replace با URL واقعی
+curl https://your-site.netlify.app/.netlify/functions/get-tariff
+```
+
+---
+
+## 📊 Tech Stack
+
+- **Frontend**: Vanilla JS, Tailwind CSS
+- **Backend**: Netlify Functions (Node.js)
+- **Database**: Supabase (PostgreSQL)
+- **AI**: Google Gemini API
+- **Hosting**:
+  - Frontend: GitHub Pages
+  - Functions: Netlify
+- **Validation**: Ajv (JSON Schema)
+
+---
+
+## 🌟 Features
+
+- ✅ Scenario management (save/load)
+- ✅ Tariff calculations (electricity pricing)
+- ✅ Causal Loop Diagram processing
+- ✅ AI-powered analysis (Gemini)
+- ✅ Real-time job queue system
+- ✅ Serverless architecture (zero maintenance)
+- ✅ Free tier ready (Netlify + Supabase)
+
+---
+
 ## Backlog
 
-- Migrate from `cdn.tailwindcss.com` to CSS compiled with Tailwind CLI at build time.
+- Migrate from `cdn.tailwindcss.com` to CSS compiled with Tailwind CLI at build time
+- Add authentication (Supabase Auth)
+- Implement rate limiting
+- Add monitoring/analytics
 
 ## Local Setup, Test, and Deploy
 

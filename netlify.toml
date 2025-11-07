@@ -116,4 +116,4 @@ status = 301
 [[headers]]
 for = "/water/cld/*"
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; connect-src 'self' https://api.wesh360.ir; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://api.wesh360.ir; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' data: https://cdnjs.cloudflare.com;"
