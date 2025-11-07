@@ -38,17 +38,23 @@
 
 ### روش 2: استفاده از Docker
 
-اگر می‌خواهید دیاگرام PNG تولید کنید، از Docker استفاده کنید:
+اگر می‌خواهید دیاگرام‌ها را با Docker تولید کنید (نیازی به نصب دستی ندارید):
 
 ```bash
 # Build Docker image
 cd docs/architecture
 docker build -t wesh360-architecture .
 
-# Run و تولید دیاگرام
+# تولید دیاگرام کامل (پیش‌فرض: PNG, SVG, PDF)
 docker run --rm -v $(pwd):/app wesh360-architecture
 
-# فایل wesh360_architecture.png تولید می‌شود
+# تولید فقط PNG
+docker run --rm -v $(pwd):/app wesh360-architecture system_architecture.py
+
+# تولید دیاگرام ساده
+docker run --rm -v $(pwd):/app wesh360-architecture system_architecture_simplified.py --all
+
+# فایل‌های خروجی در دایرکتوری جاری تولید می‌شوند
 ```
 
 ---
