@@ -1,0 +1,19 @@
+# فایل‌های خروجی دیاگرام - از commit کردن جلوگیری می‌کنیم
+*.png
+*.svg
+*.pdf
+*.dot
+wesh360_architecture.*
+wesh360_overview.*
+
+# فایل‌های موقت Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# محیط‌های مجازی
+venv/
+env/
+ENV/

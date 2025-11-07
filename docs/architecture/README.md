@@ -1,0 +1,174 @@
+# WESH360 System Architecture Documentation
+
+این دایرکتوری شامل مستندات معماری سیستم WESH360 است.
+
+## 📄 فایل‌ها
+
+### 1. `ARCHITECTURE.md`
+مستندات کامل معماری سیستم با دیاگرام‌های Mermaid که در GitHub به خوبی رندر می‌شوند.
+
+**مشاهده:** فایل را مستقیماً در GitHub باز کنید تا دیاگرام‌ها رندر شوند.
+
+### 2. `system_architecture.py`
+اسکریپت Python برای تولید دیاگرام کامل معماری سیستم با جزئیات.
+
+**خروجی:** دیاگرام کامل با تمام کامپوننت‌ها
+
+### 3. `system_architecture_simplified.py`
+اسکریپت Python برای تولید دیاگرام ساده و خلاصه معماری.
+
+**خروجی:** نمای کلی سیستم
+
+**پیش‌نیازهای هر دو اسکریپت:**
+- Python 3.7+
+- Graphviz
+- کتابخانه diagrams
+
+### 4. `Dockerfile`
+فایل Docker برای اجرای راحت اسکریپت‌های Python بدون نیاز به نصب دستی dependencies.
+
+## 🚀 روش‌های استفاده
+
+### روش 1: مشاهده در GitHub (توصیه می‌شود)
+ساده‌ترین روش این است که فایل `ARCHITECTURE.md` را مستقیماً در GitHub باز کنید. دیاگرام‌های Mermaid به صورت خودکار رندر می‌شوند.
+
+[مشاهده معماری سیستم →](./ARCHITECTURE.md)
+
+---
+
+### روش 2: استفاده از Docker
+
+اگر می‌خواهید دیاگرام‌ها را با Docker تولید کنید (نیازی به نصب دستی ندارید):
+
+```bash
+# Build Docker image
+cd docs/architecture
+docker build -t wesh360-architecture .
+
+# تولید دیاگرام کامل (پیش‌فرض: PNG, SVG, PDF)
+docker run --rm -v $(pwd):/app wesh360-architecture
+
+# تولید فقط PNG
+docker run --rm -v $(pwd):/app wesh360-architecture system_architecture.py
+
+# تولید دیاگرام ساده
+docker run --rm -v $(pwd):/app wesh360-architecture system_architecture_simplified.py --all
+
+# فایل‌های خروجی در دایرکتوری جاری تولید می‌شوند
+```
+
+---
+
+### روش 3: نصب دستی
+
+#### macOS
+```bash
+# نصب Graphviz
+brew install graphviz
+
+# نصب Python package
+pip install diagrams
+
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
+```
+
+#### Ubuntu/Debian
+```bash
+# نصب Graphviz
+sudo apt-get update
+sudo apt-get install graphviz
+
+# نصب Python package
+pip install diagrams
+
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
+```
+
+#### Windows (با Chocolatey)
+```powershell
+# نصب Graphviz
+choco install graphviz
+
+# نصب Python package
+pip install diagrams
+
+# اجرای اسکریپت - دیاگرام کامل
+python system_architecture.py              # فقط PNG
+python system_architecture.py --all        # PNG, SVG, PDF
+python system_architecture.py --format svg # فقط SVG
+
+# اجرای اسکریپت - دیاگرام ساده
+python system_architecture_simplified.py
+```
+
+---
+
+## 📊 خروجی
+
+### دیاگرام کامل (system_architecture.py)
+- `wesh360_architecture.png` - دیاگرام کامل با تمام جزئیات
+- `wesh360_architecture.svg` - نسخه وکتور (با `--all` یا `--format svg`)
+- `wesh360_architecture.pdf` - نسخه PDF (با `--all` یا `--format pdf`)
+
+### دیاگرام ساده (system_architecture_simplified.py)
+- `wesh360_overview.png` - نمای کلی سیستم
+- `wesh360_overview.svg` - نسخه وکتور (با `--all` یا `--format svg`)
+- `wesh360_overview.pdf` - نسخه PDF (با `--all` یا `--format pdf`)
+
+---
+
+## 🔍 محتوای دیاگرام
+
+دیاگرام معماری شامل موارد زیر است:
+
+- ✅ **Frontend Layer**: Netlify CDN, Static Assets, Netlify Functions
+- ✅ **Backend Layer**: FastAPI, Rate Limiter, Job Queue, Worker
+- ✅ **External Services**: Google Gemini AI, Maps APIs
+- ✅ **Data Layer**: JSON & GeoJSON data sources
+- ✅ **Security**: CORS, HMAC Signature Validation, Rate Limiting
+- ✅ **Monitoring**: Prometheus Metrics
+- ✅ **CI/CD**: GitHub Actions deployment flow
+
+---
+
+## 📝 به‌روزرسانی دیاگرام
+
+برای به‌روزرسانی دیاگرام:
+
+1. فایل `system_architecture.py` را ویرایش کنید
+2. اسکریپت را اجرا کنید (با یکی از روش‌های بالا)
+3. دیاگرام جدید تولید می‌شود
+
+---
+
+## 🤝 مشارکت
+
+برای اضافه کردن جزئیات بیشتر یا اصلاح دیاگرام:
+
+1. فایل Python را ویرایش کنید
+2. Pull Request ایجاد کنید
+3. دیاگرام به‌روزرسانی شده را attach کنید
+
+---
+
+## 📚 منابع
+
+- [Diagrams Documentation](https://diagrams.mingrammer.com/)
+- [Graphviz Installation](https://graphviz.org/download/)
+- [Mermaid Documentation](https://mermaid.js.org/)
+
+---
+
+تاریخ آخرین به‌روزرسانی: 2025-11-07
