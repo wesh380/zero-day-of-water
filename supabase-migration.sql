@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS scenarios (
 );
 
 -- Index برای جستجوی سریع
-CREATE INDEX idx_scenarios_created_at ON scenarios(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_scenarios_created_at ON scenarios(created_at DESC);
 
 -- 2. جدول tariffs (نرخ‌های برق)
 CREATE TABLE IF NOT EXISTS tariffs (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS tariffs (
 );
 
 -- Index برای گرفتن آخرین نرخ
-CREATE INDEX idx_tariffs_created_at ON tariffs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_tariffs_created_at ON tariffs(created_at DESC);
 
 -- 3. جدول cld_jobs (جایگزین file-based jobs)
 CREATE TABLE IF NOT EXISTS cld_jobs (
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS cld_jobs (
 );
 
 -- Indexes برای performance
-CREATE INDEX idx_cld_jobs_status ON cld_jobs(status) WHERE status IN ('queued', 'processing');
-CREATE INDEX idx_cld_jobs_created_at ON cld_jobs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_cld_jobs_status ON cld_jobs(status) WHERE status IN ('queued', 'processing');
+CREATE INDEX IF NOT EXISTS idx_cld_jobs_created_at ON cld_jobs(created_at DESC);
 
 -- 4. جدول cld_results (نتایج پردازش)
 CREATE TABLE IF NOT EXISTS cld_results (
@@ -67,12 +67,14 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Trigger برای scenarios
+DROP TRIGGER IF EXISTS update_scenarios_updated_at ON scenarios;
 CREATE TRIGGER update_scenarios_updated_at
   BEFORE UPDATE ON scenarios
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
 -- Trigger برای cld_jobs
+DROP TRIGGER IF EXISTS update_cld_jobs_updated_at ON cld_jobs;
 CREATE TRIGGER update_cld_jobs_updated_at
   BEFORE UPDATE ON cld_jobs
   FOR EACH ROW
@@ -90,38 +92,47 @@ ALTER TABLE cld_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cld_results ENABLE ROW LEVEL SECURITY;
 
 -- Policy برای خواندن عمومی (فعلاً همه می‌تونن بخونن)
+DROP POLICY IF EXISTS "Allow public read on scenarios" ON scenarios;
 CREATE POLICY "Allow public read on scenarios"
   ON scenarios FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public insert on scenarios" ON scenarios;
 CREATE POLICY "Allow public insert on scenarios"
   ON scenarios FOR INSERT
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read on tariffs" ON tariffs;
 CREATE POLICY "Allow public read on tariffs"
   ON tariffs FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public insert on tariffs" ON tariffs;
 CREATE POLICY "Allow public insert on tariffs"
   ON tariffs FOR INSERT
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read on cld_jobs" ON cld_jobs;
 CREATE POLICY "Allow public read on cld_jobs"
   ON cld_jobs FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public insert on cld_jobs" ON cld_jobs;
 CREATE POLICY "Allow public insert on cld_jobs"
   ON cld_jobs FOR INSERT
   WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public update on cld_jobs" ON cld_jobs;
 CREATE POLICY "Allow public update on cld_jobs"
   ON cld_jobs FOR UPDATE
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public read on cld_results" ON cld_results;
 CREATE POLICY "Allow public read on cld_results"
   ON cld_results FOR SELECT
   USING (true);
 
+DROP POLICY IF EXISTS "Allow public insert on cld_results" ON cld_results;
 CREATE POLICY "Allow public insert on cld_results"
   ON cld_results FOR INSERT
   WITH CHECK (true);
@@ -163,9 +174,10 @@ $$ LANGUAGE plpgsql;
 -- نمونه داده برای تست
 -- =====================================================
 
--- یک tariff نمونه
+-- یک tariff نمونه (اگه قبلاً insert نشده)
 INSERT INTO tariffs (ppa, buy, sell)
-VALUES (2500, 3000, 2200);
+SELECT 2500, 3000, 2200
+WHERE NOT EXISTS (SELECT 1 FROM tariffs LIMIT 1);
 
 -- =====================================================
 -- Views برای راحتی Query
