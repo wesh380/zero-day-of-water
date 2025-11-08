@@ -108,7 +108,7 @@
       }
 
       // جلوگیری از اسکرول بدنه
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('loading-body-lock');
 
       return this.overlay;
     }
@@ -132,7 +132,7 @@
             this.overlay.parentNode.removeChild(this.overlay);
           }
           this.overlay = null;
-          document.body.style.overflow = '';
+          document.body.classList.remove('loading-body-lock');
         }, this.options.fadeOutDuration);
       };
 
@@ -170,7 +170,7 @@
       const progressBar = this.overlay.querySelector('.loading-progress__bar');
       if (progressBar) {
         progressBar.classList.add('loading-progress__bar--determinate');
-        progressBar.style.width = percentage + '%';
+        progressBar.style.setProperty('--progress-width', percentage + '%');
       }
 
       this.currentProgress = percentage;
@@ -263,11 +263,14 @@
     const skeleton = document.createElement('div');
     skeleton.className = `skeleton skeleton-${type}`;
 
-    if (element.dataset.skeletonWidth) {
-      skeleton.style.width = element.dataset.skeletonWidth;
-    }
-    if (element.dataset.skeletonHeight) {
-      skeleton.style.height = element.dataset.skeletonHeight;
+    if (element.dataset.skeletonWidth || element.dataset.skeletonHeight) {
+      skeleton.classList.add('skeleton-dynamic');
+      if (element.dataset.skeletonWidth) {
+        skeleton.style.setProperty('--skeleton-width', element.dataset.skeletonWidth);
+      }
+      if (element.dataset.skeletonHeight) {
+        skeleton.style.setProperty('--skeleton-height', element.dataset.skeletonHeight);
+      }
     }
 
     element.appendChild(skeleton);
@@ -330,23 +333,23 @@
    */
   function lazyLoadImage(img, onLoad) {
     const skeleton = document.createElement('div');
-    skeleton.className = 'skeleton skeleton-rect';
-    skeleton.style.width = img.width ? img.width + 'px' : '100%';
-    skeleton.style.height = img.height ? img.height + 'px' : '200px';
+    skeleton.className = 'skeleton skeleton-rect skeleton-dynamic';
+    skeleton.style.setProperty('--skeleton-width', img.width ? img.width + 'px' : '100%');
+    skeleton.style.setProperty('--skeleton-height', img.height ? img.height + 'px' : '200px');
 
-    img.style.display = 'none';
+    img.classList.add('loading-display-none');
     img.parentNode.insertBefore(skeleton, img);
 
     img.addEventListener('load', () => {
       skeleton.remove();
-      img.style.display = '';
+      img.classList.remove('loading-display-none');
       if (onLoad) onLoad();
     });
 
     // اگر تصویر قبلاً بارگذاری شده است
     if (img.complete) {
       skeleton.remove();
-      img.style.display = '';
+      img.classList.remove('loading-display-none');
       if (onLoad) onLoad();
     }
   }

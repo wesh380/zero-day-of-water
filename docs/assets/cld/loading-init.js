@@ -27,13 +27,12 @@
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 6v6l4 2"></path>
           </svg>
-          <div style="margin-top: 16px; font-size: 14px;">در حال ترسیم دیاگرام...</div>
+          <div class="loading-skeleton-text">در حال ترسیم دیاگرام...</div>
         </div>
       `;
 
       // مخفی کردن container اصلی
-      cyContainer.style.opacity = '0';
-      cyContainer.style.position = 'absolute';
+      cyContainer.classList.add('loading-hidden');
 
       // اضافه کردن skeleton
       cyContainer.parentNode.insertBefore(skeleton, cyContainer);
@@ -42,14 +41,12 @@
       window.removeCLDSkeleton = function() {
         const skeletonEl = document.getElementById('cld-skeleton');
         if (skeletonEl) {
-          skeletonEl.style.opacity = '0';
-          skeletonEl.style.transition = 'opacity 0.3s ease-out';
+          skeletonEl.classList.add('loading-fadeout');
 
           setTimeout(() => {
             skeletonEl.remove();
-            cyContainer.style.position = '';
-            cyContainer.style.opacity = '';
-            cyContainer.style.transition = 'opacity 0.5s ease-in';
+            cyContainer.classList.remove('loading-hidden');
+            cyContainer.classList.add('loading-fadein');
           }, 300);
         }
       };
@@ -198,14 +195,14 @@
         </div>
       `;
 
-      canvas.style.display = 'none';
+      canvas.classList.add('loading-display-none');
       parent.insertBefore(skeleton, canvas);
 
       // حذف skeleton وقتی chart آماده شد
       const observer = new MutationObserver(() => {
         if (canvas.dataset.chartLoaded === 'true') {
           skeleton.remove();
-          canvas.style.display = '';
+          canvas.classList.remove('loading-display-none');
           observer.disconnect();
         }
       });

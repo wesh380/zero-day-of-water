@@ -145,3 +145,50 @@
   font-size: 14px;
 }
 
+/* Loading States - CSP compliant classes */
+.loading-skeleton-text {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.loading-hidden {
+  opacity: 0;
+  position: absolute;
+}
+
+.loading-fadeout {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.loading-fadein {
+  transition: opacity 0.5s ease-in;
+}
+
+.loading-body-lock {
+  overflow: hidden;
+}
+
+.loading-display-none {
+  display: none;
+}
+
+.loading-display-block {
+  display: block;
+}
+
+.loading-card-fadein {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Progress bar dynamic width - use CSS custom properties */
+.loading-progress__bar--determinate {
+  width: var(--progress-width, 0%);
+}
+
+/* Skeleton dynamic sizing */
+.skeleton-dynamic {
+  width: var(--skeleton-width, 100%);
+  height: var(--skeleton-height, 200px);
+}
+

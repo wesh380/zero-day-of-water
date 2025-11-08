@@ -76,9 +76,9 @@
         // اضافه کردن skeleton
         if (!img.previousElementSibling || !img.previousElementSibling.classList.contains('skeleton')) {
           const skeleton = document.createElement('div');
-          skeleton.className = 'skeleton skeleton-rect';
-          skeleton.style.height = img.height ? img.height + 'px' : '200px';
-          img.style.display = 'none';
+          skeleton.className = 'skeleton skeleton-rect skeleton-dynamic';
+          skeleton.style.setProperty('--skeleton-height', img.height ? img.height + 'px' : '200px');
+          img.classList.add('loading-display-none');
           img.parentNode.insertBefore(skeleton, img);
         }
 
@@ -98,7 +98,7 @@
       // حذف کلاس loading بعد از بارگذاری
       setTimeout(() => {
         card.classList.remove('loading');
-        card.style.animation = 'fade-in 0.3s ease-out';
+        card.classList.add('loading-card-fadein');
       }, 100 + Math.random() * 200);
     });
   });
