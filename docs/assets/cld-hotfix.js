@@ -67,8 +67,7 @@
         const rect = container.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) {
           console.error('[CLD Hotfix] Container #cy has zero size!', rect);
-          container.style.minHeight = '600px';
-          container.style.minWidth = '100%';
+          container.classList.add('cld-force-dimensions');
           cy.resize();
         }
       }
@@ -117,8 +116,8 @@
       const container = document.getElementById('cy');
       if (container) {
         const errorMsg = document.createElement('div');
-        errorMsg.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: #fee; border: 2px solid #c00; border-radius: 8px; text-align: center; z-index: 1000;';
-        errorMsg.innerHTML = '<p style="margin: 0; font-weight: bold; color: #c00;">خطا در بارگذاری گراف</p><p style="margin: 10px 0 0; font-size: 14px;">لطفاً صفحه را رفرش کنید یا به <a href="/contact/">پشتیبانی</a> اطلاع دهید.</p>';
+        errorMsg.className = 'cld-error-message';
+        errorMsg.innerHTML = '<p class="cld-error-title">خطا در بارگذاری گراف</p><p class="cld-error-text">لطفاً صفحه را رفرش کنید یا به <a href="/contact/">پشتیبانی</a> اطلاع دهید.</p>';
         container.appendChild(errorMsg);
       }
     } else {

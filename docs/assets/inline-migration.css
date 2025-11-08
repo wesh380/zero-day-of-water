@@ -40,6 +40,11 @@
   visibility: visible !important;
 }
 
+.cld-force-dimensions{
+  min-height: 600px !important;
+  min-width: 100% !important;
+}
+
 /* components used in JS refactors */
 .footer-fixed{position:fixed;left:0;right:0;bottom:0;font-size:13px;color:#555;text-align:center;padding:12px 0}
 .body-mb{margin-bottom:60px}
@@ -114,4 +119,29 @@
 
 [data-accent-color="green"] { --color-accent-blue: #10b981; }
 [data-accent-color="red"] { --color-accent-blue: #ef4444; }
+
+/* CLD graph error message */
+.cld-error-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background: #fee;
+  border: 2px solid #c00;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.cld-error-title {
+  margin: 0;
+  font-weight: bold;
+  color: #c00;
+}
+
+.cld-error-text {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
 
