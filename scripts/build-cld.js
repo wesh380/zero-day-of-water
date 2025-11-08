@@ -43,7 +43,7 @@ const DIST = path.join(ASSETS, 'dist');
 
   const allJs = glob.sync('**/*.js', {
     cwd: ASSETS, nodir: true, absolute: true,
-    ignore: ['**/vendor/**','**/dist/**','**/*worker*.js','**/*sim-worker*.js']
+    ignore: ['**/vendor/**','**/dist/**','**/*worker*.js','**/*sim-worker*.js','**/page-model-load.js','**/model-fetch.js','**/waitForVisible.js','**/provenance.js','**/presets.js','**/preset-*.js','**/controls-meta.js','**/extras-readability.js']
   }).filter(f => /cld|water-cld/i.test(f));
 
   const orderedJs = manualOrder.concat(
@@ -61,6 +61,8 @@ const DIST = path.join(ASSETS, 'dist');
     compress:true,
     mangle:{ reserved:['cytoscape','dagre','elk'] },
     ecma:2017,
+    module: false,
+    toplevel: false,
     sourceMap: true
   });
   await fs.writeFile(path.join(DIST,'water-cld.bundle.js'), min.code, 'utf8');

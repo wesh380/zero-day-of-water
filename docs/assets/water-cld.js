@@ -684,7 +684,18 @@ function cldToCyElements(graph){ return toCyElements(graph); }
       { selector: '.highlight', style: { 'border-color': '#60a5fa', 'border-width': 4 } },
       { selector: 'edge.highlight', style: { 'line-color': '#60a5fa', 'target-arrow-color': '#60a5fa', 'source-arrow-color': '#60a5fa', 'width': 5 } }
     ];
-    cy.style().fromJson(baseStyle).update();
+
+    // اعمال استایل‌ها به روش صحیح (بدون fromJson)
+    try {
+      const stylesheet = cy.style();
+      baseStyle.forEach(function(styleObj) {
+        stylesheet.selector(styleObj.selector).style(styleObj.style);
+      });
+      stylesheet.update();
+      console.log('[CLD] Base styles applied successfully');
+    } catch (e) {
+      console.error('[CLD] Failed to apply base styles:', e);
+    }
     if (window.CLD_CORE && typeof window.CLD_CORE.runLayout === 'function') {
       window.CLD_CORE.runLayout('grid', {});
     } else {
