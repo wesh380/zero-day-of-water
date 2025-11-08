@@ -39,7 +39,14 @@
   <!-- Diagram Accessibility Improvements -->
   <link rel="stylesheet" href="/assets/water-cld.diagram-accessibility.css" />
 
+  <!-- Loading States System -->
+  <link rel="stylesheet" href="/assets/css/loading-states.css" />
+
   <script src="/assets/js/nav-utils.js" defer></script>
+
+  <!-- Loading Manager - باید قبل از همه بارگذاری شود -->
+  <script src="/assets/js/loading-manager.js"></script>
+  <script src="/assets/cld/loading-init.js"></script>
   <script>
     /* Suppress Cloudflare Beacon Errors */
     window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('cloudflareinsights.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
