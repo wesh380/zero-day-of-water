@@ -9,6 +9,39 @@
   'use strict';
 
   /**
+   * Dynamic Stylesheet Helper - CSP compliant
+   * به جای استفاده از inline styles، قوانین CSS را به یک stylesheet پویا اضافه می‌کند
+   */
+  const dynamicStyleSheet = (() => {
+    const style = document.createElement('style');
+    style.id = 'loading-dynamic-styles';
+    document.head.appendChild(style);
+    return style.sheet;
+  })();
+
+  let styleRuleCounter = 0;
+
+  function setDynamicStyles(element, styles) {
+    // ایجاد یک ID منحصر به فرد برای المان اگر ندارد
+    if (!element.id) {
+      element.id = 'dynamic-el-' + (++styleRuleCounter);
+    }
+
+    // ساخت CSS rule
+    const cssProps = Object.entries(styles)
+      .map(([prop, value]) => `${prop}: ${value}`)
+      .join('; ');
+
+    const rule = `#${element.id} { ${cssProps}; }`;
+
+    try {
+      dynamicStyleSheet.insertRule(rule, dynamicStyleSheet.cssRules.length);
+    } catch (e) {
+      console.warn('Failed to insert dynamic style rule:', e);
+    }
+  }
+
+  /**
    * کلاس اصلی مدیریت Loading
    */
   class LoadingManager {
@@ -170,7 +203,9 @@
       const progressBar = this.overlay.querySelector('.loading-progress__bar');
       if (progressBar) {
         progressBar.classList.add('loading-progress__bar--determinate');
-        progressBar.style.setProperty('--progress-width', percentage + '%');
+        setDynamicStyles(progressBar, {
+          'width': percentage + '%'
+        });
       }
 
       this.currentProgress = percentage;
@@ -264,13 +299,14 @@
     skeleton.className = `skeleton skeleton-${type}`;
 
     if (element.dataset.skeletonWidth || element.dataset.skeletonHeight) {
-      skeleton.classList.add('skeleton-dynamic');
+      const styles = {};
       if (element.dataset.skeletonWidth) {
-        skeleton.style.setProperty('--skeleton-width', element.dataset.skeletonWidth);
+        styles.width = element.dataset.skeletonWidth;
       }
       if (element.dataset.skeletonHeight) {
-        skeleton.style.setProperty('--skeleton-height', element.dataset.skeletonHeight);
+        styles.height = element.dataset.skeletonHeight;
       }
+      setDynamicStyles(skeleton, styles);
     }
 
     element.appendChild(skeleton);
@@ -333,9 +369,12 @@
    */
   function lazyLoadImage(img, onLoad) {
     const skeleton = document.createElement('div');
-    skeleton.className = 'skeleton skeleton-rect skeleton-dynamic';
-    skeleton.style.setProperty('--skeleton-width', img.width ? img.width + 'px' : '100%');
-    skeleton.style.setProperty('--skeleton-height', img.height ? img.height + 'px' : '200px');
+    skeleton.className = 'skeleton skeleton-rect';
+
+    setDynamicStyles(skeleton, {
+      'width': img.width ? img.width + 'px' : '100%',
+      'height': img.height ? img.height + 'px' : '200px'
+    });
 
     img.classList.add('loading-display-none');
     img.parentNode.insertBefore(skeleton, img);

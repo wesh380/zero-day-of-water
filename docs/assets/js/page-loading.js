@@ -6,6 +6,36 @@
 (function() {
   'use strict';
 
+  /**
+   * Dynamic Stylesheet Helper - CSP compliant
+   */
+  const dynamicStyleSheet = (() => {
+    const style = document.createElement('style');
+    style.id = 'page-loading-dynamic-styles';
+    document.head.appendChild(style);
+    return style.sheet;
+  })();
+
+  let styleRuleCounter = 0;
+
+  function setDynamicStyles(element, styles) {
+    if (!element.id) {
+      element.id = 'page-dynamic-el-' + (++styleRuleCounter);
+    }
+
+    const cssProps = Object.entries(styles)
+      .map(([prop, value]) => `${prop}: ${value}`)
+      .join('; ');
+
+    const rule = `#${element.id} { ${cssProps}; }`;
+
+    try {
+      dynamicStyleSheet.insertRule(rule, dynamicStyleSheet.cssRules.length);
+    } catch (e) {
+      console.warn('Failed to insert dynamic style rule:', e);
+    }
+  }
+
   // فقط در صورتی که LoadingManager موجود باشد
   if (!window.LoadingManager) {
     console.warn('LoadingManager not found - skipping page loading');
@@ -76,8 +106,10 @@
         // اضافه کردن skeleton
         if (!img.previousElementSibling || !img.previousElementSibling.classList.contains('skeleton')) {
           const skeleton = document.createElement('div');
-          skeleton.className = 'skeleton skeleton-rect skeleton-dynamic';
-          skeleton.style.setProperty('--skeleton-height', img.height ? img.height + 'px' : '200px');
+          skeleton.className = 'skeleton skeleton-rect';
+          setDynamicStyles(skeleton, {
+            'height': img.height ? img.height + 'px' : '200px'
+          });
           img.classList.add('loading-display-none');
           img.parentNode.insertBefore(skeleton, img);
         }
