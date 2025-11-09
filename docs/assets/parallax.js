@@ -15,7 +15,8 @@
     const progress = scrolled / windowHeight;
 
     // Parallax: تصویر آهسته‌تر حرکت می‌کند (using CSS custom properties)
-    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.5}px`);
+    // سرعت کاهش یافت از 0.5 به 0.2 برای جلوگیری از نمایش پس‌زمینه
+    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.2}px`);
     heroImage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.2, 0));
   });
 })();
