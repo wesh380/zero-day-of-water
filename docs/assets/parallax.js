@@ -19,7 +19,7 @@
     heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.5}px`);
     heroImage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.2, 0));
 
-    // Fade in متن
+    // Fade out متن (از 1 شروع می‌شود و هنگام scroll کاهش می‌یابد)
     if (heroText) {
       if (progress > 0.3) {
         const textOpacity = Math.min((progress - 0.3) * 2, 1);
