@@ -11,7 +11,9 @@
   // در موبایل افکت را غیرفعال می‌کنیم
   if (isMobile || reduce) return;
 
-  window.addEventListener('scroll', () => {
+  let ticking = false;
+
+  function updateParallax() {
     const scrolled = window.pageYOffset;
     const windowHeight = window.innerHeight;
     const progress = scrolled / windowHeight;
@@ -24,7 +26,16 @@
     if (heroCard) {
       heroCard.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
-  });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
 })();
 
 (function(){
