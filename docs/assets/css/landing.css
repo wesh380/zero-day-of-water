@@ -1,25 +1,22 @@
 /* Canonical landing stylesheet */
+/* === Hero Section with Parallax Effect === */
 .hero {
   position: relative;
-  display: grid;
-  place-items: center;
-  min-height: clamp(60vh, 70svh, 80svh);
+  height: 100vh;
   overflow: hidden;
-}
-
-.hero,
-.hero * {
-  position: relative;
-  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 120vh; /* بزرگتر برای parallax */
+  z-index: 0;
+  will-change: transform, opacity;
 }
 
 .hero-img {
@@ -44,21 +41,25 @@
     linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.35)),
     linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent 60%);
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .hero .content {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 1;
   text-align: center;
-  color: #fff;
-  padding: 0 1rem 8vh;
+  color: white;
+  padding: 0 1rem;
+  max-width: 1200px;
+  will-change: opacity, transform;
 }
 
 .hero-title {
-  margin-top: 15vh;
+  margin: 0 0 1rem;
   font-size: clamp(2.5rem, 5vw, 3.5rem); /* 56px on desktop, responsive */
   font-weight: 700;
   line-height: 1.2;
@@ -69,21 +70,21 @@
   letter-spacing: -0.02em;
 }
 
-.hero .content p {
-  margin-top: 0.75rem;
-  font-size: var(--font-body);
-  opacity: 0.95;
-}
-
 .hero-subtitle {
+  margin: 0;
   font-size: clamp(1rem, 2.5vw, 1.25rem); /* 20px on desktop, responsive */
   font-weight: 500;
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  margin-top: 16px;
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+/* بخش محتوای اصلی بعد از hero */
+#main {
+  position: relative;
+  z-index: 3;
+  margin-top: 100vh;
+  background: white;
 }
 
 .cards-grid,
@@ -136,26 +137,6 @@
   opacity: 1;
 }
 
-@media (max-width: 48rem) {
-  .hero {
-    background-attachment: scroll;
-    min-height: min(100svh, 85vh);
-  }
-  .hero-title {
-    margin-top: 10vh;
-    font-size: var(--font-h2);
-    padding-inline: 1rem;
-  }
-}
-
-@media (max-width: 40rem) {
-  .cards-section {
-    margin-top: -1.875rem;
-  }
-  .hero .content {
-    padding: 0 1rem 6vh;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .card {
@@ -383,55 +364,39 @@
   .wiz-form .actions { width: 100%; }
 }
 
-/* === Parallax Fade Effect === */
-.hero {
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-media {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 120vh; /* بزرگتر برای parallax */
-  z-index: 0;
-  will-change: transform, opacity;
-}
-
-.hero .content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  opacity: 1;
-  text-align: center;
-  color: white;
-  will-change: opacity, transform;
-}
-
-/* بخش محتوای اصلی بعد از hero */
-#main {
-  position: relative;
-  z-index: 3;
-  margin-top: 100vh;
-  background: white;
-}
-
+/* === Responsive Adjustments for Mobile === */
 @media (max-width: 48rem) {
+  .hero {
+    min-height: min(100svh, 85vh);
+    background-attachment: scroll;
+  }
+
   .hero-media {
     position: absolute; /* در موبایل fixed مشکل ایجاد می‌کند */
-    height: 100vh;
+    height: 100%;
   }
 
   .hero .content {
     position: absolute;
+    padding: 0 1.5rem 6vh;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
   }
 
   #main {
     margin-top: 0;
+  }
+}
+
+@media (max-width: 40rem) {
+  .cards-section {
+    margin-top: -1.875rem;
   }
 }
 
