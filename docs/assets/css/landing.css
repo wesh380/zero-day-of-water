@@ -242,3 +242,55 @@
   .wiz-form .actions { width: 100%; }
 }
 
+/* === Parallax Fade Effect === */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120vh; /* بزرگتر برای parallax */
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+.hero .content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0;
+  text-align: center;
+  color: white;
+  will-change: opacity, transform;
+}
+
+/* بخش محتوای اصلی بعد از hero */
+#main {
+  position: relative;
+  z-index: 3;
+  margin-top: 100vh;
+  background: white;
+}
+
+@media (max-width: 48rem) {
+  .hero-media {
+    position: absolute; /* در موبایل fixed مشکل ایجاد می‌کند */
+    height: 100vh;
+  }
+
+  .hero .content {
+    position: absolute;
+  }
+
+  #main {
+    margin-top: 0;
+  }
+}
+
