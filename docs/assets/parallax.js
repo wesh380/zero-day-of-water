@@ -11,8 +11,8 @@
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  // در موبایل افکت را غیرفعال می‌کنیم
-  if (isMobile || reduce) return;
+  // در موبایل هم افکت را اجرا می‌کنیم (فقط reduced motion رو چک می‌کنیم)
+  if (reduce) return;
 
   let ticking = false;
 
@@ -27,15 +27,15 @@
       heroBackground.classList.remove('fading');
     }
 
-    // 2. Box fade out
-    const boxFadeStart = windowHeight * 0.5;
-    const boxFadeEnd = windowHeight * 1.2;
+    // 2. Box fade out - فقط بعد از scroll زیاد
+    const boxFadeStart = windowHeight * 0.7; // تغییر از 0.5 به 0.7
+    const boxFadeEnd = windowHeight * 1.5;   // تغییر از 1.2 به 1.5
     const boxFadeProgress = Math.min(1,
       Math.max(0, (scrolled - boxFadeStart) / (boxFadeEnd - boxFadeStart))
     );
 
     if (heroBox) {
-      if (boxFadeProgress > 0.1) {
+      if (boxFadeProgress > 0.15) { // تغییر از 0.1 به 0.15
         heroBox.classList.add('fading-out');
       } else {
         heroBox.classList.remove('fading-out');
@@ -52,7 +52,7 @@
     }
 
     // 4. Parallax effect (optional - subtle movement)
-    if (heroBackground) {
+    if (heroBackground && !isMobile) {
       heroBackground.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
 
@@ -66,8 +66,13 @@
     }
   }, { passive: true });
 
-  // Initial call
-  updateParallax();
+  // Initial call فقط برای scroll indicator
+  if (scrollIndicator) {
+    const scrolled = window.pageYOffset;
+    if (scrolled > 100) {
+      scrollIndicator.classList.add('hidden');
+    }
+  }
 })();
 
 (function(){
