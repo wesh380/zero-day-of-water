@@ -1,6 +1,8 @@
+// Layered Parallax Effect - پارالکس چند لایه
 (function(){
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const heroImage = document.querySelector('.hero-media');
+  const heroCard = document.querySelector('.hero .content');
 
   if (!heroImage) return;
 
@@ -14,10 +16,14 @@
     const windowHeight = window.innerHeight;
     const progress = scrolled / windowHeight;
 
-    // Parallax: تصویر آهسته‌تر حرکت می‌کند (using CSS custom properties)
-    // سرعت کاهش یافت از 0.5 به 0.2 برای جلوگیری از نمایش پس‌زمینه
-    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.2}px`);
+    // Parallax Background: سرعت 0.6 (سریع‌تر)
+    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.6}px`);
     heroImage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.2, 0));
+
+    // Parallax Card: سرعت 0.3 (آهسته‌تر) برای ایجاد عمق
+    if (heroCard) {
+      heroCard.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
   });
 })();
 
