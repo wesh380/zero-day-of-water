@@ -21,15 +21,10 @@
     // Fade out تصویر
     heroImage.style.opacity = Math.max(1 - progress * 1.2, 0);
 
-    // Fade in متن
+    // Fade out متن (از 1 شروع می‌شود و هنگام scroll کاهش می‌یابد)
     if (heroText) {
-      if (progress > 0.3) {
-        heroText.style.opacity = Math.min((progress - 0.3) * 2, 1);
-        heroText.style.transform = `translate(-50%, -50%) translateY(${-(progress - 0.3) * 50}px)`;
-      } else {
-        heroText.style.opacity = 0;
-        heroText.style.transform = `translate(-50%, -50%)`;
-      }
+      heroText.style.opacity = Math.max(1 - progress * 2, 0);
+      heroText.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.3}px)`;
     }
   });
 })();

@@ -59,15 +59,31 @@
 
 .hero-title {
   margin-top: 15vh;
-  font-size: var(--font-h1);
-  line-height: 1.25;
-  text-shadow: 0 .125rem .375rem rgba(0, 0, 0, 0.35);
+  font-size: clamp(2.5rem, 5vw, 3.5rem); /* 56px on desktop, responsive */
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  letter-spacing: -0.02em;
 }
 
 .hero .content p {
   margin-top: 0.75rem;
   font-size: var(--font-body);
   opacity: 0.95;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem); /* 20px on desktop, responsive */
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  margin-top: 16px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cards-grid,
@@ -176,8 +192,133 @@
 }
 .wiz-tabs .tab[aria-selected="true"] { background: #0ea5e9; color:#04121f; border-color:#0ea5e9; }
 
+/* === Enhanced CTA Buttons === */
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 48px auto 24px;
+}
+
+.cta-primary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: right;
+  min-height: auto;
+  white-space: normal;
+}
+
+.cta-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  border-color: #0ea5e9;
+}
+
+.cta-icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.cta-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  text-align: right;
+  gap: 4px;
+}
+
+.cta-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.cta-subtitle {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.cta-arrow {
+  font-size: 24px;
+  color: #0ea5e9;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.cta-primary:hover .cta-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* رنگ‌های اختصاصی برای هر دکمه */
+.cta-water:hover {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+}
+
+.cta-electricity:hover {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.cta-gas:hover {
+  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+}
+
+/* وضعیت انتخاب شده */
+.cta-primary[aria-selected="true"] {
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+}
+
+.cta-primary[aria-selected="true"] .cta-title {
+  color: #04121f;
+}
+
+.cta-primary[aria-selected="true"] .cta-subtitle {
+  color: rgba(4, 18, 31, 0.7);
+}
+
+.cta-primary[aria-selected="true"] .cta-arrow {
+  opacity: 1;
+  color: #04121f;
+}
+
 @media (max-width:25.875rem){
   .wiz-tabs{ justify-content:center; }
+
+  .cta-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 32px auto 16px;
+  }
+
+  .cta-primary {
+    padding: 20px 24px;
+  }
+
+  .cta-icon {
+    font-size: 40px;
+  }
+
+  .cta-title {
+    font-size: 20px;
+  }
+
+  .cta-subtitle {
+    font-size: 13px;
+  }
 }
 
 .wiz-form { display:grid; gap:.75rem; grid-template-columns: 1fr 1fr; align-items:end; }
@@ -265,7 +406,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-  opacity: 0;
+  opacity: 1;
   text-align: center;
   color: white;
   will-change: opacity, transform;
