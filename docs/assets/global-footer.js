@@ -1,17 +1,17 @@
 /**
- * Suppress Cloudflare Beacon Loading Errors
- * این کد خطاهای مربوط به بارگذاری beacon.min.js را در کنسول پنهان می‌کند
+ * Suppress Analytics Script Loading Errors
+ * این کد خطاهای مربوط به بارگذاری اسکریپت آمارگیری را در کنسول پنهان می‌کند
  * این خطاها معمولاً توسط ad-blocker ها ایجاد می‌شوند و مشکلی برای عملکرد سایت ندارند
  */
 (function() {
   'use strict';
 
-  // مدیریت خطاهای network در سطح window برای اسکریپت‌های Cloudflare
+  // مدیریت خطاهای network در سطح window برای اسکریپت‌های آمارگیری
   window.addEventListener('error', function(e) {
-    // اگر خطا مربوط به بارگذاری beacon است
+    // اگر خطا مربوط به بارگذاری اسکریپت آمارگیری است
     if (e.target && e.target.src &&
-        (e.target.src.includes('cloudflareinsights.com') ||
-         e.target.src.includes('beacon.min.js'))) {
+        (e.target.src.includes('statsfa.com') ||
+         e.target.src.includes('script.js'))) {
       // جلوگیری از نمایش خطا در کنسول
       e.preventDefault();
       e.stopPropagation();

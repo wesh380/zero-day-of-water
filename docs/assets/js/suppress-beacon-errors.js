@@ -1,7 +1,7 @@
 /**
- * Suppress Cloudflare Beacon Loading Errors
+ * Suppress Analytics Script Loading Errors
  *
- * این اسکریپت خطاهای مربوط به بارگذاری beacon.min.js را در کنسول پنهان می‌کند
+ * این اسکریپت خطاهای مربوط به بارگذاری اسکریپت آمارگیری را در کنسول پنهان می‌کند
  * این خطاها معمولاً توسط ad-blocker ها ایجاد می‌شوند و مشکلی برای عملکرد سایت ندارند
  */
 (function() {
@@ -15,9 +15,9 @@
     const args = Array.prototype.slice.call(arguments);
     const errorMessage = args.join(' ');
 
-    // اگر خطا مربوط به cloudflareinsights یا beacon است، آن را نشان نده
-    if (errorMessage.includes('cloudflareinsights.com') ||
-        errorMessage.includes('beacon.min.js') ||
+    // اگر خطا مربوط به اسکریپت آمارگیری است، آن را نشان نده
+    if (errorMessage.includes('statsfa.com') ||
+        errorMessage.includes('script.js') ||
         errorMessage.includes('ERR_CONNECTION_CLOSED')) {
       // خطا را log نمی‌کنیم
       return;
@@ -29,8 +29,8 @@
 
   // مدیریت خطاهای network در سطح window
   window.addEventListener('error', function(e) {
-    // اگر خطا مربوط به بارگذاری beacon است
-    if (e.target && e.target.src && e.target.src.includes('cloudflareinsights.com')) {
+    // اگر خطا مربوط به بارگذاری اسکریپت آمارگیری است
+    if (e.target && e.target.src && e.target.src.includes('statsfa.com')) {
       // جلوگیری از نمایش خطا در کنسول
       e.preventDefault();
       e.stopPropagation();
@@ -40,7 +40,7 @@
 
   // مدیریت promise rejection ها
   window.addEventListener('unhandledrejection', function(e) {
-    if (e.reason && e.reason.toString().includes('cloudflareinsights.com')) {
+    if (e.reason && e.reason.toString().includes('statsfa.com')) {
       e.preventDefault();
       return false;
     }

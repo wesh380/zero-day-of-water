@@ -1,37 +1,41 @@
 /**
- * Cloudflare Web Analytics Beacon Loader
+ * Statsfa Website Analytics Loader
  * با error handling برای جلوگیری از خطاهای کنسول در صورت بلاک شدن توسط ad-blocker
  */
 (function() {
   'use strict';
 
-  // تنظیمات Cloudflare Beacon
-  const BEACON_CONFIG = {
-    token: '9e1a59b59254492b858c1d1d730c72c7',
-    spa: false
+  // تنظیمات Statsfa Analytics
+  const STATSFA_CONFIG = {
+    host: 'https://statsfa.com',
+    id: 'ZwSg9rf6GA',
+    dnt: true
   };
 
-  const BEACON_URL = 'https://static.cloudflareinsights.com/beacon.min.js';
+  const STATSFA_SCRIPT_URL = 'https://statsfa.com/js/script.js';
 
   /**
-   * بارگذاری امن اسکریپت Cloudflare Beacon
+   * بارگذاری امن اسکریپت Statsfa Analytics
    */
-  function loadBeaconSafely() {
+  function loadStatsfaSafely() {
     const script = document.createElement('script');
+    script.async = true;
     script.defer = true;
-    script.src = BEACON_URL;
-    script.setAttribute('data-cf-beacon', JSON.stringify(BEACON_CONFIG));
+    script.src = STATSFA_SCRIPT_URL;
+    script.id = STATSFA_CONFIG.id;
+    script.setAttribute('data-host', STATSFA_CONFIG.host);
+    script.setAttribute('data-dnt', STATSFA_CONFIG.dnt);
 
     // مدیریت خطاها
     script.onerror = function() {
       // خطا را silent می‌کنیم - احتمالاً ad-blocker فعال است
       // هیچ پیامی در کنسول نمایش نمی‌دهیم چون این مشکل client-side است
-      console.debug('Cloudflare Analytics: Unable to load (blocked by ad-blocker or network)');
+      console.debug('Statsfa Analytics: Unable to load (blocked by ad-blocker or network)');
     };
 
     // بررسی موفقیت‌آمیز بودن بارگذاری
     script.onload = function() {
-      console.debug('Cloudflare Analytics: Loaded successfully');
+      console.debug('Statsfa Analytics: Loaded successfully');
     };
 
     // اضافه کردن اسکریپت به DOM
@@ -40,8 +44,8 @@
 
   // بارگذاری پس از بارگذاری کامل DOM
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadBeaconSafely);
+    document.addEventListener('DOMContentLoaded', loadStatsfaSafely);
   } else {
-    loadBeaconSafely();
+    loadStatsfaSafely();
   }
 })();

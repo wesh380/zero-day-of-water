@@ -49,7 +49,7 @@
   <script src="/assets/cld/loading-init.js"></script>
   <script>
     /* Suppress Cloudflare Beacon Errors */
-    window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('cloudflareinsights.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
+    window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('statsfa.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
   </script>
   <!-- Performance Monitoring (RUM) -->
   <script src="/assets/cld/perf/rum.js" defer></script>
@@ -353,7 +353,9 @@
     <script defer src="/assets/js/ui-prune-ctas.js"></script>
     <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9e1a59b59254492b858c1d1d730c72c7"}'></script>
+  <!-- Statsfa Website Analytics Start -->
+  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
+  <!-- Statsfa Website Analytics End -->
   <!-- دکمه ثبت بازخورد Porsline -->
   <a class="porsline-button-wrapper" href="#porsline-side-tab"
     onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
