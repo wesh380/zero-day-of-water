@@ -27,7 +27,9 @@
       // Only apply parallax after initial animation completes
       const rect = card.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
-        card.style.transform = `translateY(${yPos}px)`;
+        // Use CSS custom property instead of inline style
+        card.style.setProperty('--parallax-y', `${yPos}px`);
+        card.classList.add('parallax-active');
       }
     });
   }
@@ -44,7 +46,7 @@
     });
   });
 
-  // Counter Animation
+  // Counter Animation (uses textContent only, no style changes)
   function animateNumber(element, final) {
     // Extract number from text (e.g., "500M+" -> 500)
     const match = final.match(/\d+/);

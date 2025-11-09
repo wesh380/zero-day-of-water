@@ -15,20 +15,20 @@
     const windowHeight = window.innerHeight;
     const progress = scrolled / windowHeight;
 
-    // Parallax: تصویر آهسته‌تر حرکت می‌کند
-    heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
-
-    // Fade out تصویر
-    heroImage.style.opacity = Math.max(1 - progress * 1.2, 0);
+    // Parallax: تصویر آهسته‌تر حرکت می‌کند (using CSS custom properties)
+    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.5}px`);
+    heroImage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.2, 0));
 
     // Fade in متن
     if (heroText) {
       if (progress > 0.3) {
-        heroText.style.opacity = Math.min((progress - 0.3) * 2, 1);
-        heroText.style.transform = `translate(-50%, -50%) translateY(${-(progress - 0.3) * 50}px)`;
+        const textOpacity = Math.min((progress - 0.3) * 2, 1);
+        const textY = -(progress - 0.3) * 50;
+        heroText.style.setProperty('--text-opacity', textOpacity);
+        heroText.style.setProperty('--text-y', `${textY}px`);
       } else {
-        heroText.style.opacity = 0;
-        heroText.style.transform = `translate(-50%, -50%)`;
+        heroText.style.setProperty('--text-opacity', 0);
+        heroText.style.setProperty('--text-y', '0px');
       }
     }
   });
