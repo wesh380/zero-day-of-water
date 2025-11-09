@@ -1,89 +1,92 @@
 /* ========================================
    WESH360 Theme-Based Color Palette
    پالت رنگی تم‌دار برای بخش‌های مختلف سایت
+   بازنویسی شده با Design Tokens
    ======================================== */
+
+@import url('./design-tokens.css');
 
 /* ===== 1. Utility Theme Colors ===== */
 :root {
-  /* آب - Water Theme */
-  --theme-water-primary: #007BFF;
-  --theme-water-light: #4DA3FF;
-  --theme-water-dark: #0056b3;
-  --theme-water-bg: #E3F2FD;
-  --theme-water-border: #90CAF9;
+  /* آب - Water Theme (از primary palette استفاده می‌کند) */
+  --theme-water-primary: var(--color-primary-500);
+  --theme-water-light: var(--color-primary-300);
+  --theme-water-dark: var(--color-primary-700);
+  --theme-water-bg: var(--color-primary-50);
+  --theme-water-border: var(--color-primary-200);
 
   /* برق - Electricity Theme */
-  --theme-electricity-primary: #FFC107;
-  --theme-electricity-light: #FFD54F;
-  --theme-electricity-dark: #FFA000;
-  --theme-electricity-bg: #FFF8E1;
-  --theme-electricity-border: #FFE082;
+  --theme-electricity-primary: var(--energy-electricity-primary);
+  --theme-electricity-light: var(--energy-electricity-light);
+  --theme-electricity-dark: var(--energy-electricity-dark);
+  --theme-electricity-bg: var(--energy-electricity-bg);
+  --theme-electricity-border: #ffe082;
 
-  /* گاز - Gas Theme */
-  --theme-gas-primary: #FF5722;
-  --theme-gas-light: #FF8A65;
-  --theme-gas-dark: #E64A19;
-  --theme-gas-bg: #FBE9E7;
-  --theme-gas-border: #FFAB91;
+  /* گاز - Gas Theme (از accent palette استفاده می‌کند) */
+  --theme-gas-primary: var(--color-accent-500);
+  --theme-gas-light: var(--color-accent-400);
+  --theme-gas-dark: var(--color-accent-600);
+  --theme-gas-bg: var(--energy-gas-bg);
+  --theme-gas-border: #ffccbc;
 
-  /* محیط زیست - Environment Theme */
-  --theme-environment-primary: #28A745;
-  --theme-environment-light: #5CB85C;
-  --theme-environment-dark: #218838;
-  --theme-environment-bg: #E8F5E9;
-  --theme-environment-border: #A5D6A7;
+  /* محیط زیست - Environment Theme (از secondary palette استفاده می‌کند) */
+  --theme-environment-primary: var(--color-secondary-500);
+  --theme-environment-light: var(--color-secondary-400);
+  --theme-environment-dark: var(--color-secondary-600);
+  --theme-environment-bg: var(--energy-renewable-bg);
+  --theme-environment-border: #c8e6c9;
 
   /* خورشیدی - Solar Theme */
-  --theme-solar-primary: #FF9800;
-  --theme-solar-light: #FFB74D;
-  --theme-solar-dark: #F57C00;
-  --theme-solar-bg: #FFF3E0;
-  --theme-solar-border: #FFCC80;
+  --theme-solar-primary: #ff9800;
+  --theme-solar-light: #ffb74d;
+  --theme-solar-dark: #f57c00;
+  --theme-solar-bg: #fff3e0;
+  --theme-solar-border: #ffcc80;
 
   /* عمومی - General Theme */
-  --theme-general-primary: #6C757D;
-  --theme-general-light: #ADB5BD;
-  --theme-general-dark: #495057;
-  --theme-general-bg: #F8F9FA;
-  --theme-general-border: #DEE2E6;
+  --theme-general-primary: var(--color-gray-600);
+  --theme-general-light: var(--color-gray-400);
+  --theme-general-dark: var(--color-gray-700);
+  --theme-general-bg: var(--color-gray-50);
+  --theme-general-border: var(--color-gray-200);
 }
 
 /* ===== 2. Dark Theme Adjustments ===== */
 [data-theme="dark"] {
   /* آب - Water Theme */
-  --theme-water-primary: #2196F3;
-  --theme-water-light: #64B5F6;
-  --theme-water-dark: #1976D2;
-  --theme-water-bg: #0D47A1;
-  --theme-water-border: #1565C0;
+  --theme-water-primary: var(--color-primary-400);
+  --theme-water-light: var(--color-primary-300);
+  --theme-water-dark: var(--color-primary-600);
+  --theme-water-bg: var(--color-primary-900);
+  --theme-water-border: var(--color-primary-700);
 
   /* برق - Electricity Theme */
-  --theme-electricity-primary: #FFB300;
-  --theme-electricity-light: #FFD54F;
-  --theme-electricity-dark: #FF8F00;
-  --theme-electricity-bg: #FF6F00;
-  --theme-electricity-border: #F57C00;
+  --theme-electricity-primary: #ffb300;
+  --theme-electricity-light: #ffd54f;
+  --theme-electricity-dark: #ff8f00;
+  --theme-electricity-bg: rgba(255, 193, 7, 0.15);
+  --theme-electricity-border: #f57c00;
 
   /* گاز - Gas Theme */
-  --theme-gas-primary: #FF6F00;
-  --theme-gas-light: #FF8A65;
-  --theme-gas-dark: #E64A19;
-  --theme-gas-bg: #BF360C;
-  --theme-gas-border: #D84315;
+  --theme-gas-primary: var(--color-accent-400);
+  --theme-gas-light: var(--color-accent-300);
+  --theme-gas-dark: var(--color-accent-600);
+  --theme-gas-bg: rgba(249, 115, 22, 0.15);
+  --theme-gas-border: var(--color-accent-700);
 
   /* محیط زیست - Environment Theme */
-  --theme-environment-primary: #4CAF50;
-  --theme-environment-light: #81C784;
-  --theme-environment-dark: #388E3C;
-  --theme-environment-bg: #1B5E20;
-  --theme-environment-border: #2E7D32;
+  --theme-environment-primary: var(--color-secondary-400);
+  --theme-environment-light: var(--color-secondary-300);
+  --theme-environment-dark: var(--color-secondary-600);
+  --theme-environment-bg: rgba(34, 197, 94, 0.15);
+  --theme-environment-border: var(--color-secondary-700);
 
   /* خورشیدی - Solar Theme */
-  --theme-solar-primary: #FFA726;
-  --theme-solar-light: #FFB74D;
-  --theme-solar-dark: #F57C00;
-  --theme-solar-bg: #E65100;
-  --theme-solar-border: #EF6C00;
+  --theme-solar-primary: #ffa726;
+  --theme-solar-light: #ffb74d;
+  --theme-solar-dark: #f57c00;
+  --theme-solar-bg: rgba(255, 152, 0, 0.15);
+  --theme-solar-border: #ef6c00;
 }
 
 /* ===== 3. Theme Section Styles ===== */
@@ -95,28 +98,32 @@
   border-left: 4px solid var(--theme-water-primary);
   background: var(--theme-water-bg);
   border-color: var(--theme-water-border);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
 .water-card,
 .card.water {
   border-color: var(--theme-water-border);
   background: var(--theme-water-bg);
+  transition: all var(--transition-base);
 }
 
 .water-card:hover,
 .card.water:hover {
   border-color: var(--theme-water-primary);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+  transform: translateY(-2px);
 }
 
 .water-badge,
 .badge-water {
   background: var(--theme-water-primary);
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Electricity Section */
@@ -126,28 +133,32 @@
   border-left: 4px solid var(--theme-electricity-primary);
   background: var(--theme-electricity-bg);
   border-color: var(--theme-electricity-border);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
 .electricity-card,
 .card.electricity {
   border-color: var(--theme-electricity-border);
   background: var(--theme-electricity-bg);
+  transition: all var(--transition-base);
 }
 
 .electricity-card:hover,
 .card.electricity:hover {
   border-color: var(--theme-electricity-primary);
-  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  transform: translateY(-2px);
 }
 
 .electricity-badge,
 .badge-electricity {
   background: var(--theme-electricity-primary);
-  color: #000;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.875rem;
-  font-weight: 600;
+  color: var(--color-gray-900);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Gas Section */
@@ -157,28 +168,32 @@
   border-left: 4px solid var(--theme-gas-primary);
   background: var(--theme-gas-bg);
   border-color: var(--theme-gas-border);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
 .gas-card,
 .card.gas {
   border-color: var(--theme-gas-border);
   background: var(--theme-gas-bg);
+  transition: all var(--transition-base);
 }
 
 .gas-card:hover,
 .card.gas:hover {
   border-color: var(--theme-gas-primary);
-  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+  transform: translateY(-2px);
 }
 
 .gas-badge,
 .badge-gas {
   background: var(--theme-gas-primary);
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Environment Section */
@@ -188,28 +203,32 @@
   border-left: 4px solid var(--theme-environment-primary);
   background: var(--theme-environment-bg);
   border-color: var(--theme-environment-border);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
 .environment-card,
 .card.environment {
   border-color: var(--theme-environment-border);
   background: var(--theme-environment-bg);
+  transition: all var(--transition-base);
 }
 
 .environment-card:hover,
 .card.environment:hover {
   border-color: var(--theme-environment-primary);
-  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+  transform: translateY(-2px);
 }
 
 .environment-badge,
 .badge-environment {
   background: var(--theme-environment-primary);
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Solar Section */
@@ -219,28 +238,32 @@
   border-left: 4px solid var(--theme-solar-primary);
   background: var(--theme-solar-bg);
   border-color: var(--theme-solar-border);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
 }
 
 .solar-card,
 .card.solar {
   border-color: var(--theme-solar-border);
   background: var(--theme-solar-bg);
+  transition: all var(--transition-base);
 }
 
 .solar-card:hover,
 .card.solar:hover {
   border-color: var(--theme-solar-primary);
   box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .solar-badge,
 .badge-solar {
   background: var(--theme-solar-primary);
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full, 9999px);
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* ===== 4. Tab Styles with Theme Colors ===== */
@@ -342,6 +365,6 @@
   .environment-section,
   .solar-section {
     border-left-width: 2px;
-    padding: 1rem;
+    padding: var(--space-4);
   }
 }
