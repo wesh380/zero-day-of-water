@@ -1,28 +1,37 @@
 (function(){
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hero = document.querySelector('.hero');
-  if (!hero) return;
+  const heroImage = document.querySelector('.hero-media');
+  const heroText = document.querySelector('.hero .content');
+
+  if (!heroImage) return;
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const ampMul = isMobile ? 0.55 : 1.0;
-  const vh = Math.max(1, window.innerHeight);
-  let targetY = 0, currentY = 0;
-  const lerp = (a,b,t)=>a+(b-a)*t;
 
-  function frame(){
-    targetY = window.scrollY || 0;
-    currentY = lerp(currentY, targetY, 0.08);
+  // در موبایل افکت را غیرفعال می‌کنیم
+  if (isMobile || reduce) return;
 
-    const norm = currentY * -0.14 * ampMul * (vh / 900);
-    hero.style.transform = `translateY(${norm}px)`;
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const progress = scrolled / windowHeight;
 
-    const p = Math.min(1, currentY / (vh * 0.7));
-    document.documentElement.style.setProperty('--overlay', (0.35 - p * 0.2).toFixed(2));
+    // Parallax: تصویر آهسته‌تر حرکت می‌کند
+    heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
 
-    requestAnimationFrame(frame);
-  }
+    // Fade out تصویر
+    heroImage.style.opacity = Math.max(1 - progress * 1.2, 0);
 
-  if (!reduce) requestAnimationFrame(frame);
+    // Fade in متن
+    if (heroText) {
+      if (progress > 0.3) {
+        heroText.style.opacity = Math.min((progress - 0.3) * 2, 1);
+        heroText.style.transform = `translate(-50%, -50%) translateY(${-(progress - 0.3) * 50}px)`;
+      } else {
+        heroText.style.opacity = 0;
+        heroText.style.transform = `translate(-50%, -50%)`;
+      }
+    }
+  });
 })();
 
 (function(){
