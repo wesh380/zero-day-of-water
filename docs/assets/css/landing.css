@@ -326,7 +326,7 @@
 }
 
 /* === Household Wizard (landing) === */
-.wizard { max-width: 61.25rem; margin: 1.5rem auto .75rem; padding: 1rem; }
+.wizard { max-width: 61.25rem; margin: 0.5rem auto .75rem; padding: 1rem; }
 .wiz-head { text-align: center; color: #0f172a; }
 .wiz-title { font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 800; }
 .wiz-sub { margin-top: .375rem; opacity: .9; }
@@ -558,7 +558,7 @@
 #main {
   position: relative;
   z-index: 3;
-  margin-top: 100vh;
+  margin-top: 0;
   background: white;
 }
 
@@ -575,13 +575,13 @@
 
 /* === Stats Parallax Section === */
 .stats-parallax {
-  min-height: 100vh;
+  min-height: auto;
   background: white;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 120px 40px;
+  padding: 60px 40px;
   overflow: hidden;
 }
 
