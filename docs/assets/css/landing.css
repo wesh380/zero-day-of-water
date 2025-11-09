@@ -57,22 +57,33 @@
   max-width: 900px;
   width: 90%;
 
-  /* Glassmorphism بهبود یافته */
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  /* Glassmorphism بهبود یافته با Contrast بالا */
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(30, 41, 59, 0.85)
+  );
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
 
-  /* Border */
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  /* Border قوی‌تر */
+  border: 2px solid rgba(255, 255, 255, 0.4);
   border-radius: 32px;
 
-  /* Shadow */
+  /* Shadow عمیق‌تر */
   box-shadow:
-    0 20px 80px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
   will-change: opacity, transform;
   animation: fadeInScale 1s ease-out;
+  transition: opacity 0.6s ease-out;
+}
+
+/* Fading state برای scroll */
+.hero-section.fading .hero .content {
+  opacity: 0;
 }
 
 @keyframes fadeInScale {
@@ -636,6 +647,14 @@
   justify-content: center;
   padding: 100px 40px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.stats-parallax.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Background Decoration */
@@ -762,19 +781,21 @@
   border-color: #0ea5e9;
 }
 
-/* Icon بزرگ */
+/* Icon بزرگ بدون دایره */
 .stat-icon {
-  font-size: 80px;
-  margin-bottom: 24px;
+  font-size: 96px; /* بزرگتر از قبل */
+  margin-bottom: 28px;
   display: block;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
-  transition: transform 0.4s;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bounce effect */
+  line-height: 1;
 }
 
 .stat-card:hover .stat-icon {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.2) rotate(8deg);
+  filter: drop-shadow(0 8px 20px rgba(14, 165, 233, 0.3));
 }
 
 /* Number بزرگتر */
