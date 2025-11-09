@@ -135,3 +135,44 @@
 
 })();
 
+// Smooth Cross-fade between Hero and Stats sections
+(function() {
+  'use strict';
+
+  const prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) return;
+
+  // Hero Section Fade Observer
+  const heroSection = document.querySelector('.hero');
+  if (heroSection) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio < 0.5) {
+          entry.target.classList.add('fading');
+        } else {
+          entry.target.classList.remove('fading');
+        }
+      });
+    }, { threshold: [0, 0.5, 1] });
+
+    heroObserver.observe(heroSection);
+  }
+
+  // Stats Section Visibility Observer
+  const statsSection = document.querySelector('.stats-parallax');
+  if (statsSection) {
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    statsObserver.observe(statsSection);
+  }
+
+})();
+
