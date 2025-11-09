@@ -116,7 +116,7 @@
       <!-- متن/CTA موجود هیرو دست‌نخورده بماند -->
       <div class="content">
         <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز در خراسان رضوی</h1>
-        <p>داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
+        <p class="hero-subtitle">داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
       </div>
     </section>
   <main id="main" role="main" class="flex-grow">
@@ -128,10 +128,31 @@
       <div class="wiz-head">
         <h2 id="wiz-title" class="wiz-title">داشبورد مدیریتی خانوار</h2>
         <p class="wiz-sub">ابتدا یکی از تب‌ها را انتخاب و فرم را کامل کنید؛ سپس نتایج نمایش داده می‌شود.</p>
-        <div class="wiz-tabs" role="tablist" aria-label="Utilities">
-          <button role="tab" data-utility="water" aria-selected="true" class="tab">آب</button>
-          <button role="tab" data-utility="electricity" aria-selected="false" class="tab">برق</button>
-          <button role="tab" data-utility="gas" aria-selected="false" class="tab">گاز و فرآورده‌های نفتی</button>
+        <div class="wiz-tabs cta-grid" role="tablist" aria-label="Utilities">
+          <button role="tab" data-utility="water" aria-selected="true" class="tab cta-primary cta-water">
+            <span class="cta-icon">💧</span>
+            <span class="cta-text">
+              <span class="cta-title">آب</span>
+              <span class="cta-subtitle">مدیریت منابع آبی</span>
+            </span>
+            <span class="cta-arrow">←</span>
+          </button>
+          <button role="tab" data-utility="electricity" aria-selected="false" class="tab cta-primary cta-electricity">
+            <span class="cta-icon">⚡</span>
+            <span class="cta-text">
+              <span class="cta-title">برق</span>
+              <span class="cta-subtitle">مصرف و تعرفه</span>
+            </span>
+            <span class="cta-arrow">←</span>
+          </button>
+          <button role="tab" data-utility="gas" aria-selected="false" class="tab cta-primary cta-gas">
+            <span class="cta-icon">🔥</span>
+            <span class="cta-text">
+              <span class="cta-title">گاز و نفت</span>
+              <span class="cta-subtitle">فرآورده‌های نفتی</span>
+            </span>
+            <span class="cta-arrow">←</span>
+          </button>
         </div>
       </div>
 
