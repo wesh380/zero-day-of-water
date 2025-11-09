@@ -101,18 +101,28 @@
       </div>
     </header>
 <section class="hero">
-      <picture class="hero-media">
-        <source type="image/webp"
-                srcset="/assets/img/hero/hero-mobile.webp 768w,
-                        /assets/img/hero/hero-desktop-1280.webp 1280w,
-                        /assets/img/hero/hero-desktop.webp 1440w,
-                        /assets/img/hero/hero-desktop-1920.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 1440px">
-        <img class="hero-img" alt="نمای هوایی از زیرساخت‌های انرژی و آب خراسان رضوی"
-             src="/assets/img/hero/hero-desktop-1440.jpg"
-             width="1440" height="810"
-             loading="eager" decoding="async" fetchpriority="high">
-      </picture>
+      <!-- Fixed Background with Layers -->
+      <div class="hero-background" id="heroBackground">
+        <!-- Picture element - Hero Image Layer -->
+        <picture class="hero-image-layer">
+          <source type="image/webp"
+                  srcset="/assets/img/hero/hero-mobile.webp 768w,
+                          /assets/img/hero/hero-desktop-1280.webp 1280w,
+                          /assets/img/hero/hero-desktop.webp 1440w,
+                          /assets/img/hero/hero-desktop-1920.webp 1920w"
+                  sizes="(max-width: 768px) 100vw, 1440px">
+          <img class="hero-img" alt="نمای هوایی از زیرساخت‌های انرژی و آب خراسان رضوی"
+               src="/assets/img/hero/hero-desktop-1440.jpg"
+               width="1440" height="810"
+               loading="eager" decoding="async" fetchpriority="high">
+        </picture>
+
+        <!-- Dark Overlay -->
+        <div class="hero-dark-overlay"></div>
+
+        <!-- Gradient Fade Overlay - این magic است! -->
+        <div class="hero-fade-overlay"></div>
+      </div>
 
       <!-- Floating Energy Icons -->
       <div class="floating-icon" aria-hidden="true">☀️</div>
@@ -120,23 +130,34 @@
       <div class="floating-icon" aria-hidden="true">💡</div>
       <div class="floating-icon" aria-hidden="true">⚡</div>
 
-      <!-- Hero Content with Badge & Gradient -->
-      <div class="content">
-        <span class="hero-badge">🏛️ استان خراسان رضوی</span>
-        <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز</h1>
-        <p class="hero-subtitle">داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
-        <div class="hero-cta-buttons">
-          <a href="#wizard" class="hero-btn hero-btn-primary">
-            <span class="hero-btn-icon">📊</span>
-            <span class="hero-btn-text">مشاهده داشبوردها</span>
-          </a>
-          <a href="#stats-parallax" class="hero-btn hero-btn-secondary">
-            <span class="hero-btn-icon">📈</span>
-            <span class="hero-btn-text">مشاهده آمار</span>
-          </a>
+      <!-- Hero Content Container -->
+      <div class="hero-content-container">
+        <div class="hero-box" id="heroBox">
+          <!-- Hero Content with Badge & Gradient -->
+          <div class="content">
+            <span class="hero-badge">🏛️ استان خراسان رضوی</span>
+            <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز</h1>
+            <p class="hero-subtitle">داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
+            <div class="hero-cta-buttons">
+              <a href="#wizard" class="hero-btn hero-btn-primary">
+                <span class="hero-btn-icon">📊</span>
+                <span class="hero-btn-text">مشاهده داشبوردها</span>
+              </a>
+              <a href="#stats-parallax" class="hero-btn hero-btn-secondary">
+                <span class="hero-btn-icon">📈</span>
+                <span class="hero-btn-text">مشاهده آمار</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">
+      <div class="scroll-icon">⬇</div>
+      <div class="scroll-text">اسکرول کنید</div>
+    </div>
 
   <!-- Stats Parallax Section -->
   <section id="stats-parallax" class="stats-parallax">
@@ -145,7 +166,6 @@
       <!-- Title -->
       <div class="stats-title">
         <h2>وضعیت آب و انرژی خراسان رضوی در یک نگاه</h2>
-        <p>آمار و اطلاعات کلیدی پلتفرم</p>
       </div>
 
       <!-- Stats Grid -->
