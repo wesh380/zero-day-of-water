@@ -383,10 +383,10 @@
   <script>
     // Global error handler to suppress third-party script errors
     window.addEventListener('error', function(e) {
-      // Suppress errors from external scripts (Porsline, Cloudflare, etc.)
+      // Suppress errors from external scripts (Porsline, Statsfa, etc.)
       if (e.filename && (
         e.filename.includes('porsline.ir') ||
-        e.filename.includes('cloudflareinsights.com') ||
+        e.filename.includes('statsfa.com') ||
         e.filename.includes('cdn.porsline.ir')
       )) {
         e.preventDefault();
@@ -414,7 +414,9 @@
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9e1a59b59254492b858c1d1d730c72c7"}'></script>
+  <!-- Statsfa Website Analytics Start -->
+  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
+  <!-- Statsfa Website Analytics End -->
   <!-- دکمه ثبت بازخورد Porsline -->
   <a class="porsline-button-wrapper" href="#porsline-side-tab"
     onclick="clzdTiLuIp('porsline-side-tab-iframe');typeof showSideTab==='function'&&showSideTab()">
