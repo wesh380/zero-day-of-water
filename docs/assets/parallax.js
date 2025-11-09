@@ -1,10 +1,13 @@
-// Layered Parallax Effect - پارالکس چند لایه
+// Smooth Parallax with Gradient Fade Overlay
 (function(){
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const heroImage = document.querySelector('.hero-media');
-  const heroCard = document.querySelector('.hero .content');
+  'use strict';
 
-  if (!heroImage) return;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroBackground = document.getElementById('heroBackground');
+  const heroBox = document.getElementById('heroBox');
+  const scrollIndicator = document.getElementById('scrollIndicator');
+
+  if (!heroBackground) return;
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -16,15 +19,41 @@
   function updateParallax() {
     const scrolled = window.pageYOffset;
     const windowHeight = window.innerHeight;
-    const progress = scrolled / windowHeight;
 
-    // Parallax Background: سرعت 0.6 (سریع‌تر)
-    heroImage.style.setProperty('--hero-scroll-y', `${scrolled * 0.6}px`);
-    heroImage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.2, 0));
+    // 1. Background fade با gradient overlay
+    if (scrolled > windowHeight * 0.3) {
+      heroBackground.classList.add('fading');
+    } else {
+      heroBackground.classList.remove('fading');
+    }
 
-    // Parallax Card: سرعت 0.3 (آهسته‌تر) برای ایجاد عمق
-    if (heroCard) {
-      heroCard.style.transform = `translateY(${scrolled * 0.3}px)`;
+    // 2. Box fade out
+    const boxFadeStart = windowHeight * 0.5;
+    const boxFadeEnd = windowHeight * 1.2;
+    const boxFadeProgress = Math.min(1,
+      Math.max(0, (scrolled - boxFadeStart) / (boxFadeEnd - boxFadeStart))
+    );
+
+    if (heroBox) {
+      if (boxFadeProgress > 0.1) {
+        heroBox.classList.add('fading-out');
+      } else {
+        heroBox.classList.remove('fading-out');
+      }
+    }
+
+    // 3. Scroll indicator hide
+    if (scrollIndicator) {
+      if (scrolled > 100) {
+        scrollIndicator.classList.add('hidden');
+      } else {
+        scrollIndicator.classList.remove('hidden');
+      }
+    }
+
+    // 4. Parallax effect (optional - subtle movement)
+    if (heroBackground) {
+      heroBackground.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
 
     ticking = false;
@@ -36,6 +65,9 @@
       ticking = true;
     }
   }, { passive: true });
+
+  // Initial call
+  updateParallax();
 })();
 
 (function(){
