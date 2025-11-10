@@ -1,0 +1,309 @@
+/* ========================================
+   Household Wizard CSS
+   داشبورد مدیریتی خانوار
+   ======================================== */
+
+.wizard {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px -24px rgba(30, 60, 114, 0.3);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1100px;
+}
+
+.wiz-head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.wiz-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0 0 0.5rem;
+}
+
+.wiz-sub {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem;
+}
+
+.wiz-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.wiz-tabs .tab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.wiz-tabs .tab:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.wiz-tabs .tab[aria-selected="true"] {
+  border-color: currentColor;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.05));
+}
+
+.wiz-tabs .cta-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.wiz-tabs .cta-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.125rem;
+  flex: 1;
+}
+
+.wiz-tabs .cta-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.wiz-tabs .cta-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.wiz-tabs .cta-arrow {
+  font-size: 1.25rem;
+  opacity: 0.5;
+  transition: transform 0.2s ease;
+}
+
+.wiz-tabs .tab:hover .cta-arrow {
+  transform: translateX(-4px);
+}
+
+.wiz-form {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.wiz-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.wiz-form .field label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.wiz-form .field input,
+.wiz-form .field select {
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.wiz-form .field input:focus,
+.wiz-form .field select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  outline: none;
+}
+
+.wiz-form .field .row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wiz-form .field .row input {
+  flex: 1;
+}
+
+.wiz-form .field .row select {
+  min-width: 100px;
+}
+
+.wiz-form .actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.wiz-form .btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wiz-form .btn.primary {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  box-shadow: 0 4px 12px -4px rgba(37, 99, 235, 0.5);
+}
+
+.wiz-form .btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.6);
+}
+
+.wiz-form .btn.ghost {
+  background: #fff;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.wiz-form .btn.ghost:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.wiz-form .hint {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+  text-align: center;
+}
+
+.wiz-results {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.05));
+  border-radius: 12px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.wiz-results[hidden] {
+  display: none;
+}
+
+.wiz-results .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wiz-results .kpi {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+.wiz-results .kpi .k {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wiz-results .kpi .v {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.wiz-results .kpi .chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.wiz-results .chart-wrap {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.wiz-results .wiz-chart {
+  max-height: 300px;
+  width: 100%;
+}
+
+.wiz-results .tips {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.wiz-results .tips li {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #fff;
+  border-radius: 8px;
+  border-right: 4px solid #2563eb;
+  font-size: 0.95rem;
+}
+
+.wiz-results .note {
+  color: #64748b;
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 1rem 0 0;
+}
+
+@media (max-width: 768px) {
+  .wizard {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .wiz-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .wiz-form {
+    padding: 1rem;
+  }
+
+  .wiz-form .actions {
+    flex-direction: column;
+  }
+
+  .wiz-form .btn {
+    width: 100%;
+  }
+
+  .wiz-results .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .wiz-results .cards {
+    grid-template-columns: 1fr;
+  }
+}
