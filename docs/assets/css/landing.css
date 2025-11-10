@@ -182,8 +182,10 @@ section.hero {
   padding: 60px 48px;
   text-align: center;
 
-  /* ✅ همیشه visible */
-  opacity: 1;
+  /* ✅ همیشه visible - CRITICAL for dashboard visibility */
+  opacity: 1 !important;
+  display: block !important;
+  visibility: visible !important;
   transform: scale(1) translateY(0);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
