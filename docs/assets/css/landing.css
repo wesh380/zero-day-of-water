@@ -76,20 +76,29 @@
   opacity: 1;
 }
 
-/* Content Container */
-.hero-content-container {
-  position: relative;
+/* Content Container - ✅ Absolute برای fix شدن در 100vh اول */
+.hero-content-container,
+.hero-content {
+  /* ✅ این box رو توی 100vh اول fix می‌کنه */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh; /* فقط 100vh اول - نه min-height! */
   z-index: 30; /* ✅ بالاتر از hero-background (0) */
-  min-height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px;
-  pointer-events: none; /* ✅ اجازه click به elements زیرش */
+
+  /* ✅ اجازه click through به background */
+  pointer-events: none;
 }
 
 /* ✅ فقط content click-able باشه */
-.hero-content-container * {
+.hero-content-container *,
+.hero-content * {
   pointer-events: auto;
 }
 
