@@ -39,19 +39,20 @@
 }
 
 /* Dark Overlay */
-.hero-dark-overlay {
+.hero-dark-overlay,
+.hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.4),
-    rgba(0, 0, 0, 0.6)
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.7)
   );
   z-index: 2;
   pointer-events: none;
 }
 
-/* Gradient Fade Overlay - این magic است! */
+/* ✅ Gradient Fade Overlay - این magic است! */
 .hero-fade-overlay {
   position: absolute;
   inset: 0;
@@ -64,11 +65,12 @@
     #f8fafc 100%
   );
   opacity: 0;
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.8s ease-out;
   pointer-events: none;
   z-index: 3;
 }
 
+#heroBackground.fading .hero-fade-overlay,
 .hero-background.fading .hero-fade-overlay {
   opacity: 1;
 }
@@ -84,55 +86,88 @@
   padding: 40px;
 }
 
-/* Hero Box */
+/* ============================================
+   GLASS MORPHISM BOX - بهبود یافته!
+   ============================================ */
+
+#heroBox,
 .hero-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 20 !important;
   max-width: 900px;
   width: 90%;
   border-radius: 32px;
-  overflow: hidden;
-  box-shadow:
-    0 20px 80px rgba(0, 0, 0, 0.4),
-    0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: visible; /* ✅ برای shadow و effects */
 
   /* Animation */
-  opacity: 1;
+  opacity: 1 !important; /* ✅ همیشه visible */
   will-change: transform, opacity;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeInScale 1s ease-out;
 }
 
+/* ✅ Override fading-out برای initial load */
+#heroBox:not(.fading-out),
+.hero-box:not(.fading-out) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
 /* Fade out box when scrolling */
+#heroBox.fading-out,
 .hero-box.fading-out {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.95) translateY(-30px);
   pointer-events: none;
 }
 
-/* Content styling */
-.hero .content {
+/* Content styling - این لایه glassmorphism است */
+.hero .content,
+#heroBox .content {
   position: relative;
   z-index: 2;
   text-align: center;
   color: #fff;
   padding: 60px 48px;
+  border-radius: 32px;
 
-  /* Glassmorphism بهبود یافته با Contrast بالا */
+  /* ✅ Darker glass = Contrast بهتر */
   background: linear-gradient(
     135deg,
-    rgba(15, 23, 42, 0.92),
-    rgba(30, 41, 59, 0.88)
+    rgba(15, 23, 42, 0.85),
+    rgba(30, 41, 59, 0.80)
   );
+
+  /* ✅ Blur قوی */
   backdrop-filter: blur(30px) saturate(150%);
   -webkit-backdrop-filter: blur(30px) saturate(150%);
 
   /* Border */
   border: 2px solid rgba(255, 255, 255, 0.2);
+
+  /* Shadow قوی */
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Noise Texture (optional - برای depth) */
+#heroBox .content::after,
+.hero .content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  pointer-events: none;
   border-radius: 32px;
+  z-index: -1;
 }
 
 @keyframes fadeInScale {
@@ -627,63 +662,120 @@
   }
 }
 
-/* === Hero CTA Buttons === */
-.hero-cta-buttons {
+/* ============================================
+   CTA BUTTONS - Glass Morphism بهبود یافته
+   ============================================ */
+
+.hero-cta-buttons,
+.hero-cta {
+  position: relative;
+  z-index: 2;
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 16px;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 16px;
   animation: fadeInUp 0.8s ease-out 0.6s backwards;
 }
 
+.cta-button,
+.btn-hero,
 .hero-btn {
+  padding: 20px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 36px;
-  border-radius: 16px;
-  font-size: 18px;
-  font-weight: 700;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  border: none;
+  position: relative;
+  overflow: hidden;
   white-space: nowrap;
 }
 
+/* Primary CTA - Glass White */
+.cta-primary,
+.btn-primary,
+.hero-btn-primary {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.cta-primary:hover,
+.btn-primary:hover,
+.hero-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Secondary CTA - Glass Blue */
+.cta-secondary,
+.btn-secondary,
+.hero-btn-secondary {
+  background: rgba(14, 165, 233, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(14, 165, 233, 0.4);
+  color: #7dd3fc;
+  box-shadow:
+    0 8px 24px rgba(14, 165, 233, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cta-secondary:hover,
+.btn-secondary:hover,
+.hero-btn-secondary:hover {
+  background: rgba(14, 165, 233, 0.35);
+  border-color: rgba(14, 165, 233, 0.6);
+  color: white;
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 40px rgba(14, 165, 233, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Icon */
+.btn-icon,
 .hero-btn-icon {
   font-size: 24px;
+  display: inline-flex;
+  align-items: center;
   transition: transform 0.3s ease;
 }
 
-.hero-btn:hover .hero-btn-icon {
+.hero-btn:hover .hero-btn-icon,
+.cta-button:hover .btn-icon {
   transform: scale(1.15) rotate(5deg);
 }
 
-.hero-btn-primary {
-  background: white;
-  color: #0f172a;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  animation: ripple-animation 0.6s ease-out;
+  pointer-events: none;
 }
 
-.hero-btn-primary:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-}
-
-.hero-btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.hero-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-2px);
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 /* === Stats Parallax Section - بهبود یافته === */
