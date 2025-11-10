@@ -1,54 +1,80 @@
 /* ============================================
+   CRITICAL OVERRIDES - HIGHEST PRIORITY
+   این قوانین باید همه چیز را override کنند
+   ============================================ */
+
+/* Reset تمام transforms و positions از bundle‌های قدیمی */
+.hero,
+.hero *,
+section.hero,
+section.hero * {
+  /* جلوگیری از هرگونه transform از parent */
+  transform: none !important;
+}
+
+/* ============================================
    HERO SECTION - Fixed Positioning
-   باکس روی عکس ثابت می‌مونه!
    ============================================ */
 
 .hero {
   min-height: 150vh;
   position: relative;
   overflow: hidden;
+  /* جلوگیری از تاثیر transform parent */
+  transform-style: flat !important;
 }
 
 /* ============================================
-   BACKGROUND - Fixed با HIGHEST PRIORITY
+   BACKGROUND - ABSOLUTELY FIXED
    ============================================ */
 
-/* ✅ Maximum specificity برای override کردن bundle قدیمی */
+/* Maximum specificity + !important برای override همه چیز */
+html body section.hero #heroBackground,
+html body section.hero .hero-background,
+html body .hero #heroBackground,
+html body .hero .hero-background,
 section.hero #heroBackground,
 section.hero .hero-background,
 .hero #heroBackground,
 .hero .hero-background,
 #heroBackground,
-.hero-background,
-.hero-media {
+.hero-background {
+  /* CRITICAL: این باید fixed بمونه */
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100% !important;
+  width: 100vw !important;
   height: 100vh !important;
   z-index: 0 !important;
+
+  /* ❌ NO TRANSFORM - این خیلی مهمه! */
+  transform: none !important;
+  transform-style: flat !important;
   will-change: opacity !important;
+
+  /* Smooth transition فقط برای opacity */
   transition: opacity 0.6s ease-out !important;
 
-  /* ✅ CRITICAL: هیچ transform نمیخوریم! */
-  transform: none !important;
+  /* Disable هرگونه CSS animation */
+  animation: none !important;
 
-  /* ✅ Reset CSS variables که bundle قدیمی استفاده میکرد */
-  --hero-scroll-y: 0px !important;
+  /* Reset custom properties */
+  --hero-scroll-y: 0 !important;
   --hero-opacity: 1 !important;
+
+  /* Lock در position */
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.hero-image {
-  position: absolute;
-  inset: 0;
-  background: url('../images/hero-van-gogh.jpg') center/cover;
-  background-attachment: fixed;
-}
-
-.hero-image-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Layer‌های داخل background */
+.hero-image-layer,
+.hero-img,
+.hero-dark-overlay,
+.hero-fade-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  transform: none !important;
 }
 
 .hero-img {
@@ -57,6 +83,9 @@ section.hero .hero-background,
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
+  /* جلوگیری از scale یا transform */
+  transform: none !important;
+  will-change: auto !important;
 }
 
 @media (max-width: 420px) {
@@ -65,10 +94,9 @@ section.hero .hero-background,
   }
 }
 
-.hero-overlay,
-.hero-dark-overlay {
-  position: absolute;
-  inset: 0;
+/* Dark overlay */
+.hero-dark-overlay,
+.hero-overlay {
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.5),
@@ -78,9 +106,8 @@ section.hero .hero-background,
   pointer-events: none;
 }
 
+/* Gradient fade overlay */
 .hero-fade-overlay {
-  position: absolute;
-  inset: 0;
   background: linear-gradient(
     to bottom,
     transparent 0%,
@@ -95,40 +122,38 @@ section.hero .hero-background,
   z-index: 3;
 }
 
+/* فقط gradient visible بشه */
 #heroBackground.fading .hero-fade-overlay {
   opacity: 1;
 }
 
 
 /* ============================================
-   CONTENT CONTAINER - روی صفحه ثابت میمونه!
+   CONTENT CONTAINER - Stays in place
    ============================================ */
 
 .hero-content,
 .hero-content-container {
-  /* ✅ این wrapper همیشه 100vh اول رو می‌گیره */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  z-index: 10;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 100vh !important;
+  z-index: 10 !important;
 
-  /* Center کردن box */
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 60px 40px;
 
-  /* ✅ اجازه click through به background */
+  /* Allow click through به background */
   pointer-events: none;
+
+  /* NO TRANSFORM */
+  transform: none !important;
 }
 
-/* فقط box clickable باشه */
-#heroBox {
-  pointer-events: auto;
-}
-
+/* فقط box clickable */
 .hero-content-container *,
 .hero-content * {
   pointer-events: auto;
@@ -503,18 +528,18 @@ section.hero .hero-background,
     display: none;
   }
 
-  /* ✅ Disable parallax در موبایل - با highest specificity */
-  section.hero #heroBackground,
-  section.hero .hero-background,
-  .hero #heroBackground,
-  .hero .hero-background,
+  /* Force fixed در موبایل */
+  html body section.hero #heroBackground,
+  html body section.hero .hero-background,
+  html body .hero #heroBackground,
+  html body .hero .hero-background,
   #heroBackground,
-  .hero-background,
-  .hero-media {
+  .hero-background {
     position: fixed !important;
     transform: none !important;
-    --hero-scroll-y: 0px !important;
-    --hero-opacity: 1 !important;
+    opacity: 1 !important;
+    will-change: auto !important;
+    transition: none !important;
   }
 }
 

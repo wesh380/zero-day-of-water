@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <!-- ✅ CRITICAL CSS - Override همه چیز قبل از load شدن CSS ها -->
+  <style>
+    /* CRITICAL: Override همه چیز */
+    #heroBackground,
+    .hero-background {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      transform: none !important;
+      z-index: 0 !important;
+    }
+  </style>
   <!-- CSS Bundles - Phase 3 Optimization: Reduced from 14 to 5 files -->
   <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
   <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
   <link rel="stylesheet" href="/assets/css-bundles-dist/features.bundle.css">
   <link rel="stylesheet" href="/assets/css-bundles-dist/page-specific.bundle.css">
-  <!-- Override bundled landing.css with latest version -->
+  <!-- ✅ Landing CSS با priority بالاتر -->
   <link rel="stylesheet" href="/assets/css/landing.css">
   <meta charset="utf-8">
   <meta http-equiv="Content-Language" content="fa-IR" />
