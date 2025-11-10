@@ -94,13 +94,13 @@ section.hero .hero-background,
   }
 }
 
-/* Dark overlay */
+/* Dark overlay - ✅ کاهش opacity برای دیدن جزئیات عکس */
 .hero-dark-overlay,
 .hero-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.7)
+    rgba(0, 0, 0, 0.35), /* ✅ بود: 0.5 */
+    rgba(0, 0, 0, 0.55)  /* ✅ بود: 0.7 */
   );
   z-index: 2;
   pointer-events: none;
@@ -138,13 +138,14 @@ section.hero .hero-background,
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  height: 100vh !important;
+  height: 100dvh !important; /* ✅ بهبود mobile-friendly */
   z-index: 10 !important;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 40px;
+  /* ✅ حذف padding - فقط box باید padding داشته باشد */
+  padding: 0 40px;
 
   /* ✅ این خط مهمه - Allow click through */
   pointer-events: none;
@@ -177,21 +178,22 @@ section.hero .hero-background,
   border-radius: 32px;
   overflow: hidden;
 
-  /* Glass effect */
+  /* Glass effect - ✅ بهبود readability */
   background: linear-gradient(
     135deg,
-    rgba(15, 23, 42, 0.85),
-    rgba(30, 41, 59, 0.80)
+    rgba(15, 23, 42, 0.92), /* بود: 0.85 */
+    rgba(30, 41, 59, 0.88)  /* بود: 0.80 */
   );
-  backdrop-filter: blur(30px) saturate(150%);
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(40px) saturate(180%); /* بود: blur(30px) saturate(150%) */
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
 
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.25); /* بود: 0.2 */
 
+  /* ✅ بهبود shadow */
   box-shadow:
-    0 20px 80px rgba(0, 0, 0, 0.4),
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 32px 96px rgba(0, 0, 0, 0.5), /* بود: 0 20px 80px rgba(0, 0, 0, 0.4) */
+    0 12px 40px rgba(0, 0, 0, 0.4), /* بود: 0 8px 32px rgba(0, 0, 0, 0.3) */
+    inset 0 2px 0 rgba(255, 255, 255, 0.4); /* بود: inset 0 1px 0 rgba(255, 255, 255, 0.3) */
 
   padding: 60px 48px;
   text-align: center;
@@ -201,6 +203,7 @@ section.hero .hero-background,
   transform: scale(1) translateY(0) !important;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
+  contain: layout style paint; /* ✅ بهینه‌سازی performance */
 }
 
 /* Initial animation */
@@ -263,29 +266,34 @@ section.hero .hero-background,
   background: rgba(14, 165, 233, 0.25);
   border: 1px solid rgba(14, 165, 233, 0.6);
   color: #7dd3fc;
-  padding: 8px 20px;
+  padding: 10px 24px; /* ✅ بود: 8px 20px */
   border-radius: 50px;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px; /* ✅ بود: 14px */
+  font-weight: 800; /* ✅ بود: 700 */
   margin-bottom: 24px;
   backdrop-filter: blur(10px);
+  letter-spacing: 0.3px; /* ✅ اضافه شده */
 }
 
 .hero-title {
-  font-size: 56px;
-  font-weight: 800;
+  font-size: 64px; /* ✅ بود: 56px */
+  font-weight: 900; /* ✅ بود: 800 */
   color: #ffffff;
   margin-bottom: 20px;
   text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
+  line-height: 1.15; /* ✅ بود: 1.2 - tighter */
+  letter-spacing: -0.02em; /* ✅ اضافه شده - tighter spacing */
 }
 
 .hero-subtitle {
-  font-size: 20px;
-  color: #cbd5e1;
+  font-size: 22px; /* ✅ بود: 20px */
+  color: #e2e8f0; /* ✅ بود: #cbd5e1 - lighter */
   margin-bottom: 40px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  line-height: 1.6;
+  line-height: 1.7; /* ✅ بود: 1.6 */
+  max-width: 700px; /* ✅ اضافه شده */
+  margin-left: auto; /* ✅ اضافه شده */
+  margin-right: auto; /* ✅ اضافه شده */
 }
 
 
@@ -401,7 +409,7 @@ section.hero .hero-background,
 #scrollIndicator,
 .scroll-indicator {
   position: fixed;
-  bottom: 40px;
+  bottom: 60px; /* ✅ بود: 40px */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
@@ -409,6 +417,8 @@ section.hero .hero-background,
   opacity: 1;
   transition: opacity 0.3s ease-out;
   pointer-events: none;
+  /* ✅ بهبود visibility */
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
 }
 
 #scrollIndicator.hidden,
@@ -417,9 +427,12 @@ section.hero .hero-background,
 }
 
 .scroll-icon {
-  font-size: 40px;
-  color: white;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  font-size: 48px; /* ✅ بود: 40px */
+  color: #ffffff;
+  /* ✅ بهبود text-shadow */
+  text-shadow:
+    0 0 20px rgba(14, 165, 233, 0.8),
+    0 4px 12px rgba(0, 0, 0, 0.9);
   animation: bounce 2s infinite;
 }
 
@@ -436,11 +449,15 @@ section.hero .hero-background,
 }
 
 .scroll-text {
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
+  color: #ffffff;
+  font-size: 16px; /* ✅ بود: 14px */
+  font-weight: 700; /* ✅ بود: 600 */
   margin-top: 8px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  /* ✅ بهبود text-shadow */
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.9),
+    0 0 12px rgba(14, 165, 233, 0.6);
+  letter-spacing: 0.5px;
 }
 
 
@@ -505,16 +522,24 @@ section.hero .hero-background,
 
   #heroBox,
   .hero-box {
-    padding: 40px 24px;
-    width: 95%;
+    padding: 32px 20px; /* ✅ بود: 40px 24px */
+    width: 92%; /* ✅ بود: 95% */
+    max-width: 480px; /* ✅ محدود کردن عرض */
   }
 
   .hero-title {
-    font-size: 32px;
+    font-size: 28px; /* ✅ بود: 32px */
+    line-height: 1.3;
   }
 
   .hero-subtitle {
-    font-size: 16px;
+    font-size: 15px; /* ✅ بود: 16px */
+    line-height: 1.6;
+  }
+
+  .hero-badge {
+    font-size: 13px;
+    padding: 8px 16px;
   }
 
   .hero-cta,
@@ -527,6 +552,8 @@ section.hero .hero-background,
   .hero-btn {
     width: 100%;
     justify-content: center;
+    padding: 14px 28px; /* ✅ بود: 16px 32px */
+    font-size: 15px; /* ✅ بود: 16px */
   }
 
   .floating-icon {
@@ -550,14 +577,14 @@ section.hero .hero-background,
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 28px;
+    font-size: 26px; /* ✅ کمی بزرگتر از قبل */
   }
 
   .cta-button,
   .btn-hero,
   .hero-btn {
-    padding: 16px 32px;
-    font-size: 16px;
+    padding: 14px 28px;
+    font-size: 15px;
   }
 }
 
@@ -634,22 +661,25 @@ section.hero .hero-background,
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
+  gap: 32px; /* ✅ افزایش gap برای فاصله بهتر */
 }
 
 .stat-card {
-  background: #fff;
+  background: #ffffff !important; /* ✅ اطمینان از opacity کامل */
   border-radius: 32px;
   padding: 48px 32px;
   text-align: center;
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  border: 1px solid #e2e8f0; /* ✅ بهبود contrast - solid color */
+  /* ✅ بهبود box-shadow */
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.08),
-    0 8px 24px rgba(0, 0, 0, 0.04);
+    0 24px 64px rgba(0, 0, 0, 0.12),
+    0 12px 32px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(14, 165, 233, 0.08);
   opacity: 0;
   transform: translateY(50px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
+  contain: layout style paint; /* ✅ بهینه‌سازی performance */
 }
 
 .stat-card:nth-child(1) {
@@ -690,7 +720,9 @@ section.hero .hero-background,
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  /* ✅ بهبود contrast آیکون‌ها */
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  border: 2px solid #60a5fa;
   border-radius: 50%;
   position: relative;
   transition: all 0.5s;
@@ -723,8 +755,8 @@ section.hero .hero-background,
 
 .stat-number {
   font-size: 56px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  font-weight: 900; /* ✅ بود: 800 - bold‌تر */
+  background: linear-gradient(135deg, #0284c7, #2563eb); /* ✅ رنگ‌های تیره‌تر */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -735,7 +767,7 @@ section.hero .hero-background,
 .stat-label {
   font-size: 16px;
   font-weight: 600;
-  color: #64748b;
+  color: #475569; /* ✅ بود: #64748b - تیره‌تر برای contrast بهتر */
   line-height: 1.6;
 }
 
@@ -799,6 +831,18 @@ section.hero .hero-background,
   }
 }
 
+/* ✅ بهبود focus states برای keyboard navigation */
+.cta-button:focus-visible,
+.btn-hero:focus-visible,
+.hero-btn:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 4px rgba(56, 189, 248, 0.3),
+    0 16px 40px rgba(14, 165, 233, 0.4);
+}
+
+/* Legacy support */
 .cta-button:focus,
 .btn-hero:focus,
 .hero-btn:focus {
