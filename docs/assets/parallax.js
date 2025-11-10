@@ -30,6 +30,10 @@
     // BACKGROUND EFFECTS - فقط opacity و scale
     // ============================================
 
+    // ============================================
+    // BACKGROUND FADE ONLY - NO TRANSFORM!
+    // ============================================
+
     // 1. Fade gradient overlay
     if (scrolled > windowHeight * 0.5) {
       heroBackground.classList.add('fading');
@@ -37,12 +41,12 @@
       heroBackground.classList.remove('fading');
     }
 
-    // 2. Opacity fade only - NO TRANSFORM!
-    // هیچ transform نمیزنیم تا fixed positioning خراب نشه
-    if (!isMobile && heroBackground) {
-      const opacityValue = Math.max(0, 1 - (scrolled / (windowHeight * 1.5)));
-      heroBackground.style.opacity = opacityValue;
-    }
+    // 2. ❌ حذف کامل opacity change - background همیشه visible
+    // این خط حذف شد تا background ثابت بماند
+    // heroBackground.style.opacity = opacityValue; // ❌ این مشکل ساز بود!
+
+    // 3. ✅ فقط gradient overlay را fade کن (از طریق class)
+    // کلاس "fading" در CSS gradient را visible می‌کند
 
     // ============================================
     // HERO BOX FADE OUT
@@ -90,6 +94,21 @@
   if (scrollIndicator && window.pageYOffset > 150) {
     scrollIndicator.classList.add('hidden');
   }
+
+  // ============================================
+  // FORCE FIXED POSITION ON LOAD
+  // ============================================
+
+  // اطمینان از fixed بودن background در load
+  window.addEventListener('load', () => {
+    if (heroBackground) {
+      // Force reset
+      heroBackground.style.position = 'fixed';
+      heroBackground.style.transform = 'none';
+      heroBackground.style.top = '0';
+      heroBackground.style.left = '0';
+    }
+  });
 
 })();
 
