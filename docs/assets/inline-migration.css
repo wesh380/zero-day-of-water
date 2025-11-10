@@ -68,11 +68,13 @@
 .h-auto{ height:auto; }
 .aspect-square{ aspect-ratio: 1 / 1; }
 
-/* Porsline feedback button - minimal override for colors only */
+/* Porsline feedback button - minimal override for colors and positioning */
 .porsline-button-wrapper {
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
   color: #ffffff !important;
   transition: all 0.3s ease !important;
+  z-index: 9999 !important;
+  position: fixed !important;
 }
 
 .porsline-button-wrapper:hover {
