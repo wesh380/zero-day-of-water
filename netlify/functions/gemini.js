@@ -32,7 +32,7 @@ export async function handler(event) {
     return send(r.status, {
       error: 'upstream',
       status: r.status,
-      model: MODEL,
+      model: selectedModel,
       detail: sanitize(data)
     });
   }
