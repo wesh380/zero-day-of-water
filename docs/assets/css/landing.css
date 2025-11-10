@@ -84,9 +84,10 @@ section.hero {
 .hero-dark-overlay,
 .hero-overlay {
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.7)
+    135deg,
+    rgba(15, 23, 42, 0.3),   /* Navy blue */
+    rgba(30, 41, 59, 0.4),   /* Slate */
+    rgba(14, 165, 233, 0.2)  /* Sky blue */
   );
   z-index: 2;
   pointer-events: none;
@@ -619,14 +620,15 @@ section.hero {
 }
 
 .stat-card {
-  background: #fff;
+  background: #ffffff !important;
   border-radius: 32px;
   padding: 48px 32px;
   text-align: center;
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  border: 2px solid #e2e8f0;
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.08),
-    0 8px 24px rgba(0, 0, 0, 0.04);
+    0 28px 72px rgba(0, 0, 0, 0.15),
+    0 14px 36px rgba(0, 0, 0, 0.10),
+    0 6px 20px rgba(14, 165, 233, 0.12);
   opacity: 0;
   transform: translateY(50px);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -664,14 +666,15 @@ section.hero {
 }
 
 .stat-icon {
-  font-size: 56px;
-  width: 120px;
-  height: 120px;
+  font-size: 64px;
+  width: 140px;
+  height: 140px;
   margin: 0 auto 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+  border: 3px solid #3b82f6;
   border-radius: 50%;
   position: relative;
   transition: all 0.5s;
@@ -703,8 +706,8 @@ section.hero {
 }
 
 .stat-number {
-  font-size: 56px;
-  font-weight: 800;
+  font-size: 64px;
+  font-weight: 900;
   background: linear-gradient(135deg, #0ea5e9, #3b82f6);
   -webkit-background-clip: text;
   background-clip: text;
@@ -785,6 +788,43 @@ section.hero {
 .hero-btn:focus {
   outline: 3px solid rgba(14, 165, 233, 0.6);
   outline-offset: 4px;
+}
+
+
+/* ============================================
+   WIZARD FORM SECTION
+   ============================================ */
+
+#household-wizard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabs بزرگتر */
+.wiz-tabs button {
+  padding: 24px 32px;
+  font-size: 18px;
+  border-radius: 16px;
+}
+
+/* Form inputs */
+.wiz-form input,
+.wiz-form select {
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+}
+
+.wiz-form input:focus,
+.wiz-form select:focus {
+  border-color: #0ea5e9;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
 }
 
 
