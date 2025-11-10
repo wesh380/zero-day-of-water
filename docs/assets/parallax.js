@@ -45,8 +45,9 @@
     );
 
     if (heroBox) {
-      // ✅ FIX 3: Threshold بالاتر = box بیشتر می‌مونه
-      if (boxFadeProgress > 0.2) {
+      // ✅ FIX 3: Guard condition - فقط بعد از scroll کافی fade out بشه
+      // اگر scroll کمتر از boxFadeStart باشه، هیچ fade نکن!
+      if (scrolled >= boxFadeStart && boxFadeProgress > 0.2) {
         heroBox.classList.add('fading-out');
       } else {
         heroBox.classList.remove('fading-out');
@@ -78,8 +79,11 @@
     }
   }, { passive: true });
 
-  // Initial call
-  updateParallax();
+  // ✅ Initial call - فقط برای scroll indicator
+  // Box رو fade out نمی‌کنه چون scrolled = 0
+  if (scrollIndicator && window.pageYOffset > 150) {
+    scrollIndicator.classList.add('hidden');
+  }
 
 })();
 

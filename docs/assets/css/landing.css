@@ -92,21 +92,29 @@
 
 #heroBox,
 .hero-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 20 !important;
   max-width: 900px;
   width: 90%;
   border-radius: 32px;
   overflow: visible; /* ✅ برای shadow و effects */
 
   /* Animation */
-  opacity: 1;
+  opacity: 1 !important; /* ✅ همیشه visible */
   will-change: transform, opacity;
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   animation: fadeInScale 1s ease-out;
+}
+
+/* ✅ Override fading-out برای initial load */
+#heroBox:not(.fading-out),
+.hero-box:not(.fading-out) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
 }
 
 /* Fade out box when scrolling */
