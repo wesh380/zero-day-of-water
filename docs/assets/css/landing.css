@@ -3,13 +3,11 @@
    این قوانین باید همه چیز را override کنند
    ============================================ */
 
-/* Reset تمام transforms و positions از bundle‌های قدیمی */
+/* Reset transforms فقط برای container اصلی hero */
 .hero,
-.hero *,
-section.hero,
-section.hero * {
+section.hero {
   /* جلوگیری از هرگونه transform از parent */
-  transform: none !important;
+  transform: none;
 }
 
 /* ============================================
@@ -21,23 +19,14 @@ section.hero * {
   position: relative;
   overflow: hidden;
   /* جلوگیری از تاثیر transform parent */
-  transform-style: flat !important;
+  transform-style: flat;
 }
 
 /* ============================================
    BACKGROUND - ABSOLUTELY FIXED
    ============================================ */
 
-/* Maximum specificity + !important برای override همه چیز */
-html body section.hero #heroBackground,
-html body section.hero .hero-background,
-html body .hero #heroBackground,
-html body .hero .hero-background,
-section.hero #heroBackground,
-section.hero .hero-background,
-.hero #heroBackground,
-.hero .hero-background,
-#heroBackground,
+/* Single clean selector - specificity کافی با !important برای critical properties */
 .hero-background {
   /* CRITICAL: این باید fixed بمونه */
   position: fixed !important;
@@ -49,22 +38,21 @@ section.hero .hero-background,
 
   /* ❌ NO TRANSFORM - این خیلی مهمه! */
   transform: none !important;
-  transform-style: flat !important;
-  will-change: opacity !important;
+  will-change: opacity;
 
   /* Smooth transition فقط برای opacity */
-  transition: opacity 0.6s ease-out !important;
+  transition: opacity 0.6s ease-out;
 
   /* Disable هرگونه CSS animation */
-  animation: none !important;
+  animation: none;
 
   /* Reset custom properties */
-  --hero-scroll-y: 0 !important;
-  --hero-opacity: 1 !important;
+  --hero-scroll-y: 0;
+  --hero-opacity: 1;
 
   /* Lock در position */
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 /* Layer‌های داخل background */
@@ -72,9 +60,9 @@ section.hero .hero-background,
 .hero-img,
 .hero-dark-overlay,
 .hero-fade-overlay {
-  position: absolute !important;
-  inset: 0 !important;
-  transform: none !important;
+  position: absolute;
+  inset: 0;
+  transform: none;
 }
 
 .hero-img {
@@ -83,9 +71,7 @@ section.hero .hero-background,
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
-  /* جلوگیری از scale یا transform */
-  transform: none !important;
-  will-change: auto !important;
+  will-change: auto;
 }
 
 @media (max-width: 420px) {
@@ -134,12 +120,12 @@ section.hero .hero-background,
 
 .hero-content,
 .hero-content-container {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 100vh !important;
-  z-index: 10 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 10;
 
   display: flex;
   align-items: center;
@@ -150,7 +136,7 @@ section.hero .hero-background,
   pointer-events: none;
 
   /* NO TRANSFORM */
-  transform: none !important;
+  transform: none;
 }
 
 /* فقط box clickable */
@@ -161,7 +147,7 @@ section.hero .hero-background,
 
 /* ✅ وقتی از hero section عبور می‌کنیم، container رو hide کن */
 .hero-content-container.hidden {
-  display: none !important;
+  display: none;
 }
 
 
@@ -197,8 +183,8 @@ section.hero .hero-background,
   text-align: center;
 
   /* ✅ همیشه visible */
-  opacity: 1 !important;
-  transform: scale(1) translateY(0) !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, opacity;
 }
@@ -534,17 +520,12 @@ section.hero .hero-background,
   }
 
   /* Force fixed در موبایل */
-  html body section.hero #heroBackground,
-  html body section.hero .hero-background,
-  html body .hero #heroBackground,
-  html body .hero .hero-background,
-  #heroBackground,
   .hero-background {
     position: fixed !important;
     transform: none !important;
-    opacity: 1 !important;
-    will-change: auto !important;
-    transition: none !important;
+    opacity: 1;
+    will-change: auto;
+    transition: none;
   }
 }
 
@@ -785,8 +766,8 @@ section.hero .hero-background,
   .floating-icon,
   .stat-card,
   .stats-title {
-    animation: none !important;
-    transition: none !important;
+    animation: none;
+    transition: none;
   }
 
   .stat-card:hover {
