@@ -16,6 +16,8 @@
   const heroBackground = document.getElementById('heroBackground');
   const heroBox = document.getElementById('heroBox');
   const scrollIndicator = document.getElementById('scrollIndicator');
+  const heroContainer = document.querySelector('.hero-content-container');
+  const heroSection = document.querySelector('.hero');
 
   if (!heroBackground) return;
 
@@ -76,6 +78,21 @@
         scrollIndicator.classList.add('hidden');
       } else {
         scrollIndicator.classList.remove('hidden');
+      }
+    }
+
+    // ============================================
+    // HERO CONTAINER HIDE - وقتی از hero section عبور می‌کنیم
+    // ============================================
+
+    if (heroContainer && heroSection) {
+      const heroSectionHeight = heroSection.offsetHeight;
+
+      // وقتی از hero section خارج شدیم
+      if (scrolled > heroSectionHeight - windowHeight) {
+        heroContainer.classList.add('hidden');
+      } else {
+        heroContainer.classList.remove('hidden');
       }
     }
 
