@@ -37,13 +37,10 @@
       heroBackground.classList.remove('fading');
     }
 
-    // 2. Subtle scale effect (NO translateY!)
-    // فقط یک zoom out خیلی subtle برای depth
+    // 2. Opacity fade only - NO TRANSFORM!
+    // هیچ transform نمیزنیم تا fixed positioning خراب نشه
     if (!isMobile && heroBackground) {
-      const scaleValue = 1 + (scrolled / windowHeight) * 0.1; // max 1.1x
       const opacityValue = Math.max(0, 1 - (scrolled / (windowHeight * 1.5)));
-
-      heroBackground.style.transform = `scale(${scaleValue})`;
       heroBackground.style.opacity = opacityValue;
     }
 
