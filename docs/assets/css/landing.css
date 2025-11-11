@@ -135,22 +135,35 @@ section.hero {
 .hero-box {
   max-width: 900px;
   width: 100%;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   text-align: center;
 
-  /* CRITICAL: Completely lock position - no movement */
-  transform: none !important;
+  /* Center the box */
+  transform: translate(-50%, -50%) !important;
   backface-visibility: hidden;
 
   /* Initial fade in animation */
-  animation: fadeInUp 1s ease-out forwards;
+  animation: fadeInScale 1s ease-out forwards;
 }
 
 /* Stop animation after it completes */
 #heroBox.loaded,
 .hero-box.loaded {
   animation: none;
-  transform: none !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+  }
 }
 
 @keyframes fadeInUp {
@@ -160,7 +173,7 @@ section.hero {
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
   }
 }
 
