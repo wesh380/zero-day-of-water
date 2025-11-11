@@ -1,364 +1,264 @@
 // ============================================
-// WESH360 - Professional Parallax System
-// پارالکس حرفه‌ای با Fixed Background
+// WESH360 - Optimized Parallax System
+// Fixed Hero + Smooth Animations
 // ============================================
 
 (function() {
   'use strict';
 
-  // ============================================
-  // 1. HERO PARALLAX - با Fixed Background
-  // ============================================
-
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
-
-  const heroBackground = document.getElementById('heroBackground');
-  const heroBox = document.getElementById('heroBox');
-  const scrollIndicator = document.getElementById('scrollIndicator');
-  const heroContainer = document.querySelector('.hero-content-container');
-  const heroSection = document.querySelector('.hero');
-
-  if (!heroBackground) return;
-
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  let ticking = false;
-
-  function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const windowHeight = window.innerHeight;
-
-    // ============================================
-    // BACKGROUND EFFECTS - فقط opacity و scale
-    // ============================================
-
-    // ============================================
-    // BACKGROUND FADE ONLY - NO TRANSFORM!
-    // ============================================
-
-    // 1. Fade gradient overlay
-    if (scrolled > windowHeight * 0.5) {
-      heroBackground.classList.add('fading');
-    } else {
-      heroBackground.classList.remove('fading');
-    }
-
-    // 2. ❌ حذف کامل opacity change - background همیشه visible
-    // این خط حذف شد تا background ثابت بماند
-    // heroBackground.style.opacity = opacityValue; // ❌ این مشکل ساز بود!
-
-    // 3. ✅ فقط gradient overlay را fade کن (از طریق class)
-    // کلاس "fading" در CSS gradient را visible می‌کند
-
-    // ============================================
-    // HERO BOX FADE OUT - ❌ غیرفعال شده
-    // ✅ Hero Box باید ثابت بماند و حرکت نکند
-    // ============================================
-
-    // ❌ این کد باعث می‌شد hero-box حرکت کند
-    /*
-    const boxFadeStart = windowHeight * 0.8;
-    const boxFadeEnd = windowHeight * 1.5;
-
-    if (heroBox) {
-      if (scrolled >= boxFadeStart) {
-        const progress = Math.min(1, (scrolled - boxFadeStart) / (boxFadeEnd - boxFadeStart));
-
-        if (progress > 0.1) {
-          heroBox.classList.add('fading-out');
-        }
-      } else {
-        heroBox.classList.remove('fading-out');
-      }
-    }
-    */
-
-    // ============================================
-    // SCROLL INDICATOR
-    // ============================================
-
-    if (scrollIndicator) {
-      if (scrolled > 150) {
-        scrollIndicator.classList.add('hidden');
-      } else {
-        scrollIndicator.classList.remove('hidden');
-      }
-    }
-
-    // ============================================
-    // HERO CONTAINER HIDE - ❌ غیرفعال شده
-    // ✅ Hero Container باید همیشه visible باشد
-    // ============================================
-
-    // ❌ این کد باعث می‌شد hero-container مخفی شود
-    /*
-    if (heroContainer && heroSection) {
-      const heroSectionHeight = heroSection.offsetHeight;
-
-      // وقتی از hero section خارج شدیم
-      if (scrolled > heroSectionHeight - windowHeight) {
-        heroContainer.classList.add('hidden');
-      } else {
-        heroContainer.classList.remove('hidden');
-      }
-    }
-    */
-
-    ticking = false;
-  }
-
-  // Optimized scroll listener
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // Initial check
-  if (scrollIndicator && window.pageYOffset > 150) {
-    scrollIndicator.classList.add('hidden');
-  }
-
-  // ============================================
-  // FORCE FIXED POSITION ON LOAD
-  // ============================================
-
-  // اطمینان از fixed بودن background در load
-  window.addEventListener('load', () => {
-    if (heroBackground) {
-      // Force reset
-      heroBackground.style.position = 'fixed';
-      heroBackground.style.transform = 'none';
-      heroBackground.style.top = '0';
-      heroBackground.style.left = '0';
-    }
-  });
-
-})();
-
-
-// ============================================
-// 2. CARDS FADE-IN Animation
-// ============================================
-
-(function() {
-  'use strict';
-
-  const cards = Array.from(document.querySelectorAll('.card'));
-  if (!cards.length) return;
-
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, 100);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      rootMargin: '-10% 0px',
-      threshold: 0.1
-    });
-
-    cards.forEach(card => observer.observe(card));
-  } else {
-    cards.forEach(card => card.classList.add('visible'));
-  }
-})();
-
-
-// ============================================
-// 3. STATS COUNTER Animation
-// ============================================
-
-(function() {
-  'use strict';
-
-  const prefersReducedMotion = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  function animateNumber(element, final) {
-    const match = final.match(/\d+/);
+  // ============================================
+  // 1. SCROLL INDICATOR - با IntersectionObserver
+  // ============================================
+
+  const scrollIndicator = document.getElementById('scrollIndicator') ||
+                          document.querySelector('.scroll-hint');
+
+  if (scrollIndicator) {
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function updateScrollIndicator() {
+      const scrollY = window.pageYOffset;
+
+      // Show/hide based on scroll position
+      if (scrollY > 150 && lastScrollY <= 150) {
+        scrollIndicator.classList.add('hidden');
+      } else if (scrollY <= 150 && lastScrollY > 150) {
+        scrollIndicator.classList.remove('hidden');
+      }
+
+      lastScrollY = scrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollIndicator);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial state
+    if (window.pageYOffset > 150) {
+      scrollIndicator.classList.add('hidden');
+    }
+  }
+
+})();
+
+
+// ============================================
+// 2. STATS COUNTER - بهینه شده با easing
+// ============================================
+
+(function() {
+  'use strict';
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  // Easing function for smooth animation
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function animateNumber(element, finalText) {
+    const match = finalText.match(/\d+/);
     if (!match) return;
 
     const target = parseInt(match[0]);
     const duration = 2000;
-    const fps = 60;
-    const totalFrames = (duration / 1000) * fps;
-    const increment = target / totalFrames;
-    let current = 0;
-    let frame = 0;
+    const startTime = performance.now();
 
-    function update() {
-      frame++;
-      current = Math.min(current + increment, target);
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutExpo(progress);
+      const current = Math.floor(easedProgress * target);
 
-      element.textContent = final.replace(/\d+/, Math.floor(current));
+      element.textContent = finalText.replace(/\d+/, current);
 
-      if (current < target && frame < totalFrames) {
+      if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        element.textContent = final;
+        element.textContent = finalText;
       }
     }
 
     requestAnimationFrame(update);
   }
 
-  const observer = new IntersectionObserver((entries) => {
+  // Observe stat cards
+  const statObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const card = entry.target;
         const numberEl = card.querySelector('.stat-number');
 
         if (numberEl && !numberEl.dataset.animated) {
-          const finalNumber = numberEl.textContent;
+          const finalText = numberEl.textContent;
           numberEl.dataset.animated = 'true';
 
+          // Small delay for better UX
           setTimeout(() => {
-            animateNumber(numberEl, finalNumber);
+            animateNumber(numberEl, finalText);
           }, 200);
         }
 
-        observer.unobserve(card);
+        // Unobserve after animation starts
+        statObserver.unobserve(card);
       }
     });
   }, {
     threshold: 0.3,
-    rootMargin: '0px 0px -100px 0px'
+    rootMargin: '0px 0px -50px 0px'
   });
 
+  // Observe all stat cards
   document.querySelectorAll('.stat-card').forEach(card => {
-    observer.observe(card);
+    statObserver.observe(card);
   });
 
 })();
 
 
 // ============================================
-// 4. STATS PARALLAX Effect (Subtle)
+// 3. CARDS FADE-IN Animation
 // ============================================
 
 (function() {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  const statCards = document.querySelectorAll('.stat-card');
-  if (!statCards.length) return;
+  const cards = document.querySelectorAll('.card, .data-card');
+  if (!cards.length) return;
 
-  let scrollTimeout;
-
-  function handleParallax() {
-    const scrolled = window.pageYOffset;
-
-    statCards.forEach((card, index) => {
-      const speed = 0.02 + (index * 0.005);
-      const yPos = -(scrolled * speed);
-
-      const rect = card.getBoundingClientRect();
-
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        card.style.setProperty('--parallax-y', `${yPos}px`);
-        card.classList.add('parallax-active');
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        cardObserver.unobserve(entry.target);
       }
     });
+  }, {
+    rootMargin: '-10% 0px',
+    threshold: 0.1
+  });
+
+  cards.forEach(card => cardObserver.observe(card));
+
+})();
+
+
+// ============================================
+// 4. RIPPLE EFFECT - بهینه شده
+// ============================================
+
+(function() {
+  'use strict';
+
+  const buttons = document.querySelectorAll('.hero-btn, .btn-primary, .cta-button, .btn-hero');
+
+  function createRipple(event) {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+
+    // Calculate ripple position
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const size = Math.max(rect.width, rect.height);
+
+    // Create ripple element
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.cssText = `
+      position: absolute;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${size}px;
+      height: ${size}px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s ease-out;
+      pointer-events: none;
+    `;
+
+    // Add to button
+    button.appendChild(ripple);
+
+    // Remove after animation
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
   }
 
-  window.addEventListener('scroll', () => {
-    if (scrollTimeout) {
-      window.cancelAnimationFrame(scrollTimeout);
-    }
+  buttons.forEach(button => {
+    button.addEventListener('click', createRipple);
+  });
 
-    scrollTimeout = window.requestAnimationFrame(handleParallax);
+})();
+
+
+// ============================================
+// 5. VIEWPORT HEIGHT - برای mobile
+// ============================================
+
+(function() {
+  'use strict';
+
+  let resizeTimeout;
+
+  function updateViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
+  // Set initial value
+  updateViewportHeight();
+
+  // Update on resize with debounce
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(updateViewportHeight, 150);
   }, { passive: true });
 
 })();
 
 
 // ============================================
-// 5. SMOOTH CROSS-FADE Hero ↔ Stats
+// 6. SMOOTH SCROLL - برای navigation links
 // ============================================
 
 (function() {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
 
-  if (prefersReducedMotion) return;
+  smoothScrollLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
 
-  const heroSection = document.querySelector('.hero');
-  if (heroSection) {
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const ratio = entry.intersectionRatio;
+      // Skip empty or single # links
+      if (!href || href === '#') return;
 
-        if (ratio < 0.4) {
-          entry.target.classList.add('fading');
-        } else {
-          entry.target.classList.remove('fading');
-        }
-      });
-    }, {
-      threshold: [0, 0.2, 0.4, 0.6, 0.8, 1]
-    });
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
 
-    heroObserver.observe(heroSection);
-  }
-
-  const statsSection = document.querySelector('.stats-parallax');
-  if (statsSection) {
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    statsObserver.observe(statsSection);
-  }
-
-})();
-
-
-// ============================================
-// 6. CTA BUTTONS Ripple Effect
-// ============================================
-
-(function() {
-  'use strict';
-
-  const buttons = document.querySelectorAll('.hero-btn, .cta-button, .btn-hero');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-
-      this.appendChild(ripple);
-
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     });
   });
 
@@ -366,17 +266,19 @@
 
 
 // ============================================
-// 7. LAZY LOAD Images
+// 7. LAZY LOAD Images - بهینه شده
 // ============================================
 
 (function() {
   'use strict';
 
+  // Check if browser supports native lazy loading
   if ('loading' in HTMLImageElement.prototype) {
-    // Native lazy loading
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
-      img.src = img.dataset.src || img.src;
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+      }
     });
   } else {
     // Fallback with IntersectionObserver
@@ -384,11 +286,16 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src || img.src;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+          }
           img.classList.add('loaded');
           imageObserver.unobserve(img);
         }
       });
+    }, {
+      rootMargin: '50px 0px',
+      threshold: 0.01
     });
 
     document.querySelectorAll('img[loading="lazy"]').forEach(img => {
@@ -400,28 +307,67 @@
 
 
 // ============================================
-// 8. PERFORMANCE - Debounce Resize
+// 8. PERFORMANCE MONITORING (Development)
 // ============================================
 
 (function() {
   'use strict';
 
-  let resizeTimeout;
+  // Only in development
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
 
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
+    // Monitor FPS
+    let lastTime = performance.now();
+    let frames = 0;
 
-    resizeTimeout = setTimeout(() => {
-      // Re-calculate dimensions
-      const windowHeight = window.innerHeight;
+    function measureFPS() {
+      const now = performance.now();
+      frames++;
 
-      // Update CSS custom properties
-      document.documentElement.style.setProperty('--vh', `${windowHeight * 0.01}px`);
-    }, 150);
-  }, { passive: true });
+      if (now >= lastTime + 1000) {
+        const fps = Math.round((frames * 1000) / (now - lastTime));
 
-  // Initial set
-  const windowHeight = window.innerHeight;
-  document.documentElement.style.setProperty('--vh', `${windowHeight * 0.01}px`);
+        // Warn if FPS is low
+        if (fps < 30) {
+          console.warn(`⚠️ Low FPS detected: ${fps}`);
+        }
+
+        frames = 0;
+        lastTime = now;
+      }
+
+      requestAnimationFrame(measureFPS);
+    }
+
+    // Start monitoring
+    requestAnimationFrame(measureFPS);
+  }
 
 })();
+
+
+// ============================================
+// 9. ERROR HANDLING - Global
+// ============================================
+
+(function() {
+  'use strict';
+
+  // Catch errors in animations
+  window.addEventListener('error', (e) => {
+    if (e.filename && e.filename.includes('parallax.js')) {
+      console.error('Parallax Error:', e.message);
+      // Graceful degradation - disable animations
+      document.documentElement.classList.add('no-animations');
+    }
+  }, true);
+
+})();
+
+
+// ============================================
+// Console info
+// ============================================
+
+console.log('%c🚀 WESH360 Parallax System Loaded', 'color: #0ea5e9; font-weight: bold; font-size: 14px;');
+console.log('%c✅ Fixed Hero | Smooth Animations | Optimized Performance', 'color: #10b981; font-size: 12px;');
