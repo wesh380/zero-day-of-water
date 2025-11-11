@@ -54,95 +54,36 @@ section.hero {
 }
 
 /* ============================================
-   BACKGROUND - ABSOLUTELY FIXED
+   BACKGROUND - SIMPLE GRADIENT (NO IMAGE)
    ============================================ */
 
-/* Single clean selector - specificity کافی با !important برای critical properties */
 .hero-background {
-  /* CRITICAL: این باید fixed بمونه */
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  z-index: 0 !important;
-
-  /* ❌ NO TRANSFORM - این خیلی مهمه! */
-  transform: none !important;
-  will-change: opacity;
-
-  /* Smooth transition فقط برای opacity */
-  transition: opacity 0.6s ease-out;
-
-  /* Disable هرگونه CSS animation */
-  animation: none;
-
-  /* Reset custom properties */
-  --hero-scroll-y: 0;
-  --hero-opacity: 1;
-
-  /* Lock در position */
-  margin: 0;
-  padding: 0;
-}
-
-/* Layer‌های داخل background */
-.hero-image-layer,
-.hero-img,
-.hero-dark-overlay,
-.hero-fade-overlay {
-  position: absolute;
-  inset: 0;
-  transform: none;
-}
-
-.hero-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 40%;
-  will-change: auto;
-}
-
-@media (max-width: 420px) {
-  .hero-img {
-    object-position: center 30%;
-  }
-}
-
-/* Dark overlay */
-.hero-dark-overlay,
-.hero-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
   background: linear-gradient(
     135deg,
-    rgba(15, 23, 42, 0.3),   /* Navy blue */
-    rgba(30, 41, 59, 0.4),   /* Slate */
-    rgba(14, 165, 233, 0.2)  /* Sky blue */
+    #0f172a 0%,
+    #1e293b 50%,
+    #0ea5e9 100%
+  );
+}
+
+/* Light overlay (نه تیره!) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.75) 0%,
+    rgba(30, 41, 59, 0.65) 50%,
+    rgba(14, 165, 233, 0.55) 100%
   );
   z-index: 2;
   pointer-events: none;
-}
-
-/* Gradient fade overlay */
-.hero-fade-overlay {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 40%,
-    rgba(248, 250, 252, 0.5) 70%,
-    rgba(248, 250, 252, 0.9) 85%,
-    #f8fafc 100%
-  );
-  opacity: 0;
-  transition: opacity 0.8s ease-out;
-  pointer-events: none;
-  z-index: 3;
-}
-
-/* فقط gradient visible بشه */
-#heroBackground.fading .hero-fade-overlay {
-  opacity: 1;
 }
 
 
@@ -152,7 +93,7 @@ section.hero {
 
 .hero-content,
 .hero-content-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -162,29 +103,23 @@ section.hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 40px;
+  padding: 0 24px;
 
-  /* ✅ این خط مهمه - Allow click through */
+  /* Allow click through to elements */
   pointer-events: none;
-
-  /* NO TRANSFORM */
-  transform: none;
 }
 
-/* فقط box clickable */
+/* فقط box و محتویات clickable */
 .hero-content-container *,
-.hero-content * {
+.hero-content *,
+.hero-box,
+.hero-box * {
   pointer-events: auto;
-}
-
-/* ✅ وقتی از hero section عبور می‌کنیم، container رو hide کن */
-.hero-content-container.hidden {
-  display: none;
 }
 
 
 /* ============================================
-   GLASS MORPHISM BOX
+   HERO BOX - Simple & Clean
    ============================================ */
 
 #heroBox,
@@ -192,74 +127,19 @@ section.hero {
   max-width: 900px;
   width: 100%;
   position: relative;
-  border-radius: 32px;
-  overflow: hidden;
-
-  /* Glass effect */
-  background: linear-gradient(
-    135deg,
-    rgba(15, 23, 42, 0.85),
-    rgba(30, 41, 59, 0.80)
-  );
-  backdrop-filter: blur(30px) saturate(150%);
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
-
-  border: 2px solid rgba(255, 255, 255, 0.2);
-
-  box-shadow:
-    0 20px 80px rgba(0, 0, 0, 0.4),
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-
-  padding: 60px 48px;
   text-align: center;
-
-  /* ✅ همیشه visible */
-  opacity: 1;
-  transform: scale(1) translateY(0);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
+  animation: fadeInUp 1s ease-out;
 }
 
-/* Initial animation */
-#heroBox {
-  animation: fadeInScale 1s ease-out;
-}
-
-@keyframes fadeInScale {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
   }
-}
-
-/* Fade out state */
-#heroBox.fading-out {
-  opacity: 0;
-  transform: scale(0.95) translateY(-30px);
-  pointer-events: none;
-}
-
-/* Noise texture */
-#heroBox::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
-  opacity: 0.3;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-}
-
-#heroBox .content,
-.hero-box .content,
-.hero .content {
-  position: relative;
-  z-index: 2;
 }
 
 
@@ -289,21 +169,70 @@ section.hero {
   backdrop-filter: blur(10px);
 }
 
-.hero-title {
-  font-size: var(--text-6xl, 60px);
+/* Social Proof Badge */
+.hero-badge-proof {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 100px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.badge-icon {
+  font-size: 18px;
+  color: #10b981;
+}
+
+.badge-text strong {
+  color: white;
   font-weight: 800;
+}
+
+.hero-title {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 900;
   color: #ffffff;
-  margin-bottom: var(--space-lg, 20px);
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-title-highlight {
+  display: block;
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+/* Underline effect */
+.hero-title-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  border-radius: 2px;
 }
 
 .hero-subtitle {
-  font-size: var(--text-2xl, 24px);
-  color: #cbd5e1;
-  margin-bottom: var(--space-2xl, 40px);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  line-height: 1.6;
+  font-size: clamp(16px, 2vw, 22px);
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -314,9 +243,10 @@ section.hero {
 .hero-cta,
 .hero-cta-buttons {
   display: flex;
+  flex-direction: column;
   gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
 .cta-button,
@@ -336,29 +266,41 @@ section.hero {
   overflow: hidden;
 }
 
-/* Primary - Glass White */
+/* Primary - Solid Gradient Button */
 .cta-primary,
 .btn-primary,
 .hero-btn-primary {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 40px;
+  font-size: 19px;
+  font-weight: 700;
   color: white;
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  border: none;
+  border-radius: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 10px 30px rgba(14, 165, 233, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .cta-primary:hover,
 .btn-primary:hover,
 .hero-btn-primary:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-4px);
   box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 16px 40px rgba(14, 165, 233, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.cta-primary:active,
+.btn-primary:active,
+.hero-btn-primary:active {
+  transform: translateY(-2px);
 }
 
 /* Secondary - Glass Blue */
@@ -394,6 +336,32 @@ section.hero {
   align-items: center;
 }
 
+/* Text Button (Secondary) */
+.btn-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.btn-text:hover {
+  color: white;
+  gap: 12px;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+
+.btn-text:hover .arrow {
+  transform: translateY(4px);
+}
+
 /* Ripple effect */
 .ripple {
   position: absolute;
@@ -416,6 +384,52 @@ section.hero {
    SCROLL INDICATOR
    ============================================ */
 
+/* Scroll Hint Button with SVG */
+.scroll-hint {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: bounce 2s infinite;
+}
+
+.scroll-hint:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.scroll-icon-svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+  stroke-width: 2.5;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Legacy support */
 #scrollIndicator,
 .scroll-indicator {
   position: fixed;
@@ -427,8 +441,6 @@ section.hero {
   opacity: 1;
   transition: opacity 0.3s ease-out;
   pointer-events: none;
-  filter: drop-shadow(0 0 30px rgba(14, 165, 233, 1))
-          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
 }
 
 #scrollIndicator.hidden,
@@ -439,28 +451,7 @@ section.hero {
 .scroll-icon {
   font-size: 56px;
   color: white;
-  text-shadow:
-    0 0 30px rgba(14, 165, 233, 1),
-    0 0 60px rgba(56, 189, 248, 0.8),
-    0 4px 12px rgba(0, 0, 0, 0.9);
-  animation: bounce 2s infinite, pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-15px);
-  }
-  60% {
-    transform: translateY(-8px);
-  }
+  animation: bounce 2s infinite;
 }
 
 .scroll-text {
@@ -528,7 +519,7 @@ section.hero {
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 120vh;
+    min-height: 100vh;
   }
 
   #heroBox,
@@ -538,7 +529,7 @@ section.hero {
   }
 
   .hero-title {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .hero-subtitle {
@@ -552,22 +543,14 @@ section.hero {
 
   .cta-button,
   .btn-hero,
-  .hero-btn {
+  .hero-btn,
+  .btn-primary {
     width: 100%;
     justify-content: center;
   }
 
   .floating-icon {
     display: none;
-  }
-
-  /* Force fixed در موبایل */
-  .hero-background {
-    position: fixed !important;
-    transform: none !important;
-    opacity: 1;
-    will-change: auto;
-    transition: none;
   }
 }
 
@@ -826,8 +809,16 @@ section.hero {
 
 .cta-button:focus,
 .btn-hero:focus,
-.hero-btn:focus {
+.hero-btn:focus,
+.btn-primary:focus,
+.btn-text:focus,
+.scroll-hint:focus {
   outline: 3px solid rgba(14, 165, 233, 0.6);
+  outline-offset: 4px;
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid rgba(56, 189, 248, 0.6);
   outline-offset: 4px;
 }
 

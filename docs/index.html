@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <!-- ✅ CRITICAL CSS - Override همه چیز قبل از load شدن CSS ها -->
-  <style>
-    /* CRITICAL: Override همه چیز */
-    #heroBackground,
-    .hero-background {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      transform: none !important;
-      z-index: 0 !important;
-    }
-  </style>
   <!-- CSS Bundles - Phase 3 Optimization: Reduced from 14 to 5 files -->
   <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
   <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
@@ -44,11 +30,6 @@
   <script>if(!document.createElement('canvas').toDataURL('image/webp').includes('data:image/webp')){document.documentElement.classList.add('no-webp');}</script>
   <!-- Font Awesome Icons (for other pages) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-  <!-- preload hero image: keep srcset consistent with picture -->
-  <link rel="preload" as="image"
-        href="/assets/img/hero/hero-desktop.webp"
-        imagesrcset="/assets/img/hero/hero-mobile.webp 768w, /assets/img/hero/hero-desktop-1280.webp 1280w, /assets/img/hero/hero-desktop.webp 1440w, /assets/img/hero/hero-desktop-1920.webp 1920w"
-        imagesizes="(max-width: 768px) 100vw, 1440px">
   <!-- UI Enhancements -->
   <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
   <link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png">
@@ -116,64 +97,65 @@
         </div>
       </div>
     </header>
-<section class="hero">
-      <!-- Fixed Background with Layers -->
-      <div class="hero-background" id="heroBackground">
-        <!-- Picture element - Hero Image Layer -->
-        <picture class="hero-image-layer">
-          <source type="image/webp"
-                  srcset="/assets/img/hero/hero-mobile.webp 768w,
-                          /assets/img/hero/hero-desktop-1280.webp 1280w,
-                          /assets/img/hero/hero-desktop.webp 1440w,
-                          /assets/img/hero/hero-desktop-1920.webp 1920w"
-                  sizes="(max-width: 768px) 100vw, 1440px">
-          <img class="hero-img" alt="نمای هوایی از زیرساخت‌های انرژی و آب خراسان رضوی"
-               src="/assets/img/hero/hero-desktop-1440.jpg"
-               width="1440" height="810"
-               loading="eager" decoding="async" fetchpriority="high">
-        </picture>
+<!-- ============================================
+     HERO SECTION - MINIMAL & FOCUSED
+     فقط 3 عنصر اصلی: Title + Subtitle + CTA
+     ============================================ -->
 
-        <!-- Dark Overlay -->
-        <div class="hero-dark-overlay"></div>
-
-        <!-- Gradient Fade Overlay - این magic است! -->
-        <div class="hero-fade-overlay"></div>
+    <section class="hero">
+      <!-- Background - NO IMAGE, Simple Gradient -->
+      <div class="hero-background">
+        <!-- Light overlay برای خوانایی -->
+        <div class="hero-overlay"></div>
       </div>
 
-      <!-- Floating Energy Icons -->
-      <div class="floating-icon" aria-hidden="true">☀️</div>
-      <div class="floating-icon" aria-hidden="true">🌬️</div>
-      <div class="floating-icon" aria-hidden="true">💡</div>
-      <div class="floating-icon" aria-hidden="true">⚡</div>
+      <!-- Content - Centered & Simple -->
+      <div class="hero-content">
+        <div class="hero-box">
+          <!-- Main Message -->
+          <h1 class="hero-title">
+            داده‌های آب و انرژی،
+            <span class="hero-title-highlight">برای همه قابل فهم</span>
+          </h1>
 
-      <!-- Hero Content Container -->
-      <div class="hero-content-container">
-        <div class="hero-box" id="heroBox">
-          <!-- Hero Content with Badge & Gradient -->
-          <div class="content">
-            <span class="hero-badge">🏛️ استان خراسان رضوی</span>
-            <h1 class="hero-title">مدیریت هوشمند آب، برق و گاز</h1>
-            <p class="hero-subtitle">داشبوردهای تعاملی برای آگاهی، بهینه‌سازی و تصمیم‌گیری بهتر</p>
-            <div class="hero-cta-buttons">
-              <a href="#wizard" class="hero-btn hero-btn-primary">
-                <span class="hero-btn-icon">📊</span>
-                <span class="hero-btn-text">مشاهده داشبوردها</span>
-              </a>
-              <a href="#stats-parallax" class="hero-btn hero-btn-secondary">
-                <span class="hero-btn-icon">📈</span>
-                <span class="hero-btn-text">مشاهده آمار</span>
-              </a>
-            </div>
+          <!-- Clear Value Proposition -->
+          <p class="hero-subtitle">
+            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
+            <br>برای شهروندان، کشاورزان و تصمیم‌گیران
+          </p>
+
+          <!-- Single, Clear CTA -->
+          <div class="hero-cta">
+            <a href="#household-wizard" class="btn-primary btn-large">
+              <span class="btn-icon">🚀</span>
+              <span>شروع کنید - رایگان است</span>
+            </a>
+
+            <!-- Secondary CTA (subtle) -->
+            <a href="#stats-parallax" class="btn-text">
+              چگونه کار می‌کند؟ <span class="arrow">↓</span>
+            </a>
+          </div>
+
+          <!-- Social Proof Badge -->
+          <div class="hero-badge-proof">
+            <span class="badge-icon">✓</span>
+            <span class="badge-text">
+              بیش از <strong>3,500</strong> کاربر فعال در خراسان رضوی
+            </span>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator" id="scrollIndicator">
-      <div class="scroll-icon">⬇</div>
-      <div class="scroll-text">اسکرول کنید</div>
-    </div>
+      <!-- Scroll Indicator (Simple) -->
+      <button class="scroll-hint"
+              aria-label="اسکرول به پایین"
+              onclick="document.querySelector('#stats-parallax').scrollIntoView({behavior: 'smooth'})">
+        <svg class="scroll-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 5v14m0 0l-7-7m7 7l7-7"/>
+        </svg>
+      </button>
+    </section>
 
   <!-- Stats Parallax Section -->
   <section id="stats-parallax" class="stats-parallax">
