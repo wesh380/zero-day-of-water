@@ -138,22 +138,29 @@ section.hero {
   position: relative;
   text-align: center;
 
-  /* Lock position - no movement on scroll */
-  transform: translateZ(0);
-  will-change: opacity;
+  /* CRITICAL: Completely lock position - no movement */
+  transform: none !important;
+  backface-visibility: hidden;
 
-  animation: fadeInUp 1s ease-out;
-  animation-fill-mode: forwards;
+  /* Initial fade in animation */
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Stop animation after it completes */
+#heroBox.loaded,
+.hero-box.loaded {
+  animation: none;
+  transform: none !important;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px) translateZ(0);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) translateZ(0);
+    transform: none;
   }
 }
 

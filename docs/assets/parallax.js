@@ -51,9 +51,12 @@
     // کلاس "fading" در CSS gradient را visible می‌کند
 
     // ============================================
-    // HERO BOX FADE OUT
+    // HERO BOX FADE OUT - ❌ غیرفعال شده
+    // ✅ Hero Box باید ثابت بماند و حرکت نکند
     // ============================================
 
+    // ❌ این کد باعث می‌شد hero-box حرکت کند
+    /*
     const boxFadeStart = windowHeight * 0.8;
     const boxFadeEnd = windowHeight * 1.5;
 
@@ -68,6 +71,7 @@
         heroBox.classList.remove('fading-out');
       }
     }
+    */
 
     // ============================================
     // SCROLL INDICATOR
@@ -82,9 +86,12 @@
     }
 
     // ============================================
-    // HERO CONTAINER HIDE - وقتی از hero section عبور می‌کنیم
+    // HERO CONTAINER HIDE - ❌ غیرفعال شده
+    // ✅ Hero Container باید همیشه visible باشد
     // ============================================
 
+    // ❌ این کد باعث می‌شد hero-container مخفی شود
+    /*
     if (heroContainer && heroSection) {
       const heroSectionHeight = heroSection.offsetHeight;
 
@@ -95,6 +102,7 @@
         heroContainer.classList.remove('hidden');
       }
     }
+    */
 
     ticking = false;
   }
