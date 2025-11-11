@@ -47,7 +47,7 @@ section.hero {
 
 .hero {
   min-height: 150vh;
-  position: relative;
+  position: static;
   overflow: hidden;
   /* جلوگیری از تاثیر transform parent */
   transform-style: flat;
