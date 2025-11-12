@@ -1,5 +1,5 @@
-// استفاده از مدل جدید Gemini - مدل‌های 1.5 از آوریل 2025 منسوخ شده‌اند
-const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash-exp';
+// استفاده از مدل جدید Gemini 2.0 Flash - پایدار و سریع
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 
 export async function handler(event) {
   const key = process.env.GEMINI_API_KEY || '';
