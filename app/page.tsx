@@ -32,11 +32,6 @@ const OptimizedNavigation = () => {
           <div className="flex items-center gap-6">
             {/* کاربران آنلاین */}
             <div className="flex items-center gap-2">
-              <div className="flex -space-x-2">
-                <div className="w-6 h-6 rounded-full bg-white/20 border-2 border-white flex items-center justify-center text-xs">👤</div>
-                <div className="w-6 h-6 rounded-full bg-white/20 border-2 border-white flex items-center justify-center text-xs">👤</div>
-                <div className="w-6 h-6 rounded-full bg-white/20 border-2 border-white flex items-center justify-center text-xs">👤</div>
-              </div>
               <span className="hidden md:inline">
                 <span className="font-bold">{liveUsers}</span> نفر الان دارن چک می‌کنن
               </span>
@@ -261,7 +256,7 @@ const OptimizedNavigation = () => {
           </div>
 
           {/* Hero Title */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-6 leading-tight animate-fadeIn">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-6 leading-tight animate-fadeIn text-white">
             داده‌های آب و انرژی،
             <br />
             <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
@@ -270,12 +265,12 @@ const OptimizedNavigation = () => {
           </h1>
 
           {/* Subtitle با تاکید روی ارزش */}
-          <p className="text-lg md:text-xl text-center text-blue-100 mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg md:text-xl text-center text-white mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn" style={{ animationDelay: '0.1s' }}>
             پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
           </p>
 
           {/* Value Props */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn text-white" style={{ animationDelay: '0.2s' }}>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
               <Zap className="w-4 h-4 text-yellow-400" />
               <span>کاهش 30-50٪ قبض</span>
@@ -298,7 +293,7 @@ const OptimizedNavigation = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity"></div>
               <Zap className="w-6 h-6 text-red-600" />
-              <span>چک کردن قبض (رایگان)</span>
+              <span className="text-blue-700">چک کردن قبض (رایگان)</span>
               <div className="w-2 h-2 bg-red-600 rounded-full animate-ping absolute -top-1 -right-1"></div>
             </a>
 
@@ -306,20 +301,20 @@ const OptimizedNavigation = () => {
               href="#how"
               className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300"
             >
-              <span>چطور کار می‌کنه؟</span>
+              <span className="text-white">چطور کار می‌کنه؟</span>
               <ChevronDown className="w-5 h-5" />
             </a>
           </div>
 
           {/* Security Badge */}
-          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-blue-200 animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-white animate-fadeIn" style={{ animationDelay: '0.4s' }}>
             <div className="flex items-center gap-1">
               <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span>امنیت داده، حفظ حریم خصوصی</span>
+              <span className="text-white">امنیت داده، حفظ حریم خصوصی</span>
             </div>
           </div>
         </div>
