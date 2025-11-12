@@ -1,6 +1,6 @@
 "use client"
 
-import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield, Menu, X } from "lucide-react"
+import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
@@ -12,64 +12,79 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Navigation */}
-        <nav className="relative z-10 flex flex-row-reverse items-center justify-between p-6">
-          {/* Navigation Links - Right Side (Desktop) */}
-          <div className="hidden lg:flex items-center gap-1">
-            {[
-              { label: "خانه", href: "/" },
-              { label: "داشبوردها", href: "/dashboards/" },
-              { label: "ماشین‌حساب", href: "/calculators/" },
-              { label: "پژوهش", href: "/research/" },
-              { label: "ارتباط", href: "/contact/" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+        <nav className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:py-4">
+          <div className="flex w-full flex-wrap items-center justify-between px-6">
+            {/* Logo - Left Side */}
+            <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
+              <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
+              <span className="font-medium text-balance">WESH360</span>
+            </div>
 
-          {/* Mobile Menu Button - Only visible on mobile */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+            {/* Hamburger button for mobile view */}
+            <button
+              className="block border-0 bg-transparent px-2 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-controls="navbarSupportedContent"
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle navigation"
+            >
+              {/* Hamburger icon */}
+              <span className="[&>svg]:w-7 [&>svg]:stroke-foreground">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
 
-          {/* Logo - Left Side */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
-            <span className="font-medium text-balance">WESH360</span>
-          </div>
-
-          {/* Mobile Menu Dropdown */}
-          {mobileMenuOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 mx-6 p-4 bg-card ring-1 ring-border backdrop-blur rounded-2xl lg:hidden z-50">
-              <div className="flex flex-col gap-2">
+            {/* Collapsible navbar container */}
+            <div
+              className={`${
+                mobileMenuOpen ? "!visible" : ""
+              } mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto`}
+              id="navbarSupportedContent"
+            >
+              {/* Right links */}
+              <ul className="list-none mr-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
                 {[
                   { label: "خانه", href: "/" },
                   { label: "داشبوردها", href: "/dashboards/" },
                   { label: "ماشین‌حساب", href: "/calculators/" },
                   { label: "پژوهش", href: "/research/" },
                   { label: "ارتباط", href: "/contact/" },
-                ].map((item) => (
-                  <a
+                ].map((item, index) => (
+                  <li
                     key={item.label}
-                    href={item.href}
-                    className="px-4 py-3 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors text-center"
-                    onClick={() => setMobileMenuOpen(false)}
+                    className={`${
+                      index === 0
+                        ? "my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
+                        : "mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
+                    }`}
                   >
-                    {item.label}
-                  </a>
+                    <a
+                      href={item.href}
+                      className={`${
+                        index === 0
+                          ? "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
+                          : "p-0 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          )}
+          </div>
         </nav>
 
         {/* Hero Content */}
