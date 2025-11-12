@@ -1,29 +1,32 @@
 "use client"
 
-import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
+import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Navigation */}
         <nav className="relative z-10 flex items-center justify-between p-6">
-          {/* Logo */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
+          {/* Logo - Left Side */}
+          <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full order-2 lg:order-1">
             <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
             <span className="font-medium text-balance">WESH360</span>
           </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Navigation Links - Right Side (Desktop) */}
+          <div className="hidden lg:flex items-center gap-1 order-1 lg:order-2">
             {[
+              { label: "خانه", href: "/" },
               { label: "داشبوردها", href: "/dashboards/" },
               { label: "ماشین‌حساب", href: "/calculators/" },
               { label: "پژوهش", href: "/research/" },
               { label: "ارتباط", href: "/contact/" },
-              { label: "سیاست امنیت", href: "/security/" },
             ].map((item) => (
               <a
                 key={item.label}
@@ -35,6 +38,38 @@ export default function HomePage() {
             ))}
           </div>
 
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors order-1"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="absolute top-full left-0 right-0 mt-2 mx-6 p-4 bg-card ring-1 ring-border backdrop-blur rounded-2xl lg:hidden">
+              <div className="flex flex-col gap-2">
+                {[
+                  { label: "خانه", href: "/" },
+                  { label: "داشبوردها", href: "/dashboards/" },
+                  { label: "ماشین‌حساب", href: "/calculators/" },
+                  { label: "پژوهش", href: "/research/" },
+                  { label: "ارتباط", href: "/contact/" },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="px-4 py-3 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors text-center"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </nav>
 
         {/* Hero Content */}
