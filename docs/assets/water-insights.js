@@ -168,9 +168,16 @@ All numbers must be numeric (no units attached in JSON).
 
       } catch(e){
         clearSkeleton();
-        out.textContent = '⚠️ خطا در محاسبه.';
+        // مدیریت هوشمند خطاها
+        if (e.message.includes('AI_HTTP_429')) {
+          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+        } else if (e.message.includes('EMPTY_PROMPT')) {
+          out.textContent = 'لطفاً مواد غذایی را وارد کنید.';
+        } else {
+          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در محاسبه</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+        }
         out.focus();
-        console.warn(e.message);
+        console.warn('Footprint calculation error:', e.message);
       } finally {
         hideThinkingUI();
       }
@@ -231,7 +238,12 @@ All numbers must be numeric (no units attached in JSON).
         note.textContent = data.note_fa || '';
         out.replaceChildren(ul, impact, note);
       } catch(e){
-        out.textContent = '⚠️ خطا در شبیه‌سازی.';
+        // مدیریت هوشمند خطاها
+        if (e.message.includes('AI_HTTP_429')) {
+          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+        } else {
+          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در شبیه‌سازی</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+        }
         console.warn('Simulation error:', e.message);
       }
       finally {
@@ -290,7 +302,12 @@ All numbers must be numeric (no units attached in JSON).
         });
         out.replaceChildren(ul);
       } catch(e){
-        out.textContent = '⚠️ خطا در تولید راهکار.';
+        // مدیریت هوشمند خطاها
+        if (e.message.includes('AI_HTTP_429')) {
+          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+        } else {
+          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در تولید راهکار</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+        }
         console.warn('Tips generation error:', e.message);
       }
       finally {
