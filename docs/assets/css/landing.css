@@ -139,7 +139,7 @@ section.hero {
   text-align: center;
 
   /* CRITICAL: Completely lock position - no movement */
-  transform: none !important;
+  /* transform: none !important; */
   backface-visibility: hidden;
 
   /* Initial fade in animation */
