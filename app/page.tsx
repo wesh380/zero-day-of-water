@@ -1,89 +1,368 @@
 "use client"
 
-import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
+import React, { useState, useEffect } from 'react'
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
+const OptimizedNavigation = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [liveUsers, setLiveUsers] = useState(43);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+
+    // شبیه‌سازی کاربران آنلاین
+    const interval = setInterval(() => {
+      setLiveUsers(prev => prev + Math.floor(Math.random() * 3) - 1);
+    }, 5000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Top Bar - اطلاعات فوری */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 text-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            {/* کاربران آنلاین */}
+            <div className="flex items-center gap-2">
+              <span className="hidden md:inline">
+                <span className="font-bold">{liveUsers}</span> نفر الان دارن چک می‌کنن
+              </span>
+            </div>
+
+            {/* آمار تاثیرگذاری */}
+            <div className="hidden lg:flex items-center gap-1 text-yellow-300">
+              <TrendingUp className="w-4 h-4" />
+              <span>امروز: <strong>127</strong> نشتی کشف شد</span>
+            </div>
+          </div>
+
+          {/* تماس فوری */}
+          <a href="tel:05138xxxxxx" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
+            <Phone className="w-4 h-4" />
+            <span className="hidden md:inline font-medium">051-3800-xxxx</span>
+            <span className="md:hidden">تماس</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-300 font-tahoma ${
+          scrolled
+            ? 'bg-white/95 backdrop-blur-xl shadow-lg'
+            : 'bg-white'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+
+            {/* Logo و Tagline */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <Droplets className="w-8 h-8 text-blue-600" />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                </div>
+                <div>
+                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2">
+                    WESH360
+                    <span className="text-blue-600">🏠</span>
+                  </div>
+                  <div className="text-[10px] text-gray-500 -mt-1">
+                    صرفه‌جویی هوشمند
+                  </div>
+                </div>
+              </div>
+
+              {/* Trust Badge */}
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full border border-green-200">
+                <Users className="w-4 h-4 text-green-600" />
+                <span className="text-xs text-green-700">
+                  <strong>+3,500</strong> کاربر فعال
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-2">
+
+              {/* منوی اصلی با آیکون */}
+              <a
+                href="/dashboards/"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-blue-50 transition-all group"
+              >
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                  <TrendingUp className="w-4 h-4 text-blue-600" />
+                </div>
+                <span className="font-medium text-gray-700 group-hover:text-blue-600">
+                  داشبوردها
+                </span>
+              </a>
+
+              <a
+                href="/calculators/"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-purple-50 transition-all group"
+              >
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                  <Zap className="w-4 h-4 text-purple-600" />
+                </div>
+                <span className="font-medium text-gray-700 group-hover:text-purple-600">
+                  محاسبه‌گر
+                </span>
+              </a>
+
+              <a
+                href="/research/"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-green-50 transition-all group"
+              >
+                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                  <Droplets className="w-4 h-4 text-green-600" />
+                </div>
+                <span className="font-medium text-gray-700 group-hover:text-green-600">
+                  وضعیت خراسان
+                </span>
+              </a>
+
+              {/* دکمه ارتباط با منوی کشویی */}
+              <div className="relative group">
+                <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-all">
+                  <span className="font-medium text-gray-700">ارتباط با ما</span>
+                  <ChevronDown className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
+                </button>
+
+                {/* Dropdown */}
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
+                    <Phone className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="font-medium text-gray-900">تماس تلفنی</div>
+                      <div className="text-xs text-gray-500">051-3800-xxxx</div>
+                    </div>
+                  </a>
+                  <a href="https://t.me/wesh360" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
+                    <div className="w-5 h-5 text-blue-500">📱</div>
+                    <div>
+                      <div className="font-medium text-gray-900">تلگرام</div>
+                      <div className="text-xs text-gray-500">پشتیبانی آنلاین</div>
+                    </div>
+                  </a>
+                  <a href="/contact/" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors rounded-b-2xl">
+                    <div className="w-5 h-5 text-gray-600">✉️</div>
+                    <div>
+                      <div className="font-medium text-gray-900">فرم تماس</div>
+                      <div className="text-xs text-gray-500">پاسخ در 24 ساعت</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* دکمه CTA اصلی */}
+              <a
+                href="#check-bill"
+                className="relative flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <Zap className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">چک رایگان قبض</span>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              {mobileOpen ? (
+                <X className="w-6 h-6 text-gray-700" />
+              ) : (
+                <Menu className="w-6 h-6 text-gray-700" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {mobileOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 animate-slideDown">
+            <div className="px-4 py-4 space-y-2">
+              <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
+                <TrendingUp className="w-5 h-5 text-blue-600" />
+                <span className="font-medium text-gray-700">داشبوردها</span>
+              </a>
+              <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors">
+                <Zap className="w-5 h-5 text-purple-600" />
+                <span className="font-medium text-gray-700">محاسبه‌گر</span>
+              </a>
+              <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors">
+                <Droplets className="w-5 h-5 text-green-600" />
+                <span className="font-medium text-gray-700">وضعیت خراسان</span>
+              </a>
+              <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                <Phone className="w-5 h-5 text-gray-600" />
+                <span className="font-medium text-gray-700">تماس با ما</span>
+              </a>
+
+              <a
+                href="#check-bill"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold mt-4"
+              >
+                <Zap className="w-5 h-5" />
+                چک رایگان قبض
+              </a>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Hero با بهبود فاصله */}
+      <header className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 hero-pattern-bg"></div>
+        </div>
+
+        {/* Content */}
+        <div className="relative max-w-7xl mx-auto px-4 pt-16 pb-24 md:pt-20 md:pb-32">
+
+          {/* Badge با طراحی بهتر */}
+          <div className="flex justify-center mb-8 animate-fadeIn">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-5 py-2.5 rounded-full">
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <Clock className="w-4 h-4 text-green-400" />
+              </div>
+              <span className="text-sm font-medium">
+                در <strong className="text-yellow-300">24 ساعت</strong> گذشته:
+              </span>
+              <div className="flex items-center gap-1 bg-white/20 px-3 py-1 rounded-full">
+                <Users className="w-4 h-4" />
+                <span className="font-bold">127</span>
+              </div>
+              <span className="text-sm">کاربر نشتی کشف کردن 💰</span>
+            </div>
+          </div>
+
+          {/* Hero Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-6 leading-tight animate-fadeIn text-white">
+            داده‌های آب و انرژی،
+            <br />
+            <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+              برای همه قابل فهم
+            </span>
+          </h1>
+
+          {/* Subtitle با تاکید روی ارزش */}
+          <p className="text-lg md:text-xl text-center text-white mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn animate-delay-100">
+            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
+          </p>
+
+          {/* Value Props */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn text-white animate-delay-200">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+              <Zap className="w-4 h-4 text-yellow-400" />
+              <span>کاهش 30-50٪ قبض</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+              <Clock className="w-4 h-4 text-green-400" />
+              <span>نتیجه در 30 ثانیه</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+              <Users className="w-4 h-4 text-blue-400" />
+              <span>بدون نیاز به ثبت‌نام</span>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fadeIn animate-delay-300">
+            <a
+              href="#check"
+              className="group relative inline-flex items-center gap-3 bg-white text-blue-700 px-8 py-4 rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              <Zap className="w-6 h-6 text-red-600" />
+              <span className="text-blue-700">چک کردن قبض (رایگان)</span>
+              <div className="w-2 h-2 bg-red-600 rounded-full animate-ping absolute -top-1 -right-1"></div>
+            </a>
+
+            <a
+              href="#how"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300"
+            >
+              <span className="text-white">چطور کار می‌کنه؟</span>
+              <ChevronDown className="w-5 h-5" />
+            </a>
+          </div>
+
+          {/* Security Badge */}
+          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-white animate-fadeIn animate-delay-400">
+            <div className="flex items-center gap-1">
+              <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-white">امنیت داده، حفظ حریم خصوصی</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave Divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+          </svg>
+        </div>
+      </header>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.6s ease-out forwards;
+          opacity: 0;
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out;
+        }
+      `}</style>
+    </>
+  );
+};
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section */}
-      <div className="relative min-h-screen">
-        {/* Navigation */}
-        <nav className="relative z-10 flex items-center justify-between p-6">
-          {/* Logo */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
-            <span className="font-medium text-balance">WESH360</span>
-          </div>
-
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-1">
-            {[
-              { label: "داشبوردها", href: "/dashboards/" },
-              { label: "ماشین‌حساب", href: "/calculators/" },
-              { label: "پژوهش", href: "/research/" },
-              { label: "ارتباط", href: "/contact/" },
-              { label: "سیاست امنیت", href: "/security/" },
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-        </nav>
-
-        {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-6 text-center">
-          {/* Badge */}
-          <div className="mb-6 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <span className="text-sm font-medium">بیش از 3,500 کاربر فعال در خراسان رضوی</span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-6 text-balance">
-            داده‌های آب و انرژی،
-            <br />
-            <span className="font-bold">برای همه قابل فهم</span>
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-xl md:text-2xl text-foreground/90 max-w-4xl mb-12 leading-relaxed text-pretty">
-            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
-            <br />
-            برای شهروندان، کشاورزان و تصمیم‌گیران
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-16">
-            <Button
-              size="lg"
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-8 py-4 text-lg"
-              asChild
-            >
-              <a href="#features">شروع کنید - رایگان است</a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-primary/20 ring-1 ring-primary/30 backdrop-blur border-0 text-foreground hover:bg-primary/30 rounded-full px-8 py-4 text-lg"
-              asChild
-            >
-              <a href="#stats">چگونه کار می‌کند؟</a>
-            </Button>
-          </div>
-
-          {/* Footer Note */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <Shield className="w-4 h-4" />
-            <span className="text-sm font-medium">امنیت داده، خط قرمز ماست</span>
-          </div>
-        </div>
-      </div>
+      <OptimizedNavigation />
 
       {/* Stats Section */}
       <section id="stats" className="relative z-10 py-24 px-6">
