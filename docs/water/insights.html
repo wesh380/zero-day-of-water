@@ -180,16 +180,12 @@
                     <div class="text-center">
                         <button id="calc-water-btn" type="button" class="btn-gemini bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">🌱</span><span>محاسبه ردپای آب</span></button>
                         <div id="ai-thinking" class="mt-4 hidden">
-                            <div class="flex items-center justify-center gap-2 text-gray-700">
-                                <span class="text-xl">✨</span>
-                                <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
-                                <span class="flex items-center gap-1">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                                </span>
+                            <div class="flex flex-col items-center justify-center gap-3">
+                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-warning motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                                    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                                <span class="text-sm text-gray-600">در حال محاسبه با هوش مصنوعی…</span>
                             </div>
-                            <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
                         </div>
                     </div>
                     <div id="water-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
@@ -208,16 +204,12 @@
                     </div>
                     <div class="text-center"><button id="simulate-btn" type="button" class="text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg bg-indigo-600 hover:bg-indigo-700"><span class="ml-2" aria-hidden="true">📈</span>آینده را شبیه‌سازی کن</button></div>
                     <div id="simulate-thinking" class="mt-4 hidden">
-                      <div class="flex items-center gap-2 text-gray-700">
-                        <span class="text-xl">✨</span>
-                        <span class="text-sm">در حال محاسبه با هوش مصنوعی…</span>
-                        <span class="flex items-center gap-1">
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                        </span>
+                      <div class="flex flex-col items-center justify-center gap-3">
+                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-info motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                        </div>
+                        <span class="text-sm text-gray-600">در حال محاسبه با هوش مصنوعی…</span>
                       </div>
-                      <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-purple-400 animate-spin mx-auto"></div>
                     </div>
                     <div id="simulate-result" data-fa-digits class="mt-4" aria-live="polite" tabindex="-1"></div>
                     <div id="simulate-share" class="mt-2"></div>
@@ -235,16 +227,12 @@
                     </div>
                     <div class="text-center"><button id="solution-btn" type="button" class="btn-gemini text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg"><span class="ml-2" aria-hidden="true">✨</span>برایم راهکار بساز</button></div>
                     <div id="solution-thinking" class="mt-4 hidden">
-                      <div class="flex items-center gap-2 text-gray-700">
-                        <span class="text-xl">✨</span>
-                        <span class="text-sm">در حال پردازش و ساخت راهکارها…</span>
-                        <span class="flex items-center gap-1">
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:120ms]"></span>
-                          <span class="w-1.5 h-1.5 rounded-full bg-gray-300 animate-bounce [animation-delay:240ms]"></span>
-                        </span>
+                      <div class="flex flex-col items-center justify-center gap-3">
+                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                        </div>
+                        <span class="text-sm text-gray-600">در حال پردازش و ساخت راهکارها…</span>
                       </div>
-                      <div class="mt-3 h-8 w-20 rounded-full border-2 border-dashed border-blue-400 animate-spin mx-auto"></div>
                     </div>
                     <div id="solution-result" data-fa-digits class="mt-4 p-4 bg-white/70 rounded-xl shadow-inner" aria-live="polite" tabindex="-1"></div>
                     <div id="solution-share" class="mt-2"></div>
