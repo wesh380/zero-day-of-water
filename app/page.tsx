@@ -48,12 +48,12 @@ export default function HomePage() {
             {/* Collapsible navbar container */}
             <div
               className={`${
-                mobileMenuOpen ? "!visible" : ""
-              } mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto`}
+                mobileMenuOpen ? "flex" : "hidden"
+              } mt-2 flex-grow basis-[100%] items-center lg:mt-0 lg:flex lg:basis-auto`}
               id="navbarSupportedContent"
             >
               {/* Right links */}
-              <ul className="list-none mr-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
+              <ul className="list-none ms-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
                 {[
                   { label: "خانه", href: "/" },
                   { label: "داشبوردها", href: "/dashboards/" },
