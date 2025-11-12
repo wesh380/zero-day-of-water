@@ -12,12 +12,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Navigation */}
-        <nav className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:py-4">
+        <nav className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:flex-wrap lg:justify-start lg:py-4">
           <div className="flex w-full flex-wrap items-center justify-between px-6">
             {/* Logo - Left Side */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-              <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
-              <span className="font-medium text-balance">WESH360</span>
+            <div className="ms-2">
+              <a href="/" className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
+                <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
+                <span className="font-medium text-balance">WESH360</span>
+              </a>
             </div>
 
             {/* Hamburger button for mobile view */}
@@ -48,12 +50,12 @@ export default function HomePage() {
             {/* Collapsible navbar container */}
             <div
               className={`${
-                mobileMenuOpen ? "flex" : "hidden"
-              } mt-2 flex-grow basis-[100%] items-center lg:mt-0 lg:flex lg:basis-auto`}
+                mobileMenuOpen ? "!visible" : ""
+              } mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto`}
               id="navbarSupportedContent"
             >
-              {/* Right links */}
-              <ul className="list-none ms-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
+              {/* Navigation Links */}
+              <ul className="list-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
                 {[
                   { label: "خانه", href: "/" },
                   { label: "داشبوردها", href: "/dashboards/" },
@@ -73,9 +75,10 @@ export default function HomePage() {
                       href={item.href}
                       className={`${
                         index === 0
-                          ? "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
-                          : "p-0 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
+                          ? "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full transition-colors lg:px-2"
+                          : "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
                       }`}
+                      aria-current={index === 0 ? "page" : undefined}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.label}
