@@ -2,21 +2,34 @@
 
 import { Droplet, Zap, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useEffect } from "react"
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  useEffect(() => {
+    // Initialize TW Elements
+    const initTE = async () => {
+      const { Collapse, initTWE } = await import("tw-elements")
+      initTWE({ Collapse })
+    }
+    initTE()
+  }, [])
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Navigation */}
-        <nav className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:flex-wrap lg:justify-start lg:py-4">
+        <nav
+          className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:flex-wrap lg:justify-start lg:py-4"
+          data-twe-navbar-ref
+        >
           <div className="flex w-full flex-wrap items-center justify-between px-6">
             {/* Logo - Left Side */}
             <div className="ms-2">
-              <a href="/" className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
+              <a
+                href="/"
+                className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full"
+              >
                 <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
                 <span className="font-medium text-balance">WESH360</span>
               </a>
@@ -26,9 +39,10 @@ export default function HomePage() {
             <button
               className="block border-0 bg-transparent px-2 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              data-twe-collapse-init
+              data-twe-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent"
-              aria-expanded={mobileMenuOpen}
+              aria-expanded="false"
               aria-label="Toggle navigation"
             >
               {/* Hamburger icon */}
@@ -49,13 +63,15 @@ export default function HomePage() {
 
             {/* Collapsible navbar container */}
             <div
-              className={`${
-                mobileMenuOpen ? "!visible" : ""
-              } mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto`}
+              className="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
               id="navbarSupportedContent"
+              data-twe-collapse-item
             >
               {/* Navigation Links */}
-              <ul className="list-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row">
+              <ul
+                className="list-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+                data-twe-navbar-nav-ref
+              >
                 {[
                   { label: "خانه", href: "/" },
                   { label: "داشبوردها", href: "/dashboards/" },
@@ -70,6 +86,7 @@ export default function HomePage() {
                         ? "my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
                         : "mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
                     }`}
+                    data-twe-nav-item-ref
                   >
                     <a
                       href={item.href}
@@ -79,7 +96,7 @@ export default function HomePage() {
                           : "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
                       }`}
                       aria-current={index === 0 ? "page" : undefined}
-                      onClick={() => setMobileMenuOpen(false)}
+                      data-twe-nav-link-ref
                     >
                       {item.label}
                     </a>
