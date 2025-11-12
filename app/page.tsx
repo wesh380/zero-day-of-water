@@ -19,25 +19,23 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Navigation */}
-        <nav
-          className="relative z-10 flex w-full flex-nowrap items-center justify-between py-2 lg:flex-wrap lg:justify-start lg:py-4"
-          data-twe-navbar-ref
-        >
-          <div className="flex w-full flex-wrap items-center justify-between px-6">
-            {/* Logo - Left Side */}
-            <div className="ms-2">
-              <a
-                href="/"
-                className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full"
-              >
-                <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5" />
-                <span className="font-medium text-balance">WESH360</span>
+        <nav className="relative flex w-full flex-wrap items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:py-4">
+          <div className="flex w-full flex-wrap items-center justify-between px-3">
+            <div>
+              <a className="mx-2 my-1 flex items-center gap-2 lg:mb-0 lg:mt-0" href="/">
+                <img
+                  src="/assets/img/logo/wesh360.svg"
+                  style={{ height: "20px" }}
+                  alt="WESH360 Logo"
+                  loading="lazy"
+                />
+                <span className="font-medium text-foreground">WESH360</span>
               </a>
             </div>
 
             {/* Hamburger button for mobile view */}
             <button
-              className="block border-0 bg-transparent px-2 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 lg:hidden"
+              className="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
               type="button"
               data-twe-collapse-init
               data-twe-target="#navbarSupportedContent"
@@ -46,7 +44,7 @@ export default function HomePage() {
               aria-label="Toggle navigation"
             >
               {/* Hamburger icon */}
-              <span className="[&>svg]:w-7 [&>svg]:stroke-foreground">
+              <span className="[&>svg]:w-7 [&>svg]:stroke-black/50 dark:[&>svg]:stroke-neutral-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -67,41 +65,62 @@ export default function HomePage() {
               id="navbarSupportedContent"
               data-twe-collapse-item
             >
-              {/* Navigation Links */}
+              {/* Left links */}
               <ul
-                className="list-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+                className="list-style-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
                 data-twe-navbar-nav-ref
               >
-                {[
-                  { label: "خانه", href: "/" },
-                  { label: "داشبوردها", href: "/dashboards/" },
-                  { label: "ماشین‌حساب", href: "/calculators/" },
-                  { label: "پژوهش", href: "/research/" },
-                  { label: "ارتباط", href: "/contact/" },
-                ].map((item, index) => (
-                  <li
-                    key={item.label}
-                    className={`${
-                      index === 0
-                        ? "my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2"
-                        : "mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
-                    }`}
-                    data-twe-nav-item-ref
+                {/* Home link */}
+                <li className="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2" data-twe-nav-item-ref>
+                  <a
+                    className="text-black dark:text-white lg:px-2"
+                    aria-current="page"
+                    href="/"
+                    data-twe-nav-link-ref
                   >
-                    <a
-                      href={item.href}
-                      className={`${
-                        index === 0
-                          ? "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full transition-colors lg:px-2"
-                          : "px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors lg:px-2"
-                      }`}
-                      aria-current={index === 0 ? "page" : undefined}
-                      data-twe-nav-link-ref
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
+                    خانه
+                  </a>
+                </li>
+                {/* Features link */}
+                <li className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0" data-twe-nav-item-ref>
+                  <a
+                    className="p-0 text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                    href="/dashboards/"
+                    data-twe-nav-link-ref
+                  >
+                    داشبوردها
+                  </a>
+                </li>
+                {/* Pricing link */}
+                <li className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0" data-twe-nav-item-ref>
+                  <a
+                    className="p-0 text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                    href="/calculators/"
+                    data-twe-nav-link-ref
+                  >
+                    ماشین‌حساب
+                  </a>
+                </li>
+                {/* Research link */}
+                <li className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0" data-twe-nav-item-ref>
+                  <a
+                    className="p-0 text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                    href="/research/"
+                    data-twe-nav-link-ref
+                  >
+                    پژوهش
+                  </a>
+                </li>
+                {/* Contact link */}
+                <li className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0" data-twe-nav-item-ref>
+                  <a
+                    className="p-0 text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                    href="/contact/"
+                    data-twe-nav-link-ref
+                  >
+                    ارتباط
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
