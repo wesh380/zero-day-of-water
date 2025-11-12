@@ -3,7 +3,7 @@
  *
  * این function هر 1 دقیقه یکبار اجرا میشه و pending jobs رو process می‌کنه
  *
- * Schedule: هر 1 دقیقه (cron: */1 * * * *)
+ * Schedule: هر 1 دقیقه
  */
 
 const { schedule } = require("@netlify/functions");
