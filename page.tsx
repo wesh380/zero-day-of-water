@@ -1,6 +1,6 @@
 "use client"
 
-import { Compass, Lock, Plus, Minus, Mail } from "lucide-react"
+import { Droplet, Zap, Flame, Leaf, Lock, Plus, Minus, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
@@ -13,29 +13,29 @@ export default function HomePage() {
 
   const faqs = [
     {
-      question: "How physically demanding is the tour?",
+      question: "سطح دشواری فیزیکی تور چقدر است؟",
       answer:
-        "The Son Doong expedition requires excellent physical fitness. You'll trek 15+ kilometers through jungle terrain, rappel down 80-meter drops, and navigate underground rivers. Participants must be able to carry a 15kg backpack and have prior caving or trekking experience.",
+        "پلتفرم WESH360 نیاز به درک اساسی کاربر ندارد. رابط کاربری به‌صورت ساده و متناسب با تمام سنین طراحی شده است. شما می‌توانید در هر زمان از داشبوردها استفاده کنید و داده‌ها بلادرنگ به‌روز می‌شوند.",
     },
     {
-      question: "What is included in the tour price?",
+      question: "در بسته WESH360 چه چیزی شامل است؟",
       answer:
-        "Your expedition includes all permits, professional guides, safety equipment, camping gear, meals during the expedition, transportation from Phong Nha, and emergency evacuation insurance. Personal items like clothing and toiletries are not included.",
+        "بسته ما شامل دسترسی کامل به داشبوردهای تعاملی، تحلیل مصرف انرژی و آب، ماشین‌حساب‌های تخصصی و گزارش‌های پایش لحظه‌ای است. تمام خدمات اساسی رایگان و برای تمام کاربران در دسترس هستند.",
     },
     {
-      question: "Is it safe to explore Son Doong Cave?",
+      question: "آیا استفاده از WESH360 ایمن است؟",
       answer:
-        "Safety is our absolute priority. All guides are certified cave rescue specialists, we use professional-grade equipment, maintain constant communication with base camp, and have comprehensive emergency protocols. Weather conditions are monitored continuously.",
+        "امنیت داده، خط قرمز ما است. تمام اطلاعات با رمزگذاری مطابق با استانداردهای بین‌المللی محافظت می‌شوند. ما صرفاً داده‌های عمومی و غیرشخصی را نمایش می‌دهیم و تاخیر ایمن ۴۸–۷۲ ساعت برای داده‌های حساس اعمال می‌کنیم.",
     },
     {
-      question: "How do I book a spot?",
+      question: "چگونه می‌توانم شروع کنم؟",
       answer:
-        "Expeditions are limited to 10 people per group and run only during dry season (February-August). Book 6-12 months in advance through our website. A 50% deposit secures your spot, with final payment due 30 days before departure.",
+        "ورود بسیار آسان است. فقط یکی از داشبوردها را انتخاب کنید و شروع به کاوش کنید. بدون نیاز به ثبت‌نام یا اطلاعات حساس، شما می‌توانید از تمام ابزارهای پایه استفاده کنید و داده‌های خود را تحلیل کنید.",
     },
   ]
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground" dir="rtl">
       {/* Hero Section */}
       <div className="relative min-h-screen">
         {/* Background Image with Overlay */}
@@ -44,13 +44,13 @@ export default function HomePage() {
         <nav className="relative z-10 flex items-center justify-between p-6">
           {/* Logo */}
           <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <Compass className="w-5 h-5" />
-            <span className="font-medium text-balance">Son Doong Expeditions</span>
+            <Droplet className="w-5 h-5" />
+            <span className="font-medium text-balance">WESH360</span>
           </div>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-1">
-            {["The Expedition", "Safety", "Gallery", "FAQ", "Contact"].map((item) => (
+            {["داشبوردها", "ماشین‌حساب", "پژوهش", "سوالات", "ارتباط"].map((item) => (
               <a
                 key={item}
                 href="#"
@@ -67,10 +67,10 @@ export default function HomePage() {
               href="#"
               className="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors"
             >
-              Login
+              ورود
             </a>
             <Button className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-6">
-              Book Now
+              شروع کنید
             </Button>
           </div>
         </nav>
@@ -79,16 +79,20 @@ export default function HomePage() {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-6 text-center">
           {/* Badge */}
           <div className="mb-6 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
-            <span className="text-sm font-medium">Limited Group Expeditions</span>
+            <span className="text-sm font-medium">پلتفرم مدیریت هوشمند آب و انرژی</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-6 text-balance">Enter a Lost World.</h1>
+          <h1 className="text-6xl md:text-8xl font-light tracking-tight mb-6 text-balance">
+            داده‌های آب و انرژی،
+            <span className="block text-primary"> برای همه قابل فهم</span>
+          </h1>
 
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-foreground/90 max-w-4xl mb-12 leading-relaxed text-pretty">
-            Explore the colossal chambers of Son Doong Cave in Vietnam, a unique ecosystem with its own jungle and
-            weather system, on a fully-guided 4-day expedition.
+            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
+            <br />
+            برای شهروندان، کشاورزان و تصمیم‌گیران
           </p>
 
           {/* CTA Buttons */}
@@ -97,21 +101,21 @@ export default function HomePage() {
               size="lg"
               className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-8 py-4 text-lg"
             >
-              Book Your Expedition
+              🚀 شروع کنید - رایگان است
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="bg-primary/20 ring-1 ring-primary/30 backdrop-blur border-0 text-foreground hover:bg-primary/30 rounded-full px-8 py-4 text-lg"
             >
-              View Itinerary
+              چگونه کار می‌کند؟ ↓
             </Button>
           </div>
 
           {/* Footer Note */}
           <div className="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full">
             <Lock className="w-4 h-4" />
-            <span className="text-sm font-medium">Safety is our Priority</span>
+            <span className="text-sm font-medium">بیش از 3,500 کاربر فعال در خراسان رضوی</span>
           </div>
         </div>
       </div>
@@ -120,35 +124,47 @@ export default function HomePage() {
       <section className="relative z-10 py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-            {/* Total Expeditions */}
+            {/* Water Data */}
             <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
               <div className="mb-6">
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">250+</div>
-                <p className="text-muted-foreground leading-relaxed">Successful Expeditions</p>
+                <div className="flex justify-center mb-4">
+                  <Droplet className="w-12 h-12 text-primary" />
+                </div>
+                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div>
+                <p className="text-muted-foreground leading-relaxed">متر مکعب<br />داده آب</p>
               </div>
             </div>
 
-            {/* Total Explorers */}
+            {/* Dams & Sources */}
             <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
               <div className="mb-6">
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">2,500+</div>
-                <p className="text-muted-foreground leading-relaxed">Explorers Guided</p>
-              </div>
-            </div>
-
-            {/* Safety Record */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
-              <div className="mb-6">
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">100%</div>
-                <p className="text-muted-foreground leading-relaxed">Safety Record</p>
-              </div>
-            </div>
-
-            {/* Years Experience */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
-              <div className="mb-6">
+                <div className="flex justify-center mb-4">
+                  <Zap className="w-12 h-12 text-primary" />
+                </div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div>
-                <p className="text-muted-foreground leading-relaxed">Years of Experience</p>
+                <p className="text-muted-foreground leading-relaxed">سد و منبع<br />تحت پوشش</p>
+              </div>
+            </div>
+
+            {/* Monitoring Points */}
+            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+              <div className="mb-6">
+                <div className="flex justify-center mb-4">
+                  <Flame className="w-12 h-12 text-primary" />
+                </div>
+                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div>
+                <p className="text-muted-foreground leading-relaxed">نقطه<br />مانیتورینگ</p>
+              </div>
+            </div>
+
+            {/* Real-time Data */}
+            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+              <div className="mb-6">
+                <div className="flex justify-center mb-4">
+                  <Leaf className="w-12 h-12 text-primary" />
+                </div>
+                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div>
+                <p className="text-muted-foreground leading-relaxed">داده<br />Real-time</p>
               </div>
             </div>
           </div>
@@ -161,58 +177,54 @@ export default function HomePage() {
           <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
             {/* Section Header */}
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">Your Epic Journey</h2>
+              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">مسیر پیش رو</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-                From jungle treks to underground camps, here's what to expect.
+                از انتخاب داشبورد تا تحلیل داده‌های آب و انرژی، یک سفر ساده و قدرتمند
               </p>
             </div>
 
             {/* Journey Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-              {/* Phase 1: Briefing & Prep */}
+              {/* Phase 1: Selection */}
               <div className="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 h-80 flex flex-col">
                 <div className="flex-1">
-                  <div className="text-3xl font-bold text-muted-foreground mb-4">01.</div>
-                  <h3 className="text-xl font-semibold mb-4">Briefing & Prep</h3>
+                  <div className="text-3xl font-bold text-muted-foreground mb-4">۰۱.</div>
+                  <h3 className="text-xl font-semibold mb-4">انتخاب و مقدمات</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Your adventure begins in Phong Nha with a full safety briefing and equipment check to ensure you're
-                    ready for the trek.
+                    یک داشبورد را انتخاب کنید و داخل وارد شوید. بدون نیاز به تکمیل فرم‌های پیچیده، شما می‌توانید فوری از تمام ابزارها استفاده کنید.
                   </p>
                 </div>
               </div>
 
-              {/* Phase 2: The Trek */}
+              {/* Phase 2: Data Exploration */}
               <div className="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 h-80 flex flex-col">
                 <div className="flex-1">
-                  <div className="text-3xl font-bold text-muted-foreground mb-4">02.</div>
-                  <h3 className="text-xl font-semibold mb-4">The Trek</h3>
+                  <div className="text-3xl font-bold text-muted-foreground mb-4">۰۲.</div>
+                  <h3 className="text-xl font-semibold mb-4">کاوش داده‌ها</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Hike through pristine jungle, cross rivers, and camp in remote locations on your way to the entrance
-                    of Son Doong.
+                    نمودارها و آمارهای بلادرنگ را بررسی کنید. داده‌های تصفیه‌شده و تجمیع‌شده تمام آنچه برای درک وضعیت لازم است را نشان می‌دهند.
                   </p>
                 </div>
               </div>
 
-              {/* Phase 3: Caving */}
+              {/* Phase 3: Analysis */}
               <div className="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 h-80 flex flex-col">
                 <div className="flex-1">
-                  <div className="text-3xl font-bold text-muted-foreground mb-4">03.</div>
-                  <h3 className="text-xl font-semibold mb-4">Caving</h3>
+                  <div className="text-3xl font-bold text-muted-foreground mb-4">۰۳.</div>
+                  <h3 className="text-xl font-semibold mb-4">تحلیل و مقایسه</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Descend into the cave to witness colossal stalagmites, explore vast chambers, and see the unique
-                    underground jungle.
+                    اطلاعات خود را با استانداردهای جهانی مقایسه کنید. ماشین‌حساب‌های تخصصی و نکات آموزشی به شما کمک می‌کند.
                   </p>
                 </div>
               </div>
 
-              {/* Phase 4: Base Camp */}
+              {/* Phase 4: Decision Making */}
               <div className="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 h-80 flex flex-col">
                 <div className="flex-1">
-                  <div className="text-3xl font-bold text-muted-foreground mb-4">04.</div>
-                  <h3 className="text-xl font-semibold mb-4">Base Camp</h3>
+                  <div className="text-3xl font-bold text-muted-foreground mb-4">۰۴.</div>
+                  <h3 className="text-xl font-semibold mb-4">تصمیم‌گیری هوشمند</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Spend nights at breathtaking campsites inside the cave, sharing stories with your group before
-                    trekking back.
+                    بر اساس داده‌ها و نکات ارائه‌شده، تصمیمات بهتری برای مصرف پایدار آب و انرژی بگیرید.
                   </p>
                 </div>
               </div>
@@ -224,7 +236,7 @@ export default function HomePage() {
                 size="lg"
                 className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-12 py-4 text-lg font-semibold"
               >
-                Check Availability
+                داشبوردها را ببینید
               </Button>
             </div>
           </div>
@@ -239,11 +251,10 @@ export default function HomePage() {
               {/* Left Column - Title and Description */}
               <div>
                 <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
-                  Frequently Asked Questions
+                  سوالات متداول
                 </h2>
                 <p className="text-xl text-muted-foreground leading-relaxed text-pretty">
-                  Everything you need to know about the expedition, from physical requirements to booking your spot on
-                  this exclusive adventure.
+                  همه‌چیزی که درباره WESH360 باید بدانید، از نحوه استفاده تا امنیت داده‌های شما
                 </p>
               </div>
 
@@ -284,28 +295,28 @@ export default function HomePage() {
           <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
             {/* Section Header */}
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">Contact Our Team</h2>
+              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">تماس با تیم ما</h2>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               {/* Left Column - Contact Form */}
               <div className="rounded-2xl bg-secondary text-foreground p-8 shadow-2xl">
-                <h3 className="text-2xl font-bold mb-6">Send an Inquiry</h3>
+                <h3 className="text-2xl font-bold mb-6">ارسال پیام</h3>
                 <form className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name
+                      نام
                     </label>
                     <input
                       type="text"
                       id="name"
                       className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
-                      placeholder="Your full name"
+                      placeholder="نام کامل شما"
                     />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email
+                      ایمیل
                     </label>
                     <input
                       type="email"
@@ -316,17 +327,17 @@ export default function HomePage() {
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Message
+                      پیام
                     </label>
                     <textarea
                       id="message"
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:ring-2 focus:ring-ring focus:border-transparent resize-none"
-                      placeholder="Tell us about your expedition interests..."
+                      placeholder="درباره علاقه‌های خود درباره WESH360 بنویسید..."
                     />
                   </div>
                   <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg py-3 font-normal text-base">
-                    Send Message
+                    ارسال پیام
                   </Button>
                 </form>
               </div>
@@ -335,8 +346,7 @@ export default function HomePage() {
               <div className="space-y-8">
                 <div>
                   <p className="text-xl text-muted-foreground leading-relaxed text-pretty">
-                    For questions about private tours, partnerships, or media inquiries, please get in touch. We reply
-                    within one business day.
+                    برای سوالاتی درباره همکاری‌های فنی، رویدادها یا سوال‌های فنی، لطفاً با ما تماس بگیرید. ما در یک روز کاری پاسخ می‌دهیم.
                   </p>
                 </div>
 
@@ -344,18 +354,18 @@ export default function HomePage() {
                 <div className="rounded-2xl bg-secondary text-foreground p-6 shadow-2xl">
                   <div className="flex items-center gap-4 mb-4">
                     <img
-                      src="/images/design-mode/edam-garden.jpg"
-                      alt="David Luong"
+                      src="/assets/img/logo/wesh360.svg"
+                      alt="WESH360"
                       className="w-16 h-16 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="text-lg font-semibold">David Luong</h4>
-                      <p className="text-muted-foreground">Lead Expedition Guide</p>
+                      <h4 className="text-lg font-semibold">تیم WESH360</h4>
+                      <p className="text-muted-foreground">پشتیبانی و توسعه</p>
                     </div>
                   </div>
                   <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg flex items-center justify-center gap-2">
                     <Mail className="w-4 h-4" />
-                    Email
+                    ایمیل
                   </Button>
                 </div>
               </div>
@@ -373,20 +383,19 @@ export default function HomePage() {
               {/* Brand Section */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 mb-6">
-                  <Compass className="w-6 h-6" />
-                  <span className="text-xl font-semibold">Son Doong Expeditions</span>
+                  <Droplet className="w-6 h-6" />
+                  <span className="text-xl font-semibold">WESH360</span>
                 </div>
                 <p className="text-muted-foreground leading-relaxed text-pretty">
-                  The official tour operator for expeditions into Son Doong, the world's largest cave. We are dedicated
-                  to safety, conservation, and unforgettable adventures.
+                  پلتفرم رسمی مدیریت هوشمند آب و انرژی خراسان رضوی. ما متعهد به شفافیت، امنیت داده‌ها و توانمندسازی شهروندان هستیم.
                 </p>
               </div>
 
-              {/* Expedition Links */}
+              {/* Dashboards Links */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">EXPEDITION</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">داشبوردها</h3>
                 <ul className="space-y-3">
-                  {["Itinerary", "Pricing", "Gear List", "Photo Gallery"].map((item) => (
+                  {["آب", "برق", "گاز", "محیط‌زیست"].map((item) => (
                     <li key={item}>
                       <a
                         href="#"
@@ -401,9 +410,9 @@ export default function HomePage() {
 
               {/* About Links */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">ABOUT</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">درباره ما</h3>
                 <ul className="space-y-3">
-                  {["Our Mission", "Safety Standards", "Our Team", "Conservation"].map((item) => (
+                  {["مأموریت", "استانداردهای ایمنی", "تیم", "محافظت‌اطلاعات"].map((item) => (
                     <li key={item}>
                       <a
                         href="#"
@@ -418,9 +427,9 @@ export default function HomePage() {
 
               {/* Resources Links */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">RESOURCES</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">منابع</h3>
                 <ul className="space-y-3">
-                  {["Help Center", "Contact Us", "FAQ", "Terms & Conditions"].map((item) => (
+                  {["مرکز کمک", "تماس با ما", "سوالات", "شرایط و قوانین"].map((item) => (
                     <li key={item}>
                       <a
                         href="#"
@@ -437,15 +446,15 @@ export default function HomePage() {
             {/* Newsletter Section */}
             <div className="border-t border-border pt-12 mb-12">
               <div className="max-w-md">
-                <h3 className="text-lg font-semibold mb-4">Get Expedition Updates</h3>
+                <h3 className="text-lg font-semibold mb-4">دریافت به‌روزرسانی‌های WESH360</h3>
                 <div className="flex gap-3">
                   <input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="ایمیل خود را وارد کنید"
                     className="flex-1 px-4 py-3 rounded-lg bg-primary/20 ring-1 ring-primary/30 backdrop-blur border-0 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:outline-none"
                   />
                   <Button className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-lg px-6 h-[50px]">
-                    Subscribe
+                    اشتراک
                   </Button>
                 </div>
               </div>
@@ -453,7 +462,7 @@ export default function HomePage() {
 
             {/* Sub-footer */}
             <div className="border-t border-border pt-8">
-              <p className="text-muted-foreground text-sm text-center">© 2025 Son Doong Expeditions</p>
+              <p className="text-muted-foreground text-sm text-center">© 2025 WESH360 - مدیریت هوشمند آب و انرژی</p>
             </div>
           </div>
         </div>

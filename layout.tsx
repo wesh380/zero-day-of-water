@@ -25,9 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Son Doong Expeditions — Journey to the World's Largest Cave",
+  title: "WESH360 | مدیریت هوشمند آب، برق و گاز خراسان رضوی - داشبورد تحلیلی و پایش مصرف",
   description:
-    "Book a once-in-a-lifetime expedition into Son Doong, the world's largest cave. Discover a lost world of giant stalagmites, underground rivers, and a unique jungle ecosystem.",
+    "داشبورد مدیریت هوشمند آب، برق و گاز خراسان رضوی | پایش لحظه‌ای، تحلیل مصرف، ماشین‌حساب‌های تخصصی و راهکارهای بهینه‌سازی انرژی برای مشهد و استان",
   generator: "v0.app",
 }
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="fa" dir="rtl">
       <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable} ${_v0_fontVariables}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
