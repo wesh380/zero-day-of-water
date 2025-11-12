@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Landing page styles */
+@layer utilities {
+  .font-tahoma {
+    font-family: Tahoma, Arial, sans-serif;
+  }
+
+  .hero-pattern-bg {
+    background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .animate-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animate-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animate-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

@@ -55,12 +55,11 @@ const OptimizedNavigation = () => {
 
       {/* Main Navigation */}
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 transition-all duration-300 font-tahoma ${
           scrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-lg'
             : 'bg-white'
         }`}
-        style={{ fontFamily: 'Tahoma, Arial, sans-serif' }}
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-20">
@@ -228,10 +227,7 @@ const OptimizedNavigation = () => {
       <header className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}></div>
+          <div className="absolute inset-0 hero-pattern-bg"></div>
         </div>
 
         {/* Content */}
@@ -265,12 +261,12 @@ const OptimizedNavigation = () => {
           </h1>
 
           {/* Subtitle با تاکید روی ارزش */}
-          <p className="text-lg md:text-xl text-center text-white mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg md:text-xl text-center text-white mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn animate-delay-100">
             پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
           </p>
 
           {/* Value Props */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn text-white" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn text-white animate-delay-200">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
               <Zap className="w-4 h-4 text-yellow-400" />
               <span>کاهش 30-50٪ قبض</span>
@@ -286,7 +282,7 @@ const OptimizedNavigation = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fadeIn" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fadeIn animate-delay-300">
             <a
               href="#check"
               className="group relative inline-flex items-center gap-3 bg-white text-blue-700 px-8 py-4 rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
@@ -307,7 +303,7 @@ const OptimizedNavigation = () => {
           </div>
 
           {/* Security Badge */}
-          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-white animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-white animate-fadeIn animate-delay-400">
             <div className="flex items-center gap-1">
               <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

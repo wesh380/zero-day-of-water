@@ -194,3 +194,31 @@
   height: var(--skeleton-height, 200px);
 }
 
+/* Landing page - font-family */
+.font-tahoma {
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* Landing page - hero background pattern */
+.hero-pattern-bg {
+  background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+/* Landing page - animation delays */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
