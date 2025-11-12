@@ -1,5 +1,9 @@
 node_modules/
 
+# Next.js
+.next/
+next-env.d.ts
+
 # debug artifacts
 docs/assets/*-test.png
 docs/debug/
