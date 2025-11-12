@@ -1,5 +1,11 @@
 node_modules/
 
+# Next.js
+.next/
+out/
+next-env.d.ts
+docs/index.html.backup
+
 # debug artifacts
 docs/assets/*-test.png
 docs/debug/

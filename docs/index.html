@@ -1,586 +1,1 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <!-- CSS Bundles - Phase 3 Optimization: Reduced from 14 to 5 files -->
-  <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
-  <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
-  <link rel="stylesheet" href="/assets/css-bundles-dist/features.bundle.css">
-  <link rel="stylesheet" href="/assets/css-bundles-dist/page-specific.bundle.css">
-  <!-- ✅ Landing CSS با priority بالاتر -->
-  <link rel="stylesheet" href="/assets/css/landing.css">
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Language" content="fa-IR" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://wesh360.ir/">
-  <meta property="og:title" content="WESH360 - مدیریت هوشمند آب و انرژی خراسان رضوی">
-  <meta property="og:description" content="داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز در خراسان رضوی">
-  <meta property="og:image" content="https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg">
-  <meta property="og:image:alt" content="WESH360 - داشبورد مدیریت انرژی و آب" />
-  <meta property="og:locale" content="fa_IR">
-  <meta property="og:site_name" content="WESH360">
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="WESH360 - مدیریت هوشمند آب و انرژی">
-  <meta name="twitter:description" content="داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز">
-  <meta name="twitter:image" content="https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg">
-  <meta name="section" content="site" />
-  <title>WESH360 | مدیریت هوشمند آب، برق و گاز خراسان رضوی - داشبورد تحلیلی و پایش مصرف</title>
-  <meta name="description" content="داشبورد مدیریت هوشمند آب، برق و گاز خراسان رضوی | پایش لحظه‌ای، تحلیل مصرف، ماشین‌حساب‌های تخصصی و راهکارهای بهینه‌سازی انرژی برای مشهد و استان">
-  <link rel="canonical" href="https://wesh360.ir/">
-  <script>if(!document.createElement('canvas').toDataURL('image/webp').includes('data:image/webp')){document.documentElement.classList.add('no-webp');}</script>
-  <!-- Font Awesome Icons (for other pages) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-  <!-- UI Enhancements -->
-  <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
-  <link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/logo/icons/icon-180.png">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="mask-icon" href="/assets/img/logo/wesh360.svg" color="#0ea5e9">
-  <meta name="theme-color" content="#0ea5e9">
-  <script defer src="./assets/unified-badge.js"></script>
-  <script defer src="./assets/global-footer.js"></script>
-  <script src="/assets/js/nav-utils.js" defer></script>
-  <script defer src="/assets/js/ui-enhancements.js"></script>
-  <script defer src="/assets/js/navigation-enhancements.js"></script>
-  <!-- Loading Manager -->
-  <script src="/assets/js/loading-manager.js" defer></script>
-  <script src="/assets/js/page-loading.js" defer></script>
-  <!-- Schema.org JSON-LD for Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "WESH360",
-    "alternateName": "وش ۳۶۰",
-    "url": "https://wesh360.ir",
-    "logo": "https://wesh360.ir/assets/img/logo/wesh360.svg",
-    "description": "پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی",
-    "sameAs": [
-      "https://t.me/w_e_s_h",
-      "https://eitaa.com/wesh_ir"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "Customer Support",
-      "email": "info@wesh360.ir",
-      "availableLanguage": "Persian"
-    }
-  }
-  </script>
-</head>
-  <body data-page="home" class="min-h-screen flex flex-col">
-    <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-
-    <header id="site-header" class="site-header" dir="rtl" role="banner" aria-label="سربرگ سایت">
-      <div class="site-header__inner container">
-        <a class="brand brand--rtl" href="/" aria-label="خانه هم‌افزایی انرژی و آب">
-          <img src="/assets/img/logo/wesh360.svg" alt="WESH360" decoding="async" fetchpriority="high" />
-        </a>
-        <button class="nav-toggle" type="button" aria-label="نمایش منو" aria-expanded="false" aria-controls="site-header-menu">
-          <span class="nav-toggle__bar" aria-hidden="true"></span>
-          <span class="nav-toggle__bar" aria-hidden="true"></span>
-          <span class="nav-toggle__bar" aria-hidden="true"></span>
-        </button>
-        <div id="site-header-menu" class="site-header__menu" data-header-menu aria-hidden="true">
-          <nav class="site-header__nav" aria-label="ناوبری اصلی">
-            <ul class="site-header__nav-list">
-              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/dashboards/">داشبوردها</a></li>
-              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/calculators/">ماشین‌حساب (آزمایشی)</a></li>
-              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/research/">پژوهش</a></li>
-              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/contact/">ارتباط</a></li>
-              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/security/">سیاست امنیت</a></li>
-            </ul>
-          </nav>
-          <div class="site-header__actions" aria-label="اقدامات اصلی">
-            <a class="site-header__action site-header__action--outline" href="/responsible-disclosure/">سیاست امنیت</a>
-          </div>
-        </div>
-      </div>
-    </header>
-<!-- ============================================
-     HERO SECTION - MINIMAL & FOCUSED
-     فقط 3 عنصر اصلی: Title + Subtitle + CTA
-     ============================================ -->
-
-    <section class="hero">
-      <!-- Background - NO IMAGE, Simple Gradient -->
-      <div class="hero-background">
-        <!-- Light overlay برای خوانایی -->
-        <div class="hero-overlay"></div>
-      </div>
-
-      <!-- Content - Centered & Simple -->
-      <div class="hero-content">
-        <div class="hero-box">
-          <!-- Main Message -->
-          <h1 class="hero-title">
-            داده‌های آب و انرژی،
-            <span class="hero-title-highlight">برای همه قابل فهم</span>
-          </h1>
-
-          <!-- Clear Value Proposition -->
-          <p class="hero-subtitle">
-            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
-            <br>برای شهروندان، کشاورزان و تصمیم‌گیران
-          </p>
-
-          <!-- Single, Clear CTA -->
-          <div class="hero-cta">
-            <a href="#household-wizard" class="btn-primary btn-large">
-              <span class="btn-icon">🚀</span>
-              <span>شروع کنید - رایگان است</span>
-            </a>
-
-            <!-- Secondary CTA (subtle) -->
-            <a href="#stats-parallax" class="btn-text">
-              چگونه کار می‌کند؟ <span class="arrow">↓</span>
-            </a>
-          </div>
-
-          <!-- Social Proof Badge -->
-          <div class="hero-badge-proof">
-            <span class="badge-icon">✓</span>
-            <span class="badge-text">
-              بیش از <strong>3,500</strong> کاربر فعال در خراسان رضوی
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scroll Indicator (Simple) -->
-      <button class="scroll-hint"
-              aria-label="اسکرول به پایین"
-              onclick="document.querySelector('#stats-parallax').scrollIntoView({behavior: 'smooth'})">
-        <svg class="scroll-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M12 5v14m0 0l-7-7m7 7l7-7"/>
-        </svg>
-      </button>
-    </section>
-
-  <!-- Stats Parallax Section -->
-  <section id="stats-parallax" class="stats-parallax">
-    <div class="stats-container">
-
-      <!-- Title -->
-      <div class="stats-title">
-        <h2>وضعیت آب و انرژی خراسان رضوی در یک نگاه</h2>
-      </div>
-
-      <!-- Stats Grid -->
-      <div class="stats-grid">
-
-        <!-- Stat 1 -->
-        <div class="stat-card">
-          <div class="stat-icon">💧</div>
-          <div class="stat-number">500M+</div>
-          <div class="stat-separator"></div>
-          <div class="stat-label">
-            متر مکعب<br>
-            داده آب
-          </div>
-        </div>
-
-        <!-- Stat 2 -->
-        <div class="stat-card">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-number">15+</div>
-          <div class="stat-separator"></div>
-          <div class="stat-label">
-            سد و منبع<br>
-            تحت پوشش
-          </div>
-        </div>
-
-        <!-- Stat 3 -->
-        <div class="stat-card">
-          <div class="stat-icon">📊</div>
-          <div class="stat-number">1000+</div>
-          <div class="stat-separator"></div>
-          <div class="stat-label">
-            نقطه<br>
-            مانیتورینگ
-          </div>
-        </div>
-
-        <!-- Stat 4 -->
-        <div class="stat-card">
-          <div class="stat-icon">🔄</div>
-          <div class="stat-number">24/7</div>
-          <div class="stat-separator"></div>
-          <div class="stat-label">
-            داده<br>
-            Real-time
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <main id="main" role="main" class="flex-grow">
-    <a data-cta="amaayesh" href="./amaayesh/index.html"
-       class="inline-flex items-center gap-2 px-4 py-2 my-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white">
-      نقشه آمایش انرژی خراسان رضوی
-    </a>
-    <section id="household-wizard" class="wizard container rtl" aria-labelledby="wiz-title">
-      <div class="wiz-head">
-        <h2 id="wiz-title" class="wiz-title">داشبورد مدیریتی خانوار</h2>
-        <p class="wiz-sub">ابتدا یکی از تب‌ها را انتخاب و فرم را کامل کنید؛ سپس نتایج نمایش داده می‌شود.</p>
-        <div class="wiz-tabs cta-grid" role="tablist" aria-label="Utilities">
-          <button role="tab" data-utility="water" aria-selected="true" class="tab cta-primary cta-water">
-            <span class="cta-icon">💧</span>
-            <span class="cta-text">
-              <span class="cta-title">آب</span>
-              <span class="cta-subtitle">مدیریت منابع آبی</span>
-            </span>
-            <span class="cta-arrow">←</span>
-          </button>
-          <button role="tab" data-utility="electricity" aria-selected="false" class="tab cta-primary cta-electricity">
-            <span class="cta-icon">⚡</span>
-            <span class="cta-text">
-              <span class="cta-title">برق</span>
-              <span class="cta-subtitle">مصرف و تعرفه</span>
-            </span>
-            <span class="cta-arrow">←</span>
-          </button>
-          <button role="tab" data-utility="gas" aria-selected="false" class="tab cta-primary cta-gas">
-            <span class="cta-icon">🔥</span>
-            <span class="cta-text">
-              <span class="cta-title">گاز و نفت</span>
-              <span class="cta-subtitle">فرآورده‌های نفتی</span>
-            </span>
-            <span class="cta-arrow">←</span>
-          </button>
-        </div>
-      </div>
-
-      <form class="wiz-form" id="wiz-form" novalidate>
-        <div class="field"><label>مبلغ قبض (تومان)</label><input name="amount" inputmode="numeric" required /></div>
-        <div class="field">
-          <label>میزان مصرف</label>
-          <div class="row">
-            <input name="usage" inputmode="numeric" required />
-            <select name="unit" aria-label="واحد">
-              <option value="L">L</option>
-              <option value="kWh">kWh</option>
-              <option value="m3">m³</option>
-            </select>
-          </div>
-        </div>
-        <div class="field"><label>تعداد اعضای خانوار</label><input name="members" inputmode="numeric" required /></div>
-        <div class="field"><label>دوره صورتحساب (روز)</label><input name="billingDays" inputmode="numeric" required /></div>
-        <div class="row actions">
-          <button type="submit" class="btn primary">محاسبه</button>
-          <button type="button" id="wiz-reset" class="btn ghost">حذف داده‌ها</button>
-        </div>
-        <p class="hint" id="wiz-hint">برای دیدن نتایج، فرم را کامل کنید.</p>
-      </form>
-
-      <div id="wiz-results" class="wiz-results" hidden>
-        <div class="cards">
-          <div class="kpi"><div class="k">مصرف سرانه/روز</div><div class="v" id="k-percapita">—</div></div>
-          <div class="kpi"><div class="k">هدف جهانی</div><div class="v" id="k-target">—</div></div>
-          <div class="kpi"><div class="k">Δ و ٪ اختلاف</div><div class="v" id="k-delta">—</div></div>
-          <div class="kpi"><div class="k">امتیاز</div><div class="v" id="k-score">—</div></div>
-          <div class="kpi"><div class="k">CO₂e</div><div class="v" id="k-co2e">—</div></div>
-          <div class="kpi">
-            <div class="k">برچسب مصرف</div>
-            <div class="v">
-              <span id="k-label" class="chip" aria-live="polite">—</span>
-            </div>
-          </div>
-        </div>
-        <div class="chart-wrap">
-          <canvas id="wiz-chart" class="wiz-chart" aria-label="مقایسه مصرف سرانه با هدف"></canvas>
-        </div>
-        <ul id="wiz-tips" class="tips"></ul>
-        <p class="note" id="wiz-note"></p>
-      </div>
-    </section>
-
-    <section id="entry-cards" class="cards-section" aria-label="navigation cards">
-      <!-- Water Card -->
-      <a href="/water/hub" data-utility="water" class="data-card water" aria-label="ورود به داشبورد آب">
-        <div class="data-card-header">
-          <div class="data-card-icon-wrapper water">
-            <svg class="icon icon-water icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
-            </svg>
-          </div>
-          <span class="data-card-badge badge-public">فعال</span>
-        </div>
-        <div class="data-card-body">
-          <h3 class="data-card-title">آب</h3>
-          <p class="data-card-description">داشبورد مدیریت و پایش منابع آب</p>
-        </div>
-      </a>
-
-      <!-- Electricity Card -->
-      <a href="/electricity/" data-utility="electricity" class="data-card electricity" aria-label="ورود به داشبورد برق">
-        <div class="data-card-header">
-          <div class="data-card-icon-wrapper electricity">
-            <svg class="icon icon-electricity icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/>
-            </svg>
-          </div>
-          <span class="data-card-badge badge-public">فعال</span>
-        </div>
-        <div class="data-card-body">
-          <h3 class="data-card-title">برق</h3>
-          <p class="data-card-description">تحلیل پیک، کیفیت و مدیریت مصرف</p>
-        </div>
-      </a>
-
-      <!-- Gas Card -->
-      <a href="/gas/" data-utility="gas" class="data-card gas" aria-label="ورود به داشبورد گاز و فرآورده‌های نفتی">
-        <div class="data-card-header">
-          <div class="data-card-icon-wrapper gas">
-            <svg class="icon icon-gas icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-            </svg>
-          </div>
-          <span class="data-card-badge badge-public">فعال</span>
-        </div>
-        <div class="data-card-body">
-          <h3 class="data-card-title">گاز و فرآورده‌های نفتی</h3>
-          <p class="data-card-description">پایش توزیع و شدت کربن</p>
-        </div>
-      </a>
-
-      <!-- Environment Card -->
-      <a href="/environment/" class="data-card environment" aria-label="ورود به بخش محیط زیست و پسماند">
-        <div class="data-card-header">
-          <div class="data-card-icon-wrapper environment">
-            <svg class="icon icon-environment icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
-              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
-            </svg>
-          </div>
-          <span class="data-card-badge badge-soon">به‌زودی</span>
-        </div>
-        <div class="data-card-body">
-          <h3 class="data-card-title">محیط زیست و پسماند</h3>
-          <p class="data-card-description">پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند</p>
-        </div>
-      </a>
-    </section>
-    <section class="flex justify-center py-6">
-      <a data-cta="water-lab" href="/test/water-cld.html" class="border rounded px-3 py-2 text-sm">
-        مدل آزمایشی بهره‌وری آب
-      </a>
-    </section>
-  </main>
-  <!-- Policy Sheet -->
-  <div id="policySheet" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="policyTitle">
-    <div class="absolute inset-0 bg-black/60" data-close></div>
-    <div class="fixed inset-y-0 right-0 w-full md:inset-0 md:flex md:items-center md:justify-center">
-      <div class="w-full md:max-w-screen-md h-full md:h-auto md:max-h-[90vh] bg-white overflow-y-auto p-6 shadow-lg">
-        <div class="flex items-start justify-between mb-4">
-          <h2 id="policyTitle" class="text-lg font-bold" tabindex="-1">سیاست امنیت و حکمرانی داده</h2>
-          <button class="text-slate-500 hover:text-slate-700" data-close aria-label="بستن">×</button>
-        </div>
-        <p class="mb-4 text-sm leading-7 text-slate-700">شفافیت داده و خط قرمز امنیت در WESH360<br/>ما صرفاً داده‌های عملکرد زنجیرهٔ تأمین انرژی و آب را به‌صورت تجمیعی و با تاخیر ایمن ۴۸–۷۲ ساعت مصورسازی می‌کنیم. امنیت سایبری و امنیت داده، خط قرمز ماست. روندهای استانی/شهری، شاخص‌های آموزشی و ابزارهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌شود؛ در نسخهٔ عمومی از انتشار جزئیات حساس (مختصات شبکه، نام تأسیسات، موجودی دقیق، دادهٔ بلادرنگ) خودداری می‌گردد.</p>
-        <div class="prose prose-slate rtl max-w-none text-sm leading-7">
-          <h3>بیانیهٔ شفافیت، امنیت و حکمرانی داده در WESH360</h3>
-          <p><strong>هدف ما:</strong> مصورسازی داده‌های <strong>عملکرد زنجیرهٔ تأمین انرژی و آب</strong> برای <strong>آگاهی‌بخشی، هم‌افزایی و اطلاع‌رسانی عمومی</strong>—به‌زبان ساده، دقیق و قابل‌اتکا.<br><strong>خط قرمز ما:</strong> <strong>امنیت سایبری و امنیت داده</strong>.</p>
-          <hr />
-          <h2>۱) دامنهٔ داده و فلسفهٔ انتشار</h2>
-          <ul>
-            <li>تنها <strong>داده‌های عمومی و عملیاتیِ غیرشخصی</strong> مرتبط با آب، برق، گاز و فرآورده‌های نفتی را در سطح <strong>استان/شهر</strong> نمایش می‌دهیم.</li>
-            <li>هدف از انتشار، <strong>تصویر کلان و آموزشی</strong> از وضعیت است؛ نه نمایش جزئیات حساس یا قابلیت سوء‌استفادهٔ عملیاتی.</li>
-          </ul>
-          <h2>۲) چه نمایش می‌دهیم / چه نمایش نمی‌دهیم</h2>
-          <p><strong>نمایش می‌دهیم:</strong></p>
-          <ul>
-            <li>روندها و شاخص‌های تجمیعی (مصرف/تقاضا، پیک روز گذشته، تلفات کلان، ترکیب سوخت و شدت کربن، شاخص‌های کیفیت خدمت در سطح استان/شهر، شبیه‌سازهای آموزشی مانند قبض).</li>
-            <li>متادادهٔ هر نمودار: <strong>زمان آخرین به‌روزرسانی</strong>، <strong>منبع داده</strong> (در صورت وجود)، و <strong>برچسب سطح انتشار</strong>.</li>
-          </ul>
-          <p><strong>نمایش نمی‌دهیم:</strong></p>
-          <ul>
-            <li><strong>مختصات دقیق شبکه</strong>، <strong>نقشه‌های تک‌لاین</strong>، <strong>نام و نشانی ریزدانهٔ تأسیسات/مخازن/خطوط</strong>، <strong>موجودی دقیق ذخایر</strong>، و <strong>اعداد بلادرنگ</strong> که حساسیت عملیاتی ایجاد می‌کنند.</li>
-            <li>هرگونه جزئیات قابل انتساب که به <strong>واحد مشخص</strong> (مثلاً یک نیروگاه/بلوک خاص) اشارهٔ مستقیم کند.</li>
-          </ul>
-          <h2>۳) اصول امنیت و محرمانگی</h2>
-          <ul>
-            <li><strong>تجمیع و تاخیر ایمن:</strong> انتشار عمومی با <strong>تاخیر حداقل ۴۸–۷۲ ساعت</strong> برای شاخص‌های حساس؛ مقادیر در نسخهٔ عمومی <strong>گرد</strong> می‌شوند.</li>
-            <li><strong>حداقل‌گرایی اطلاعاتی:</strong> تنها آنچه برای فهم عمومی لازم است نمایش می‌دهیم (اصل Minimum Necessary).</li>
-            <li><strong>سطح‌بندی دسترسی (RBAC):</strong> داده و داشبوردها با برچسب‌های <strong>Public / Internal / Restricted</strong> مدیریت می‌شوند.</li>
-            <li><strong>حذف ریزدانه‌گی مکانی/عملیاتی:</strong> از انتشار هر داده‌ای که امکان <strong>بازشناسایی تأسیسات</strong> یا <strong>بازسازی وضعیت لحظه‌ای شبکه</strong> بدهد، خودداری می‌کنیم.</li>
-            <li><strong>پایداری و تاب‌آوری:</strong> کنترل‌های امنیت سایبری، لاگ‌برداری دسترسی، و نسخه‌پشتیبان متناسب با ریسک.</li>
-          </ul>
-          <h2>۴) سیاست برچسب‌گذاری محتوا</h2>
-          <ul>
-            <li><strong>Public:</strong> دادهٔ تجمیعی استان/شهر با تاخیر ایمن و گردکردن؛ بدون نام/مختصات تأسیسات.</li>
-            <li><strong>Internal:</strong> جزئیات بیشتر در سطح شهر/بخش با تاخیر کوتاه‌تر؛ همچنان بدون نقشهٔ حساس یا موجودی دقیق.</li>
-            <li><strong>Restricted:</strong> مواردی مانند برنامه/حادثهٔ تعمیرات، قیود شبکه، یا تحلیل‌های حساس که صرفاً نزد متولیان باقی می‌ماند.</li>
-          </ul>
-          <blockquote>کنار هر کاشی، یک <strong>Badge</strong> شامل سطح انتشار + زمان آخرین به‌روزرسانی درج می‌شود.</blockquote>
-          <h2>۵) حکمرانی داده‌مبنا (Data Governance)</h2>
-          <ul>
-            <li><strong>نقش‌ها و مالکیت (RACI):</strong> برای هر جریان داده، مالک کسب‌وکاری و فنی مشخص است.</li>
-            <li><strong>کاتالوگ و شناسنامهٔ داده:</strong> تعریف یکنواخت میدان‌ها، واحدها و منابع برای جلوگیری از تفسیر سلیقه‌ای.</li>
-            <li><strong>کیفیت داده (DQ):</strong> کنترل کامل‌بودن، سازگاری زمانی/واحدی، و ثبت «نسخهٔ داده» روی هر انتشار.</li>
-            <li><strong>تبار داده (Lineage):</strong> مسیر تولید شاخص‌ها از منبع تا نمودار قابل ردیابی است.</li>
-            <li><strong>نسخه‌بندی و بایگانی:</strong> نگهداشت خروجی‌ها با شماره نسخه و تاریخ انتشار.</li>
-          </ul>
-          <h2>۶) انطباق با مادهٔ ۱۰۷ «برنامهٔ هفتم توسعه»</h2>
-          <p>WESH360 خود را با روح و مفاد مادهٔ ۱۰۷—در حوزهٔ دولت هوشمند و حکمرانی داده—هماهنگ می‌کند:</p>
-          <ul>
-            <li><strong>الف) یکپارچگی زیرساختی:</strong> استفاده از <strong>درگاه‌ها و APIهای رسمی</strong> دستگاه‌ها؛ پرهیز از ایجاد انباره‌های موازی.</li>
-            <li><strong>ب) پشتیبانی از نوآوری و امنیت:</strong> ارائهٔ داشبوردهای پایش کیفیت/پیشرفت برای معاونت‌های «نوآوری، هوشمندسازی و امنیت» دستگاه‌های همکار.</li>
-            <li><strong>پ) استقرار حکمرانی داده در چرخهٔ هوشمندسازی:</strong> الگوهای اجرایی (Policy JSON، کاتالوگ داده، چک‌لیست کیفیت) برای تسهیل تدوین برنامه و <strong>پایش‌پذیری</strong> آن.</li>
-            <li><strong>ت) حذف موازی‌کاری سامانه‌ها:</strong> هر توسعهٔ فرابخشی مشروط به مجوز مرجع ذی‌صلاح و هم‌راستا با سامانه‌های مشترک است.</li>
-            <li><strong>ث) ارتقای شاخص‌های دولت هوشمند:</strong> رصد دوره‌ای شاخص‌هایی مانند یکپارچگی تبادل داده، درصد خدمات دیجیتال و کیفیت تجربهٔ کاربر.</li>
-            <li><strong>ج) اتصال برخط امن و پنجرهٔ ملی:</strong> نمایش مسیرهای کاربر و پیوند به «پنجرهٔ ملی خدمات دولت هوشمند» برای خدمت‌رسانی یکپارچه.</li>
-            <li><strong>چ) تبادل بین‌دستگاهی و پایگاه‌های پایه:</strong> به‌محض تکمیل پایگاه‌های پایه، تبادل <strong>برخط و قانونی</strong> و ثبت تبار داده در انتشار شاخص‌ها.</li>
-            <li><strong>ح) حذف دریافت دستی مدارک پایه:</strong> تکیه بر <strong>استعلام‌های برخط</strong> و عدم مطالبهٔ مدارک تکراری از مخاطبان.</li>
-            <li><strong>خ) پایش طرح‌های پیشران تحول دیجیتال:</strong> داشبوردهای مدیریتی برای رصد اجرا، تامین مالی و ریسک‌های طرح‌ها.</li>
-          </ul>
-          <h2>۷) روش‌شناسی و شفافیت محاسبات</h2>
-          <ul>
-            <li>هر نمودار/کارت با <strong>Tooltip روش محاسبه</strong> (فرمول، واحد، دامنهٔ زمانی) و در صورت لزوم <strong>بازهٔ ضرایب</strong> همراه است.</li>
-            <li>در نبود دادهٔ رسمیِ باز، از <strong>نمونه‌سازی آموزشی</strong> با برچسب صریح «آموزشی/تقریبی» استفاده می‌شود تا مخاطب دچار خطا نشود.</li>
-          </ul>
-          <h2>۸) مشارکت و هم‌افزایی</h2>
-          <ul>
-            <li>ما از <strong>بازخورد تخصصی</strong> و <strong>گزارش‌های مردمی</strong> برای بهبود کیفیت و پوشش شاخص‌ها استقبال می‌کنیم.</li>
-            <li>پیشنهادهای شما برای توسعهٔ داشبوردها، باعث <strong>ارتقای فهم مشترک</strong> بین شهروندان، رسانه و تصمیم‌گیران می‌شود.</li>
-          </ul>
-          <h2>۹) گزارش مسئولانهٔ آسیب‌پذیری</h2>
-          <ul>
-            <li>اگر نکته‌ای امنیتی مشاهده کردید، لطفاً در صفحهٔ <strong>/security</strong> اطلاع دهید یا ایمیل بزنید به: <strong>security@wesh360.ir</strong> (در صورت تغییر، در سایت به‌روزرسانی می‌شود).</li>
-            <li>ما گزارش‌های با حسن نیت را ارج می‌نهیم و پس از رفع، نتیجه را به‌صورت شفاف اعلام می‌کنیم.</li>
-          </ul>
-          <h2>۱۰) نسخه‌بندی و به‌روزرسانی</h2>
-          <ul>
-            <li>این بیانیه به‌صورت دوره‌ای بازبینی می‌شود. <strong>نسخه:</strong> 1.0 • <strong>تاریخ به‌روزرسانی:</strong> ۱۴۰۴/۰۵/۲۷</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile actions sheet -->
-  <div id="mobileActionsSheet" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="mobileActionsTitle">
-    <div class="absolute inset-0 bg-black/60" data-close></div>
-    <div class="fixed inset-y-0 right-0 w-64 bg-white p-6 shadow-lg overflow-y-auto flex flex-col gap-3">
-      <h2 id="mobileActionsTitle" class="text-base font-semibold mb-2" tabindex="-1">سیاست و امنیت</h2>
-      <a href="/security-policy" class="flex items-center gap-2 text-sm font-medium text-slate-700 border border-slate-300 rounded-lg px-3 py-2 hover:bg-slate-100">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
-        <span>سیاست امنیت و حکمرانی داده</span>
-      </a>
-      <a href="/responsible-disclosure" class="flex items-center gap-2 text-sm font-medium text-slate-700 border border-slate-300 rounded-lg px-3 py-2 hover:bg-slate-100">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 2 1.88 1.88" /><path d="M14.12 3.88 16 2" /><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1" /><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6" /><path d="M12 20v-9" /><path d="M6.53 9C4.6 8.8 3 7.1 3 5" /><path d="M6 13H2" /><path d="M3 21c0-2.1 1.7-3.9 3.8-4" /><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4" /><path d="M22 13h-4" /><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4" /></svg>
-        <span>ارتباط با ما</span>
-      </a>
-      <a href="/research/" class="flex items-center gap-2 text-sm font-medium text-slate-700 border border-slate-300 rounded-lg px-3 py-2 hover:bg-slate-100" aria-label="پژوهشگران" title="پژوهشگران">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /><path d="M6.453 15h11.094" /><path d="M8.5 2h7" /></svg>
-        <span>پژوهشگران</span>
-      </a>
-      <a href="/solar/" class="flex items-center gap-2 text-sm font-medium text-slate-700 border border-slate-300 rounded-lg px-3 py-2 hover:bg-slate-100" title="ماشین‌حساب خورشیدی">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v4" /><path d="m16.24 7.76 2.83-2.83" /><path d="M20 12h4" /><path d="m16.24 16.24 2.83 2.83" /><path d="M12 18v4" /><path d="m4.93 19.07 2.83-2.83" /><path d="M0 12h4" /><path d="m4.93 4.93 2.83 2.83" /><circle cx="12" cy="12" r="4" /></svg>
-        <span>ماشین‌حساب خورشیدی</span>
-      </a>
-    </div>
-  </div>
-  <script>
-(function(){
-  const root = document.documentElement;
-  const header = document.querySelector('header, .site-header, nav[role="navigation"]');
-  const footer = document.querySelector('footer, .site-footer');
-  function setHF(){
-    const hh = header ? header.getBoundingClientRect().height : 0;
-    const fh = footer ? footer.getBoundingClientRect().height : 0;
-    root.style.setProperty('--header-h', hh + 'px');
-    root.style.setProperty('--footer-h', fh + 'px');
-  }
-  setHF();
-  addEventListener('load', setHF);
-  addEventListener('resize', setHF);
-})();
-</script>
-  <script>
-    // Global error handler to suppress third-party script errors
-    window.addEventListener('error', function(e) {
-      // Suppress errors from external scripts (Porsline, Statsfa, etc.)
-      if (e.filename && (
-        e.filename.includes('porsline.ir') ||
-        e.filename.includes('statsfa.com') ||
-        e.filename.includes('cdn.porsline.ir')
-      )) {
-        e.preventDefault();
-        console.warn('External script error suppressed:', e.message);
-        return true;
-      }
-      // Suppress specific known errors from third-party libraries
-      if (e.message && e.message.includes('handleTextInputStart')) {
-        e.preventDefault();
-        console.warn('Third-party library error suppressed:', e.message);
-        return true;
-      }
-    }, true);
-  </script>
-  <script defer src="/assets/js/easter.js"></script>
-  <script defer src="./assets/parallax.js"></script>
-  <!-- Icon System -->
-  <script defer src="/assets/js/icons.js"></script>
-  <!-- Micro-interactions -->
-  <script defer src="/assets/js/micro-interactions.js"></script>
-  <script type="module" src="/index.js" defer charset="utf-8"></script>
-  <script defer src="assets/numfmt.js?v=1"></script>
-  <script defer src="./assets/cld-loader.js"></script>
-  <script defer src="./assets/household-wizard.js"></script>
-  <script defer src="/assets/js/ui-prune-ctas.js"></script>
-  <script src="/assets/js/header.js" defer></script>
-  <script src="/assets/js/nav-prune.js" defer></script>
-  <!-- Statsfa Website Analytics Start -->
-  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
-  <!-- Statsfa Website Analytics End -->
-  <!-- دکمه ثبت بازخورد Porsline -->
-  <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');typeof showSideTab==='function'&&showSideTab()">
-    بازخورد دهید
-  </a>
-  <script>
-    // Load Porsline script immediately with async for better performance
-    (function() {
-      try {
-        var js,q,d=document,
-          gi=d.getElementById,
-          ce=d.createElement,
-          gt=d.getElementsByTagName,
-          id="porsline-share",
-          b="https://cdn.porsline.ir/static/panel/v2/statics/";
-        if(!gi.call(d,id)) {
-          js=ce.call(d,"script");
-          js.id = id;
-          js.setAttribute("data-position","right");
-          js.src=b+"side-tab.js";
-          js.async = true;
-          js.onerror = function() {
-            console.warn('Porsline script failed to load');
-          };
-          q=gt.call(d,"script")[0];
-          q.parentNode.insertBefore(js,q);
-        }
-      } catch(e) {
-        console.warn('Porsline initialization error:', e.message);
-      }
-    })();
-
-    var clzdTiLuIp = function (ifid) {
-      try {
-        const el = document.getElementById(ifid);
-        if (el) {
-          el.fetchPriority = 'high';
-          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0";
-        }
-      } catch(e) {
-        console.warn('Porsline iframe error:', e.message);
-      }
-    };
-  </script>
-</body>
-</html>
-
-
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="image" href="/assets/img/logo/wesh360.svg"/><link rel="stylesheet" href="/_next/static/css/5694b8452ac39b8a.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-535f85a4e318b70d.js"/><script src="/_next/static/chunks/fd9d1056-23c08b0fa14f151e.js" async=""></script><script src="/_next/static/chunks/117-07aac93683a01b20.js" async=""></script><script src="/_next/static/chunks/main-app-83649634728b3f66.js" async=""></script><script src="/_next/static/chunks/912-e885832a3d85ecd0.js" async=""></script><script src="/_next/static/chunks/app/page-fbb1444ed7ff5a06.js" async=""></script><script src="/_next/static/chunks/app/layout-89660f3a22c799dc.js" async=""></script><link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg"/><link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png"/><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/logo/icons/icon-180.png"/><meta name="theme-color" content="#0ea5e9"/><title>WESH360 | مدیریت هوشمند آب، برق و گاز خراسان رضوی - داشبورد تحلیلی و پایش مصرف</title><meta name="description" content="داشبورد مدیریت هوشمند آب، برق و گاز خراسان رضوی | پایش لحظه‌ای، تحلیل مصرف، ماشین‌حساب‌های تخصصی و راهکارهای بهینه‌سازی انرژی برای مشهد و استان"/><meta name="generator" content="v0.app"/><meta property="og:title" content="WESH360 - مدیریت هوشمند آب و انرژی خراسان رضوی"/><meta property="og:description" content="داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز در خراسان رضوی"/><meta property="og:url" content="https://wesh360.ir/"/><meta property="og:site_name" content="WESH360"/><meta property="og:locale" content="fa_IR"/><meta property="og:image" content="https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="WESH360 - داشبورد مدیریت انرژی و آب"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="WESH360 - مدیریت هوشمند آب و انرژی"/><meta name="twitter:description" content="داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز"/><meta name="twitter:image" content="https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg"/><script src="/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body class="font-sans"><!--$--><div class="min-h-screen bg-background text-foreground"><div class="relative min-h-screen"><nav class="relative z-10 flex items-center justify-between p-6"><div class="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full"><img src="/assets/img/logo/wesh360.svg" alt="WESH360" class="w-5 h-5"/><span class="font-medium text-balance">WESH360</span></div><div class="hidden md:flex items-center gap-1"><a href="/dashboards/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">داشبوردها</a><a href="/calculators/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">ماشین‌حساب</a><a href="/research/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">پژوهش</a><a href="/contact/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">ارتباط</a><a href="/security/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">سیاست امنیت</a></div><div class="flex items-center gap-3"><a href="/responsible-disclosure/" class="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors">سیاست امنیت</a></div></nav><div class="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-6 text-center"><div class="mb-6 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full"><span class="text-sm font-medium">بیش از 3,500 کاربر فعال در خراسان رضوی</span></div><h1 class="text-6xl md:text-8xl font-light tracking-tight mb-6 text-balance">داده‌های آب و انرژی،<br/><span class="font-bold">برای همه قابل فهم</span></h1><p class="text-xl md:text-2xl text-foreground/90 max-w-4xl mb-12 leading-relaxed text-pretty">پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی<br/>برای شهروندان، کشاورزان و تصمیم‌گیران</p><div class="flex flex-col sm:flex-row gap-4 mb-16"><a href="#features" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 shadow h-10 bg-primary-foreground text-primary hover:bg-primary-foreground/90 rounded-full px-8 py-4 text-lg">شروع کنید - رایگان است</a><a href="#stats" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border-input shadow-sm hover:text-accent-foreground h-10 bg-primary/20 ring-1 ring-primary/30 backdrop-blur border-0 text-foreground hover:bg-primary/30 rounded-full px-8 py-4 text-lg">چگونه کار می‌کند؟</a></div><div class="flex items-center gap-2 px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-4 h-4"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span class="text-sm font-medium">امنیت داده، خط قرمز ماست</span></div></div></div><section id="stats" class="relative z-10 py-24 px-6"><div class="max-w-7xl mx-auto"><div class="text-center mb-16"><h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">وضعیت آب و انرژی خراسان رضوی در یک نگاه</h2></div><div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8"><div class="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center"><div class="mb-6"><div class="text-5xl mb-4">💧</div><div class="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div><p class="text-muted-foreground leading-relaxed">متر مکعب<br/>داده آب</p></div></div><div class="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center"><div class="mb-6"><div class="text-5xl mb-4">⚡</div><div class="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div><p class="text-muted-foreground leading-relaxed">سد و منبع<br/>تحت پوشش</p></div></div><div class="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center"><div class="mb-6"><div class="text-5xl mb-4">📊</div><div class="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div><p class="text-muted-foreground leading-relaxed">نقطه<br/>مانیتورینگ</p></div></div><div class="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center"><div class="mb-6"><div class="text-5xl mb-4">🔄</div><div class="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div><p class="text-muted-foreground leading-relaxed">داده<br/>Real-time</p></div></div></div></div></section><section id="features" class="relative z-10 py-24 px-6"><div class="max-w-7xl mx-auto"><div class="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12"><div class="text-center mb-16"><h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">داشبوردهای تعاملی</h2><p class="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">پایش لحظه‌ای و مدیریت هوشمند منابع آب، برق و انرژی</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"><a href="/water/hub" class="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"><div class="flex items-start gap-4 mb-6"><div class="p-3 rounded-xl bg-blue-500/20 ring-1 ring-blue-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplet w-8 h-8 text-blue-500"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg></div><div class="flex-1"><div class="flex items-center justify-between mb-2"><h3 class="text-2xl font-semibold">آب</h3><span class="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">فعال</span></div><p class="text-muted-foreground leading-relaxed">داشبورد مدیریت و پایش منابع آب</p></div></div><div class="flex items-center gap-2 text-primary group-hover:gap-3 transition-all"><span class="text-sm font-medium">مشاهده داشبورد</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left w-4 h-4"><path d="m15 18-6-6 6-6"></path></svg></div></a><a href="/electricity/" class="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"><div class="flex items-start gap-4 mb-6"><div class="p-3 rounded-xl bg-yellow-500/20 ring-1 ring-yellow-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-8 h-8 text-yellow-500"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></div><div class="flex-1"><div class="flex items-center justify-between mb-2"><h3 class="text-2xl font-semibold">برق</h3><span class="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">فعال</span></div><p class="text-muted-foreground leading-relaxed">تحلیل پیک، کیفیت و مدیریت مصرف</p></div></div><div class="flex items-center gap-2 text-primary group-hover:gap-3 transition-all"><span class="text-sm font-medium">مشاهده داشبورد</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left w-4 h-4"><path d="m15 18-6-6 6-6"></path></svg></div></a><a href="/gas/" class="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"><div class="flex items-start gap-4 mb-6"><div class="p-3 rounded-xl bg-orange-500/20 ring-1 ring-orange-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flame w-8 h-8 text-orange-500"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></div><div class="flex-1"><div class="flex items-center justify-between mb-2"><h3 class="text-2xl font-semibold">گاز و فرآورده‌های نفتی</h3><span class="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">فعال</span></div><p class="text-muted-foreground leading-relaxed">پایش توزیع و شدت کربن</p></div></div><div class="flex items-center gap-2 text-primary group-hover:gap-3 transition-all"><span class="text-sm font-medium">مشاهده داشبورد</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left w-4 h-4"><path d="m15 18-6-6 6-6"></path></svg></div></a><div class="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 opacity-75"><div class="flex items-start gap-4 mb-6"><div class="p-3 rounded-xl bg-green-500/20 ring-1 ring-green-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf w-8 h-8 text-green-500"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg></div><div class="flex-1"><div class="flex items-center justify-between mb-2"><h3 class="text-2xl font-semibold">محیط زیست و پسماند</h3><span class="px-3 py-1 text-xs font-medium bg-gray-500/20 text-gray-700 rounded-full">به‌زودی</span></div><p class="text-muted-foreground leading-relaxed">پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند</p></div></div></div></div><div class="text-center pt-8 border-t border-border"><a href="./amaayesh/index.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white transition-colors"><span>نقشه آمایش انرژی خراسان رضوی</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left w-4 h-4"><path d="m15 18-6-6 6-6"></path></svg></a></div></div></div></section><footer class="relative z-10 py-24 px-6"><div class="max-w-7xl mx-auto"><div class="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12"><div class="lg:col-span-2"><div class="flex items-center gap-2 mb-6"><img src="/assets/img/logo/wesh360.svg" alt="WESH360" class="w-6 h-6"/><span class="text-xl font-semibold">WESH360</span></div><p class="text-muted-foreground leading-relaxed text-pretty">پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.</p></div><div><h3 class="text-sm font-bold uppercase tracking-wider mb-6">داشبوردها</h3><ul class="space-y-3"><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">آب</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">برق</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">گاز و فرآورده‌های نفتی</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">محیط زیست</a></li></ul></div><div><h3 class="text-sm font-bold uppercase tracking-wider mb-6">منابع</h3><ul class="space-y-3"><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">پژوهش</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">ماشین‌حساب</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">ارتباط با ما</a></li><li><a href="#" class="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed">سیاست امنیت</a></li></ul></div></div><div class="border-t border-border pt-8"><p class="text-muted-foreground text-sm text-center">© 2025 WESH360 | مدیریت هوشمند آب و انرژی خراسان رضوی</p></div></div></div></footer></div><!--/$--><!--$!--><template data-dgst="BAILOUT_TO_CLIENT_SIDE_RENDERING"></template><!--/$--><script src="/_next/static/chunks/webpack-535f85a4e318b70d.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/5694b8452ac39b8a.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"2:I[2846,[],\"\"]\n4:I[9107,[],\"ClientPageRoot\"]\n5:I[1262,[\"912\",\"static/chunks/912-e885832a3d85ecd0.js\",\"931\",\"static/chunks/app/page-fbb1444ed7ff5a06.js\"],\"default\",1]\n6:\"$Sreact.suspense\"\n7:I[4707,[],\"\"]\n8:I[6423,[],\"\"]\n9:I[9050,[\"185\",\"static/chunks/app/layout-89660f3a22c799dc.js\"],\"Analytics\"]\nb:I[1060,[],\"\"]\nc:[]\n"])</script><script>self.__next_f.push([1,"0:[\"$\",\"$L2\",null,{\"buildId\":\"xsIzWaRoa6-_qMFnZYNBe\",\"assetPrefix\":\"\",\"urlParts\":[\"\",\"\"],\"initialTree\":[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],\"initialSeedData\":[\"\",{\"children\":[\"__PAGE__\",{},[[\"$L3\",[\"$\",\"$L4\",null,{\"props\":{\"params\":{},\"searchParams\":{}},\"Component\":\"$5\"}],null],null],null]},[[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/5694b8452ac39b8a.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"fa\",\"dir\":\"rtl\",\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"link\",null,{\"rel\":\"icon\",\"type\":\"image/svg+xml\",\"href\":\"/assets/img/logo/wesh360.svg\"}],[\"$\",\"link\",null,{\"rel\":\"alternate icon\",\"type\":\"image/png\",\"sizes\":\"32x32\",\"href\":\"/assets/img/logo/icons/icon-32.png\"}],[\"$\",\"link\",null,{\"rel\":\"apple-touch-icon\",\"sizes\":\"180x180\",\"href\":\"/assets/img/logo/icons/icon-180.png\"}],[\"$\",\"meta\",null,{\"name\":\"theme-color\",\"content\":\"#0ea5e9\"}]]}],[\"$\",\"body\",null,{\"className\":\"font-sans\",\"children\":[[\"$\",\"$6\",null,{\"fallback\":null,\"children\":[\"$\",\"$L7\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L8\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[]}]}],[\"$\",\"$L9\",null,{}]]}]]}]],null],null],\"couldBeIntercepted\":false,\"initialHead\":[null,\"$La\"],\"globalErrorComponent\":\"$b\",\"missingSlots\":\"$Wc\"}]\n"])</script><script>self.__next_f.push([1,"a:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"WESH360 | مدیریت هوشمند آب، برق و گاز خراسان رضوی - داشبورد تحلیلی و پایش مصرف\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"داشبورد مدیریت هوشمند آب، برق و گاز خراسان رضوی | پایش لحظه‌ای، تحلیل مصرف، ماشین‌حساب‌های تخصصی و راهکارهای بهینه‌سازی انرژی برای مشهد و استان\"}],[\"$\",\"meta\",\"4\",{\"name\":\"generator\",\"content\":\"v0.app\"}],[\"$\",\"meta\",\"5\",{\"property\":\"og:title\",\"content\":\"WESH360 - مدیریت هوشمند آب و انرژی خراسان رضوی\"}],[\"$\",\"meta\",\"6\",{\"property\":\"og:description\",\"content\":\"داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز در خراسان رضوی\"}],[\"$\",\"meta\",\"7\",{\"property\":\"og:url\",\"content\":\"https://wesh360.ir/\"}],[\"$\",\"meta\",\"8\",{\"property\":\"og:site_name\",\"content\":\"WESH360\"}],[\"$\",\"meta\",\"9\",{\"property\":\"og:locale\",\"content\":\"fa_IR\"}],[\"$\",\"meta\",\"10\",{\"property\":\"og:image\",\"content\":\"https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg\"}],[\"$\",\"meta\",\"11\",{\"property\":\"og:image:width\",\"content\":\"1200\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:image:height\",\"content\":\"630\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:image:alt\",\"content\":\"WESH360 - داشبورد مدیریت انرژی و آب\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:type\",\"content\":\"website\"}],[\"$\",\"meta\",\"15\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"16\",{\"name\":\"twitter:title\",\"content\":\"WESH360 - مدیریت هوشمند آب و انرژی\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:description\",\"content\":\"داشبوردهای تعاملی برای پایش و مدیریت آب، برق و گاز\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:image\",\"content\":\"https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg\"}]]\n3:"])</script><script>self.__next_f.push([1,"null\n"])</script></body></html>
