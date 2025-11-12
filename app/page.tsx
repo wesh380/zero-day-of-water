@@ -35,15 +35,6 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            <a
-              href="/responsible-disclosure/"
-              className="px-4 py-2 bg-primary/20 ring-1 ring-primary/30 backdrop-blur rounded-full hover:bg-primary/30 transition-colors"
-            >
-              سیاست امنیت
-            </a>
-          </div>
         </nav>
 
         {/* Hero Content */}
