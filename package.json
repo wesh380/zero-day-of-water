@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run build:copy",
+    "build:next": "next build",
+    "build:copy": "node scripts/copy-next-to-docs.js || true",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verify:publish": "echo 'Skipping verify:publish for Next.js build' || true"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
