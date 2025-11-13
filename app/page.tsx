@@ -69,17 +69,17 @@ const OptimizedNavigation = () => {
 
             {/* Logo و Tagline */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="relative group">
+              <a href="/" className="flex items-center gap-3 group">
+                <div className="relative">
                   <img
-                    src="/assets/img/logo/wesh360-logo.png"
+                    src="/assets/img/logo/wesh360-logo.avif"
                     alt="WESH360 Logo"
-                    className="w-12 h-12 rounded-full shadow-md group-hover:shadow-xl transition-shadow duration-300"
+                    className="w-14 h-14 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
                   />
                   <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
                 </div>
                 <div>
-                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2">
+                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2 group-hover:text-blue-600 transition-colors">
                     WESH360
                     <span className="text-blue-600">🏠</span>
                   </div>
@@ -87,7 +87,7 @@ const OptimizedNavigation = () => {
                     صرفه‌جویی هوشمند آب و انرژی
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Trust Badge */}
               <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-green-50/80 backdrop-blur-md rounded-full border border-green-200/50 shadow-sm hover:shadow-md transition-all">
