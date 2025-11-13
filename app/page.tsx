@@ -60,8 +60,8 @@ const OptimizedNavigation = () => {
       <nav
         className={`sticky top-0 z-50 transition-all duration-300 font-tahoma ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-lg'
-            : 'bg-white'
+            ? 'bg-white/80 backdrop-blur-2xl shadow-2xl border-b border-white/20'
+            : 'bg-white/70 backdrop-blur-lg border-b border-gray-100/50'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4">
@@ -69,27 +69,31 @@ const OptimizedNavigation = () => {
 
             {/* Logo و Tagline */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+              <a href="/" className="flex items-center gap-3 group">
                 <div className="relative">
-                  <Droplets className="w-8 h-8 text-blue-600" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                  <img
+                    src="/page/landing/logo2.webp"
+                    alt="WESH360 Logo"
+                    className="w-16 h-16 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
                 </div>
                 <div>
-                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2">
+                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2 group-hover:text-blue-600 transition-colors">
                     WESH360
                     <span className="text-blue-600">🏠</span>
                   </div>
-                  <div className="text-[10px] text-gray-500 -mt-1">
-                    صرفه‌جویی هوشمند
+                  <div className="text-[10px] text-gray-500 -mt-1 font-medium">
+                    صرفه‌جویی هوشمند آب و انرژی
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Trust Badge */}
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full border border-green-200">
+              <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-green-50/80 backdrop-blur-md rounded-full border border-green-200/50 shadow-sm hover:shadow-md transition-all">
                 <Users className="w-4 h-4 text-green-600" />
-                <span className="text-xs text-green-700">
-                  <strong>+3,500</strong> کاربر فعال
+                <span className="text-xs text-green-700 font-medium">
+                  <strong className="font-bold">+3,500</strong> کاربر فعال
                 </span>
               </div>
             </div>
@@ -100,49 +104,49 @@ const OptimizedNavigation = () => {
               {/* منوی اصلی با آیکون */}
               <a
                 href="/dashboards/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-blue-50 transition-all group"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-blue-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                <div className="w-8 h-8 bg-blue-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-blue-200/90 transition-all shadow-sm">
                   <TrendingUp className="w-4 h-4 text-blue-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-blue-600">
+                <span className="font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
                   داشبوردها
                 </span>
               </a>
 
               <a
                 href="/calculators/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-purple-50 transition-all group"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-purple-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                <div className="w-8 h-8 bg-purple-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-purple-200/90 transition-all shadow-sm">
                   <Zap className="w-4 h-4 text-purple-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-purple-600">
+                <span className="font-medium text-gray-700 group-hover:text-purple-600 transition-colors">
                   محاسبه‌گر
                 </span>
               </a>
 
               <a
                 href="/research/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-green-50 transition-all group"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-green-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                <div className="w-8 h-8 bg-green-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-green-200/90 transition-all shadow-sm">
                   <Droplets className="w-4 h-4 text-green-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-green-600">
+                <span className="font-medium text-gray-700 group-hover:text-green-600 transition-colors">
                   وضعیت خراسان
                 </span>
               </a>
 
               {/* دکمه ارتباط با منوی کشویی */}
               <div className="relative group">
-                <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100/80 backdrop-blur-sm transition-all hover:shadow-md">
                   <span className="font-medium text-gray-700">ارتباط با ما</span>
                   <ChevronDown className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
                 </button>
 
                 {/* Dropdown */}
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <Phone className="w-5 h-5 text-blue-600" />
                     <div>
@@ -170,12 +174,12 @@ const OptimizedNavigation = () => {
               {/* دکمه CTA اصلی */}
               <a
                 href="#check-bill"
-                className="relative flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden group"
+                className="relative flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-red-400/30"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <Zap className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">چک رایگان قبض</span>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+                <Zap className="w-5 h-5 relative z-10 drop-shadow-md" />
+                <span className="relative z-10 drop-shadow-md">چک رایگان قبض</span>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping shadow-lg"></div>
               </a>
             </div>
 
@@ -195,7 +199,7 @@ const OptimizedNavigation = () => {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 animate-slideDown">
+          <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100/50 animate-slideDown shadow-lg">
             <div className="px-4 py-4 space-y-2">
               <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
