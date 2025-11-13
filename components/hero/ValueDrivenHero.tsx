@@ -170,15 +170,15 @@ export default function ValueDrivenHero() {
         >
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-white text-sm font-medium">سیستم فعال</span>
+            <span className="text-white text-sm font-medium" style={{ color: '#ffffff' }}>سیستم فعال</span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <ShieldCheck className="w-4 h-4 text-green-400" />
-            <span className="text-white text-sm font-medium">حکمرانی داده</span>
+            <span className="text-white text-sm font-medium" style={{ color: '#ffffff' }}>حکمرانی داده</span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <Network className="w-4 h-4 text-blue-400" />
-            <span className="text-white text-sm font-medium">پوشش استانی</span>
+            <span className="text-white text-sm font-medium" style={{ color: '#ffffff' }}>پوشش استانی</span>
           </div>
         </motion.div>
 
@@ -192,7 +192,7 @@ export default function ValueDrivenHero() {
             className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-full px-6 py-3 mb-8"
           >
             <Database className="w-5 h-5 text-blue-400" />
-            <span className="text-blue-300 font-medium">
+            <span className="text-blue-300 font-medium" style={{ color: '#93c5fd' }}>
               از داده‌های پراکنده تا تصمیم‌های یکپارچه
             </span>
           </motion.div>
@@ -205,7 +205,7 @@ export default function ValueDrivenHero() {
             className="mb-8"
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
-              <span className="text-white">چالش‌های </span>
+              <span className="text-white" style={{ color: '#ffffff' }}>چالش‌های </span>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={activeResource}
@@ -219,7 +219,7 @@ export default function ValueDrivenHero() {
                 </motion.span>
               </AnimatePresence>
               <br />
-              <span className="text-white">را با </span>
+              <span className="text-white" style={{ color: '#ffffff' }}>را با </span>
               <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-transparent bg-clip-text">
                 داده حل کنید
               </span>
@@ -233,16 +233,16 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto"
+                className="text-xl md:text-2xl max-w-4xl mx-auto"
               >
-                <p className="mb-3">
-                  <span className="text-red-400 font-bold">مشکل:</span> {currentResource.problem}
+                <p className="mb-3 text-gray-200" style={{ color: '#e5e7eb' }}>
+                  <span className="text-red-400 font-bold" style={{ color: '#f87171' }}>مشکل:</span> {currentResource.problem}
                 </p>
-                <p className="mb-3">
-                  <span className="text-green-400 font-bold">راه‌حل:</span> {currentResource.solution}
+                <p className="mb-3 text-gray-200" style={{ color: '#e5e7eb' }}>
+                  <span className="text-green-400 font-bold" style={{ color: '#4ade80' }}>راه‌حل:</span> {currentResource.solution}
                 </p>
-                <p>
-                  <span className="text-cyan-400 font-bold">تأثیر:</span> {currentResource.impact}
+                <p className="text-gray-200" style={{ color: '#e5e7eb' }}>
+                  <span className="text-cyan-400 font-bold" style={{ color: '#22d3ee' }}>تأثیر:</span> {currentResource.impact}
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -307,7 +307,7 @@ export default function ValueDrivenHero() {
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-black text-white mb-3">
+                    <h3 className="text-2xl font-black text-white mb-3" style={{ color: '#ffffff' }}>
                       {resource.name}
                     </h3>
 
@@ -327,7 +327,7 @@ export default function ValueDrivenHero() {
                               className="w-4 h-4 flex-shrink-0"
                               style={{ color: resource.color }}
                             />
-                            <span>{feature.text}</span>
+                            <span style={{ color: '#e5e7eb' }}>{feature.text}</span>
                           </motion.div>
                         );
                       })}
@@ -372,10 +372,10 @@ export default function ValueDrivenHero() {
           className="max-w-6xl mx-auto mb-12"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-white mb-3">
+            <h2 className="text-3xl font-black text-white mb-3" style={{ color: '#ffffff' }}>
               چرا <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-300">
+            <p className="text-gray-300" style={{ color: '#d1d5db' }}>
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -405,8 +405,8 @@ export default function ValueDrivenHero() {
                       className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
                       style={{ color: pillar.color }}
                     />
-                    <h3 className="text-white font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-300 mb-2">{pillar.description}</p>
+                    <h3 className="text-white font-bold mb-2" style={{ color: '#ffffff' }}>{pillar.title}</h3>
+                    <p className="text-sm text-gray-300 mb-2" style={{ color: '#d1d5db' }}>{pillar.description}</p>
                     <p className="text-xs font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
@@ -429,7 +429,7 @@ export default function ValueDrivenHero() {
             whileTap={{ scale: 0.95 }}
             className="group relative px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-full font-bold text-white text-lg shadow-2xl shadow-blue-500/50 overflow-hidden"
           >
-            <span className="relative z-10 flex items-center gap-3">
+            <span className="relative z-10 flex items-center gap-3" style={{ color: '#ffffff' }}>
               <BarChart3 className="w-6 h-6" />
               کاوش در داشبوردها
             </span>
@@ -447,7 +447,7 @@ export default function ValueDrivenHero() {
             className="px-10 py-5 bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-full font-bold text-white text-lg hover:bg-white/20 transition-all flex items-center gap-3"
           >
             <Zap className="w-6 h-6 text-yellow-400" />
-            چک سریع قبض
+            <span style={{ color: '#ffffff' }}>چک سریع قبض</span>
           </motion.button>
         </motion.div>
 
@@ -460,19 +460,19 @@ export default function ValueDrivenHero() {
         >
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-400" />
-            <span>امنیت تضمین شده</span>
+            <span style={{ color: '#d1d5db' }}>امنیت تضمین شده</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-blue-400" />
-            <span>استانداردهای بین‌المللی</span>
+            <span style={{ color: '#d1d5db' }}>استانداردهای بین‌المللی</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-yellow-400" />
-            <span>پایش لحظه‌ای</span>
+            <span style={{ color: '#d1d5db' }}>پایش لحظه‌ای</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-purple-400" />
-            <span>تحلیل هوشمند</span>
+            <span style={{ color: '#d1d5db' }}>تحلیل هوشمند</span>
           </div>
         </motion.div>
       </motion.div>
@@ -489,7 +489,7 @@ export default function ValueDrivenHero() {
           transition={{ duration: 2, repeat: Infinity }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-gray-400 text-xs font-medium">ادامه مطلب</span>
+          <span className="text-gray-400 text-xs font-medium" style={{ color: '#9ca3af' }}>ادامه مطلب</span>
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <motion.div
               animate={{ y: [0, 12, 0] }}
