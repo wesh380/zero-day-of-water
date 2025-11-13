@@ -72,7 +72,7 @@ const OptimizedNavigation = () => {
               <a href="/" className="flex items-center gap-3 group">
                 <div className="relative">
                   <img
-                    src="/assets/img/logo/wesh360-logo.webp"
+                    src="/page/landing/logo2.webp"
                     alt="WESH360 Logo"
                     className="w-16 h-16 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
                   />
