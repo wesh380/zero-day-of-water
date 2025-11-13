@@ -78,7 +78,7 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 -translate-y-1/2 hidden lg:block" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {journeySteps.map((step, index) => {
@@ -94,14 +94,14 @@ export default function DataJourney() {
                   className="relative"
                 >
                   {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-bold text-sm z-10">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-black text-2xl shadow-lg z-10">
                     {index + 1}
                   </div>
 
                   {/* Card */}
                   <motion.div
                     whileHover={{ y: -10, scale: 1.05 }}
-                    className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-2xl p-6 pt-8 h-full shadow-sm hover:shadow-lg transition-shadow"
+                    className="relative bg-white backdrop-blur-xl border-2 border-gray-200 rounded-2xl p-6 pt-8 h-full shadow-md hover:shadow-xl transition-shadow"
                   >
                     {/* Icon */}
                     <div
@@ -109,7 +109,7 @@ export default function DataJourney() {
                       style={{ backgroundColor: `${step.color}20` }}
                     >
                       <Icon
-                        className="w-8 h-8"
+                        className="w-12 h-12"
                         style={{ color: step.color }}
                       />
                     </div>
@@ -120,7 +120,7 @@ export default function DataJourney() {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm text-center mb-4">
+                    <p className="text-gray-700 text-base text-center mb-4">
                       {step.description}
                     </p>
 
@@ -129,7 +129,7 @@ export default function DataJourney() {
                       {step.details.map((detail, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-2 text-xs text-gray-700"
+                          className="flex items-center gap-2 text-sm text-gray-600"
                         >
                           <div
                             className="w-1.5 h-1.5 rounded-full"
