@@ -5,6 +5,7 @@ import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock,
 import { Button } from "@/components/ui/button"
 import DataGovernanceHero from "@/components/hero/DataGovernanceHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
+import DataJourney from "@/components/sections/DataJourney"
 
 const OptimizedNavigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -367,6 +368,7 @@ export default function HomePage() {
       <OptimizedNavigation />
       <DataGovernanceHero />
       <GovernancePrinciples />
+      <DataJourney />
 
       {/* Stats Section */}
       <section id="stats" className="relative z-10 py-24 px-6">
