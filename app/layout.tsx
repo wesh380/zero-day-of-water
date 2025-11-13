@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 
 import { Suspense } from "react"
+import Script from "next/script"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -48,6 +49,15 @@ export default function RootLayout({
       </head>
       <body className="font-sans">
         <Suspense fallback={null}>{children}</Suspense>
+        {/* Statsfa Website Analytics Start */}
+        <Script
+          data-host="https://statsfa.com"
+          data-dnt="true"
+          src="https://statsfa.com/js/script.js"
+          id="ZwSg9rf6GA"
+          strategy="afterInteractive"
+        />
+        {/* Statsfa Website Analytics End */}
       </body>
     </html>
   )
