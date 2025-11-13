@@ -225,14 +225,7 @@ export default function ValueDrivenHero() {
               </AnimatePresence>
               <br />
               <span className="text-gray-900">را با </span>
-              <span
-                className="bg-gradient-to-r from-orange-700 to-red-700 text-transparent bg-clip-text font-black"
-                style={{
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}
-              >
+              <span className="text-orange-700 font-black">
                 داده حل کنید
               </span>
             </h1>
