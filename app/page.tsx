@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import DataGovernanceHero from "@/components/hero/DataGovernanceHero"
 
 const OptimizedNavigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -363,6 +364,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <OptimizedNavigation />
+      <DataGovernanceHero />
 
       {/* Stats Section */}
       <section id="stats" className="relative z-10 py-24 px-6">
