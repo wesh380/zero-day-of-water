@@ -1,0 +1,510 @@
+'use client';
+
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import {
+  Droplet,
+  Zap,
+  Flame,
+  Droplets,
+  Database,
+  ShieldCheck,
+  TrendingUp,
+  Network,
+  Eye,
+  Clock,
+  Users,
+  Target,
+  BarChart3,
+  Lightbulb,
+  AlertTriangle,
+  CheckCircle2
+} from 'lucide-react';
+
+// Value Propositions واقعی - نه داده فیک
+const resources = [
+  {
+    id: 'water',
+    icon: Droplet,
+    name: 'آب',
+    color: '#3B82F6',
+    gradient: 'from-blue-400 to-cyan-400',
+    glow: 'rgba(59, 130, 246, 0.4)',
+    problem: 'بحران آب خراسان رضوی',
+    solution: 'مدیریت هوشمند مصرف',
+    impact: 'کاهش اتلاف',
+    features: [
+      { icon: Eye, text: 'پایش لحظه‌ای مصرف' },
+      { icon: AlertTriangle, text: 'هشدار نشت و اتلاف' },
+      { icon: BarChart3, text: 'تحلیل الگوی مصرف' }
+    ]
+  },
+  {
+    id: 'electricity',
+    icon: Zap,
+    name: 'برق',
+    color: '#F59E0B',
+    gradient: 'from-yellow-400 to-orange-400',
+    glow: 'rgba(245, 158, 11, 0.4)',
+    problem: 'پیک‌بار و خاموشی',
+    solution: 'پیش‌بینی و توزیع بهینه',
+    impact: 'کاهش قطعی',
+    features: [
+      { icon: Target, text: 'پیش‌بینی پیک‌بار' },
+      { icon: TrendingUp, text: 'بهینه‌سازی توزیع' },
+      { icon: Clock, text: 'مدیریت بار شبکه' }
+    ]
+  },
+  {
+    id: 'gas',
+    icon: Flame,
+    name: 'گاز',
+    color: '#EF4444',
+    gradient: 'from-red-400 to-pink-400',
+    glow: 'rgba(239, 68, 68, 0.4)',
+    problem: 'کمبود در فصل سرما',
+    solution: 'مدیریت تقاضا و عرضه',
+    impact: 'توزیع عادلانه',
+    features: [
+      { icon: Users, text: 'اولویت‌بندی مصرف' },
+      { icon: Eye, text: 'نظارت فشار شبکه' },
+      { icon: Lightbulb, text: 'راهکار صرفه‌جویی' }
+    ]
+  },
+  {
+    id: 'oil',
+    icon: Droplets,
+    name: 'فرآورده‌های نفتی',
+    color: '#10B981',
+    gradient: 'from-green-400 to-emerald-400',
+    glow: 'rgba(16, 185, 129, 0.4)',
+    problem: 'پایش کیفیت و توزیع',
+    solution: 'شفافیت در زنجیره تأمین',
+    impact: 'کاهش تقلب',
+    features: [
+      { icon: ShieldCheck, text: 'تضمین کیفیت' },
+      { icon: Eye, text: 'ردیابی زنجیره' },
+      { icon: CheckCircle2, text: 'گزارش استاندارد' }
+    ]
+  }
+];
+
+// Data Governance Pillars - واقعی
+const governancePillars = [
+  {
+    icon: ShieldCheck,
+    title: 'امنیت و حریم خصوصی',
+    description: 'حفاظت از داده‌های حساس با رمزنگاری',
+    value: 'اطمینان از محرمانگی',
+    color: '#3B82F6'
+  },
+  {
+    icon: Database,
+    title: 'یکپارچگی داده',
+    description: 'استانداردسازی و یکسان‌سازی منابع',
+    value: 'حذف تناقض‌ها',
+    color: '#8B5CF6'
+  },
+  {
+    icon: Eye,
+    title: 'شفافیت و ردیابی',
+    description: 'مسیر کامل داده از منبع تا گزارش',
+    value: 'قابلیت ممیزی',
+    color: '#F59E0B'
+  },
+  {
+    icon: TrendingUp,
+    title: 'تحلیل هوشمند',
+    description: 'الگویابی و پیش‌بینی با هوش مصنوعی',
+    value: 'تصمیم‌گیری آگاهانه',
+    color: '#10B981'
+  }
+];
+
+export default function ValueDrivenHero() {
+  const [activeResource, setActiveResource] = useState(0);
+  const [hoveredResource, setHoveredResource] = useState<number | null>(null);
+  const { scrollYProgress } = useScroll();
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveResource((prev) => (prev + 1) % resources.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentResource = resources[activeResource];
+
+  return (
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, ${currentResource.glow}, transparent 70%)`
+          }}
+          animate={{ opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        />
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {resources.map((resource, idx) => (
+          <motion.div
+            key={idx}
+            className="absolute w-1.5 h-1.5 rounded-full"
+            style={{ backgroundColor: resource.color, opacity: 0.3 }}
+            initial={{
+              x: `${20 + idx * 20}%`,
+              y: '100%',
+            }}
+            animate={{
+              y: ['-20%', '100%'],
+            }}
+            transition={{
+              duration: 8 + idx * 2,
+              repeat: Infinity,
+              ease: 'linear',
+              delay: idx * 1.5,
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div
+        style={{ y, opacity }}
+        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-20"
+      >
+        {/* Top Status Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-white/90 text-sm font-medium">سیستم فعال</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+            <ShieldCheck className="w-4 h-4 text-green-400" />
+            <span className="text-white/90 text-sm font-medium">حکمرانی داده</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+            <Network className="w-4 h-4 text-blue-400" />
+            <span className="text-white/90 text-sm font-medium">پوشش استانی</span>
+          </div>
+        </motion.div>
+
+        {/* Main Content */}
+        <div className="text-center mb-16">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-full px-6 py-3 mb-8"
+          >
+            <Database className="w-5 h-5 text-blue-400" />
+            <span className="text-blue-300 font-medium">
+              از داده‌های پراکنده تا تصمیم‌های یکپارچه
+            </span>
+          </motion.div>
+
+          {/* Main Headline - Problem/Solution Focused */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mb-8"
+          >
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
+              <span className="text-white">چالش‌های </span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={activeResource}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className={`inline-block bg-gradient-to-r ${currentResource.gradient} text-transparent bg-clip-text`}
+                >
+                  {currentResource.name}
+                </motion.span>
+              </AnimatePresence>
+              <br />
+              <span className="text-white">را با </span>
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-400 text-transparent bg-clip-text">
+                داده حل کنید
+              </span>
+            </h1>
+
+            {/* Dynamic Problem/Solution */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeResource}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto"
+              >
+                <p className="mb-3">
+                  <span className="text-red-400 font-bold">مشکل:</span> {currentResource.problem}
+                </p>
+                <p className="mb-3">
+                  <span className="text-green-400 font-bold">راه‌حل:</span> {currentResource.solution}
+                </p>
+                <p>
+                  <span className="text-cyan-400 font-bold">تأثیر:</span> {currentResource.impact}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </div>
+
+        {/* Resource Value Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto mb-12"
+        >
+          {resources.map((resource, index) => {
+            const Icon = resource.icon;
+            const isActive = activeResource === index;
+            const isHovered = hoveredResource === index;
+
+            return (
+              <motion.div
+                key={resource.id}
+                onHoverStart={() => setHoveredResource(index)}
+                onHoverEnd={() => setHoveredResource(null)}
+                onClick={() => setActiveResource(index)}
+                whileHover={{ scale: 1.03, y: -5 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative cursor-pointer group"
+              >
+                <motion.div
+                  className={`
+                    relative h-full bg-white/5 backdrop-blur-xl rounded-2xl p-6
+                    border-2 transition-all duration-300
+                    ${isActive || isHovered ? 'border-white/30 bg-white/10' : 'border-white/10'}
+                  `}
+                  animate={{
+                    boxShadow: isActive
+                      ? `0 0 40px ${resource.glow}, 0 10px 30px rgba(0,0,0,0.3)`
+                      : '0 0 0 rgba(0,0,0,0)'
+                  }}
+                >
+                  {/* Gradient Background */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{
+                      background: `radial-gradient(circle at top right, ${resource.color}15, transparent)`
+                    }}
+                  />
+
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <motion.div
+                      className={`inline-flex p-4 rounded-xl mb-4 bg-gradient-to-br ${resource.gradient}`}
+                      animate={{
+                        rotate: isActive ? [0, 5, -5, 0] : 0,
+                      }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Icon className="w-7 h-7 text-white" />
+                    </motion.div>
+
+                    {/* Title */}
+                    <h3 className="text-2xl font-black text-white mb-3">
+                      {resource.name}
+                    </h3>
+
+                    {/* Features List */}
+                    <div className="space-y-2">
+                      {resource.features.map((feature, idx) => {
+                        const FeatureIcon = feature.icon;
+                        return (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: isActive ? idx * 0.1 : 0 }}
+                            className="flex items-center gap-2 text-sm text-gray-300"
+                          >
+                            <FeatureIcon
+                              className="w-4 h-4 flex-shrink-0"
+                              style={{ color: resource.color }}
+                            />
+                            <span>{feature.text}</span>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Hover Action */}
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: isHovered ? 1 : 0 }}
+                      className="mt-4 pt-4 border-t border-white/10"
+                    >
+                      <div className="flex items-center gap-2 text-sm font-medium" style={{ color: resource.color }}>
+                        <span>مشاهده جزئیات</span>
+                        <span>←</span>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Active Pulse */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{ border: `2px solid ${resource.color}` }}
+                      animate={{
+                        opacity: [0.5, 1, 0.5],
+                        scale: [1, 1.02, 1]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  )}
+                </motion.div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Data Governance Value Proposition */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="max-w-6xl mx-auto mb-12"
+        >
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-black text-white mb-3">
+              چرا <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">حکمرانی داده</span>؟
+            </h2>
+            <p className="text-gray-400">
+              چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {governancePillars.map((pillar, idx) => {
+              const Icon = pillar.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + idx * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:bg-white/10 hover:border-white/20 transition-all group"
+                >
+                  <Icon
+                    className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                    style={{ color: pillar.color }}
+                  />
+                  <h3 className="text-white font-bold mb-2">{pillar.title}</h3>
+                  <p className="text-sm text-gray-400 mb-2">{pillar.description}</p>
+                  <p className="text-xs font-semibold" style={{ color: pillar.color }}>
+                    ↳ {pillar.value}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-full font-bold text-white text-lg shadow-2xl shadow-blue-500/50 overflow-hidden"
+          >
+            <span className="relative z-10 flex items-center gap-3">
+              <BarChart3 className="w-6 h-6" />
+              کاوش در داشبوردها
+            </span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500"
+              initial={{ x: '100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 py-5 bg-white/10 backdrop-blur-xl border-2 border-white/20 rounded-full font-bold text-white text-lg hover:bg-white/20 transition-all flex items-center gap-3"
+          >
+            <Zap className="w-6 h-6 text-yellow-400" />
+            چک سریع قبض
+          </motion.button>
+        </motion.div>
+
+        {/* Trust Line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-gray-500"
+        >
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-green-400" />
+            <span>امنیت تضمین شده</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-400" />
+            <span>استانداردهای بین‌المللی</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-yellow-400" />
+            <span>پایش لحظه‌ای</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-purple-400" />
+            <span>تحلیل هوشمند</span>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-2"
+        >
+          <span className="text-gray-500 text-xs">ادامه مطلب</span>
+          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1 h-3 bg-white/40 rounded-full"
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
