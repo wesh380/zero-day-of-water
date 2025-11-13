@@ -50,10 +50,10 @@ const journeySteps = [
 
 export default function DataJourney() {
   return (
-    <section className="py-24 bg-slate-800 relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[linear-gradient(30deg,transparent_12%,rgba(59,130,246,.5)_12.5%,rgba(59,130,246,.5)_13%,transparent_13.5%)] bg-[length:40px_40px]" />
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-[linear-gradient(30deg,transparent_12%,rgba(59,130,246,.2)_12.5%,rgba(59,130,246,.2)_13%,transparent_13.5%)] bg-[length:40px_40px]" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -64,13 +64,13 @@ export default function DataJourney() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-5xl font-black text-white mb-4">
+          <h2 className="text-5xl font-black text-gray-900 mb-4">
             سفر داده از
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
               {' '}خام تا ارزش
             </span>
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-600 text-lg">
             فرآیند شش مرحله‌ای تبدیل داده به دانش قابل اقدام
           </p>
         </motion.div>
@@ -78,7 +78,7 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 -translate-y-1/2 hidden lg:block" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {journeySteps.map((step, index) => {
@@ -94,14 +94,14 @@ export default function DataJourney() {
                   className="relative"
                 >
                   {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm z-10">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-bold text-sm z-10">
                     {index + 1}
                   </div>
 
                   {/* Card */}
                   <motion.div
                     whileHover={{ y: -10, scale: 1.05 }}
-                    className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 pt-8 h-full"
+                    className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-2xl p-6 pt-8 h-full shadow-sm hover:shadow-lg transition-shadow"
                   >
                     {/* Icon */}
                     <div
@@ -115,12 +115,12 @@ export default function DataJourney() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-white text-center mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 text-center mb-2">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-400 text-sm text-center mb-4">
+                    <p className="text-gray-600 text-sm text-center mb-4">
                       {step.description}
                     </p>
 
@@ -129,7 +129,7 @@ export default function DataJourney() {
                       {step.details.map((detail, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-2 text-xs text-gray-500"
+                          className="flex items-center gap-2 text-xs text-gray-700"
                         >
                           <div
                             className="w-1.5 h-1.5 rounded-full"
@@ -144,7 +144,7 @@ export default function DataJourney() {
                     <motion.div
                       className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{
-                        background: `radial-gradient(circle at center, ${step.color}15, transparent)`
+                        background: `radial-gradient(circle at center, ${step.color}10, transparent)`
                       }}
                     />
                   </motion.div>

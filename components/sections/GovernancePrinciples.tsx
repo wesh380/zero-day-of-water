@@ -73,7 +73,7 @@ const principles = [
 
 export default function GovernancePrinciples() {
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800">
+    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -82,21 +82,21 @@ export default function GovernancePrinciples() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/40 rounded-full px-6 py-2 mb-6">
-            <Shield className="w-5 h-5 text-blue-400" />
-            <span className="text-blue-300 text-sm font-bold">
+          <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-300 rounded-full px-6 py-2 mb-6">
+            <Shield className="w-5 h-5 text-blue-600" />
+            <span className="text-blue-700 text-sm font-bold">
               Data Governance Framework
             </span>
           </div>
 
-          <h2 className="text-5xl font-black text-white mb-4">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+          <h2 className="text-5xl font-black text-gray-900 mb-4">
+            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
               هشت ستون
             </span>
             {' '}حکمرانی داده
           </h2>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             چارچوب جامع برای مدیریت، کنترل و بهره‌برداری بهینه از دارایی‌های داده
           </p>
         </motion.div>
@@ -116,10 +116,10 @@ export default function GovernancePrinciples() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group relative"
               >
-                <div className="relative h-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 overflow-hidden transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/15">
+                <div className="relative h-full bg-white backdrop-blur-xl border border-gray-200 rounded-2xl p-6 overflow-hidden transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-lg">
                   {/* Gradient Overlay */}
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-10 group-hover:opacity-20 transition-opacity`}
+                    className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-5 group-hover:opacity-10 transition-opacity`}
                   />
 
                   {/* Icon */}
@@ -128,12 +128,12 @@ export default function GovernancePrinciples() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {principle.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     {principle.description}
                   </p>
 
@@ -142,7 +142,7 @@ export default function GovernancePrinciples() {
                     {principle.metrics.map((metric, idx) => (
                       <span
                         key={idx}
-                        className="text-xs bg-white/10 border border-white/20 rounded-full px-3 py-1 text-gray-200 font-medium"
+                        className="text-xs bg-gray-100 border border-gray-200 rounded-full px-3 py-1 text-gray-700 font-medium"
                       >
                         {metric}
                       </span>
@@ -153,7 +153,7 @@ export default function GovernancePrinciples() {
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
                     whileHover={{ opacity: 1, x: 0 }}
-                    className="absolute bottom-6 right-6 text-white/70 font-bold text-lg"
+                    className="absolute bottom-6 right-6 text-gray-400 font-bold text-lg"
                   >
                     →
                   </motion.div>
@@ -170,10 +170,10 @@ export default function GovernancePrinciples() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 overflow-hidden">
+          <button className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 overflow-hidden">
             <span className="relative z-10">بیشتر بدانید →</span>
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500"
+              className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600"
               initial={{ x: '100%' }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
