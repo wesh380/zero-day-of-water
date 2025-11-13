@@ -282,11 +282,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {/* Stat 1 */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+            <div className="rounded-2xl bg-card border-2 border-blue-200 backdrop-blur p-8 text-center hover:border-blue-400 hover:shadow-xl transition-all">
               <div className="mb-6">
-                <div className="text-5xl mb-4">💧</div>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-4">
+                  <Droplet className="w-10 h-10 text-white" />
+                </div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-gray-700 font-medium text-base leading-relaxed">
                   متر مکعب
                   <br />
                   داده آب
@@ -295,11 +297,13 @@ export default function HomePage() {
             </div>
 
             {/* Stat 2 */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+            <div className="rounded-2xl bg-card border-2 border-yellow-200 backdrop-blur p-8 text-center hover:border-yellow-400 hover:shadow-xl transition-all">
               <div className="mb-6">
-                <div className="text-5xl mb-4">⚡</div>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg mb-4">
+                  <Zap className="w-10 h-10 text-white" />
+                </div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-gray-700 font-medium text-base leading-relaxed">
                   سد و منبع
                   <br />
                   تحت پوشش
@@ -308,11 +312,13 @@ export default function HomePage() {
             </div>
 
             {/* Stat 3 */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+            <div className="rounded-2xl bg-card border-2 border-purple-200 backdrop-blur p-8 text-center hover:border-purple-400 hover:shadow-xl transition-all">
               <div className="mb-6">
-                <div className="text-5xl mb-4">📊</div>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
+                  <TrendingUp className="w-10 h-10 text-white" />
+                </div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-gray-700 font-medium text-base leading-relaxed">
                   نقطه
                   <br />
                   مانیتورینگ
@@ -321,11 +327,13 @@ export default function HomePage() {
             </div>
 
             {/* Stat 4 */}
-            <div className="rounded-2xl bg-card ring-1 ring-border backdrop-blur p-8 text-center">
+            <div className="rounded-2xl bg-card border-2 border-green-200 backdrop-blur p-8 text-center hover:border-green-400 hover:shadow-xl transition-all">
               <div className="mb-6">
-                <div className="text-5xl mb-4">🔄</div>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg mb-4">
+                  <Clock className="w-10 h-10 text-white" />
+                </div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-gray-700 font-medium text-base leading-relaxed">
                   داده
                   <br />
                   Real-time
@@ -355,25 +363,25 @@ export default function HomePage() {
               {/* Water Card */}
               <a
                 href="/water/hub"
-                className="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"
+                className="group rounded-2xl bg-secondary border-3 border-blue-300 backdrop-blur p-8 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-200 transition-all"
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-blue-500/20 ring-1 ring-blue-500/30">
-                    <Droplet className="w-8 h-8 text-blue-500" />
+                  <div className="p-4 rounded-xl bg-blue-500/20 border-2 border-blue-500/40 shadow-lg">
+                    <Droplet className="w-9 h-9 text-blue-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-2xl font-semibold">آب</h3>
-                      <span className="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">
+                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed font-medium">
                       داشبورد مدیریت و پایش منابع آب
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-blue-600 group-hover:gap-3 transition-all">
                   <span className="text-sm font-medium">مشاهده داشبورد</span>
                   <ChevronLeft className="w-4 h-4" />
                 </div>
@@ -382,25 +390,25 @@ export default function HomePage() {
               {/* Electricity Card */}
               <a
                 href="/electricity/"
-                className="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"
+                className="group rounded-2xl bg-secondary border-3 border-yellow-300 backdrop-blur p-8 hover:border-yellow-500 hover:shadow-2xl hover:shadow-yellow-200 transition-all"
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-yellow-500/20 ring-1 ring-yellow-500/30">
-                    <Zap className="w-8 h-8 text-yellow-500" />
+                  <div className="p-4 rounded-xl bg-yellow-500/20 border-2 border-yellow-500/40 shadow-lg">
+                    <Zap className="w-9 h-9 text-yellow-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-2xl font-semibold">برق</h3>
-                      <span className="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">
+                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed font-medium">
                       تحلیل پیک، کیفیت و مدیریت مصرف
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-yellow-600 group-hover:gap-3 transition-all">
                   <span className="text-sm font-medium">مشاهده داشبورد</span>
                   <ChevronLeft className="w-4 h-4" />
                 </div>
@@ -409,42 +417,42 @@ export default function HomePage() {
               {/* Gas Card */}
               <a
                 href="/gas/"
-                className="group rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 hover:ring-2 hover:ring-primary/50 transition-all"
+                className="group rounded-2xl bg-secondary border-3 border-orange-300 backdrop-blur p-8 hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-200 transition-all"
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-orange-500/20 ring-1 ring-orange-500/30">
-                    <Flame className="w-8 h-8 text-orange-500" />
+                  <div className="p-4 rounded-xl bg-orange-500/20 border-2 border-orange-500/40 shadow-lg">
+                    <Flame className="w-9 h-9 text-orange-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-2xl font-semibold">گاز و فرآورده‌های نفتی</h3>
-                      <span className="px-3 py-1 text-xs font-medium bg-green-500/20 text-green-700 rounded-full">
+                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">پایش توزیع و شدت کربن</p>
+                    <p className="text-gray-700 leading-relaxed font-medium">پایش توزیع و شدت کربن</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
+                <div className="flex items-center gap-2 text-orange-600 group-hover:gap-3 transition-all">
                   <span className="text-sm font-medium">مشاهده داشبورد</span>
                   <ChevronLeft className="w-4 h-4" />
                 </div>
               </a>
 
               {/* Environment Card */}
-              <div className="rounded-2xl bg-secondary ring-1 ring-border backdrop-blur p-8 opacity-75">
+              <div className="rounded-2xl bg-secondary border-3 border-gray-300 backdrop-blur p-8 opacity-75">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 rounded-xl bg-green-500/20 ring-1 ring-green-500/30">
-                    <Leaf className="w-8 h-8 text-green-500" />
+                  <div className="p-4 rounded-xl bg-green-500/20 border-2 border-green-500/40 shadow-lg">
+                    <Leaf className="w-9 h-9 text-green-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-2xl font-semibold">محیط زیست و پسماند</h3>
-                      <span className="px-3 py-1 text-xs font-medium bg-gray-500/20 text-gray-700 rounded-full">
+                      <span className="px-4 py-2 text-sm font-bold bg-gray-400 text-white rounded-full shadow-md border-2 border-gray-300">
                         به‌زودی
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed font-medium">
                       پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند
                     </p>
                   </div>

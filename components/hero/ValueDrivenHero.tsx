@@ -277,17 +277,17 @@ export default function ValueDrivenHero() {
                 className="relative cursor-pointer group"
               >
                 <motion.div
-                  className={`
-                    relative h-full bg-white backdrop-blur-xl rounded-2xl p-6
-                    border-2 transition-all duration-300
-                    ${isActive || isHovered ? 'border-gray-300 shadow-lg' : 'border-gray-200'}
-                  `}
+                  className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
+                  style={{
+                    borderColor: isActive || isHovered ? resource.color : '#e5e7eb',
+                    borderWidth: isActive || isHovered ? '3px' : '2px'
+                  }}
                   animate={{
                     boxShadow: isActive
                       ? `0 0 40px ${resource.glow}, 0 10px 30px rgba(0,0,0,0.1)`
                       : isHovered
                       ? `0 0 20px ${resource.glow}`
-                      : '0 0 0 rgba(0,0,0,0)'
+                      : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
                   {/* Gradient Background */}
@@ -449,7 +449,7 @@ export default function ValueDrivenHero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 bg-white backdrop-blur-xl border-2 border-gray-300 rounded-full font-bold text-gray-900 text-lg hover:bg-gray-50 transition-all flex items-center gap-3 shadow-md"
+            className="px-10 py-5 bg-white backdrop-blur-xl border-3 border-yellow-400 rounded-full font-bold text-gray-900 text-lg hover:bg-yellow-50 transition-all flex items-center gap-3 shadow-xl shadow-yellow-400/30 hover:shadow-2xl hover:shadow-yellow-400/40"
           >
             <Zap className="w-6 h-6 text-yellow-500" />
             <span>چک سریع قبض</span>
@@ -461,23 +461,23 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-gray-600"
+          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm font-medium text-gray-700"
         >
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-green-600" />
-            <span>امنیت تضمین شده</span>
+          <div className="flex items-center gap-3 bg-green-50 border-2 border-green-200 rounded-full px-4 py-2.5">
+            <CheckCircle2 className="w-6 h-6 text-green-600" />
+            <span className="text-green-800">امنیت تضمین شده</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-blue-600" />
-            <span>استانداردهای بین‌المللی</span>
+          <div className="flex items-center gap-3 bg-blue-50 border-2 border-blue-200 rounded-full px-4 py-2.5">
+            <CheckCircle2 className="w-6 h-6 text-blue-600" />
+            <span className="text-blue-800">استانداردهای بین‌المللی</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-yellow-600" />
-            <span>پایش لحظه‌ای</span>
+          <div className="flex items-center gap-3 bg-yellow-50 border-2 border-yellow-200 rounded-full px-4 py-2.5">
+            <CheckCircle2 className="w-6 h-6 text-yellow-600" />
+            <span className="text-yellow-800">پایش لحظه‌ای</span>
           </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-purple-600" />
-            <span>تحلیل هوشمند</span>
+          <div className="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-full px-4 py-2.5">
+            <CheckCircle2 className="w-6 h-6 text-purple-600" />
+            <span className="text-purple-800">تحلیل هوشمند</span>
           </div>
         </motion.div>
       </motion.div>
