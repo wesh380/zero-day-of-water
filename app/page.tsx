@@ -264,7 +264,7 @@ const OptimizedNavigation = () => {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div style={{ backgroundColor: '#020617', minHeight: '100vh' }}>
       <OptimizedNavigation />
       <ValueDrivenHero />
       <GovernancePrinciples />
