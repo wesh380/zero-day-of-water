@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import DataGovernanceHero from "@/components/hero/DataGovernanceHero"
+import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
 
@@ -226,106 +226,6 @@ const OptimizedNavigation = () => {
         )}
       </nav>
 
-      {/* Hero با بهبود فاصله */}
-      <header className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 hero-pattern-bg"></div>
-        </div>
-
-        {/* Content */}
-        <div className="relative max-w-7xl mx-auto px-4 pt-16 pb-24 md:pt-20 md:pb-32">
-
-          {/* Badge با طراحی بهتر */}
-          <div className="flex justify-center mb-8 animate-fadeIn">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-5 py-2.5 rounded-full">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <Clock className="w-4 h-4 text-green-400" />
-              </div>
-              <span className="text-sm font-medium">
-                در <strong className="text-yellow-300">24 ساعت</strong> گذشته:
-              </span>
-              <div className="flex items-center gap-1 bg-white/20 px-3 py-1 rounded-full">
-                <Users className="w-4 h-4" />
-                <span className="font-bold">127</span>
-              </div>
-              <span className="text-sm">کاربر نشتی کشف کردن 💰</span>
-            </div>
-          </div>
-
-          {/* Hero Title */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-6 leading-tight animate-fadeIn text-white">
-            داده‌های آب و انرژی،
-            <br />
-            <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
-              برای همه قابل فهم
-            </span>
-          </h1>
-
-          {/* Subtitle با تاکید روی ارزش */}
-          <p className="text-lg md:text-xl text-center text-white mb-4 max-w-3xl mx-auto leading-relaxed animate-fadeIn animate-delay-100">
-            پلتفرم هوشمند مدیریت منابع آب و انرژی خراسان رضوی
-          </p>
-
-          {/* Value Props */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-sm animate-fadeIn text-white animate-delay-200">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <Zap className="w-4 h-4 text-yellow-400" />
-              <span>کاهش 30-50٪ قبض</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <Clock className="w-4 h-4 text-green-400" />
-              <span>نتیجه در 30 ثانیه</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-              <Users className="w-4 h-4 text-blue-400" />
-              <span>بدون نیاز به ثبت‌نام</span>
-            </div>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fadeIn animate-delay-300">
-            <a
-              href="#check"
-              className="group relative inline-flex items-center gap-3 bg-white text-blue-700 px-8 py-4 rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              <Zap className="w-6 h-6 text-red-600" />
-              <span className="text-blue-700">چک کردن قبض (رایگان)</span>
-              <div className="w-2 h-2 bg-red-600 rounded-full animate-ping absolute -top-1 -right-1"></div>
-            </a>
-
-            <a
-              href="#how"
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300"
-            >
-              <span className="text-white">چطور کار می‌کنه؟</span>
-              <ChevronDown className="w-5 h-5" />
-            </a>
-          </div>
-
-          {/* Security Badge */}
-          <div className="flex items-center justify-center gap-2 mt-10 text-sm text-white animate-fadeIn animate-delay-400">
-            <div className="flex items-center gap-1">
-              <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
-                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="text-white">امنیت داده، حفظ حریم خصوصی</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
-          </svg>
-        </div>
-      </header>
-
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -366,7 +266,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <OptimizedNavigation />
-      <DataGovernanceHero />
+      <ValueDrivenHero />
       <GovernancePrinciples />
       <DataJourney />
 
