@@ -116,24 +116,24 @@ export default function GovernancePrinciples() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group relative"
               >
-                <div className="relative h-full bg-white backdrop-blur-xl border border-gray-200 rounded-2xl p-6 overflow-hidden transition-all duration-300 group-hover:border-gray-300 group-hover:shadow-lg">
+                <div className="relative h-full bg-white backdrop-blur-xl border-2 border-gray-300 rounded-2xl p-6 overflow-hidden transition-all duration-300 group-hover:border-gray-400 group-hover:shadow-xl group-hover:shadow-gray-200">
                   {/* Gradient Overlay */}
                   <motion.div
                     className={`absolute inset-0 bg-gradient-to-br ${principle.color} opacity-5 group-hover:opacity-10 transition-opacity`}
                   />
 
                   {/* Icon */}
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${principle.color} mb-4`}>
-                    <Icon className="w-6 h-6 text-white" />
+                  <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${principle.color} mb-4`}>
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
                     {principle.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                  <p className="text-gray-700 text-base mb-4 leading-relaxed font-medium">
                     {principle.description}
                   </p>
 
@@ -142,7 +142,7 @@ export default function GovernancePrinciples() {
                     {principle.metrics.map((metric, idx) => (
                       <span
                         key={idx}
-                        className="text-xs bg-gray-100 border border-gray-200 rounded-full px-3 py-1 text-gray-700 font-medium"
+                        className="text-sm bg-gray-100 border-2 border-gray-300 rounded-full px-3 py-1.5 text-gray-800 font-semibold"
                       >
                         {metric}
                       </span>
