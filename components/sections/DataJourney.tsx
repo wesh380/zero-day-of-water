@@ -95,7 +95,7 @@ export default function DataJourney() {
                 >
                   {/* Step Number */}
                   <div
-                    className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-lg z-10 shadow-lg border-4 border-white"
+                    className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-2xl z-10 shadow-lg border-4 border-white"
                     style={{
                       background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`
                     }}
@@ -114,7 +114,7 @@ export default function DataJourney() {
                       style={{ backgroundColor: `${step.color}25`, border: `3px solid ${step.color}50` }}
                     >
                       <Icon
-                        className="w-10 h-10"
+                        className="w-12 h-12"
                         style={{ color: step.color }}
                       />
                     </div>
@@ -125,7 +125,7 @@ export default function DataJourney() {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm text-center mb-4">
+                    <p className="text-gray-700 text-base text-center mb-4">
                       {step.description}
                     </p>
 
@@ -134,7 +134,7 @@ export default function DataJourney() {
                       {step.details.map((detail, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-2 text-xs text-gray-700"
+                          className="flex items-center gap-2 text-sm text-gray-600"
                         >
                           <div
                             className="w-1.5 h-1.5 rounded-full"
