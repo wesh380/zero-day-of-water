@@ -168,17 +168,17 @@ export default function ValueDrivenHero() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
-          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-white/90 text-sm font-medium">سیستم فعال</span>
+            <span className="text-white text-sm font-medium">سیستم فعال</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <ShieldCheck className="w-4 h-4 text-green-400" />
-            <span className="text-white/90 text-sm font-medium">حکمرانی داده</span>
+            <span className="text-white text-sm font-medium">حکمرانی داده</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-4 py-2">
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <Network className="w-4 h-4 text-blue-400" />
-            <span className="text-white/90 text-sm font-medium">پوشش استانی</span>
+            <span className="text-white text-sm font-medium">پوشش استانی</span>
           </div>
         </motion.div>
 
@@ -233,7 +233,7 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto"
+                className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto"
               >
                 <p className="mb-3">
                   <span className="text-red-400 font-bold">مشکل:</span> {currentResource.problem}
@@ -273,21 +273,24 @@ export default function ValueDrivenHero() {
               >
                 <motion.div
                   className={`
-                    relative h-full bg-white/5 backdrop-blur-xl rounded-2xl p-6
+                    relative h-full bg-white/10 backdrop-blur-xl rounded-2xl p-6
                     border-2 transition-all duration-300
-                    ${isActive || isHovered ? 'border-white/30 bg-white/10' : 'border-white/10'}
+                    ${isActive || isHovered ? 'border-white/40 bg-white/15' : 'border-white/30'}
                   `}
                   animate={{
                     boxShadow: isActive
                       ? `0 0 40px ${resource.glow}, 0 10px 30px rgba(0,0,0,0.3)`
+                      : isHovered
+                      ? `0 0 20px ${resource.glow}`
                       : '0 0 0 rgba(0,0,0,0)'
                   }}
                 >
                   {/* Gradient Background */}
                   <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute inset-0 rounded-2xl transition-opacity"
                     style={{
-                      background: `radial-gradient(circle at top right, ${resource.color}15, transparent)`
+                      background: `radial-gradient(circle at top right, ${resource.color}30, transparent)`,
+                      opacity: isActive || isHovered ? 1 : 0.3
                     }}
                   />
 
@@ -318,7 +321,7 @@ export default function ValueDrivenHero() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: isActive ? idx * 0.1 : 0 }}
-                            className="flex items-center gap-2 text-sm text-gray-300"
+                            className="flex items-center gap-2 text-sm text-gray-200"
                           >
                             <FeatureIcon
                               className="w-4 h-4 flex-shrink-0"
@@ -334,9 +337,9 @@ export default function ValueDrivenHero() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: isHovered ? 1 : 0 }}
-                      className="mt-4 pt-4 border-t border-white/10"
+                      className="mt-4 pt-4 border-t border-white/20"
                     >
-                      <div className="flex items-center gap-2 text-sm font-medium" style={{ color: resource.color }}>
+                      <div className="flex items-center gap-2 text-sm font-bold" style={{ color: resource.color }}>
                         <span>مشاهده جزئیات</span>
                         <span>←</span>
                       </div>
@@ -372,7 +375,7 @@ export default function ValueDrivenHero() {
             <h2 className="text-3xl font-black text-white mb-3">
               چرا <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-400">
+            <p className="text-gray-300">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -387,17 +390,27 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + idx * 0.1 }}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 hover:bg-white/10 hover:border-white/20 transition-all group"
+                  className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-5 hover:bg-white/15 hover:border-white/30 transition-all group overflow-hidden"
                 >
-                  <Icon
-                    className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
-                    style={{ color: pillar.color }}
+                  {/* Gradient overlay on hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
+                    style={{
+                      background: `linear-gradient(135deg, ${pillar.color}, transparent)`
+                    }}
                   />
-                  <h3 className="text-white font-bold mb-2">{pillar.title}</h3>
-                  <p className="text-sm text-gray-400 mb-2">{pillar.description}</p>
-                  <p className="text-xs font-semibold" style={{ color: pillar.color }}>
-                    ↳ {pillar.value}
-                  </p>
+
+                  <div className="relative z-10">
+                    <Icon
+                      className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                      style={{ color: pillar.color }}
+                    />
+                    <h3 className="text-white font-bold mb-2">{pillar.title}</h3>
+                    <p className="text-sm text-gray-300 mb-2">{pillar.description}</p>
+                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
+                      ↳ {pillar.value}
+                    </p>
+                  </div>
                 </motion.div>
               );
             })}
@@ -443,7 +456,7 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-gray-500"
+          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-gray-300"
         >
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -476,12 +489,12 @@ export default function ValueDrivenHero() {
           transition={{ duration: 2, repeat: Infinity }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-gray-500 text-xs">ادامه مطلب</span>
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
+          <span className="text-gray-400 text-xs font-medium">ادامه مطلب</span>
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1 h-3 bg-white/40 rounded-full"
+              className="w-1 h-3 bg-white/60 rounded-full"
             />
           </div>
         </motion.div>
