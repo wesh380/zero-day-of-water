@@ -214,13 +214,18 @@ export default function ValueDrivenHero() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
                   className={`inline-block bg-gradient-to-r ${currentResource.gradient} text-transparent bg-clip-text`}
+                  style={{
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
                 >
                   {currentResource.name}
                 </motion.span>
               </AnimatePresence>
               <br />
               <span className="text-gray-900">را با </span>
-              <span className="bg-gradient-to-r from-orange-600 to-red-600 text-transparent bg-clip-text">
+              <span className="text-orange-700 font-black">
                 داده حل کنید
               </span>
             </h1>
