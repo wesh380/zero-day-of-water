@@ -78,7 +78,7 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-orange-600 via-green-600 to-cyan-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {journeySteps.map((step, index) => {
@@ -94,19 +94,24 @@ export default function DataJourney() {
                   className="relative"
                 >
                   {/* Step Number */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-black text-2xl shadow-lg z-10">
+                  <div
+                    className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-2xl z-10 shadow-lg border-4 border-white"
+                    style={{
+                      background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`
+                    }}
+                  >
                     {index + 1}
                   </div>
 
                   {/* Card */}
                   <motion.div
                     whileHover={{ y: -10, scale: 1.05 }}
-                    className="relative bg-white backdrop-blur-xl border-2 border-gray-200 rounded-2xl p-6 pt-8 h-full shadow-md hover:shadow-xl transition-shadow"
+                    className="relative bg-white backdrop-blur-xl border-2 border-gray-300 rounded-2xl p-6 pt-10 h-full shadow-md hover:shadow-2xl transition-all hover:border-gray-400"
                   >
                     {/* Icon */}
                     <div
-                      className="w-16 h-16 rounded-xl flex items-center justify-center mb-4 mx-auto"
-                      style={{ backgroundColor: `${step.color}20` }}
+                      className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5 mx-auto shadow-lg"
+                      style={{ backgroundColor: `${step.color}25`, border: `3px solid ${step.color}50` }}
                     >
                       <Icon
                         className="w-12 h-12"
