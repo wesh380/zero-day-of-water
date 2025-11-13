@@ -96,7 +96,7 @@ export default function GovernancePrinciples() {
             {' '}حکمرانی داده
           </h2>
 
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-cyan-300 text-lg max-w-2xl mx-auto">
             چارچوب جامع برای مدیریت، کنترل و بهره‌برداری بهینه از دارایی‌های داده
           </p>
         </motion.div>
@@ -133,7 +133,7 @@ export default function GovernancePrinciples() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+                  <p className="text-cyan-200 text-sm mb-4 leading-relaxed">
                     {principle.description}
                   </p>
 
@@ -142,7 +142,7 @@ export default function GovernancePrinciples() {
                     {principle.metrics.map((metric, idx) => (
                       <span
                         key={idx}
-                        className="text-xs bg-white/10 border border-white/20 rounded-full px-3 py-1 text-gray-200 font-medium"
+                        className="text-xs bg-white/10 border border-white/20 rounded-full px-3 py-1 text-cyan-100 font-medium"
                       >
                         {metric}
                       </span>

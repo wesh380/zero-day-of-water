@@ -170,15 +170,15 @@ export default function ValueDrivenHero() {
         >
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-white text-sm font-medium">سیستم فعال</span>
+            <span className="text-green-300 text-sm font-medium">سیستم فعال</span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <ShieldCheck className="w-4 h-4 text-green-400" />
-            <span className="text-white text-sm font-medium">حکمرانی داده</span>
+            <span className="text-green-300 text-sm font-medium">حکمرانی داده</span>
           </div>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-4 py-2">
             <Network className="w-4 h-4 text-blue-400" />
-            <span className="text-white text-sm font-medium">پوشش استانی</span>
+            <span className="text-blue-300 text-sm font-medium">پوشش استانی</span>
           </div>
         </motion.div>
 
@@ -233,16 +233,16 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto"
+                className="text-xl md:text-2xl text-cyan-200 max-w-4xl mx-auto"
               >
                 <p className="mb-3">
-                  <span className="text-red-400 font-bold">مشکل:</span> {currentResource.problem}
+                  <span className="text-red-400 font-bold">مشکل:</span> <span className="text-red-300">{currentResource.problem}</span>
                 </p>
                 <p className="mb-3">
-                  <span className="text-green-400 font-bold">راه‌حل:</span> {currentResource.solution}
+                  <span className="text-green-400 font-bold">راه‌حل:</span> <span className="text-green-300">{currentResource.solution}</span>
                 </p>
                 <p>
-                  <span className="text-cyan-400 font-bold">تأثیر:</span> {currentResource.impact}
+                  <span className="text-cyan-400 font-bold">تأثیر:</span> <span className="text-cyan-300">{currentResource.impact}</span>
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -321,7 +321,7 @@ export default function ValueDrivenHero() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: isActive ? idx * 0.1 : 0 }}
-                            className="flex items-center gap-2 text-sm text-gray-200"
+                            className="flex items-center gap-2 text-sm text-cyan-200"
                           >
                             <FeatureIcon
                               className="w-4 h-4 flex-shrink-0"
@@ -375,7 +375,7 @@ export default function ValueDrivenHero() {
             <h2 className="text-3xl font-black text-white mb-3">
               چرا <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-300">
+            <p className="text-cyan-300">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -406,7 +406,7 @@ export default function ValueDrivenHero() {
                       style={{ color: pillar.color }}
                     />
                     <h3 className="text-white font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-300 mb-2">{pillar.description}</p>
+                    <p className="text-sm text-cyan-200 mb-2">{pillar.description}</p>
                     <p className="text-xs font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
@@ -456,23 +456,23 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-gray-300"
+          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-xs text-cyan-200"
         >
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-green-400" />
-            <span>امنیت تضمین شده</span>
+            <span className="text-green-300">امنیت تضمین شده</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-blue-400" />
-            <span>استانداردهای بین‌المللی</span>
+            <span className="text-blue-300">استانداردهای بین‌المللی</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-yellow-400" />
-            <span>پایش لحظه‌ای</span>
+            <span className="text-yellow-300">پایش لحظه‌ای</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-purple-400" />
-            <span>تحلیل هوشمند</span>
+            <span className="text-purple-300">تحلیل هوشمند</span>
           </div>
         </motion.div>
       </motion.div>
@@ -489,7 +489,7 @@ export default function ValueDrivenHero() {
           transition={{ duration: 2, repeat: Infinity }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-gray-400 text-xs font-medium">ادامه مطلب</span>
+          <span className="text-cyan-300 text-xs font-medium">ادامه مطلب</span>
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <motion.div
               animate={{ y: [0, 12, 0] }}

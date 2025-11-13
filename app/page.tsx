@@ -79,7 +79,7 @@ const OptimizedNavigation = () => {
                     WESH360
                     <span className="text-blue-600">🏠</span>
                   </div>
-                  <div className="text-[10px] text-gray-500 -mt-1">
+                  <div className="text-[10px] text-blue-600 -mt-1">
                     صرفه‌جویی هوشمند
                   </div>
                 </div>
@@ -88,8 +88,8 @@ const OptimizedNavigation = () => {
               {/* Trust Badge */}
               <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-full border border-green-200">
                 <Users className="w-4 h-4 text-green-600" />
-                <span className="text-xs text-green-700">
-                  <strong>+3,500</strong> کاربر فعال
+                <span className="text-xs text-green-600">
+                  <strong className="text-green-700">+3,500</strong> کاربر فعال
                 </span>
               </div>
             </div>
@@ -105,7 +105,7 @@ const OptimizedNavigation = () => {
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
                   <TrendingUp className="w-4 h-4 text-blue-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-blue-600">
+                <span className="font-medium text-blue-700 group-hover:text-blue-600">
                   داشبوردها
                 </span>
               </a>
@@ -117,7 +117,7 @@ const OptimizedNavigation = () => {
                 <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
                   <Zap className="w-4 h-4 text-purple-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-purple-600">
+                <span className="font-medium text-purple-700 group-hover:text-purple-600">
                   محاسبه‌گر
                 </span>
               </a>
@@ -129,7 +129,7 @@ const OptimizedNavigation = () => {
                 <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
                   <Droplets className="w-4 h-4 text-green-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-green-600">
+                <span className="font-medium text-green-700 group-hover:text-green-600">
                   وضعیت خراسان
                 </span>
               </a>
@@ -137,8 +137,8 @@ const OptimizedNavigation = () => {
               {/* دکمه ارتباط با منوی کشویی */}
               <div className="relative group">
                 <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-all">
-                  <span className="font-medium text-gray-700">ارتباط با ما</span>
-                  <ChevronDown className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
+                  <span className="font-medium text-gray-800">ارتباط با ما</span>
+                  <ChevronDown className="w-4 h-4 text-gray-600 group-hover:rotate-180 transition-transform" />
                 </button>
 
                 {/* Dropdown */}
@@ -146,22 +146,22 @@ const OptimizedNavigation = () => {
                   <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <Phone className="w-5 h-5 text-blue-600" />
                     <div>
-                      <div className="font-medium text-gray-900">تماس تلفنی</div>
-                      <div className="text-xs text-gray-500">051-3800-xxxx</div>
+                      <div className="font-medium text-blue-800">تماس تلفنی</div>
+                      <div className="text-xs text-blue-600">051-3800-xxxx</div>
                     </div>
                   </a>
                   <a href="https://t.me/wesh360" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <div className="w-5 h-5 text-blue-500">📱</div>
                     <div>
-                      <div className="font-medium text-gray-900">تلگرام</div>
-                      <div className="text-xs text-gray-500">پشتیبانی آنلاین</div>
+                      <div className="font-medium text-blue-800">تلگرام</div>
+                      <div className="text-xs text-blue-600">پشتیبانی آنلاین</div>
                     </div>
                   </a>
                   <a href="/contact/" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors rounded-b-2xl">
-                    <div className="w-5 h-5 text-gray-600">✉️</div>
+                    <div className="w-5 h-5 text-blue-600">✉️</div>
                     <div>
-                      <div className="font-medium text-gray-900">فرم تماس</div>
-                      <div className="text-xs text-gray-500">پاسخ در 24 ساعت</div>
+                      <div className="font-medium text-blue-800">فرم تماس</div>
+                      <div className="text-xs text-blue-600">پاسخ در 24 ساعت</div>
                     </div>
                   </a>
                 </div>
@@ -199,19 +199,19 @@ const OptimizedNavigation = () => {
             <div className="px-4 py-4 space-y-2">
               <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
-                <span className="font-medium text-gray-700">داشبوردها</span>
+                <span className="font-medium text-blue-700">داشبوردها</span>
               </a>
               <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors">
                 <Zap className="w-5 h-5 text-purple-600" />
-                <span className="font-medium text-gray-700">محاسبه‌گر</span>
+                <span className="font-medium text-purple-700">محاسبه‌گر</span>
               </a>
               <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors">
                 <Droplets className="w-5 h-5 text-green-600" />
-                <span className="font-medium text-gray-700">وضعیت خراسان</span>
+                <span className="font-medium text-green-700">وضعیت خراسان</span>
               </a>
               <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
                 <Phone className="w-5 h-5 text-gray-600" />
-                <span className="font-medium text-gray-700">تماس با ما</span>
+                <span className="font-medium text-gray-800">تماس با ما</span>
               </a>
 
               <a
@@ -275,7 +275,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
+            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance bg-gradient-to-r from-blue-600 to-cyan-500 text-transparent bg-clip-text">
               وضعیت آب و انرژی خراسان رضوی در یک نگاه
             </h2>
           </div>
@@ -286,7 +286,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <div className="text-5xl mb-4">💧</div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-cyan-600 leading-relaxed">
                   متر مکعب
                   <br />
                   داده آب
@@ -299,7 +299,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <div className="text-5xl mb-4">⚡</div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-yellow-600 leading-relaxed">
                   سد و منبع
                   <br />
                   تحت پوشش
@@ -312,7 +312,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <div className="text-5xl mb-4">📊</div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-purple-600 leading-relaxed">
                   نقطه
                   <br />
                   مانیتورینگ
@@ -325,7 +325,7 @@ export default function HomePage() {
               <div className="mb-6">
                 <div className="text-5xl mb-4">🔄</div>
                 <div className="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-green-600 leading-relaxed">
                   داده
                   <br />
                   Real-time
@@ -342,10 +342,10 @@ export default function HomePage() {
           <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
             {/* Section Header */}
             <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
+              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
                 داشبوردهای تعاملی
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
+              <p className="text-xl text-blue-600 max-w-3xl mx-auto text-pretty">
                 پایش لحظه‌ای و مدیریت هوشمند منابع آب، برق و انرژی
               </p>
             </div>
@@ -368,7 +368,7 @@ export default function HomePage() {
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-blue-600 leading-relaxed">
                       داشبورد مدیریت و پایش منابع آب
                     </p>
                   </div>
@@ -395,7 +395,7 @@ export default function HomePage() {
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-yellow-600 leading-relaxed">
                       تحلیل پیک، کیفیت و مدیریت مصرف
                     </p>
                   </div>
@@ -422,7 +422,7 @@ export default function HomePage() {
                         فعال
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">پایش توزیع و شدت کربن</p>
+                    <p className="text-orange-600 leading-relaxed">پایش توزیع و شدت کربن</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
@@ -444,7 +444,7 @@ export default function HomePage() {
                         به‌زودی
                       </span>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-green-600 leading-relaxed">
                       پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند
                     </p>
                   </div>
@@ -478,7 +478,7 @@ export default function HomePage() {
                   <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-6 h-6" />
                   <span className="text-xl font-semibold">WESH360</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-pretty">
+                <p className="text-blue-600 leading-relaxed text-pretty">
                   پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی
                   داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
                 </p>
@@ -492,7 +492,7 @@ export default function HomePage() {
                     <li key={item}>
                       <a
                         href="#"
-                        className="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed"
+                        className="text-blue-600 hover:text-blue-700 transition-colors text-sm leading-relaxed"
                       >
                         {item}
                       </a>
@@ -509,7 +509,7 @@ export default function HomePage() {
                     <li key={item}>
                       <a
                         href="#"
-                        className="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed"
+                        className="text-purple-600 hover:text-purple-700 transition-colors text-sm leading-relaxed"
                       >
                         {item}
                       </a>
@@ -521,7 +521,7 @@ export default function HomePage() {
 
             {/* Sub-footer */}
             <div className="border-t border-border pt-8">
-              <p className="text-muted-foreground text-sm text-center">
+              <p className="text-gray-600 text-sm text-center">
                 © 2025 WESH360 | مدیریت هوشمند آب و انرژی خراسان رضوی
               </p>
             </div>
