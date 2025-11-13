@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
+import DataGovernanceHero from "@/components/hero/DataGovernanceHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
 
@@ -233,7 +233,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <OptimizedNavigation />
-      <ValueDrivenHero />
+      <DataGovernanceHero />
       <GovernancePrinciples />
       <DataJourney />
 
