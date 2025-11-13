@@ -233,7 +233,7 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl text-gray-100 max-w-4xl mx-auto"
+                className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto"
               >
                 <p className="mb-3">
                   <span className="text-red-400 font-bold">مشکل:</span> {currentResource.problem}
@@ -321,7 +321,7 @@ export default function ValueDrivenHero() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: isActive ? idx * 0.1 : 0 }}
-                            className="flex items-center gap-2 text-sm text-gray-100"
+                            className="flex items-center gap-2 text-sm text-gray-200"
                           >
                             <FeatureIcon
                               className="w-4 h-4 flex-shrink-0"
@@ -375,7 +375,7 @@ export default function ValueDrivenHero() {
             <h2 className="text-3xl font-black text-white mb-3">
               چرا <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-100">
+            <p className="text-gray-200">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
