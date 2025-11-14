@@ -356,11 +356,11 @@ export default function HomePage() {
       <DataJourney />
 
       {/* Stats Section */}
-      <section id="stats" className="relative z-10 py-24 px-6">
+      <section id="stats" className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-4 text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
               آمار این سایت در یک نگاه
             </h2>
           </div>
@@ -516,9 +516,9 @@ export default function HomePage() {
       </section>
 
       {/* Energy Map Section */}
-      <section id="features" className="relative z-10 py-24 px-6">
+      <section id="features" className="relative z-10 py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
+          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
             <div className="text-center">
               <a
                 href="./amaayesh/index.html"
@@ -536,26 +536,25 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-24 px-6">
+      <footer className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
+          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
               {/* Brand Section */}
               <div className="lg:col-span-2">
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-2 mb-4">
                   <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-6 h-6" />
                   <span className="text-xl font-semibold">WESH360</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-pretty">
-                  پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی
-                  داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
+                <p className="text-muted-foreground leading-relaxed">
+                  پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
                 </p>
               </div>
 
               {/* Links Section 1 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">داشبوردها</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">داشبوردها</h3>
                 <ul className="space-y-3">
                   {["آب", "برق", "گاز و فرآورده‌های نفتی", "محیط زیست"].map((item) => (
                     <li key={item}>
@@ -572,7 +571,7 @@ export default function HomePage() {
 
               {/* Links Section 2 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">منابع</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">منابع</h3>
                 <ul className="space-y-3">
                   {["پژوهش", "ماشین‌حساب", "ارتباط با ما", "سیاست امنیت"].map((item) => (
                     <li key={item}>

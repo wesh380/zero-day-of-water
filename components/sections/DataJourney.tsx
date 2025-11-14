@@ -50,7 +50,7 @@ const journeySteps = [
 
 export default function DataJourney() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-16 bg-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(30deg,transparent_12%,rgba(59,130,246,.2)_12.5%,rgba(59,130,246,.2)_13%,transparent_13.5%)] bg-[length:40px_40px]" />
@@ -62,9 +62,9 @@ export default function DataJourney() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
-          <h2 className="text-5xl font-black text-gray-900 mb-4">
+          <h2 className="text-5xl font-black text-gray-900 mb-3">
             سفر داده از
             <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
               {' '}خام تا ارزش

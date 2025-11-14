@@ -73,23 +73,23 @@ const principles = [
 
 export default function GovernancePrinciples() {
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-300 rounded-full px-6 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-300 rounded-full px-6 py-2 mb-4">
             <Shield className="w-5 h-5 text-blue-600" />
             <span className="text-blue-700 text-sm font-bold">
               Data Governance Framework
             </span>
           </div>
 
-          <h2 className="text-5xl font-black text-gray-900 mb-4">
+          <h2 className="text-5xl font-black text-gray-900 mb-3">
             <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
               هشت ستون
             </span>

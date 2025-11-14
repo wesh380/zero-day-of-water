@@ -165,13 +165,13 @@ export default function ValueDrivenHero() {
 
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-20"
+        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-12"
       >
         {/* Top Status Bar */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-8"
         >
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -188,13 +188,13 @@ export default function ValueDrivenHero() {
         </motion.div>
 
         {/* Main Content */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-8"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
           >
             <Database className="w-5 h-5 text-blue-600" />
             <span className="text-blue-700 font-medium">
@@ -207,9 +207,9 @@ export default function ValueDrivenHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-8"
+            className="mb-6"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
               <span className="text-gray-900">چالش‌های </span>
               <AnimatePresence mode="wait">
                 <motion.span
