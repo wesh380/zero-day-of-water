@@ -1,12 +1,39 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator, BarChart3 } from "lucide-react"
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator, BarChart3, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
+
+const Breadcrumbs = () => {
+  return (
+    <nav aria-label="breadcrumb" className="bg-gray-50/80 backdrop-blur-sm border-b border-gray-100 py-2 px-4">
+      <div className="max-w-7xl mx-auto">
+        <ol className="flex items-center gap-2 text-sm" itemScope itemType="https://schema.org/BreadcrumbList">
+          <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem" className="flex items-center gap-2">
+            <a
+              href="/"
+              className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors"
+              itemProp="item"
+              aria-label="صفحه اصلی"
+            >
+              <Home className="w-3.5 h-3.5" aria-hidden="true" />
+              <span itemProp="name">خانه</span>
+            </a>
+            <meta itemProp="position" content="1" />
+          </li>
+          <li aria-current="page" className="flex items-center gap-2">
+            <span className="text-gray-400">›</span>
+            <span className="text-gray-900 font-medium">پلتفرم داده</span>
+          </li>
+        </ol>
+      </div>
+    </nav>
+  );
+};
 
 const OptimizedNavigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -61,10 +88,13 @@ const OptimizedNavigation = () => {
                 <div className="relative">
                   <img
                     src="/page/landing/logo2.webp"
-                    alt="WESH360 Logo"
+                    alt="لوگوی WESH360 - سیستم مدیریت هوشمند آب و انرژی"
                     className="w-16 h-16 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
+                    width={64}
+                    height={64}
+                    loading="eager"
                   />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg" aria-hidden="true"></div>
                 </div>
                 <div>
                   <div className="font-bold text-xl text-gray-900 flex items-center gap-2 group-hover:text-blue-600 transition-colors">
@@ -353,6 +383,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <OptimizedNavigation />
+      <Breadcrumbs />
       <main>
         <ValueDrivenHero />
         <GovernancePrinciples />
@@ -548,7 +579,14 @@ export default function HomePage() {
               {/* Brand Section */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 mb-4">
-                  <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-6 h-6" />
+                  <img
+                    src="/assets/img/logo/wesh360.svg"
+                    alt="لوگوی WESH360"
+                    className="w-6 h-6"
+                    width={24}
+                    height={24}
+                    loading="lazy"
+                  />
                   <span className="text-xl font-semibold">WESH360</span>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">

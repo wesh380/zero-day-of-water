@@ -90,6 +90,8 @@ export default function RootLayout({
         logo: {
           "@type": "ImageObject",
           url: "https://wesh360.ir/assets/img/logo/wesh360.svg",
+          width: 512,
+          height: 512,
         },
         contactPoint: {
           "@type": "ContactPoint",
@@ -97,6 +99,12 @@ export default function RootLayout({
           contactType: "customer service",
           areaServed: "IR-30",
           availableLanguage: ["fa"],
+        },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "مشهد",
+          addressRegion: "خراسان رضوی",
+          addressCountry: "IR",
         },
         areaServed: {
           "@type": "AdministrativeArea",
@@ -117,6 +125,11 @@ export default function RootLayout({
           "@id": "https://wesh360.ir/#organization",
         },
         inLanguage: "fa-IR",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: "https://wesh360.ir/search?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
       },
       {
         "@type": "WebPage",
@@ -131,22 +144,61 @@ export default function RootLayout({
         },
         description: "پلتفرم رسمی مدیریت آب و انرژی خراسان رضوی - دسترسی به آمار و گزارش‌های تخصصی",
         inLanguage: "fa-IR",
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: "https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg",
+        },
       },
       {
-        "@type": "Service",
-        "@id": "https://wesh360.ir/#service",
-        serviceType: "Energy and Water Management Platform",
+        "@type": "GovernmentService",
+        "@id": "https://wesh360.ir/#governmentservice",
+        name: "پلتفرم مدیریت آب و انرژی خراسان رضوی",
+        description: "ارائه داده‌های رسمی آب، برق، گاز و فرآورده‌های نفتی استان خراسان رضوی",
         provider: {
           "@id": "https://wesh360.ir/#organization",
         },
+        serviceType: "Data Management and Analytics Platform",
+        category: "Energy and Water Management",
         areaServed: {
           "@type": "AdministrativeArea",
           name: "خراسان رضوی",
         },
-        audience: {
-          "@type": "Audience",
-          audienceType: "residents and businesses in Razavi Khorasan",
-        },
+        audience: [
+          {
+            "@type": "Audience",
+            audienceType: "شهروندان",
+            name: "عموم مردم",
+          },
+          {
+            "@type": "Audience",
+            audienceType: "محققان",
+            name: "پژوهشگران و دانشگاهیان",
+          },
+          {
+            "@type": "Audience",
+            audienceType: "سازمان‌ها",
+            name: "نهادهای دولتی و خصوصی",
+          },
+        ],
+        serviceOutput: [
+          "داشبورد تحلیلی آب",
+          "داشبورد تحلیلی برق",
+          "داشبورد تحلیلی گاز",
+          "ماشین‌حساب‌های تخصصی",
+          "گزارش‌های آماری",
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://wesh360.ir/#breadcrumb",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "خانه",
+            item: "https://wesh360.ir",
+          },
+        ],
       },
     ],
   };
@@ -154,10 +206,17 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <head>
+        {/* Favicons */}
         <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg" />
         <link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/logo/icons/icon-180.png" />
         <meta name="theme-color" content="#0ea5e9" />
+
+        {/* Preconnect to external domains for better performance */}
+        <link rel="preconnect" href="https://statsfa.com" />
+        <link rel="dns-prefetch" href="https://statsfa.com" />
+
+        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
