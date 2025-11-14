@@ -2152,17 +2152,17 @@ async function ama_bootstrap(){
   // سبک پایه برای نقاط
   function pointStyle(kind){
     const colors = {
-      wind: '#38bdf8',
-      solar: '#fbbf24',
-      dams: '#60a5fa'
+      wind: '#00ff00',    // ✅ سبز فسفری برای test!
+      solar: '#ff00ff',   // ✅ صورتی فسفری برای test!
+      dams: '#00ffff'     // ✅ آبی فسفری برای test!
     };
     return {
-      radius: 6,
-      weight: 2,
+      radius: 10,         // ✅ بزرگتر برای test!
+      weight: 3,          // ✅ ضخیم‌تر برای test!
       opacity: 1,
-      fillOpacity: 0.7,
-      color: colors[kind] || '#38bdf8',
-      fillColor: colors[kind] || '#38bdf8'
+      fillOpacity: 0.9,   // ✅ پررنگ‌تر برای test!
+      color: colors[kind] || '#00ff00',
+      fillColor: colors[kind] || '#00ff00'
     };
   }
 
@@ -2185,14 +2185,15 @@ async function ama_bootstrap(){
   function addPolyGroup(key, gj){
     if(!gj) return;
     const style = key==='province'
-      ? { color:'#6b7280', weight:2, opacity:0.8, fillOpacity:0 }
-      : { color:'#111',    weight:2, opacity:1,   fillOpacity:0 };
+      ? { color:'#ff0000', weight:4, opacity:1, fillOpacity:0.1, fillColor:'#ff0000' }  // ✅ قرمز و ضخیم برای test!
+      : { color:'#0ea5e9', weight:2, opacity:1, fillOpacity:0 };
     const layer = L.geoJSON(gj, {
       pane: 'polygons',  // مشخص کردن pane
       style: () => style
     });
     AMA.G[key].clearLayers();
     AMA.G[key].addLayer(layer);
+    console.log(`[AMA] Added ${key} polygroup - features:`, gj.features?.length || 0);
   }
 
   // window.__countiesGeoAll already set above with fallback logic
@@ -2312,6 +2313,31 @@ async function ama_bootstrap(){
     counties: map.hasLayer(AMA.G.counties),
     province: map.hasLayer(AMA.G.province)
   });
+
+  // ✅ FORCE ADD ALL LAYERS to map for testing!
+  console.log('[AMA] ══════ FORCING ALL LAYERS TO MAP ══════');
+  ['province', 'counties', 'wind', 'solar', 'dams'].forEach(key => {
+    const grp = AMA.G[key];
+    if (!grp) {
+      console.error(`[AMA] Group ${key} does not exist!`);
+      return;
+    }
+
+    const layerCount = grp.getLayers().length;
+    const isOnMap = map.hasLayer(grp);
+
+    console.log(`[AMA] ${key}:`, {
+      layerCount,
+      isOnMap,
+      action: isOnMap ? 'already on map' : 'adding to map...'
+    });
+
+    if (!isOnMap && layerCount > 0) {
+      grp.addTo(map);
+      console.log(`[AMA] ✅ ${key} forcefully added to map!`);
+    }
+  });
+  console.log('[AMA] ═══════════════════════════════════════');
 
   if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
 
