@@ -31,14 +31,11 @@ function trackAnalyticsEvent(action, params = {}) {
 // Choropleth flag (opt-in) + debug marker control
 AMA.flags = AMA.flags || {};
 AMA.flags.debugCountyMarker = false;
-AMA.flags.disableMarkerIcons = true;
+AMA.flags.disableMarkerIcons = false;  // ✅ غیرفعال - چون از DivIcon استفاده می‌کنیم
 const CHORO_ON = !!AMA.flags.enableChoropleth;
 
-// soft-disable default Marker icons when flag is on
-if (AMA.flags.disableMarkerIcons && typeof L !== 'undefined' && L && L.Marker && L.Marker.prototype){
-  const _initIcon = L.Marker.prototype._initIcon;
-  L.Marker.prototype._initIcon = function(){ /* no-op: hide image icon */ };
-}
+// حذف کد قدیمی که marker icons را disable می‌کرد
+// چون حالا از DivIcon استفاده می‌کنیم
 
 ;(function(){
   window.__AMA_UI_VERSION = 'dock-probe-v1';
@@ -272,24 +269,58 @@ let boundary;
 function safeRemoveLayer(map, layer) {
   if (!layer) return;
   if (layer.__AMA_PROTECTED && !layer.__AMA_ALLOW_REPLACE) return;
-  if (map.hasLayer(layer)) map.removeLayer(layer);
+  try {
+    // ✅ ابتدا تلاش برای remove کردن از map
+    if (map.hasLayer(layer)) {
+      map.removeLayer(layer);
+    }
+  } catch (e) {
+    // ✅ اگر خطا داد، سعی کنیم manually clear کنیم
+    console.warn('[AMA] Error removing layer, trying manual clear:', e.message);
+    try {
+      if (layer.clearLayers && typeof layer.clearLayers === 'function') {
+        layer.clearLayers();
+      }
+      if (map.hasLayer(layer)) {
+        layer.remove();
+      }
+    } catch (e2) {
+      console.error('[AMA] Failed to remove layer:', e2);
+    }
+  }
   if (layer.__AMA_ALLOW_REPLACE) layer.__AMA_ALLOW_REPLACE = false;
 }
 
 async function __refreshBoundary(map, opts={}) {
   const src = window.__countiesGeoAll || { type:'FeatureCollection', features:[] };
+
+  // ✅ پیش-فیلتر کردن features برای حذف Point features
+  const polygonOnlyFC = {
+    type: 'FeatureCollection',
+    features: (src.features || []).filter(f => {
+      const geomType = f?.geometry?.type;
+      return geomType === 'Polygon' || geomType === 'MultiPolygon';
+    })
+  };
+  console.log(`[AMA] boundary source: ${src.features?.length || 0} total, ${polygonOnlyFC.features.length} polygons`);
+
+  // ✅ Remove کردن ایمن boundary قدیمی
   if (window.boundary && !opts.keepOld) {
     window.boundary.__AMA_ALLOW_REPLACE = true;
     safeRemoveLayer(map, window.boundary);
+    window.boundary = null;  // ✅ اضافه کردن null برای garbage collection
   }
-  window.boundary = L.geoJSON(src, {
+
+  // ✅ ساخت boundary جدید فقط با polygons (بدون هیچ Point feature)
+  window.boundary = L.geoJSON(polygonOnlyFC, {
     pane:'boundary',
-    style:{ color:'#111827', weight:1.5, fill:false }
+    style:{ color:'#475569', weight:1.5, fill:false, opacity:0.7 }
   }).addTo(map);
+
   window.boundary.__AMA_PROTECTED = true;
   boundary = window.boundary;
   if (window.boundary.bringToFront) window.boundary.bringToFront();
-  if (window.AMA_DEBUG) console.log('[AHA] boundary src features =', src.features?.length||0);
+  console.log('[AMA] boundary refreshed with', polygonOnlyFC.features.length, 'polygon features');
 }
 
 function ama_popupContent(f, kind){
@@ -2149,37 +2180,176 @@ async function ama_bootstrap(){
     window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
   }
 
-  // سبک پایه برای نقاط
-  function pointStyle(kind){
-    return { radius: 4, weight: 1, opacity: 1, fillOpacity: 0.7 };
+  // ✅ تابع ساخت custom icon با emoji
+  function createCustomIcon(type) {
+    const icons = {
+      wind: '💨',
+      solar: '☀️',
+      dams: '💧'
+    };
+
+    const colors = {
+      wind: '#38bdf8',   // آبی روشن
+      solar: '#fbbf24',  // زرد
+      dams: '#60a5fa'    // آبی
+    };
+
+    // ✅ اعتبارسنجی type
+    if (!icons[type]) {
+      console.warn(`[AMA] Unknown icon type: ${type}, using default`);
+      return L.divIcon({
+        className: `custom-marker marker-default`,
+        html: `
+          <div class="marker-container">
+            <div class="marker-icon" style="color: #38bdf8">📍</div>
+            <div class="marker-pulse" style="background: #38bdf833"></div>
+          </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+      });
+    }
+
+    try {
+      return L.divIcon({
+        className: `custom-marker marker-${type}`,
+        html: `
+          <div class="marker-container">
+            <div class="marker-icon" style="color: ${colors[type]}">${icons[type]}</div>
+            <div class="marker-pulse" style="background: ${colors[type]}33"></div>
+          </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+      });
+    } catch (e) {
+      console.error(`[AMA] Error creating DivIcon:`, e);
+      return null;
+    }
   }
 
-  // ساخت لایه GeoJSON با circleMarker
-  function asCircleLayer(gj, kind){
+  // سبک پایه برای نقاط - فقط برای circleMarker fallback
+  function pointStyle(kind){
+    const colors = {
+      wind: '#38bdf8',
+      solar: '#fbbf24',
+      dams: '#60a5fa'
+    };
+    return {
+      radius: 8,
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.8,
+      color: colors[kind] || '#38bdf8',
+      fillColor: colors[kind] || '#38bdf8'
+    };
+  }
+
+  // ✅ ساخت لایه GeoJSON با DivIcon markers
+  function asMarkerLayer(gj, kind){
     if (!gj) return null;
     return L.geoJSON(gj, {
-      pointToLayer: (_f, latlng)=> L.circleMarker(latlng, pointStyle(kind))
+      pane: 'points',
+      filter: (feature) => {
+        // فقط Point features را پردازش کن
+        const geomType = feature?.geometry?.type;
+        return geomType === 'Point';
+      },
+      pointToLayer: (feature, latlng) => {
+        try {
+          const icon = createCustomIcon(kind);
+          if (!icon) {
+            console.error(`[AMA] Failed to create icon for ${kind}`);
+            return null;
+          }
+
+          const marker = L.marker(latlng, { icon });
+
+          // اضافه کردن popup با اطلاعات
+          const props = feature.properties || {};
+          const popupContent = `
+            <div class="custom-popup" dir="rtl">
+              <h3>${props.name_fa || props.name || 'نام نامشخص'}</h3>
+              <p><strong>شهرستان:</strong> ${props.county || '-'}</p>
+              ${props.capacity_mw ? `<p><strong>ظرفیت:</strong> ${props.capacity_mw} مگاوات</p>` : ''}
+              ${props.wind_class ? `<p><strong>کلاس باد:</strong> ${props.wind_class}</p>` : ''}
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+
+          return marker;
+        } catch (e) {
+          console.error(`[AMA] Error creating marker for ${kind}:`, e);
+          return null;
+        }
+      }
     });
   }
 
-  // افزودن ایمن به رجیستری بدون مارکر آیکنی
+  // افزودن ایمن به رجیستری با DivIcon
   function setPointGroup(key, gj){
     const grp = AMA.G[key]; if (!grp) return;
     grp.clearLayers();
-    const lyr = asCircleLayer(gj, key); if (lyr) grp.addLayer(lyr);
+    const lyr = asMarkerLayer(gj, key); if (lyr) grp.addLayer(lyr);
   }
 
   function addPolyGroup(key, gj){
     if(!gj) return;
     const style = key==='province'
-      ? { color:'#6b7280', weight:2, opacity:0.8, fillOpacity:0 }
-      : { color:'#111',    weight:2, opacity:1,   fillOpacity:0 };
-    const layer = L.geoJSON(gj, { style: () => style });
+      ? { color:'#0ea5e9', weight:4, opacity:1, fillOpacity:0.08, fillColor:'#0ea5e9' }  // ✅ بهبود visibility با border کلفت‌تر و رنگ واضح‌تر
+      : { color:'#38bdf8', weight:2, opacity:0.8, fillOpacity:0 };
+    const layer = L.geoJSON(gj, {
+      pane: 'polygons',
+      filter: (feature) => {
+        const geomType = feature?.geometry?.type;
+        return geomType === 'Polygon' || geomType === 'MultiPolygon';
+      },
+      style: () => style
+    });
     AMA.G[key].clearLayers();
     AMA.G[key].addLayer(layer);
+    console.log(`[AMA] Added ${key} polygroup - features:`, gj.features?.length || 0);
   }
 
-  addPolyGroup('counties', countiesData);  // استفاده از countiesData که fallback دارد
+  // window.__countiesGeoAll already set above with fallback logic
+  window.__combinedGeo = provinceFC;
+  console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
+
+  // ✅ 1. ایجاد map
+  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  window.__AMA_MAP = map;
+
+  // ✅ Diagnostic: بررسی map container
+  const mapContainer = document.getElementById('map');
+  if (mapContainer) {
+    const rect = mapContainer.getBoundingClientRect();
+    console.log('[AMA] Map container dimensions:', {
+      width: rect.width,
+      height: rect.height,
+      display: getComputedStyle(mapContainer).display,
+      visibility: getComputedStyle(mapContainer).visibility
+    });
+    if (rect.width === 0 || rect.height === 0) {
+      console.error('[AMA] ❌ Map container has ZERO dimensions! Check CSS!');
+    }
+  } else {
+    console.error('[AMA] ❌ Map container #map not found!');
+  }
+
+  // ✅ 2. ایجاد pane ها قبل از populate کردن groups
+  map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
+  map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
+  map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
+  console.log('[AMA] Panes created:', {
+    polygons: !!map.getPane('polygons'),
+    points: !!map.getPane('points'),
+    boundary: !!map.getPane('boundary')
+  });
+
+  // ✅ 3. حالا populate کردن groups (با pane های آماده)
+  addPolyGroup('counties', countiesData);
   addPolyGroup('province', provinceFC);
   setPointGroup('wind', windFC);
   setPointGroup('solar', solarFC);
@@ -2193,38 +2363,22 @@ async function ama_bootstrap(){
     dams: AMA.G.dams?.getLayers().length || 0
   });
 
-  function coerceMarkersToCircles(groupKey){
-    const grp = AMA.G[groupKey]; if (!grp) return;
-    const toAdd = [], toRemove = [];
-    grp.eachLayer(l=>{
-      if (l instanceof L.GeoJSON){
-        l.eachLayer(inn=>{
-          if (inn instanceof L.Marker && typeof inn.getLatLng==='function'){
-            const ll = inn.getLatLng();
-            toRemove.push(inn);
-            toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
-          }
-        });
-      } else if (l instanceof L.Marker && typeof l.getLatLng==='function'){
-        const ll = l.getLatLng();
-        toRemove.push(l);
-        toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
-      }
-    });
-    toRemove.forEach(x=> grp.removeLayer(x));
-    toAdd.forEach(x=> grp.addLayer(x));
-  }
+  // ✅ حذف coerceMarkersToCircles - چون از DivIcon استفاده می‌کنیم
 
-  ['wind','solar','dams'].forEach(k=>{ coerceMarkersToCircles(k); });
-  setTimeout(()=> ['wind','solar','dams'].forEach(k=> coerceMarkersToCircles(k)), 0);
+  // استفاده از tile provider با fallback
+  const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  const tileLayer = L.tileLayer(tileLayerUrl, {
+    attribution: '© OpenStreetMap',
+    maxZoom: 19,
+    errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
+  });
 
-  // window.__countiesGeoAll already set above with fallback logic
-  window.__combinedGeo = provinceFC;
-  console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
+  tileLayer.on('tileerror', function(error, tile) {
+    console.warn('[AMA] Tile load error:', error);
+  });
 
-  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
-  window.__AMA_MAP = map;
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
+  tileLayer.addTo(map);
+  console.log('[AMA] Tile layer added to map');
   if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
     map.attributionControl.setPosition('bottomleft');
@@ -2234,10 +2388,6 @@ async function ama_bootstrap(){
   map.on('click', e => {
     trackAnalyticsEvent('map_click', { lat: e.latlng.lat, lng: e.latlng.lng });
   });
-
-map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
-map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
-map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
   if (window.AMA_DEBUG) console.log('[AHA] panes zIndex=', {
     polygons: getComputedStyle(map.getPane('polygons')).zIndex,
     points:   getComputedStyle(map.getPane('points')).zIndex,
@@ -2247,28 +2397,143 @@ map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
   const canvasRenderer = L.canvas({padding:0.5});
   window.__AMA_canvasRenderer = canvasRenderer;
 
+  // ✅ Safe override of map.removeLayer with error handling
   const _rm = map.removeLayer.bind(map);
   map.removeLayer = (lyr) => {
     if (lyr?.__AMA_PROTECTED && !lyr.__AMA_ALLOW_REPLACE) {
       if (window.AMA_DEBUG) console.warn('[AMA] blocked remove on protected layer');
       return map;
     }
-    return _rm(lyr);
+    try {
+      return _rm(lyr);
+    } catch (e) {
+      console.warn('[AMA] Error in map.removeLayer:', e.message);
+      // Try manual removal
+      try {
+        if (lyr && lyr.remove) lyr.remove();
+      } catch (e2) {
+        console.error('[AMA] Failed manual remove:', e2);
+      }
+      return map;
+    }
   };
+
+  // ✅ CRITICAL: ساخت boundary قبل از اضافه کردن layers برای جلوگیری از خطا
+  console.log('[AMA] ══════ CREATING BOUNDARY FIRST ══════');
+  await __refreshBoundary(map, { keepOld:false });
+  console.log('[AMA] Boundary created successfully');
+
+  console.log('[AMA] Before enforceDefaultVisibility - Layers on map:', {
+    wind: map.hasLayer(AMA.G.wind),
+    solar: map.hasLayer(AMA.G.solar),
+    dams: map.hasLayer(AMA.G.dams),
+    counties: map.hasLayer(AMA.G.counties),
+    province: map.hasLayer(AMA.G.province)
+  });
 
   enforceDefaultVisibility(map);
   setTimeout(()=>enforceDefaultVisibility(map), 0);
+
+  console.log('[AMA] After enforceDefaultVisibility - Layers on map:', {
+    wind: map.hasLayer(AMA.G.wind),
+    solar: map.hasLayer(AMA.G.solar),
+    dams: map.hasLayer(AMA.G.dams),
+    counties: map.hasLayer(AMA.G.counties),
+    province: map.hasLayer(AMA.G.province)
+  });
+
+  // ✅ FORCE ADD ALL LAYERS to map for testing!
+  console.log('[AMA] ══════ FORCING ALL LAYERS TO MAP ══════');
+  ['province', 'counties', 'wind', 'solar', 'dams'].forEach(key => {
+    const grp = AMA.G[key];
+    if (!grp) {
+      console.error(`[AMA] Group ${key} does not exist!`);
+      return;
+    }
+
+    const layerCount = grp.getLayers().length;
+    const isOnMap = map.hasLayer(grp);
+
+    // ✅ بررسی bounds هر layer
+    let bounds = null;
+    try {
+      bounds = grp.getBounds ? grp.getBounds() : null;
+    } catch (e) {
+      bounds = 'error: ' + e.message;
+    }
+
+    console.log(`[AMA] ${key}:`, {
+      layerCount,
+      isOnMap,
+      bounds: bounds ? `${bounds._southWest?.lat.toFixed(2)},${bounds._southWest?.lng.toFixed(2)} → ${bounds._northEast?.lat.toFixed(2)},${bounds._northEast?.lng.toFixed(2)}` : 'no bounds',
+      action: isOnMap ? 'already on map' : 'adding to map...'
+    });
+
+    if (!isOnMap && layerCount > 0) {
+      grp.addTo(map);
+      console.log(`[AMA] ✅ ${key} forcefully added to map!`);
+
+      // ✅ بررسی که واقعاً اضافه شد
+      setTimeout(() => {
+        if (map.hasLayer(grp)) {
+          console.log(`[AMA] ✓ ${key} confirmed on map`);
+        } else {
+          console.error(`[AMA] ✗ ${key} FAILED to add to map!`);
+        }
+      }, 100);
+    }
+  });
+  console.log('[AMA] ═══════════════════════════════════════');
+
   if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
 
-  await __refreshBoundary(map, { keepOld:false });
+  // ✅ CRITICAL: Force fitBounds به province/counties
+  console.log('[AMA] ══════ FITTING BOUNDS ══════');
+  const allBounds = [];
 
-  const b1 = (countiesFC && L.geoJSON(countiesFC).getBounds()) || null;
-  const b2 = (provinceFC && L.geoJSON(provinceFC).getBounds()) || null;
-  let bounds = b1 || b2;
-  if (b1 && b2) { try { bounds = b1.extend(b2); } catch(_){} }
-  if (bounds && bounds.isValid && bounds.isValid()) map.fitBounds(bounds);
-  else console.warn('[AMA] no valid bounds; skip fitBounds');
-  boundary.setStyle({ className: 'neon-edge' });
+  // جمع‌آوری bounds از همه layers
+  ['province', 'counties'].forEach(key => {
+    const grp = AMA.G[key];
+    if (grp && grp.getLayers().length > 0) {
+      try {
+        const b = grp.getBounds();
+        if (b && b.isValid && b.isValid()) {
+          allBounds.push(b);
+          console.log(`[AMA] ${key} bounds:`, {
+            sw: `${b._southWest.lat.toFixed(2)},${b._southWest.lng.toFixed(2)}`,
+            ne: `${b._northEast.lat.toFixed(2)},${b._northEast.lng.toFixed(2)}`
+          });
+        }
+      } catch (e) {
+        console.error(`[AMA] Error getting bounds for ${key}:`, e);
+      }
+    }
+  });
+
+  // اگر bounds داریم، fitBounds کن
+  if (allBounds.length > 0) {
+    let combinedBounds = allBounds[0];
+    for (let i = 1; i < allBounds.length; i++) {
+      combinedBounds.extend(allBounds[i]);
+    }
+
+    console.log('[AMA] Fitting map to combined bounds...');
+    map.fitBounds(combinedBounds, { padding: [50, 50] });
+    console.log('[AMA] ✅ Map fitted to bounds!');
+  } else {
+    console.error('[AMA] ❌ No valid bounds found! Using default center.');
+    map.setView([36.3, 59.6], 7);
+  }
+  console.log('[AMA] ═══════════════════════════════════════');
+
+  // ✅ استایل boundary
+  if (boundary && boundary.setStyle) {
+    try {
+      boundary.setStyle({ className: 'neon-edge' });
+    } catch (e) {
+      console.warn('[AMA] Could not set boundary style:', e.message);
+    }
+  }
   map.on('layeradd overlayadd overlayremove', () => {
     if (boundary?.bringToFront) boundary.bringToFront();
   });
