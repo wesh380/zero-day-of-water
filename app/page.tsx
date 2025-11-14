@@ -7,6 +7,7 @@ import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
+import FAQ from "@/components/sections/FAQ"
 
 const Breadcrumbs = () => {
   return (
@@ -568,6 +569,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQ />
       </main>
 
       {/* Footer */}
