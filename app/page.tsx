@@ -267,11 +267,8 @@ export default function HomePage() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-4 text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-              پلتفرم در یک نگاه
+              آمار این سایت در یک نگاه
             </h2>
-            <p className="text-xl md:text-2xl text-gray-600 font-medium max-w-3xl mx-auto">
-              آمار و ارقام کلیدی خانه هم‌افزایی
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
