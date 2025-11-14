@@ -2151,13 +2151,26 @@ async function ama_bootstrap(){
 
   // سبک پایه برای نقاط
   function pointStyle(kind){
-    return { radius: 4, weight: 1, opacity: 1, fillOpacity: 0.7 };
+    const colors = {
+      wind: '#38bdf8',
+      solar: '#fbbf24',
+      dams: '#60a5fa'
+    };
+    return {
+      radius: 6,
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.7,
+      color: colors[kind] || '#38bdf8',
+      fillColor: colors[kind] || '#38bdf8'
+    };
   }
 
   // ساخت لایه GeoJSON با circleMarker
   function asCircleLayer(gj, kind){
     if (!gj) return null;
     return L.geoJSON(gj, {
+      pane: 'points',  // مشخص کردن pane
       pointToLayer: (_f, latlng)=> L.circleMarker(latlng, pointStyle(kind))
     });
   }
@@ -2174,12 +2187,34 @@ async function ama_bootstrap(){
     const style = key==='province'
       ? { color:'#6b7280', weight:2, opacity:0.8, fillOpacity:0 }
       : { color:'#111',    weight:2, opacity:1,   fillOpacity:0 };
-    const layer = L.geoJSON(gj, { style: () => style });
+    const layer = L.geoJSON(gj, {
+      pane: 'polygons',  // مشخص کردن pane
+      style: () => style
+    });
     AMA.G[key].clearLayers();
     AMA.G[key].addLayer(layer);
   }
 
-  addPolyGroup('counties', countiesData);  // استفاده از countiesData که fallback دارد
+  // window.__countiesGeoAll already set above with fallback logic
+  window.__combinedGeo = provinceFC;
+  console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
+
+  // ✅ 1. ایجاد map
+  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  window.__AMA_MAP = map;
+
+  // ✅ 2. ایجاد pane ها قبل از populate کردن groups
+  map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
+  map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
+  map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
+  console.log('[AMA] Panes created:', {
+    polygons: !!map.getPane('polygons'),
+    points: !!map.getPane('points'),
+    boundary: !!map.getPane('boundary')
+  });
+
+  // ✅ 3. حالا populate کردن groups (با pane های آماده)
+  addPolyGroup('counties', countiesData);
   addPolyGroup('province', provinceFC);
   setPointGroup('wind', windFC);
   setPointGroup('solar', solarFC);
@@ -2218,13 +2253,20 @@ async function ama_bootstrap(){
   ['wind','solar','dams'].forEach(k=>{ coerceMarkersToCircles(k); });
   setTimeout(()=> ['wind','solar','dams'].forEach(k=> coerceMarkersToCircles(k)), 0);
 
-  // window.__countiesGeoAll already set above with fallback logic
-  window.__combinedGeo = provinceFC;
-  console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
+  // استفاده از tile provider با fallback
+  const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  const tileLayer = L.tileLayer(tileLayerUrl, {
+    attribution: '© OpenStreetMap',
+    maxZoom: 19,
+    errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
+  });
 
-  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
-  window.__AMA_MAP = map;
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ attribution:'© OpenStreetMap' }).addTo(map);
+  tileLayer.on('tileerror', function(error, tile) {
+    console.warn('[AMA] Tile load error:', error);
+  });
+
+  tileLayer.addTo(map);
+  console.log('[AMA] Tile layer added to map');
   if (map.zoomControl && typeof map.zoomControl.setPosition==='function') map.zoomControl.setPosition('bottomleft');
   if (map.attributionControl && typeof map.attributionControl.setPosition === 'function') {
     map.attributionControl.setPosition('bottomleft');
@@ -2234,10 +2276,6 @@ async function ama_bootstrap(){
   map.on('click', e => {
     trackAnalyticsEvent('map_click', { lat: e.latlng.lat, lng: e.latlng.lng });
   });
-
-map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
-map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
-map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
   if (window.AMA_DEBUG) console.log('[AHA] panes zIndex=', {
     polygons: getComputedStyle(map.getPane('polygons')).zIndex,
     points:   getComputedStyle(map.getPane('points')).zIndex,
@@ -2256,11 +2294,30 @@ map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
     return _rm(lyr);
   };
 
+  console.log('[AMA] Before enforceDefaultVisibility - Layers on map:', {
+    wind: map.hasLayer(AMA.G.wind),
+    solar: map.hasLayer(AMA.G.solar),
+    dams: map.hasLayer(AMA.G.dams),
+    counties: map.hasLayer(AMA.G.counties),
+    province: map.hasLayer(AMA.G.province)
+  });
+
   enforceDefaultVisibility(map);
   setTimeout(()=>enforceDefaultVisibility(map), 0);
+
+  console.log('[AMA] After enforceDefaultVisibility - Layers on map:', {
+    wind: map.hasLayer(AMA.G.wind),
+    solar: map.hasLayer(AMA.G.solar),
+    dams: map.hasLayer(AMA.G.dams),
+    counties: map.hasLayer(AMA.G.counties),
+    province: map.hasLayer(AMA.G.province)
+  });
+
   if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
 
+  console.log('[AMA] Calling __refreshBoundary...');
   await __refreshBoundary(map, { keepOld:false });
+  console.log('[AMA] __refreshBoundary completed');
 
   const b1 = (countiesFC && L.geoJSON(countiesFC).getBounds()) || null;
   const b2 = (provinceFC && L.geoJSON(provinceFC).getBounds()) || null;
