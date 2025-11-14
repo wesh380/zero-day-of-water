@@ -2436,13 +2436,53 @@ async function ama_bootstrap(){
   await __refreshBoundary(map, { keepOld:false });
   console.log('[AMA] __refreshBoundary completed');
 
-  const b1 = (countiesFC && L.geoJSON(countiesFC).getBounds()) || null;
-  const b2 = (provinceFC && L.geoJSON(provinceFC).getBounds()) || null;
-  let bounds = b1 || b2;
-  if (b1 && b2) { try { bounds = b1.extend(b2); } catch(_){} }
-  if (bounds && bounds.isValid && bounds.isValid()) map.fitBounds(bounds);
-  else console.warn('[AMA] no valid bounds; skip fitBounds');
-  boundary.setStyle({ className: 'neon-edge' });
+  // ✅ CRITICAL: Force fitBounds به province/counties
+  console.log('[AMA] ══════ FITTING BOUNDS ══════');
+  const allBounds = [];
+
+  // جمع‌آوری bounds از همه layers
+  ['province', 'counties'].forEach(key => {
+    const grp = AMA.G[key];
+    if (grp && grp.getLayers().length > 0) {
+      try {
+        const b = grp.getBounds();
+        if (b && b.isValid && b.isValid()) {
+          allBounds.push(b);
+          console.log(`[AMA] ${key} bounds:`, {
+            sw: `${b._southWest.lat.toFixed(2)},${b._southWest.lng.toFixed(2)}`,
+            ne: `${b._northEast.lat.toFixed(2)},${b._northEast.lng.toFixed(2)}`
+          });
+        }
+      } catch (e) {
+        console.error(`[AMA] Error getting bounds for ${key}:`, e);
+      }
+    }
+  });
+
+  // اگر bounds داریم، fitBounds کن
+  if (allBounds.length > 0) {
+    let combinedBounds = allBounds[0];
+    for (let i = 1; i < allBounds.length; i++) {
+      combinedBounds.extend(allBounds[i]);
+    }
+
+    console.log('[AMA] Fitting map to combined bounds...');
+    map.fitBounds(combinedBounds, { padding: [50, 50] });
+    console.log('[AMA] ✅ Map fitted to bounds!');
+  } else {
+    console.error('[AMA] ❌ No valid bounds found! Using default center.');
+    map.setView([36.3, 59.6], 7);
+  }
+  console.log('[AMA] ═══════════════════════════════════════');
+
+  // ✅ استایل boundary
+  if (boundary && boundary.setStyle) {
+    try {
+      boundary.setStyle({ className: 'neon-edge' });
+    } catch (e) {
+      console.warn('[AMA] Could not set boundary style:', e.message);
+    }
+  }
   map.on('layeradd overlayadd overlayremove', () => {
     if (boundary?.bringToFront) boundary.bringToFront();
   });
