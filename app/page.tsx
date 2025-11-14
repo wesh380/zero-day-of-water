@@ -382,6 +382,7 @@ export default function HomePage() {
               </div>
 
               <div className="mb-4 relative z-10">
+                <Calculator className="w-6 h-6 text-orange-500 mb-3 mx-auto" />
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-3 group-hover:scale-110 group-hover:rotate-6 transition-all">
                   <Calculator className="w-8 h-8 text-white animate-pulse-slow" />
                 </div>
@@ -417,6 +418,7 @@ export default function HomePage() {
               </div>
 
               <div className="mb-4 relative z-10">
+                <BarChart3 className="w-6 h-6 text-blue-500 mb-3 mx-auto" />
                 <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
                   <BarChart3 className="w-9 h-9 text-white animate-chart-grow" />
                 </div>
@@ -462,6 +464,7 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
+                <Users className="w-8 h-8 text-green-600 mb-3 mx-auto" />
                 <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-3 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all animate-pulse-glow">
                   <Users className="w-10 h-10 md:w-12 md:h-12 text-white" />
                 </div>
@@ -500,6 +503,7 @@ export default function HomePage() {
               </div>
 
               <div className="mb-4 relative z-10">
+                <TrendingUp className="w-6 h-6 text-purple-500 mb-3 mx-auto" />
                 <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
                   <TrendingUp className="w-9 h-9 text-white animate-trend-pulse" />
                 </div>
