@@ -35,9 +35,9 @@ const OptimizedNavigation = () => {
           </div>
 
           {/* تماس */}
-          <a href="tel:05138xxxxxx" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
+          <a href="tel:05138434143" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
             <Phone className="w-4 h-4" />
-            <span className="hidden md:inline font-medium">051-3800-xxxx</span>
+            <span className="hidden md:inline font-medium">051-38434143</span>
             <span className="md:hidden">تماس</span>
           </a>
         </div>
@@ -134,11 +134,11 @@ const OptimizedNavigation = () => {
 
                 {/* Dropdown */}
                 <div className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
+                  <a href="tel:05138434143" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <Phone className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="font-medium text-gray-900">تماس تلفنی</div>
-                      <div className="text-xs text-gray-500">051-3800-xxxx</div>
+                      <div className="text-xs text-gray-500">051-38434143</div>
                     </div>
                   </a>
                   <a href="https://t.me/wesh360" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
@@ -199,7 +199,7 @@ const OptimizedNavigation = () => {
                 <Droplets className="w-5 h-5 text-green-600" />
                 <span className="font-medium text-gray-700">درخواست داده پژوهشی</span>
               </a>
-              <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+              <a href="tel:05138434143" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
                 <Phone className="w-5 h-5 text-gray-600" />
                 <span className="font-medium text-gray-700">تماس با ما</span>
               </a>
