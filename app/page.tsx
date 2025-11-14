@@ -10,44 +10,31 @@ import DataJourney from "@/components/sections/DataJourney"
 const OptimizedNavigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [liveUsers, setLiveUsers] = useState(43);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
 
-    // شبیه‌سازی کاربران آنلاین
-    const interval = setInterval(() => {
-      setLiveUsers(prev => prev + Math.floor(Math.random() * 3) - 1);
-    }, 5000);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(interval);
     };
   }, []);
 
   return (
     <>
-      {/* Top Bar - اطلاعات فوری */}
+      {/* Top Bar - اطلاعات رسمی */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 text-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
-            {/* کاربران آنلاین */}
+            {/* عنوان رسمی */}
             <div className="flex items-center gap-2">
-              <span className="hidden md:inline">
-                <span className="font-bold">{liveUsers}</span> نفر الان دارن چک می‌کنن
+              <span className="font-medium">
+                درگاه رسمی داده‌های انرژی و آب خراسان رضوی
               </span>
-            </div>
-
-            {/* آمار تاثیرگذاری */}
-            <div className="hidden lg:flex items-center gap-1 text-yellow-300">
-              <TrendingUp className="w-4 h-4" />
-              <span>امروز: <strong>127</strong> نشتی کشف شد</span>
             </div>
           </div>
 
-          {/* تماس فوری */}
+          {/* تماس */}
           <a href="tel:05138xxxxxx" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
             <Phone className="w-4 h-4" />
             <span className="hidden md:inline font-medium">051-3800-xxxx</span>
@@ -134,7 +121,7 @@ const OptimizedNavigation = () => {
                   <Droplets className="w-4 h-4 text-green-600" />
                 </div>
                 <span className="font-medium text-gray-700 group-hover:text-green-600 transition-colors">
-                  وضعیت خراسان
+                  درخواست داده پژوهشی
                 </span>
               </a>
 
@@ -173,13 +160,12 @@ const OptimizedNavigation = () => {
 
               {/* دکمه CTA اصلی */}
               <a
-                href="#check-bill"
-                className="relative flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-red-400/30"
+                href="/dashboards/"
+                className="relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-blue-400/30"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <Zap className="w-5 h-5 relative z-10 drop-shadow-md" />
-                <span className="relative z-10 drop-shadow-md">چک رایگان قبض</span>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping shadow-lg"></div>
+                <TrendingUp className="w-5 h-5 relative z-10 drop-shadow-md" />
+                <span className="relative z-10 drop-shadow-md">مشاهده آمار و گزارش‌ها</span>
               </a>
             </div>
 
@@ -211,7 +197,7 @@ const OptimizedNavigation = () => {
               </a>
               <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors">
                 <Droplets className="w-5 h-5 text-green-600" />
-                <span className="font-medium text-gray-700">وضعیت خراسان</span>
+                <span className="font-medium text-gray-700">درخواست داده پژوهشی</span>
               </a>
               <a href="tel:051xxx" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
                 <Phone className="w-5 h-5 text-gray-600" />
@@ -219,11 +205,11 @@ const OptimizedNavigation = () => {
               </a>
 
               <a
-                href="#check-bill"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-3 rounded-full font-bold mt-4"
+                href="/dashboards/"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold mt-4"
               >
-                <Zap className="w-5 h-5" />
-                چک رایگان قبض
+                <TrendingUp className="w-5 h-5" />
+                مشاهده آمار و گزارش‌ها
               </a>
             </div>
           </div>
