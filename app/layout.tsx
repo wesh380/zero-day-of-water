@@ -46,6 +46,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  // Geographic metadata for Local SEO
+  other: {
+    'geo.region': 'IR-30',
+    'geo.placename': 'Mashhad, Khorasan Razavi',
+    'geo.position': '36.297211;59.606392',
+    'ICBM': '36.297211, 59.606392',
+  },
   openGraph: {
     type: "website",
     url: "https://wesh360.ir/",
@@ -224,7 +231,32 @@ export default function RootLayout({
       </head>
       <body className="font-sans">
         <Suspense fallback={null}>{children}</Suspense>
-        {/* Statsfa Website Analytics Start */}
+
+        {/* Google Analytics 4 - Replace with your actual GA4 ID */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
+        {/* Statsfa Website Analytics */}
         <Script
           data-host="https://statsfa.com"
           data-dnt="true"
@@ -232,7 +264,6 @@ export default function RootLayout({
           id="ZwSg9rf6GA"
           strategy="afterInteractive"
         />
-        {/* Statsfa Website Analytics End */}
       </body>
     </html>
   )
