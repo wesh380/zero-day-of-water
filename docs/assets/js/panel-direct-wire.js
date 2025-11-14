@@ -64,12 +64,15 @@
           setOn(key, cb.checked);
           e.stopPropagation();
         });
+        cb.__bridged = true;
+        el.__bridged = true;  // علامت‌گذاری label هم به عنوان bridged
       } else {
         el.addEventListener('click', (e)=>{
           const on = el.getAttribute('aria-pressed') !== 'true';
           setOn(key, on);
           e.preventDefault();
         });
+        el.__bridged = true;
       }
     });
     syncUi();
@@ -81,10 +84,26 @@
     bind();
   };
 
+  window.__amaBridgePairs = function(){
+    const pairs = [];
+    document.querySelectorAll('[data-layer-toggle]').forEach(el=>{
+      const key = (el.getAttribute('data-layer-toggle')||'').trim();
+      const grp = G()[key];
+      const m = map();
+      pairs.push({
+        key,
+        element: el.tagName.toLowerCase()+'#'+(el.id||''),
+        bridged: !!el.__bridged,
+        hasGroup: !!grp,
+        onMap: !!(m && grp && m.hasLayer(grp))
+      });
+    });
+    return pairs;
+  };
+
   document.addEventListener('DOMContentLoaded', ()=>{
     if (document.querySelector('[data-layer-toggle]')) {
       A.initPanelDirectWire();
-      alert('\u062e\u0648\u0634 \u0622\u0645\u062f\u06cc\u062f!');
     }
   });
 })();

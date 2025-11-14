@@ -2115,7 +2115,8 @@ async function ama_bootstrap(){
     manifest = await fetch(manifestUrl2).then(r=>r.ok ? r.json() : null).catch(_=>null);
   }
   const pathsResolved = resolvePathsFromManifest(manifest);
-  if (window.AMA_DEBUG) console.log('[AMA] paths', pathsResolved);
+  console.log('[AMA] manifest loaded:', manifest);
+  console.log('[AMA] paths resolved:', pathsResolved);
 
   window.__LAYER_MANIFEST_JSON = manifest;
   window.__LAYER_MANIFEST_URL = manifestUrl;
@@ -2129,6 +2130,24 @@ async function ama_bootstrap(){
     safeLoad(pathsResolved.solar),
     safeLoad(pathsResolved.dams),
   ]);
+
+  console.log('[AMA] Data loaded:', {
+    countiesFC: countiesFC ? `${countiesFC.features?.length || 0} features` : 'null',
+    provinceFC: provinceFC ? `${provinceFC.features?.length || 0} features` : 'null',
+    windFC: windFC ? `${windFC.features?.length || 0} features` : 'null',
+    solarFC: solarFC ? `${solarFC.features?.length || 0} features` : 'null',
+    damsFC: damsFC ? `${damsFC.features?.length || 0} features` : 'null'
+  });
+
+  // Fallback: اگر countiesFC null است، از provinceFC استفاده کن
+  let countiesData = countiesFC;
+  if (!countiesFC && provinceFC) {
+    console.warn('[AMA] counties is null, using provinceFC as fallback');
+    countiesData = provinceFC;
+    window.__countiesGeoAll = provinceFC;
+  } else {
+    window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
+  }
 
   // سبک پایه برای نقاط
   function pointStyle(kind){
@@ -2160,11 +2179,19 @@ async function ama_bootstrap(){
     AMA.G[key].addLayer(layer);
   }
 
-  addPolyGroup('counties', countiesFC);
+  addPolyGroup('counties', countiesData);  // استفاده از countiesData که fallback دارد
   addPolyGroup('province', provinceFC);
   setPointGroup('wind', windFC);
   setPointGroup('solar', solarFC);
   setPointGroup('dams', damsFC);
+
+  console.log('[AMA] Groups populated:', {
+    counties: AMA.G.counties?.getLayers().length || 0,
+    province: AMA.G.province?.getLayers().length || 0,
+    wind: AMA.G.wind?.getLayers().length || 0,
+    solar: AMA.G.solar?.getLayers().length || 0,
+    dams: AMA.G.dams?.getLayers().length || 0
+  });
 
   function coerceMarkersToCircles(groupKey){
     const grp = AMA.G[groupKey]; if (!grp) return;
@@ -2191,9 +2218,9 @@ async function ama_bootstrap(){
   ['wind','solar','dams'].forEach(k=>{ coerceMarkersToCircles(k); });
   setTimeout(()=> ['wind','solar','dams'].forEach(k=> coerceMarkersToCircles(k)), 0);
 
-  window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
+  // window.__countiesGeoAll already set above with fallback logic
   window.__combinedGeo = provinceFC;
-  if (window.AMA_DEBUG) console.log('[AHA] all-counties.features =', (countiesFC?.features||[]).length);
+  console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
 
   const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
   window.__AMA_MAP = map;
