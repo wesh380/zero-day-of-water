@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Droplet, Zap, Flame, Droplets, Database, ShieldCheck, TrendingUp, Network, Eye, Clock, Users, Target, BarChart3, Lightbulb, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 // Value Propositions واقعی - نه داده فیک
@@ -16,6 +17,7 @@ const resources = [
     problem: 'بحران آب خراسان رضوی',
     solution: 'مدیریت هوشمند مصرف',
     impact: 'کاهش اتلاف',
+    link: '/water/hub',
     features: [
       { icon: Eye, text: 'پایش لحظه‌ای مصرف' },
       { icon: AlertTriangle, text: 'هشدار نشت و اتلاف' },
@@ -32,6 +34,7 @@ const resources = [
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
     impact: 'کاهش قطعی',
+    link: '/electricity/',
     features: [
       { icon: Target, text: 'پیش‌بینی پیک‌بار' },
       { icon: TrendingUp, text: 'بهینه‌سازی توزیع' },
@@ -48,6 +51,7 @@ const resources = [
     problem: 'کمبود در فصل سرما',
     solution: 'مدیریت تقاضا و عرضه',
     impact: 'توزیع عادلانه',
+    link: '/gas/',
     features: [
       { icon: Users, text: 'اولویت‌بندی مصرف' },
       { icon: Eye, text: 'نظارت فشار شبکه' },
@@ -64,6 +68,7 @@ const resources = [
     problem: 'پایش کیفیت و توزیع',
     solution: 'شفافیت در زنجیره تأمین',
     impact: 'کاهش تقلب',
+    link: '/gas/',
     features: [
       { icon: ShieldCheck, text: 'تضمین کیفیت' },
       { icon: Eye, text: 'ردیابی زنجیره' },
@@ -267,15 +272,15 @@ export default function ValueDrivenHero() {
             const isHovered = hoveredResource === index;
 
             return (
-              <motion.div
-                key={resource.id}
-                onHoverStart={() => setHoveredResource(index)}
-                onHoverEnd={() => setHoveredResource(null)}
-                onClick={() => setActiveResource(index)}
-                whileHover={{ scale: 1.03, y: -5 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative cursor-pointer group"
-              >
+              <Link href={resource.link} key={resource.id}>
+                <motion.div
+                  onHoverStart={() => setHoveredResource(index)}
+                  onHoverEnd={() => setHoveredResource(null)}
+                  onClick={() => setActiveResource(index)}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative cursor-pointer group"
+                >
                 <motion.div
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
                   style={{
@@ -365,6 +370,7 @@ export default function ValueDrivenHero() {
                   )}
                 </motion.div>
               </motion.div>
+              </Link>
             );
           })}
         </motion.div>
