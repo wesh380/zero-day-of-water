@@ -294,6 +294,16 @@ function safeRemoveLayer(map, layer) {
 async function __refreshBoundary(map, opts={}) {
   const src = window.__countiesGeoAll || { type:'FeatureCollection', features:[] };
 
+  // ✅ پیش-فیلتر کردن features برای حذف Point features
+  const polygonOnlyFC = {
+    type: 'FeatureCollection',
+    features: (src.features || []).filter(f => {
+      const geomType = f?.geometry?.type;
+      return geomType === 'Polygon' || geomType === 'MultiPolygon';
+    })
+  };
+  console.log(`[AMA] boundary source: ${src.features?.length || 0} total, ${polygonOnlyFC.features.length} polygons`);
+
   // ✅ Remove کردن ایمن boundary قدیمی
   if (window.boundary && !opts.keepOld) {
     window.boundary.__AMA_ALLOW_REPLACE = true;
@@ -301,21 +311,16 @@ async function __refreshBoundary(map, opts={}) {
     window.boundary = null;  // ✅ اضافه کردن null برای garbage collection
   }
 
-  // ✅ ساخت boundary جدید فقط با polygons (نه markers)
-  // فیلتر کردن فقط Polygon و MultiPolygon features
-  window.boundary = L.geoJSON(src, {
+  // ✅ ساخت boundary جدید فقط با polygons (بدون هیچ Point feature)
+  window.boundary = L.geoJSON(polygonOnlyFC, {
     pane:'boundary',
-    filter: (feature) => {
-      const geomType = feature?.geometry?.type;
-      return geomType === 'Polygon' || geomType === 'MultiPolygon';
-    },
     style:{ color:'#475569', weight:1.5, fill:false, opacity:0.7 }
   }).addTo(map);
 
   window.boundary.__AMA_PROTECTED = true;
   boundary = window.boundary;
   if (window.boundary.bringToFront) window.boundary.bringToFront();
-  console.log('[AMA] boundary refreshed - features:', src.features?.length||0);
+  console.log('[AMA] boundary refreshed with', polygonOnlyFC.features.length, 'polygon features');
 }
 
 function ama_popupContent(f, kind){
@@ -2413,6 +2418,11 @@ async function ama_bootstrap(){
     }
   };
 
+  // ✅ CRITICAL: ساخت boundary قبل از اضافه کردن layers برای جلوگیری از خطا
+  console.log('[AMA] ══════ CREATING BOUNDARY FIRST ══════');
+  await __refreshBoundary(map, { keepOld:false });
+  console.log('[AMA] Boundary created successfully');
+
   console.log('[AMA] Before enforceDefaultVisibility - Layers on map:', {
     wind: map.hasLayer(AMA.G.wind),
     solar: map.hasLayer(AMA.G.solar),
@@ -2476,10 +2486,6 @@ async function ama_bootstrap(){
   console.log('[AMA] ═══════════════════════════════════════');
 
   if (window.AMA && AMA.initPanelDirectWire) AMA.initPanelDirectWire();
-
-  console.log('[AMA] Calling __refreshBoundary...');
-  await __refreshBoundary(map, { keepOld:false });
-  console.log('[AMA] __refreshBoundary completed');
 
   // ✅ CRITICAL: Force fitBounds به province/counties
   console.log('[AMA] ══════ FITTING BOUNDS ══════');
