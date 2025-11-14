@@ -181,16 +181,16 @@ export default function ValueDrivenHero() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-wrap justify-center gap-3 mb-8"
         >
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm" role="status" aria-label="وضعیت سیستم">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true" />
             <span className="text-gray-800 text-sm font-medium">سیستم فعال</span>
           </div>
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-green-600" />
+            <ShieldCheck className="w-4 h-4 text-green-600" aria-label="آیکون حکمرانی داده" />
             <span className="text-gray-800 text-sm font-medium">حکمرانی داده</span>
           </div>
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <Network className="w-4 h-4 text-blue-600" />
+            <Network className="w-4 h-4 text-blue-600" aria-label="آیکون پوشش استانی" />
             <span className="text-gray-800 text-sm font-medium">پوشش استانی</span>
           </div>
         </motion.div>
@@ -203,8 +203,10 @@ export default function ValueDrivenHero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
+            role="complementary"
+            aria-label="نشان رسمی سازمان"
           >
-            <Database className="w-5 h-5 text-blue-600" />
+            <Database className="w-5 h-5 text-blue-600" aria-hidden="true" />
             <span className="text-blue-700 font-medium">
               درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
             </span>
@@ -281,7 +283,7 @@ export default function ValueDrivenHero() {
             const isHovered = hoveredResource === index;
 
             return (
-              <Link href={resource.link} key={resource.id}>
+              <Link href={resource.link} key={resource.id} aria-label={`مشاهده داشبورد ${resource.name}`}>
                 <motion.div
                   onHoverStart={() => setHoveredResource(index)}
                   onHoverEnd={() => setHoveredResource(null)}
@@ -289,6 +291,8 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.03, y: -5 }}
                   whileTap={{ scale: 0.98 }}
                   className="relative cursor-pointer group"
+                  role="article"
+                  aria-label={`کارت ${resource.name}: ${resource.problem} - راه‌حل: ${resource.solution}`}
                 >
                 <motion.div
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
@@ -321,8 +325,9 @@ export default function ValueDrivenHero() {
                         rotate: isActive ? [0, 5, -5, 0] : 0,
                       }}
                       transition={{ duration: 0.5 }}
+                      aria-hidden="true"
                     >
-                      <Icon className="w-7 h-7 text-white" />
+                      <Icon className="w-7 h-7 text-white" aria-label={`آیکون ${resource.name}`} />
                     </motion.div>
 
                     {/* Title */}
@@ -424,6 +429,7 @@ export default function ValueDrivenHero() {
                     <Icon
                       className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
                       style={{ color: pillar.lightColor || pillar.color }}
+                      aria-label={`آیکون ${pillar.title}`}
                     />
                     <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
@@ -449,9 +455,10 @@ export default function ValueDrivenHero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
+            aria-label="دسترسی به داشبورد آمار و گزارش‌های تخصصی"
           >
             <span className="relative z-10 flex items-center gap-3">
-              <BarChart3 className="w-6 h-6" />
+              <BarChart3 className="w-6 h-6" aria-hidden="true" />
               مشاهده آمار و گزارش‌ها
             </span>
             <motion.div
@@ -467,8 +474,9 @@ export default function ValueDrivenHero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-10 py-5 bg-white backdrop-blur-xl border-3 border-green-400 rounded-full font-bold text-gray-900 text-lg hover:bg-green-50 transition-all flex items-center gap-3 shadow-xl shadow-green-400/30 hover:shadow-2xl hover:shadow-green-400/40"
+            aria-label="دریافت راهنمای استفاده از پلتفرم و درخواست داده پژوهشی"
           >
-            <Database className="w-6 h-6 text-green-600" />
+            <Database className="w-6 h-6 text-green-600" aria-hidden="true" />
             <span>راهنمای استفاده از پلتفرم</span>
           </motion.a>
         </motion.div>
@@ -479,21 +487,23 @@ export default function ValueDrivenHero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm font-medium text-gray-700"
+          role="list"
+          aria-label="ویژگی‌های کلیدی پلتفرم"
         >
-          <div className="flex items-center gap-3 bg-green-50 border-2 border-green-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-green-600" />
+          <div className="flex items-center gap-3 bg-green-50 border-2 border-green-200 rounded-full px-4 py-2.5" role="listitem">
+            <CheckCircle2 className="w-6 h-6 text-green-600" aria-hidden="true" />
             <span className="text-green-800">امنیت تضمین شده</span>
           </div>
-          <div className="flex items-center gap-3 bg-blue-50 border-2 border-blue-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-blue-600" />
+          <div className="flex items-center gap-3 bg-blue-50 border-2 border-blue-200 rounded-full px-4 py-2.5" role="listitem">
+            <CheckCircle2 className="w-6 h-6 text-blue-600" aria-hidden="true" />
             <span className="text-blue-800">استانداردهای بین‌المللی</span>
           </div>
-          <div className="flex items-center gap-3 bg-yellow-50 border-2 border-yellow-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-yellow-600" />
+          <div className="flex items-center gap-3 bg-yellow-50 border-2 border-yellow-200 rounded-full px-4 py-2.5" role="listitem">
+            <CheckCircle2 className="w-6 h-6 text-yellow-600" aria-hidden="true" />
             <span className="text-yellow-800">پایش لحظه‌ای</span>
           </div>
-          <div className="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-purple-600" />
+          <div className="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-full px-4 py-2.5" role="listitem">
+            <CheckCircle2 className="w-6 h-6 text-purple-600" aria-hidden="true" />
             <span className="text-purple-800">تحلیل هوشمند</span>
           </div>
         </motion.div>
