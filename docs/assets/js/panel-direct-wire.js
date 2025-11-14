@@ -65,6 +65,7 @@
           e.stopPropagation();
         });
         cb.__bridged = true;
+        el.__bridged = true;  // علامت‌گذاری label هم به عنوان bridged
       } else {
         el.addEventListener('click', (e)=>{
           const on = el.getAttribute('aria-pressed') !== 'true';
