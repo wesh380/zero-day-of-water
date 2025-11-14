@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, Flame, Leaf, ChevronLeft, Shield } from "lucide-react"
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
@@ -348,130 +348,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Energy Map Section */}
       <section id="features" className="relative z-10 py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
-                داشبوردهای تعاملی
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-                پایش لحظه‌ای و مدیریت هوشمند منابع آب، برق و انرژی
-              </p>
-            </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              {/* Water Card */}
-              <a
-                href="/water/hub"
-                className="group rounded-2xl bg-secondary border-3 border-blue-300 backdrop-blur p-8 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-200 transition-all"
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-xl bg-blue-500/20 border-2 border-blue-500/40 shadow-lg">
-                    <Droplet className="w-9 h-9 text-blue-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-2xl font-semibold">آب</h3>
-                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
-                        فعال
-                      </span>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed font-medium">
-                      داشبورد مدیریت و پایش منابع آب
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-blue-600 group-hover:gap-3 transition-all">
-                  <span className="text-sm font-medium">مشاهده داشبورد</span>
-                  <ChevronLeft className="w-4 h-4" />
-                </div>
-              </a>
-
-              {/* Electricity Card */}
-              <a
-                href="/electricity/"
-                className="group rounded-2xl bg-secondary border-3 border-yellow-300 backdrop-blur p-8 hover:border-yellow-500 hover:shadow-2xl hover:shadow-yellow-200 transition-all"
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-xl bg-yellow-500/20 border-2 border-yellow-500/40 shadow-lg">
-                    <Zap className="w-9 h-9 text-yellow-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-2xl font-semibold">برق</h3>
-                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
-                        فعال
-                      </span>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed font-medium">
-                      تحلیل پیک، کیفیت و مدیریت مصرف
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-yellow-600 group-hover:gap-3 transition-all">
-                  <span className="text-sm font-medium">مشاهده داشبورد</span>
-                  <ChevronLeft className="w-4 h-4" />
-                </div>
-              </a>
-
-              {/* Gas Card */}
-              <a
-                href="/gas/"
-                className="group rounded-2xl bg-secondary border-3 border-orange-300 backdrop-blur p-8 hover:border-orange-500 hover:shadow-2xl hover:shadow-orange-200 transition-all"
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-xl bg-orange-500/20 border-2 border-orange-500/40 shadow-lg">
-                    <Flame className="w-9 h-9 text-orange-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-2xl font-semibold">گاز و فرآورده‌های نفتی</h3>
-                      <span className="px-4 py-2 text-sm font-bold bg-green-500 text-white rounded-full shadow-md border-2 border-green-400">
-                        فعال
-                      </span>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed font-medium">پایش توزیع و شدت کربن</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-orange-600 group-hover:gap-3 transition-all">
-                  <span className="text-sm font-medium">مشاهده داشبورد</span>
-                  <ChevronLeft className="w-4 h-4" />
-                </div>
-              </a>
-
-              {/* Environment Card */}
-              <div className="rounded-2xl bg-secondary border-3 border-gray-300 backdrop-blur p-8 opacity-75">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-4 rounded-xl bg-green-500/20 border-2 border-green-500/40 shadow-lg">
-                    <Leaf className="w-9 h-9 text-green-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-2xl font-semibold">محیط زیست و پسماند</h3>
-                      <span className="px-4 py-2 text-sm font-bold bg-gray-400 text-white rounded-full shadow-md border-2 border-gray-300">
-                        به‌زودی
-                      </span>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed font-medium">
-                      پایش آلودگی، کیفیت هوا/آب، مدیریت پسماند
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Link */}
-            <div className="text-center pt-8 border-t border-border">
+            <div className="text-center">
               <a
                 href="./amaayesh/index.html"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white transition-colors"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white transition-colors shadow-lg hover:shadow-xl"
               >
-                <span>نقشه آمایش انرژی خراسان رضوی</span>
-                <ChevronLeft className="w-4 h-4" />
+                <span className="px-3 py-1 text-xs font-bold bg-yellow-500 text-gray-900 rounded-full">
+                  آزمایشی
+                </span>
+                <span className="text-lg font-semibold">نقشه آمایش انرژی خراسان رضوی</span>
+                <ChevronLeft className="w-5 h-5" />
               </a>
             </div>
           </div>
