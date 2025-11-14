@@ -169,39 +169,39 @@ export default function ValueDrivenHero() {
 
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-12"
+        className="relative z-10 container mx-auto px-4 sm:px-6 min-h-screen flex flex-col justify-center py-12 sm:py-16"
       >
         {/* Top Status Bar */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-wrap justify-center gap-3 mb-8"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8"
         >
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-gray-800 text-sm font-medium">سیستم فعال</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-gray-800 text-xs sm:text-sm font-medium">سیستم فعال</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-green-600" />
-            <span className="text-gray-800 text-sm font-medium">حکمرانی داده</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm">
+            <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600" />
+            <span className="text-gray-800 text-xs sm:text-sm font-medium">حکمرانی داده</span>
           </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-            <Network className="w-4 h-4 text-blue-600" />
-            <span className="text-gray-800 text-sm font-medium">پوشش استانی</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-sm">
+            <Network className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600" />
+            <span className="text-gray-800 text-xs sm:text-sm font-medium">پوشش استانی</span>
           </div>
         </motion.div>
 
         {/* Main Content */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-12">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
+            className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-3 sm:px-4 md:px-6 py-2 sm:py-3 mb-4 sm:mb-6"
           >
-            <Database className="w-5 h-5 text-blue-600" />
-            <span className="text-blue-700 font-medium">
+            <Database className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0" />
+            <span className="text-blue-700 font-medium text-xs sm:text-sm md:text-base text-center">
               درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
             </span>
           </motion.div>
@@ -211,9 +211,9 @@ export default function ValueDrivenHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-6"
+            className="mb-4 sm:mb-6"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-tight mb-3 sm:mb-4 px-2">
               <span className="text-gray-900">چالش‌های </span>
               <AnimatePresence mode="wait">
                 <motion.span
@@ -233,7 +233,7 @@ export default function ValueDrivenHero() {
                   {currentResource.name}
                 </motion.span>
               </AnimatePresence>
-              <br />
+              <br className="hidden sm:block" />
               <span className="text-gray-900">را با </span>
               <span className="text-orange-700 font-black">
                 داده حل کنید
@@ -248,12 +248,12 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl max-w-4xl mx-auto"
+                className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-4xl mx-auto px-4"
               >
-                <p className="mb-3 text-gray-700">
+                <p className="mb-2 sm:mb-3 text-gray-700">
                   <span className="text-red-600 font-bold">مشکل:</span> {currentResource.problem}
                 </p>
-                <p className="mb-3 text-gray-700">
+                <p className="mb-2 sm:mb-3 text-gray-700">
                   <span className="text-green-600 font-bold">راه‌حل:</span> {currentResource.solution}
                 </p>
                 <p className="text-gray-700">
@@ -269,7 +269,7 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-7xl mx-auto mb-8 sm:mb-12"
         >
           {resources.map((resource, index) => {
             const Icon = resource.icon;
@@ -287,7 +287,7 @@ export default function ValueDrivenHero() {
                   className="relative cursor-pointer group"
                 >
                 <motion.div
-                  className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
+                  className="relative h-full bg-white backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 sm:border-3 transition-all duration-300"
                   style={{
                     borderColor: isActive || isHovered ? resource.color : '#e5e7eb',
                     borderWidth: isActive || isHovered ? '3px' : '2px'
@@ -312,22 +312,22 @@ export default function ValueDrivenHero() {
                   <div className="relative z-10">
                     {/* Icon */}
                     <motion.div
-                      className={`inline-flex p-4 rounded-xl mb-4 bg-gradient-to-br ${resource.gradient}`}
+                      className={`inline-flex p-3 sm:p-4 rounded-lg sm:rounded-xl mb-3 sm:mb-4 bg-gradient-to-br ${resource.gradient}`}
                       animate={{
                         rotate: isActive ? [0, 5, -5, 0] : 0,
                       }}
                       transition={{ duration: 0.5 }}
                     >
-                      <Icon className="w-7 h-7 text-white" />
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-black text-gray-900 mb-3">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-black text-gray-900 mb-2 sm:mb-3">
                       {resource.name}
                     </h3>
 
                     {/* Features List */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {resource.features.map((feature, idx) => {
                         const FeatureIcon = feature.icon;
                         return (
@@ -336,10 +336,10 @@ export default function ValueDrivenHero() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: isActive ? idx * 0.1 : 0 }}
-                            className="flex items-center gap-2 text-sm text-gray-700"
+                            className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-700"
                           >
                             <FeatureIcon
-                              className="w-4 h-4 flex-shrink-0"
+                              className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0"
                               style={{ color: resource.color }}
                             />
                             <span>{feature.text}</span>
@@ -352,9 +352,9 @@ export default function ValueDrivenHero() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: isHovered ? 1 : 0 }}
-                      className="mt-4 pt-4 border-t border-gray-200"
+                      className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200"
                     >
-                      <div className="flex items-center gap-2 text-sm font-bold" style={{ color: resource.color }}>
+                      <div className="flex items-center gap-2 text-xs sm:text-sm font-bold" style={{ color: resource.color }}>
                         <span>مشاهده جزئیات</span>
                         <span>←</span>
                       </div>
@@ -385,18 +385,18 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="max-w-6xl mx-auto mb-12"
+          className="max-w-6xl mx-auto mb-8 sm:mb-12"
         >
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-gray-900 mb-3">
+          <div className="text-center mb-6 sm:mb-8 px-4">
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-2 sm:mb-3">
               چرا <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {governancePillars.map((pillar, idx) => {
               const Icon = pillar.icon;
               return (
@@ -406,7 +406,7 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 + idx * 0.1 }}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
+                  className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
                   {/* Gradient overlay on hover */}
                   <div
@@ -418,11 +418,11 @@ export default function ValueDrivenHero() {
 
                   <div className="relative z-10">
                     <Icon
-                      className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mb-2 sm:mb-3 group-hover:scale-110 transition-transform"
                       style={{ color: pillar.color }}
                     />
-                    <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
+                    <h3 className="text-gray-900 font-bold mb-1.5 sm:mb-2 text-sm sm:text-base">{pillar.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1.5 sm:mb-2">{pillar.description}</p>
                     <p className="text-xs font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
@@ -438,17 +438,17 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4"
         >
           <motion.a
             href="/dashboards/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
+            className="group relative w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-sm sm:text-base md:text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
           >
-            <span className="relative z-10 flex items-center gap-3">
-              <BarChart3 className="w-6 h-6" />
-              مشاهده آمار و گزارش‌ها
+            <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+              <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span>مشاهده آمار و گزارش‌ها</span>
             </span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-blue-600"
@@ -462,9 +462,9 @@ export default function ValueDrivenHero() {
             href="/research/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 bg-white backdrop-blur-xl border-3 border-green-400 rounded-full font-bold text-gray-900 text-lg hover:bg-green-50 transition-all flex items-center gap-3 shadow-xl shadow-green-400/30 hover:shadow-2xl hover:shadow-green-400/40"
+            className="w-full sm:w-auto px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 bg-white backdrop-blur-xl border-2 sm:border-3 border-green-400 rounded-full font-bold text-gray-900 text-sm sm:text-base md:text-lg hover:bg-green-50 transition-all flex items-center justify-center gap-2 sm:gap-3 shadow-xl shadow-green-400/30 hover:shadow-2xl hover:shadow-green-400/40"
           >
-            <Database className="w-6 h-6 text-green-600" />
+            <Database className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
             <span>راهنمای استفاده از پلتفرم</span>
           </motion.a>
         </motion.div>
@@ -474,22 +474,22 @@ export default function ValueDrivenHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm font-medium text-gray-700"
+          className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-12 text-xs sm:text-sm font-medium text-gray-700 px-4"
         >
-          <div className="flex items-center gap-3 bg-green-50 border-2 border-green-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-green-600" />
+          <div className="flex items-center gap-2 sm:gap-3 bg-green-50 border-2 border-green-200 rounded-full px-3 sm:px-4 py-2 sm:py-2.5">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-600 flex-shrink-0" />
             <span className="text-green-800">امنیت تضمین شده</span>
           </div>
-          <div className="flex items-center gap-3 bg-blue-50 border-2 border-blue-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-blue-600" />
+          <div className="flex items-center gap-2 sm:gap-3 bg-blue-50 border-2 border-blue-200 rounded-full px-3 sm:px-4 py-2 sm:py-2.5">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-blue-600 flex-shrink-0" />
             <span className="text-blue-800">استانداردهای بین‌المللی</span>
           </div>
-          <div className="flex items-center gap-3 bg-yellow-50 border-2 border-yellow-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-yellow-600" />
+          <div className="flex items-center gap-2 sm:gap-3 bg-yellow-50 border-2 border-yellow-200 rounded-full px-3 sm:px-4 py-2 sm:py-2.5">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-yellow-600 flex-shrink-0" />
             <span className="text-yellow-800">پایش لحظه‌ای</span>
           </div>
-          <div className="flex items-center gap-3 bg-purple-50 border-2 border-purple-200 rounded-full px-4 py-2.5">
-            <CheckCircle2 className="w-6 h-6 text-purple-600" />
+          <div className="flex items-center gap-2 sm:gap-3 bg-purple-50 border-2 border-purple-200 rounded-full px-3 sm:px-4 py-2 sm:py-2.5">
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-purple-600 flex-shrink-0" />
             <span className="text-purple-800">تحلیل هوشمند</span>
           </div>
         </motion.div>

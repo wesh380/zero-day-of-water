@@ -29,17 +29,23 @@ const OptimizedNavigation = () => {
           <div className="flex items-center gap-6">
             {/* عنوان رسمی */}
             <div className="flex items-center gap-2">
-              <span className="font-medium">
+              <span className="font-medium hidden lg:inline">
                 درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
+              </span>
+              <span className="font-medium hidden md:inline lg:hidden">
+                درگاه رسمی داده‌های انرژی و آب خراسان رضوی
+              </span>
+              <span className="font-medium md:hidden">
+                WESH360 - خانه هم‌افزایی انرژی و آب
               </span>
             </div>
           </div>
 
           {/* تماس */}
-          <a href="tel:05138434143" className="flex items-center gap-2 hover:text-yellow-300 transition-colors">
+          <a href="tel:05138434143" className="flex items-center gap-2 hover:text-yellow-300 transition-colors flex-shrink-0">
             <Phone className="w-4 h-4" />
-            <span className="hidden md:inline font-medium">051-38434143</span>
-            <span className="md:hidden">تماس</span>
+            <span className="hidden sm:inline font-medium">051-38434143</span>
+            <span className="sm:hidden">تماس</span>
           </a>
         </div>
       </div>
@@ -52,33 +58,33 @@ const OptimizedNavigation = () => {
             : 'bg-white/70 backdrop-blur-lg border-b border-gray-100/50'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16 sm:h-20">
 
             {/* Logo و Tagline */}
-            <div className="flex items-center gap-4">
-              <a href="/" className="flex items-center gap-3 group">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <a href="/" className="flex items-center gap-2 sm:gap-3 group">
                 <div className="relative">
                   <img
                     src="/page/landing/logo2.webp"
                     alt="WESH360 Logo"
-                    className="w-16 h-16 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
+                    className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
+                  <div className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
                 </div>
                 <div>
-                  <div className="font-bold text-xl text-gray-900 flex items-center gap-2 group-hover:text-blue-600 transition-colors">
+                  <div className="font-bold text-base sm:text-lg md:text-xl text-gray-900 flex items-center gap-1.5 sm:gap-2 group-hover:text-blue-600 transition-colors">
                     WESH360
-                    <span className="text-blue-600">🏠</span>
+                    <span className="text-blue-600 text-sm sm:text-base">🏠</span>
                   </div>
-                  <div className="text-[10px] text-gray-500 -mt-1 font-medium">
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 -mt-1 font-medium">
                     صرفه‌جویی هوشمند آب و انرژی
                   </div>
                 </div>
               </a>
 
               {/* Trust Badge */}
-              <div className="hidden lg:flex items-center gap-2 px-4 py-2 bg-green-50/80 backdrop-blur-md rounded-full border border-green-200/50 shadow-sm hover:shadow-md transition-all">
+              <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 bg-green-50/80 backdrop-blur-md rounded-full border border-green-200/50 shadow-sm hover:shadow-md transition-all">
                 <Users className="w-4 h-4 text-green-600" />
                 <span className="text-xs text-green-700 font-medium">
                   <strong className="font-bold">+3,500</strong> کاربر فعال
@@ -87,54 +93,57 @@ const OptimizedNavigation = () => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-1 lg:gap-2">
 
               {/* منوی اصلی با آیکون */}
               <a
                 href="/dashboards/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-blue-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
+                className="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl hover:bg-blue-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-blue-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-blue-200/90 transition-all shadow-sm">
-                  <TrendingUp className="w-4 h-4 text-blue-600" />
+                <div className="w-7 h-7 lg:w-8 lg:h-8 bg-blue-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-blue-200/90 transition-all shadow-sm">
+                  <TrendingUp className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-blue-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
+                <span className="font-medium text-sm lg:text-base text-gray-700 group-hover:text-blue-600 transition-colors">
                   داشبوردها
                 </span>
               </a>
 
               <a
                 href="/calculators/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-purple-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
+                className="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl hover:bg-purple-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-purple-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-purple-200/90 transition-all shadow-sm">
-                  <Zap className="w-4 h-4 text-purple-600" />
+                <div className="w-7 h-7 lg:w-8 lg:h-8 bg-purple-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-purple-200/90 transition-all shadow-sm">
+                  <Zap className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-purple-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-purple-600 transition-colors">
+                <span className="font-medium text-sm lg:text-base text-gray-700 group-hover:text-purple-600 transition-colors">
                   محاسبه‌گر
                 </span>
               </a>
 
               <a
                 href="/research/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-green-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
+                className="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl hover:bg-green-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
-                <div className="w-8 h-8 bg-green-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-green-200/90 transition-all shadow-sm">
-                  <Droplets className="w-4 h-4 text-green-600" />
+                <div className="w-7 h-7 lg:w-8 lg:h-8 bg-green-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-green-200/90 transition-all shadow-sm">
+                  <Droplets className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-green-600" />
                 </div>
-                <span className="font-medium text-gray-700 group-hover:text-green-600 transition-colors">
+                <span className="font-medium text-sm lg:text-base text-gray-700 group-hover:text-green-600 transition-colors hidden xl:inline">
                   درخواست داده پژوهشی
+                </span>
+                <span className="font-medium text-sm lg:text-base text-gray-700 group-hover:text-green-600 transition-colors xl:hidden">
+                  پژوهش
                 </span>
               </a>
 
               {/* دکمه ارتباط با منوی کشویی */}
-              <div className="relative group">
-                <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100/80 backdrop-blur-sm transition-all hover:shadow-md">
-                  <span className="font-medium text-gray-700">ارتباط با ما</span>
-                  <ChevronDown className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
+              <div className="relative group hidden lg:block">
+                <button className="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-4 py-2 lg:py-2.5 rounded-xl hover:bg-gray-100/80 backdrop-blur-sm transition-all hover:shadow-md">
+                  <span className="font-medium text-sm lg:text-base text-gray-700">ارتباط با ما</span>
+                  <ChevronDown className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
                 </button>
 
                 {/* Dropdown */}
-                <div className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   <a href="tel:05138434143" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <Phone className="w-5 h-5 text-blue-600" />
                     <div>
@@ -162,11 +171,12 @@ const OptimizedNavigation = () => {
               {/* دکمه CTA اصلی */}
               <a
                 href="/dashboards/"
-                className="relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-blue-400/30"
+                className="relative flex items-center gap-1.5 lg:gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-3 lg:px-6 py-2 lg:py-3 rounded-full font-bold text-sm lg:text-base shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-blue-400/30"
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <TrendingUp className="w-5 h-5 relative z-10 drop-shadow-md" />
-                <span className="relative z-10 drop-shadow-md">مشاهده آمار و گزارش‌ها</span>
+                <TrendingUp className="w-4 h-4 lg:w-5 lg:h-5 relative z-10 drop-shadow-md" />
+                <span className="relative z-10 drop-shadow-md hidden xl:inline">مشاهده آمار و گزارش‌ها</span>
+                <span className="relative z-10 drop-shadow-md xl:hidden">آمار و گزارش</span>
               </a>
             </div>
 
@@ -187,30 +197,44 @@ const OptimizedNavigation = () => {
         {/* Mobile Menu */}
         {mobileOpen && (
           <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100/50 animate-slideDown shadow-lg">
-            <div className="px-4 py-4 space-y-2">
-              <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
-                <TrendingUp className="w-5 h-5 text-blue-600" />
+            <div className="px-4 py-4 space-y-2 max-h-[calc(100vh-5rem)] overflow-y-auto">
+              <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors active:scale-95">
+                <TrendingUp className="w-5 h-5 text-blue-600 flex-shrink-0" />
                 <span className="font-medium text-gray-700">داشبوردها</span>
               </a>
-              <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors">
-                <Zap className="w-5 h-5 text-purple-600" />
+              <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors active:scale-95">
+                <Zap className="w-5 h-5 text-purple-600 flex-shrink-0" />
                 <span className="font-medium text-gray-700">محاسبه‌گر</span>
               </a>
-              <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors">
-                <Droplets className="w-5 h-5 text-green-600" />
+              <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors active:scale-95">
+                <Droplets className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="font-medium text-gray-700">درخواست داده پژوهشی</span>
               </a>
-              <a href="tel:05138434143" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-                <Phone className="w-5 h-5 text-gray-600" />
-                <span className="font-medium text-gray-700">تماس با ما</span>
-              </a>
+
+              {/* Contact Options in Mobile */}
+              <div className="border-t border-gray-200 pt-2 mt-2">
+                <a href="tel:05138434143" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors active:scale-95">
+                  <Phone className="w-5 h-5 text-gray-600 flex-shrink-0" />
+                  <div>
+                    <div className="font-medium text-gray-700">تماس تلفنی</div>
+                    <div className="text-xs text-gray-500">051-38434143</div>
+                  </div>
+                </a>
+                <a href="https://t.me/wesh360" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors active:scale-95">
+                  <div className="w-5 h-5 text-blue-500 flex-shrink-0">📱</div>
+                  <div>
+                    <div className="font-medium text-gray-700">تلگرام</div>
+                    <div className="text-xs text-gray-500">پشتیبانی آنلاین</div>
+                  </div>
+                </a>
+              </div>
 
               <a
                 href="/dashboards/"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold mt-4"
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3.5 rounded-full font-bold mt-4 active:scale-95 transition-transform shadow-lg"
               >
                 <TrendingUp className="w-5 h-5" />
-                مشاهده آمار و گزارش‌ها
+                <span>مشاهده آمار و گزارش‌ها</span>
               </a>
             </div>
           </div>
@@ -356,43 +380,43 @@ export default function HomePage() {
       <DataJourney />
 
       {/* Stats Section */}
-      <section id="stats" className="relative z-10 py-16 px-6">
+      <section id="stats" className="relative z-10 py-12 sm:py-16 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent px-4">
               آمار این سایت در یک نگاه
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
             {/* Card 1 - ماشین‌حساب (Small) */}
             <div
-              className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+              className="group rounded-2xl sm:rounded-3xl bg-orange-50 border-2 border-orange-400 p-4 sm:p-6 text-center hover:bg-orange-100 hover:shadow-xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
               role="article"
               aria-label="آمار ماشین‌حساب‌ها: 8 ماشین‌حساب هوشمند"
               tabIndex={0}
             >
               {/* Floating Math Symbols Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute top-4 left-4 text-3xl font-bold text-orange-600 animate-float-slow">÷</div>
-                <div className="absolute top-6 right-6 text-2xl font-bold text-orange-600 animate-float-delay-1">×</div>
-                <div className="absolute bottom-8 left-6 text-2xl font-bold text-orange-600 animate-float-delay-2">+</div>
-                <div className="absolute bottom-4 right-8 text-3xl font-bold text-orange-600 animate-float-delay-3">=</div>
+                <div className="absolute top-4 left-4 text-2xl sm:text-3xl font-bold text-orange-600 animate-float-slow">÷</div>
+                <div className="absolute top-6 right-6 text-xl sm:text-2xl font-bold text-orange-600 animate-float-delay-1">×</div>
+                <div className="absolute bottom-8 left-6 text-xl sm:text-2xl font-bold text-orange-600 animate-float-delay-2">+</div>
+                <div className="absolute bottom-4 right-8 text-2xl sm:text-3xl font-bold text-orange-600 animate-float-delay-3">=</div>
               </div>
 
-              <div className="mb-4 relative z-10">
-                <Calculator className="w-6 h-6 text-orange-500 mb-3 mx-auto" />
+              <div className="mb-2 sm:mb-4 relative z-10">
+                <Calculator className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500 mb-2 sm:mb-3 mx-auto" />
                 <AnimatedCounter
                   end={8}
                   duration={1800}
                   suffix=""
-                  className="text-3xl md:text-4xl font-extrabold text-orange-700 mb-1 tracking-tight"
+                  className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-orange-700 mb-1 tracking-tight"
                 />
-                <p className="text-lg font-semibold text-orange-900 mt-1 leading-tight">
+                <p className="text-base sm:text-lg font-semibold text-orange-900 mt-1 leading-tight">
                   ماشین‌حساب
                 </p>
-                <p className="text-sm text-orange-700/70 mt-1 leading-relaxed">
+                <p className="text-xs sm:text-sm text-orange-700/70 mt-1 leading-relaxed">
                   Smart Calculators
                 </p>
               </div>
@@ -400,7 +424,7 @@ export default function HomePage() {
 
             {/* Card 2 - داشبورد (Standard) */}
             <div
-              className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              className="group rounded-2xl sm:rounded-3xl bg-blue-50 border-2 border-blue-400 p-4 sm:p-6 text-center hover:bg-blue-100 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               role="article"
               aria-label="آمار داشبوردها: 12 داشبورد تخصصی تحلیلی"
               tabIndex={0}
@@ -414,18 +438,18 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="mb-4 relative z-10">
-                <BarChart3 className="w-6 h-6 text-blue-500 mb-3 mx-auto" />
+              <div className="mb-2 sm:mb-4 relative z-10">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500 mb-2 sm:mb-3 mx-auto" />
                 <AnimatedCounter
                   end={12}
                   duration={2000}
                   suffix=""
-                  className="text-4xl md:text-5xl font-extrabold text-blue-700 mb-1 tracking-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-700 mb-1 tracking-tight"
                 />
-                <p className="text-lg font-semibold text-blue-900 mt-1 leading-tight">
+                <p className="text-base sm:text-lg font-semibold text-blue-900 mt-1 leading-tight">
                   داشبورد تخصصی
                 </p>
-                <p className="text-sm text-blue-700/70 mt-1 leading-relaxed">
+                <p className="text-xs sm:text-sm text-blue-700/70 mt-1 leading-relaxed">
                   Specialized Analytics
                 </p>
               </div>
@@ -433,24 +457,24 @@ export default function HomePage() {
 
             {/* Card 3 - جمعیت (HERO) */}
             <div
-              className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-6 md:p-8 text-center hover:bg-green-200 shadow-xl hover:shadow-2xl shadow-green-300/40 hover:shadow-green-300/70 transition-all duration-300 hover:scale-[1.01] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+              className="sm:col-span-2 lg:col-span-2 xl:col-span-1 group rounded-2xl sm:rounded-3xl bg-green-100 border-2 sm:border-3 border-green-500 p-5 sm:p-6 md:p-8 text-center hover:bg-green-200 shadow-xl hover:shadow-2xl shadow-green-300/40 hover:shadow-green-300/70 transition-all duration-300 hover:scale-[1.01] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
               role="article"
               aria-label="آمار جمعیت تحت پوشش: 3.5 میلیون نفر"
               tabIndex={0}
             >
               {/* Floating User Icons Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute top-6 left-8 animate-float-slow">
-                  <Users className="w-6 h-6 text-green-600" />
+                <div className="absolute top-4 sm:top-6 left-6 sm:left-8 animate-float-slow">
+                  <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                 </div>
-                <div className="absolute top-10 right-10 animate-float-delay-1">
-                  <Users className="w-5 h-5 text-green-600" />
+                <div className="absolute top-8 sm:top-10 right-8 sm:right-10 animate-float-delay-1">
+                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                 </div>
-                <div className="absolute bottom-12 left-12 animate-float-delay-2">
-                  <Users className="w-4 h-4 text-green-600" />
+                <div className="absolute bottom-10 sm:bottom-12 left-10 sm:left-12 animate-float-delay-2">
+                  <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-600" />
                 </div>
-                <div className="absolute bottom-8 right-14 animate-float-delay-3">
-                  <Users className="w-5 h-5 text-green-600" />
+                <div className="absolute bottom-6 sm:bottom-8 right-12 sm:right-14 animate-float-delay-3">
+                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                 </div>
               </div>
 
@@ -458,21 +482,21 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
-                <Users className="w-8 h-8 text-green-600 mb-3 mx-auto" />
-                <div className="flex items-baseline justify-center gap-2 mb-2 leading-none">
+                <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-green-600 mb-2 sm:mb-3 mx-auto" />
+                <div className="flex items-baseline justify-center gap-1.5 sm:gap-2 mb-1 sm:mb-2 leading-none">
                   <AnimatedCounter
                     end={3.5}
                     duration={2500}
                     decimals={1}
                     suffix=""
-                    className="text-5xl md:text-6xl lg:text-7xl font-black text-green-700 tracking-tight"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-green-700 tracking-tight"
                   />
-                  <span className="text-xl md:text-2xl lg:text-3xl font-bold text-green-700">میلیون</span>
+                  <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-green-700">میلیون</span>
                 </div>
-                <p className="text-lg md:text-xl lg:text-2xl font-bold text-green-900 mt-2 leading-tight">
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-green-900 mt-1.5 sm:mt-2 leading-tight">
                   جمعیت تحت پوشش
                 </p>
-                <p className="text-sm md:text-base text-green-700/80 mt-1 font-medium leading-relaxed">
+                <p className="text-xs sm:text-sm md:text-base text-green-700/80 mt-1 font-medium leading-relaxed">
                   Population Served
                 </p>
               </div>
@@ -480,33 +504,33 @@ export default function HomePage() {
 
             {/* Card 4 - کاربران روزانه (Standard) */}
             <div
-              className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
+              className="group rounded-2xl sm:rounded-3xl bg-purple-50 border-2 border-purple-400 p-4 sm:p-6 text-center hover:bg-purple-100 hover:shadow-xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
               role="article"
               aria-label="آمار کاربران فعال: بیش از 50 کاربر فعال روزانه"
               tabIndex={0}
             >
               {/* Floating Arrows Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
-                <div className="absolute top-4 left-6 text-3xl animate-float-up">↗</div>
-                <div className="absolute top-8 right-8 text-2xl animate-float-up-delay-1">↑</div>
-                <div className="absolute bottom-10 left-10 text-xl animate-float-up-delay-2">✨</div>
-                <div className="absolute bottom-6 right-6 text-3xl animate-float-up-delay-3">↗</div>
+                <div className="absolute top-4 left-6 text-2xl sm:text-3xl animate-float-up">↗</div>
+                <div className="absolute top-8 right-8 text-xl sm:text-2xl animate-float-up-delay-1">↑</div>
+                <div className="absolute bottom-10 left-10 text-lg sm:text-xl animate-float-up-delay-2">✨</div>
+                <div className="absolute bottom-6 right-6 text-2xl sm:text-3xl animate-float-up-delay-3">↗</div>
               </div>
 
-              <div className="mb-4 relative z-10">
-                <TrendingUp className="w-6 h-6 text-purple-500 mb-3 mx-auto" />
+              <div className="mb-2 sm:mb-4 relative z-10">
+                <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500 mb-2 sm:mb-3 mx-auto" />
                 <div className="flex items-baseline justify-center gap-1 mb-1">
                   <AnimatedCounter
                     end={50}
                     duration={2000}
                     suffix="+"
-                    className="text-4xl md:text-5xl font-extrabold text-purple-700 tracking-tight"
+                    className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-700 tracking-tight"
                   />
                 </div>
-                <p className="text-lg font-semibold text-purple-900 mt-1 leading-tight">
+                <p className="text-base sm:text-lg font-semibold text-purple-900 mt-1 leading-tight">
                   کاربر فعال روزانه
                 </p>
-                <p className="text-sm text-purple-700/70 mt-1 leading-relaxed">
+                <p className="text-xs sm:text-sm text-purple-700/70 mt-1 leading-relaxed">
                   Daily Active Users
                 </p>
               </div>
@@ -516,19 +540,19 @@ export default function HomePage() {
       </section>
 
       {/* Energy Map Section */}
-      <section id="features" className="relative z-10 py-12 px-6">
+      <section id="features" className="relative z-10 py-8 sm:py-12 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
+          <div className="rounded-2xl sm:rounded-3xl bg-card ring-1 ring-border backdrop-blur p-4 sm:p-6 md:p-8">
             <div className="text-center">
               <a
                 href="./amaayesh/index.html"
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white transition-colors shadow-lg hover:shadow-xl"
+                className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-xl bg-sky-600/90 hover:bg-sky-500 text-white transition-colors shadow-lg hover:shadow-xl active:scale-95"
               >
-                <span className="px-3 py-1 text-xs font-bold bg-yellow-500 text-gray-900 rounded-full">
+                <span className="px-2 sm:px-3 py-1 text-xs font-bold bg-yellow-500 text-gray-900 rounded-full">
                   آزمایشی
                 </span>
-                <span className="text-lg font-semibold">نقشه آمایش انرژی خراسان رضوی</span>
-                <ChevronLeft className="w-5 h-5" />
+                <span className="text-sm sm:text-base md:text-lg font-semibold">نقشه آمایش انرژی خراسان رضوی</span>
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
             </div>
           </div>
@@ -536,31 +560,31 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-16 px-6">
+      <footer className="relative z-10 py-8 sm:py-12 md:py-16 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
+          <div className="rounded-2xl sm:rounded-3xl bg-card ring-1 ring-border backdrop-blur p-6 sm:p-8">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
               {/* Brand Section */}
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-2 mb-4">
-                  <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-6 h-6" />
-                  <span className="text-xl font-semibold">WESH360</span>
+              <div className="sm:col-span-2">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span className="text-lg sm:text-xl font-semibold">WESH360</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                   پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
                 </p>
               </div>
 
               {/* Links Section 1 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">داشبوردها</h3>
-                <ul className="space-y-3">
+                <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider mb-3 sm:mb-4">داشبوردها</h3>
+                <ul className="space-y-2 sm:space-y-3">
                   {["آب", "برق", "گاز و فرآورده‌های نفتی", "محیط زیست"].map((item) => (
                     <li key={item}>
                       <a
                         href="#"
-                        className="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed"
+                        className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm leading-relaxed active:scale-95 inline-block"
                       >
                         {item}
                       </a>
@@ -571,13 +595,13 @@ export default function HomePage() {
 
               {/* Links Section 2 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">منابع</h3>
-                <ul className="space-y-3">
+                <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider mb-3 sm:mb-4">منابع</h3>
+                <ul className="space-y-2 sm:space-y-3">
                   {["پژوهش", "ماشین‌حساب", "ارتباط با ما", "سیاست امنیت"].map((item) => (
                     <li key={item}>
                       <a
                         href="#"
-                        className="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed"
+                        className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm leading-relaxed active:scale-95 inline-block"
                       >
                         {item}
                       </a>
@@ -588,8 +612,8 @@ export default function HomePage() {
             </div>
 
             {/* Sub-footer */}
-            <div className="border-t border-border pt-8">
-              <p className="text-muted-foreground text-sm text-center">
+            <div className="border-t border-border pt-6 sm:pt-8">
+              <p className="text-muted-foreground text-xs sm:text-sm text-center leading-relaxed">
                 © 2025 WESH360 | مدیریت هوشمند آب و انرژی خراسان رضوی
               </p>
             </div>

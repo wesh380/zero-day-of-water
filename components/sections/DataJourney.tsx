@@ -50,27 +50,27 @@ const journeySteps = [
 
 export default function DataJourney() {
   return (
-    <section className="py-16 bg-white relative overflow-hidden">
+    <section className="py-12 sm:py-16 bg-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-[linear-gradient(30deg,transparent_12%,rgba(59,130,246,.2)_12.5%,rgba(59,130,246,.2)_13%,transparent_13.5%)] bg-[length:40px_40px]" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="text-5xl font-black text-gray-900 mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-2 sm:mb-3 px-4">
             سفر داده از
             <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
               {' '}خام تا ارزش
             </span>
           </h2>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg px-4">
             فرآیند شش مرحله‌ای تبدیل داده به دانش قابل اقدام
           </p>
         </motion.div>
@@ -78,9 +78,9 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-orange-600 via-green-600 to-cyan-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
+          <div className="absolute top-1/2 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-orange-600 via-green-600 to-cyan-600 -translate-y-1/2 hidden xl:block rounded-full shadow-lg" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             {journeySteps.map((step, index) => {
               const Icon = step.icon;
 
@@ -95,7 +95,7 @@ export default function DataJourney() {
                 >
                   {/* Step Number */}
                   <div
-                    className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-2xl z-10 shadow-lg border-4 border-white"
+                    className="absolute -top-4 sm:-top-5 left-1/2 -translate-x-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-black text-lg sm:text-xl md:text-2xl z-10 shadow-lg border-3 sm:border-4 border-white"
                     style={{
                       background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`
                     }}
@@ -106,38 +106,38 @@ export default function DataJourney() {
                   {/* Card */}
                   <motion.div
                     whileHover={{ y: -10, scale: 1.05 }}
-                    className="relative bg-white backdrop-blur-xl border-2 border-gray-300 rounded-2xl p-6 pt-10 h-full shadow-md hover:shadow-2xl transition-all hover:border-gray-400"
+                    className="relative bg-white backdrop-blur-xl border-2 border-gray-300 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 pt-8 sm:pt-10 h-full shadow-md hover:shadow-2xl transition-all hover:border-gray-400"
                   >
                     {/* Icon */}
                     <div
-                      className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5 mx-auto shadow-lg"
+                      className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-5 mx-auto shadow-lg"
                       style={{ backgroundColor: `${step.color}25`, border: `3px solid ${step.color}50` }}
                     >
                       <Icon
-                        className="w-12 h-12"
+                        className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
                         style={{ color: step.color }}
                       />
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold text-gray-900 text-center mb-2">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 text-center mb-1.5 sm:mb-2">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-700 text-base text-center mb-4">
+                    <p className="text-gray-700 text-sm sm:text-base text-center mb-3 sm:mb-4">
                       {step.description}
                     </p>
 
                     {/* Details */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {step.details.map((detail, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-2 text-sm text-gray-600"
+                          className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-600"
                         >
                           <div
-                            className="w-1.5 h-1.5 rounded-full"
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                             style={{ backgroundColor: step.color }}
                           />
                           <span>{detail}</span>
@@ -147,7 +147,7 @@ export default function DataJourney() {
 
                     {/* Glow Effect */}
                     <motion.div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{
                         background: `radial-gradient(circle at center, ${step.color}10, transparent)`
                       }}
