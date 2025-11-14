@@ -5,6 +5,7 @@ node_modules/
 out/
 next-env.d.ts
 docs/index.html.backup
+*.tsbuildinfo
 
 # debug artifacts
 docs/assets/*-test.png
