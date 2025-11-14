@@ -1,5 +1,17 @@
 import { setClass } from '../css-classes.js';
 
+// ✅ CRITICAL: Fix Leaflet default icon BEFORE anything else
+// This prevents 404 errors for marker icons
+if (typeof window.L !== 'undefined' && L.Icon && L.Icon.Default) {
+  const blankPNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwsB9Yg7Q7MAAAAASUVORK5CYII=';
+  L.Icon.Default.mergeOptions({
+    iconUrl: blankPNG,
+    iconRetinaUrl: blankPNG,
+    shadowUrl: blankPNG
+  });
+  console.log('[AMA] Leaflet default icon patched to blank PNG');
+}
+
 // --- Build id ---
 window.__AMA_BUILD_ID = document.querySelector('meta[name="build-id"]')?.content || String(Date.now());
 
@@ -250,13 +262,20 @@ function boundsFromGeoJSON(gj){
 
 function enforceDefaultVisibility(map){
   const G = (window.AMA && AMA.G) || {};
-  const DEFAULT_ON = new Set(['province']); // فقط مرز استان
+  // ✅ نمایش province + نقاط (wind, solar, dams) + counties برای تست
+  const DEFAULT_ON = new Set(['province', 'counties', 'wind', 'solar', 'dams']);
   Object.keys(G).forEach(k=>{
     const grp = G[k]; if (!grp) return;
     const shouldOn = DEFAULT_ON.has(k);
     const isOn = map.hasLayer(grp);
-    if (shouldOn && !isOn) grp.addTo(map);
-    if (!shouldOn && isOn) map.removeLayer(grp);
+    if (shouldOn && !isOn) {
+      grp.addTo(map);
+      console.log(`[AMA] enforceDefaultVisibility added ${k} to map`);
+    }
+    if (!shouldOn && isOn) {
+      map.removeLayer(grp);
+      console.log(`[AMA] enforceDefaultVisibility removed ${k} from map`);
+    }
   });
 }
 
@@ -2451,21 +2470,28 @@ async function ama_bootstrap(){
       return;
     }
 
-    const layerCount = grp.getLayers().length;
+    const layers = grp.getLayers();
+    const layerCount = layers.length;
     const isOnMap = map.hasLayer(grp);
 
     // ✅ بررسی bounds هر layer
-    let bounds = null;
+    let boundsStr = 'no bounds';
     try {
-      bounds = grp.getBounds ? grp.getBounds() : null;
+      const firstLayer = layers[0];
+      if (firstLayer && typeof firstLayer.getBounds === 'function') {
+        const b = firstLayer.getBounds();
+        if (b && b._southWest && b._northEast) {
+          boundsStr = `${b._southWest.lat.toFixed(2)},${b._southWest.lng.toFixed(2)} → ${b._northEast.lat.toFixed(2)},${b._northEast.lng.toFixed(2)}`;
+        }
+      }
     } catch (e) {
-      bounds = 'error: ' + e.message;
+      boundsStr = 'error: ' + e.message;
     }
 
     console.log(`[AMA] ${key}:`, {
       layerCount,
       isOnMap,
-      bounds: bounds ? `${bounds._southWest?.lat.toFixed(2)},${bounds._southWest?.lng.toFixed(2)} → ${bounds._northEast?.lat.toFixed(2)},${bounds._northEast?.lng.toFixed(2)}` : 'no bounds',
+      bounds: boundsStr,
       action: isOnMap ? 'already on map' : 'adding to map...'
     });
 
@@ -2496,13 +2522,18 @@ async function ama_bootstrap(){
     const grp = AMA.G[key];
     if (grp && grp.getLayers().length > 0) {
       try {
-        const b = grp.getBounds();
-        if (b && b.isValid && b.isValid()) {
-          allBounds.push(b);
-          console.log(`[AMA] ${key} bounds:`, {
-            sw: `${b._southWest.lat.toFixed(2)},${b._southWest.lng.toFixed(2)}`,
-            ne: `${b._northEast.lat.toFixed(2)},${b._northEast.lng.toFixed(2)}`
-          });
+        const layers = grp.getLayers();
+        const firstLayer = layers[0];
+        // LayerGroup خودش getBounds ندارد، اما layer داخلش دارد
+        if (firstLayer && typeof firstLayer.getBounds === 'function') {
+          const b = firstLayer.getBounds();
+          if (b && b.isValid && b.isValid()) {
+            allBounds.push(b);
+            console.log(`[AMA] ${key} bounds:`, {
+              sw: `${b._southWest.lat.toFixed(2)},${b._southWest.lng.toFixed(2)}`,
+              ne: `${b._northEast.lat.toFixed(2)},${b._northEast.lng.toFixed(2)}`
+            });
+          }
         }
       } catch (e) {
         console.error(`[AMA] Error getting bounds for ${key}:`, e);
