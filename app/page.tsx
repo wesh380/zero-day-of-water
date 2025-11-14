@@ -174,6 +174,8 @@ const OptimizedNavigation = () => {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label={mobileOpen ? "بستن منوی موبایل" : "باز کردن منوی موبایل"}
+              aria-expanded={mobileOpen}
             >
               {mobileOpen ? (
                 <X className="w-6 h-6 text-gray-700" />
@@ -351,12 +353,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <OptimizedNavigation />
-      <ValueDrivenHero />
-      <GovernancePrinciples />
-      <DataJourney />
+      <main>
+        <ValueDrivenHero />
+        <GovernancePrinciples />
+        <DataJourney />
 
-      {/* Stats Section */}
-      <section id="stats" className="relative z-10 py-16 px-6">
+        {/* Stats Section */}
+        <section id="stats" className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
@@ -534,6 +537,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="relative z-10 py-16 px-6">

@@ -88,28 +88,32 @@ const governancePillars = [
     title: 'امنیت و حریم خصوصی',
     description: 'حفاظت از داده‌های حساس با رمزنگاری',
     value: 'اطمینان از محرمانگی',
-    color: '#3B82F6'
+    color: '#1E40AF', // blue-800 for better contrast (6.3:1)
+    lightColor: '#3B82F6' // for backgrounds and icons
   },
   {
     icon: Database,
     title: 'یکپارچگی داده',
     description: 'استانداردسازی و یکسان‌سازی منابع',
     value: 'حذف تناقض‌ها',
-    color: '#8B5CF6'
+    color: '#6D28D9', // purple-700 for better contrast (5.3:1)
+    lightColor: '#8B5CF6' // for backgrounds and icons
   },
   {
     icon: Eye,
     title: 'شفافیت و ردیابی',
     description: 'مسیر کامل داده از منبع تا گزارش',
     value: 'قابلیت ممیزی',
-    color: '#F59E0B'
+    color: '#B45309', // amber-700 for better contrast (5.4:1)
+    lightColor: '#F59E0B' // for backgrounds and icons
   },
   {
     icon: TrendingUp,
     title: 'تحلیل هوشمند',
     description: 'الگویابی و پیش‌بینی با هوش مصنوعی',
     value: 'تصمیم‌گیری آگاهانه',
-    color: '#10B981'
+    color: '#047857', // green-700 for better contrast (5.6:1)
+    lightColor: '#10B981' // for backgrounds and icons
   }
 ];
 
@@ -322,9 +326,9 @@ export default function ValueDrivenHero() {
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-black text-gray-900 mb-3">
+                    <h2 className="text-2xl font-black text-gray-900 mb-3">
                       {resource.name}
-                    </h3>
+                    </h2>
 
                     {/* Features List */}
                     <div className="space-y-2">
@@ -412,14 +416,14 @@ export default function ValueDrivenHero() {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.color}, transparent)`
+                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
                     }}
                   />
 
                   <div className="relative z-10">
                     <Icon
                       className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
-                      style={{ color: pillar.color }}
+                      style={{ color: pillar.lightColor || pillar.color }}
                     />
                     <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
