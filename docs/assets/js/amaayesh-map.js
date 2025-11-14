@@ -311,6 +311,13 @@ function safeRemoveLayer(map, layer) {
 }
 
 async function __refreshBoundary(map, opts={}) {
+  // ✅ DISABLED: boundary layer غیرفعال شد چون province/counties کار آن را انجام می‌دهند
+  // و ممکن است مشکلاتی مثل آیکون‌های خراب ایجاد کند
+  console.log('[AMA] boundary layer disabled - using province/counties instead');
+  window.boundary = null;
+  return;
+
+  /* DISABLED CODE:
   const src = window.__countiesGeoAll || { type:'FeatureCollection', features:[] };
 
   // ✅ پیش-فیلتر کردن features برای حذف Point features
@@ -333,13 +340,15 @@ async function __refreshBoundary(map, opts={}) {
   // ✅ ساخت boundary جدید فقط با polygons (بدون هیچ Point feature)
   window.boundary = L.geoJSON(polygonOnlyFC, {
     pane:'boundary',
-    style:{ color:'#475569', weight:1.5, fill:false, opacity:0.7 }
+    pointToLayer: () => null,  // ✅ CRITICAL: نادیده گرفتن Point features (در صورت عبور از filter)
+    style:{ color:'#64748b', weight:2, fill:false, opacity:0.9 }
   }).addTo(map);
 
   window.boundary.__AMA_PROTECTED = true;
   boundary = window.boundary;
   if (window.boundary.bringToFront) window.boundary.bringToFront();
   console.log('[AMA] boundary refreshed with', polygonOnlyFC.features.length, 'polygon features');
+  */
 }
 
 function ama_popupContent(f, kind){
@@ -2316,20 +2325,29 @@ async function ama_bootstrap(){
 
   function addPolyGroup(key, gj){
     if(!gj) return;
-    const style = key==='province'
-      ? { color:'#0ea5e9', weight:4, opacity:1, fillOpacity:0.08, fillColor:'#0ea5e9' }  // ✅ بهبود visibility با border کلفت‌تر و رنگ واضح‌تر
-      : { color:'#38bdf8', weight:2, opacity:0.8, fillOpacity:0 };
-    const layer = L.geoJSON(gj, {
-      pane: 'polygons',
-      filter: (feature) => {
-        const geomType = feature?.geometry?.type;
+
+    // ✅ پیش-فیلتر برای حذف Point features
+    const polygonOnlyFC = {
+      type: 'FeatureCollection',
+      features: (gj.features || []).filter(f => {
+        const geomType = f?.geometry?.type;
         return geomType === 'Polygon' || geomType === 'MultiPolygon';
-      },
+      })
+    };
+
+    const style = key==='province'
+      ? { color:'#0ea5e9', weight:4, opacity:1, fillOpacity:0, fillColor:'transparent', fill: false, className: 'province-border' }  // ✅ مرز استان - کلفت و واضح
+      : { color:'#64748b', weight:1, opacity:0.5, fillOpacity:0, fill: false, className: 'county-border' };  // ✅ مرز شهرستان‌ها - نازک و کم‌رنگ
+
+    const layer = L.geoJSON(polygonOnlyFC, {
+      pane: 'polygons',
+      pointToLayer: () => null,  // ✅ CRITICAL: skip Point features
       style: () => style
     });
+
     AMA.G[key].clearLayers();
     AMA.G[key].addLayer(layer);
-    console.log(`[AMA] Added ${key} polygroup - features:`, gj.features?.length || 0);
+    console.log(`[AMA] Added ${key} polygroup - ${polygonOnlyFC.features.length} polygons from ${gj.features?.length || 0} total features`);
   }
 
   // window.__countiesGeoAll already set above with fallback logic
@@ -2358,13 +2376,14 @@ async function ama_bootstrap(){
   }
 
   // ✅ 2. ایجاد pane ها قبل از populate کردن groups
-  map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
-  map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
-  map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-650']);
+  // ترتیب z-index: boundary (400) < polygons (500) < points (600)
+  map.createPane('boundary');  setClass(map.getPane('boundary'), ['z-400']);
+  map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-500']);
+  map.createPane('points');    setClass(map.getPane('points'), ['z-600']);
   console.log('[AMA] Panes created:', {
+    boundary: !!map.getPane('boundary'),
     polygons: !!map.getPane('polygons'),
-    points: !!map.getPane('points'),
-    boundary: !!map.getPane('boundary')
+    points: !!map.getPane('points')
   });
 
   // ✅ 3. حالا populate کردن groups (با pane های آماده)
