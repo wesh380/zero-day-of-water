@@ -29,7 +29,7 @@ const resources = [
     icon: Zap,
     name: 'برق',
     color: '#F59E0B',
-    gradient: 'from-amber-600 to-orange-700',
+    gradient: 'from-amber-700 to-orange-800',
     glow: 'rgba(245, 158, 11, 0.4)',
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
