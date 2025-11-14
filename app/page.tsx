@@ -248,6 +248,100 @@ const OptimizedNavigation = () => {
         .animate-slideDown {
           animation: slideDown 0.3s ease-out;
         }
+
+        /* Stats Cards Animations */
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-up {
+          0%, 100% { transform: translateY(0px); opacity: 0.1; }
+          50% { transform: translateY(-15px); opacity: 0.3; }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+          50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.8); }
+        }
+
+        @keyframes chart-grow {
+          0%, 100% { transform: scaleY(1); }
+          50% { transform: scaleY(1.1); }
+        }
+
+        @keyframes trend-pulse {
+          0%, 100% { transform: translateY(0) rotate(45deg); }
+          50% { transform: translateY(-3px) rotate(45deg); }
+        }
+
+        @keyframes grid-fade {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.7; }
+        }
+
+        .animate-float-slow {
+          animation: float-slow 3s ease-in-out infinite;
+        }
+
+        .animate-float-delay-1 {
+          animation: float-slow 3.5s ease-in-out infinite;
+          animation-delay: 0.5s;
+        }
+
+        .animate-float-delay-2 {
+          animation: float-slow 4s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+
+        .animate-float-delay-3 {
+          animation: float-slow 3.2s ease-in-out infinite;
+          animation-delay: 1.5s;
+        }
+
+        .animate-float-up {
+          animation: float-up 2.5s ease-in-out infinite;
+        }
+
+        .animate-float-up-delay-1 {
+          animation: float-up 3s ease-in-out infinite;
+          animation-delay: 0.4s;
+        }
+
+        .animate-float-up-delay-2 {
+          animation: float-up 2.8s ease-in-out infinite;
+          animation-delay: 0.8s;
+        }
+
+        .animate-float-up-delay-3 {
+          animation: float-up 3.2s ease-in-out infinite;
+          animation-delay: 1.2s;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-chart-grow {
+          animation: chart-grow 2s ease-in-out infinite;
+        }
+
+        .animate-trend-pulse {
+          animation: trend-pulse 2s ease-in-out infinite;
+        }
+
+        .animate-grid-fade {
+          animation: grid-fade 3s ease-in-out infinite;
+        }
       `}</style>
     </>
   );
@@ -273,10 +367,18 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* Card 1 - ماشین‌حساب (Small) */}
-            <div className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div className="mb-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
-                  <Calculator className="w-8 h-8 text-white" />
+            <div className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+              {/* Floating Math Symbols Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-4 left-4 text-3xl font-bold text-orange-600 animate-float-slow">÷</div>
+                <div className="absolute top-6 right-6 text-2xl font-bold text-orange-600 animate-float-delay-1">×</div>
+                <div className="absolute bottom-8 left-6 text-2xl font-bold text-orange-600 animate-float-delay-2">+</div>
+                <div className="absolute bottom-4 right-8 text-3xl font-bold text-orange-600 animate-float-delay-3">=</div>
+              </div>
+
+              <div className="mb-4 relative z-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-3 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                  <Calculator className="w-8 h-8 text-white animate-pulse-slow" />
                 </div>
                 <AnimatedCounter
                   end={8}
@@ -294,10 +396,19 @@ export default function HomePage() {
             </div>
 
             {/* Card 2 - داشبورد (Standard) */}
-            <div className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div className="mb-4">
+            <div className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+              {/* Grid Pattern Background */}
+              <div className="absolute inset-0 opacity-5 pointer-events-none">
+                <div className="grid grid-cols-4 grid-rows-4 gap-2 h-full p-4">
+                  {[...Array(16)].map((_, i) => (
+                    <div key={i} className="border border-blue-400 rounded animate-grid-fade" style={{animationDelay: `${i * 0.1}s`}}></div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-4 relative z-10">
                 <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
-                  <BarChart3 className="w-9 h-9 text-white" />
+                  <BarChart3 className="w-9 h-9 text-white animate-chart-grow" />
                 </div>
                 <AnimatedCounter
                   end={12}
@@ -316,14 +427,30 @@ export default function HomePage() {
 
             {/* Card 3 - جمعیت (HERO) */}
             <div className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-8 text-center hover:bg-green-200 hover:shadow-2xl hover:shadow-green-300/60 transition-all duration-300 hover:scale-110 cursor-pointer relative overflow-hidden">
-              {/* Background Effect */}
+              {/* Floating User Icons Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-6 left-8 animate-float-slow">
+                  <Users className="w-6 h-6 text-green-600" />
+                </div>
+                <div className="absolute top-10 right-10 animate-float-delay-1">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="absolute bottom-12 left-12 animate-float-delay-2">
+                  <Users className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="absolute bottom-8 right-14 animate-float-delay-3">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+              </div>
+
+              {/* Background Gradient Effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all">
+                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all animate-pulse-glow">
                   <Users className="w-12 h-12 text-white" />
                 </div>
-                <div className="flex items-baseline justify-center gap-1 mb-2">
+                <div className="flex items-baseline justify-center gap-2 mb-2">
                   <AnimatedCounter
                     end={3.5}
                     duration={2500}
@@ -331,7 +458,7 @@ export default function HomePage() {
                     suffix=""
                     className="text-6xl md:text-7xl font-black text-green-700"
                   />
-                  <span className="text-4xl md:text-5xl font-black text-green-700">M</span>
+                  <span className="text-2xl md:text-3xl font-bold text-green-700">میلیون</span>
                 </div>
                 <p className="text-xl md:text-2xl font-bold text-green-900 mt-2">
                   جمعیت تحت پوشش
@@ -343,10 +470,18 @@ export default function HomePage() {
             </div>
 
             {/* Card 4 - کاربران روزانه (Standard) */}
-            <div className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-2xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
-              <div className="mb-4">
+            <div className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-2xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+              {/* Floating Arrows Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-4 left-6 text-3xl animate-float-up">↗</div>
+                <div className="absolute top-8 right-8 text-2xl animate-float-up-delay-1">↑</div>
+                <div className="absolute bottom-10 left-10 text-xl animate-float-up-delay-2">✨</div>
+                <div className="absolute bottom-6 right-6 text-3xl animate-float-up-delay-3">↗</div>
+              </div>
+
+              <div className="mb-4 relative z-10">
                 <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-9 h-9 text-white" />
+                  <TrendingUp className="w-9 h-9 text-white animate-trend-pulse" />
                 </div>
                 <div className="flex items-baseline justify-center gap-1 mb-1">
                   <span className="text-lg font-semibold text-purple-600">روزانه</span>
