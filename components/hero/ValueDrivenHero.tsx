@@ -13,6 +13,7 @@ const resources = [
     name: 'آب',
     color: '#3B82F6',
     gradient: 'from-blue-600 to-cyan-600',
+    gradientColors: { from: '#2563eb', to: '#0891b2' },
     glow: 'rgba(59, 130, 246, 0.4)',
     problem: 'بحران آب خراسان رضوی',
     solution: 'مدیریت هوشمند مصرف',
@@ -30,6 +31,7 @@ const resources = [
     name: 'برق',
     color: '#F59E0B',
     gradient: 'from-orange-600 to-red-700',
+    gradientColors: { from: '#ea580c', to: '#b91c1c' },
     glow: 'rgba(245, 158, 11, 0.4)',
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
@@ -47,6 +49,7 @@ const resources = [
     name: 'گاز',
     color: '#EF4444',
     gradient: 'from-red-600 to-pink-600',
+    gradientColors: { from: '#dc2626', to: '#db2777' },
     glow: 'rgba(239, 68, 68, 0.4)',
     problem: 'کمبود در فصل سرما',
     solution: 'مدیریت تقاضا و عرضه',
@@ -64,6 +67,7 @@ const resources = [
     name: 'فرآورده‌های نفتی',
     color: '#10B981',
     gradient: 'from-green-600 to-emerald-600',
+    gradientColors: { from: '#16a34a', to: '#059669' },
     glow: 'rgba(16, 185, 129, 0.4)',
     problem: 'پایش کیفیت و توزیع',
     solution: 'شفافیت در زنجیره تأمین',
@@ -218,8 +222,9 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className={`inline-block bg-gradient-to-r ${currentResource.gradient} text-transparent bg-clip-text`}
+                  className="inline-block text-transparent"
                   style={{
+                    background: `linear-gradient(to right, ${currentResource.gradientColors.from}, ${currentResource.gradientColors.to})`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text'
