@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Droplet, Zap, Flame, Droplets, Database, ShieldCheck, TrendingUp, Network, Eye, Clock, Users, Target, BarChart3, Lightbulb, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 // Value Propositions واقعی - نه داده فیک
@@ -16,6 +17,7 @@ const resources = [
     problem: 'بحران آب خراسان رضوی',
     solution: 'مدیریت هوشمند مصرف',
     impact: 'کاهش اتلاف',
+    link: '/water/hub',
     features: [
       { icon: Eye, text: 'پایش لحظه‌ای مصرف' },
       { icon: AlertTriangle, text: 'هشدار نشت و اتلاف' },
@@ -32,6 +34,7 @@ const resources = [
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
     impact: 'کاهش قطعی',
+    link: '/electricity/',
     features: [
       { icon: Target, text: 'پیش‌بینی پیک‌بار' },
       { icon: TrendingUp, text: 'بهینه‌سازی توزیع' },
@@ -48,6 +51,7 @@ const resources = [
     problem: 'کمبود در فصل سرما',
     solution: 'مدیریت تقاضا و عرضه',
     impact: 'توزیع عادلانه',
+    link: '/gas/',
     features: [
       { icon: Users, text: 'اولویت‌بندی مصرف' },
       { icon: Eye, text: 'نظارت فشار شبکه' },
@@ -64,6 +68,7 @@ const resources = [
     problem: 'پایش کیفیت و توزیع',
     solution: 'شفافیت در زنجیره تأمین',
     impact: 'کاهش تقلب',
+    link: '/gas/',
     features: [
       { icon: ShieldCheck, text: 'تضمین کیفیت' },
       { icon: Eye, text: 'ردیابی زنجیره' },
@@ -193,7 +198,7 @@ export default function ValueDrivenHero() {
           >
             <Database className="w-5 h-5 text-blue-600" />
             <span className="text-blue-700 font-medium">
-              از داده‌های پراکنده تا تصمیم‌های یکپارچه
+              درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
             </span>
           </motion.div>
 
@@ -267,15 +272,15 @@ export default function ValueDrivenHero() {
             const isHovered = hoveredResource === index;
 
             return (
-              <motion.div
-                key={resource.id}
-                onHoverStart={() => setHoveredResource(index)}
-                onHoverEnd={() => setHoveredResource(null)}
-                onClick={() => setActiveResource(index)}
-                whileHover={{ scale: 1.03, y: -5 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative cursor-pointer group"
-              >
+              <Link href={resource.link} key={resource.id}>
+                <motion.div
+                  onHoverStart={() => setHoveredResource(index)}
+                  onHoverEnd={() => setHoveredResource(null)}
+                  onClick={() => setActiveResource(index)}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="relative cursor-pointer group"
+                >
                 <motion.div
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
                   style={{
@@ -365,6 +370,7 @@ export default function ValueDrivenHero() {
                   )}
                 </motion.div>
               </motion.div>
+              </Link>
             );
           })}
         </motion.div>
@@ -429,14 +435,15 @@ export default function ValueDrivenHero() {
           transition={{ delay: 0.9 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <motion.button
+          <motion.a
+            href="/dashboards/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-3">
               <BarChart3 className="w-6 h-6" />
-              کاوش در داشبوردها
+              مشاهده آمار و گزارش‌ها
             </span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-blue-600"
@@ -444,16 +451,17 @@ export default function ValueDrivenHero() {
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
             />
-          </motion.button>
+          </motion.a>
 
-          <motion.button
+          <motion.a
+            href="/research/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 bg-white backdrop-blur-xl border-3 border-yellow-400 rounded-full font-bold text-gray-900 text-lg hover:bg-yellow-50 transition-all flex items-center gap-3 shadow-xl shadow-yellow-400/30 hover:shadow-2xl hover:shadow-yellow-400/40"
+            className="px-10 py-5 bg-white backdrop-blur-xl border-3 border-green-400 rounded-full font-bold text-gray-900 text-lg hover:bg-green-50 transition-all flex items-center gap-3 shadow-xl shadow-green-400/30 hover:shadow-2xl hover:shadow-green-400/40"
           >
-            <Zap className="w-6 h-6 text-yellow-500" />
-            <span>چک سریع قبض</span>
-          </motion.button>
+            <Database className="w-6 h-6 text-green-600" />
+            <span>راهنمای استفاده از پلتفرم</span>
+          </motion.a>
         </motion.div>
 
         {/* Trust Line */}
