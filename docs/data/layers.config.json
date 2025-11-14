@@ -1,14 +1,8 @@
 {
-  "files": [
-    "amaayesh/khorasan_razavi_combined.geojson",
-    "amaayesh/wind_sites.geojson",
-    "amaayesh/wind_sites_raw.csv",
-    "amaayesh/wind_weights_by_county.csv",
-    "amaayesh/solar_sites.geojson",
-    "amaayesh/dams.geojson"
-  ],
-  "baseData": "amaayesh/",
+  "title": "نقشه تعاملی آمایش انرژی — خراسان رضوی",
+  "baseData": "amaayesh",
   "layers": {
+    "counties": "khorasan_razavi_combined.geojson",
     "province": "khorasan_razavi_combined.geojson",
     "wind_sites": "wind_sites.geojson",
     "solar_sites": "solar_sites.geojson",
