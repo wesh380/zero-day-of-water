@@ -269,24 +269,48 @@ let boundary;
 function safeRemoveLayer(map, layer) {
   if (!layer) return;
   if (layer.__AMA_PROTECTED && !layer.__AMA_ALLOW_REPLACE) return;
-  if (map.hasLayer(layer)) map.removeLayer(layer);
+  try {
+    // ✅ ابتدا تلاش برای remove کردن از map
+    if (map.hasLayer(layer)) {
+      map.removeLayer(layer);
+    }
+  } catch (e) {
+    // ✅ اگر خطا داد، سعی کنیم manually clear کنیم
+    console.warn('[AMA] Error removing layer, trying manual clear:', e.message);
+    try {
+      if (layer.clearLayers && typeof layer.clearLayers === 'function') {
+        layer.clearLayers();
+      }
+      if (map.hasLayer(layer)) {
+        layer.remove();
+      }
+    } catch (e2) {
+      console.error('[AMA] Failed to remove layer:', e2);
+    }
+  }
   if (layer.__AMA_ALLOW_REPLACE) layer.__AMA_ALLOW_REPLACE = false;
 }
 
 async function __refreshBoundary(map, opts={}) {
   const src = window.__countiesGeoAll || { type:'FeatureCollection', features:[] };
+
+  // ✅ Remove کردن ایمن boundary قدیمی
   if (window.boundary && !opts.keepOld) {
     window.boundary.__AMA_ALLOW_REPLACE = true;
     safeRemoveLayer(map, window.boundary);
+    window.boundary = null;  // ✅ اضافه کردن null برای garbage collection
   }
+
+  // ✅ ساخت boundary جدید فقط با polygons (نه markers)
   window.boundary = L.geoJSON(src, {
     pane:'boundary',
-    style:{ color:'#111827', weight:1.5, fill:false }
+    style:{ color:'#475569', weight:1.5, fill:false, opacity:0.7 }
   }).addTo(map);
+
   window.boundary.__AMA_PROTECTED = true;
   boundary = window.boundary;
   if (window.boundary.bringToFront) window.boundary.bringToFront();
-  if (window.AMA_DEBUG) console.log('[AHA] boundary src features =', src.features?.length||0);
+  console.log('[AMA] boundary refreshed - features:', src.features?.length||0);
 }
 
 function ama_popupContent(f, kind){
@@ -2247,6 +2271,23 @@ async function ama_bootstrap(){
   const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
   window.__AMA_MAP = map;
 
+  // ✅ Diagnostic: بررسی map container
+  const mapContainer = document.getElementById('map');
+  if (mapContainer) {
+    const rect = mapContainer.getBoundingClientRect();
+    console.log('[AMA] Map container dimensions:', {
+      width: rect.width,
+      height: rect.height,
+      display: getComputedStyle(mapContainer).display,
+      visibility: getComputedStyle(mapContainer).visibility
+    });
+    if (rect.width === 0 || rect.height === 0) {
+      console.error('[AMA] ❌ Map container has ZERO dimensions! Check CSS!');
+    }
+  } else {
+    console.error('[AMA] ❌ Map container #map not found!');
+  }
+
   // ✅ 2. ایجاد pane ها قبل از populate کردن groups
   map.createPane('polygons');  setClass(map.getPane('polygons'), ['z-400']);
   map.createPane('points');    setClass(map.getPane('points'), ['z-500']);
@@ -2306,13 +2347,25 @@ async function ama_bootstrap(){
   const canvasRenderer = L.canvas({padding:0.5});
   window.__AMA_canvasRenderer = canvasRenderer;
 
+  // ✅ Safe override of map.removeLayer with error handling
   const _rm = map.removeLayer.bind(map);
   map.removeLayer = (lyr) => {
     if (lyr?.__AMA_PROTECTED && !lyr.__AMA_ALLOW_REPLACE) {
       if (window.AMA_DEBUG) console.warn('[AMA] blocked remove on protected layer');
       return map;
     }
-    return _rm(lyr);
+    try {
+      return _rm(lyr);
+    } catch (e) {
+      console.warn('[AMA] Error in map.removeLayer:', e.message);
+      // Try manual removal
+      try {
+        if (lyr && lyr.remove) lyr.remove();
+      } catch (e2) {
+        console.error('[AMA] Failed manual remove:', e2);
+      }
+      return map;
+    }
   };
 
   console.log('[AMA] Before enforceDefaultVisibility - Layers on map:', {
@@ -2346,15 +2399,33 @@ async function ama_bootstrap(){
     const layerCount = grp.getLayers().length;
     const isOnMap = map.hasLayer(grp);
 
+    // ✅ بررسی bounds هر layer
+    let bounds = null;
+    try {
+      bounds = grp.getBounds ? grp.getBounds() : null;
+    } catch (e) {
+      bounds = 'error: ' + e.message;
+    }
+
     console.log(`[AMA] ${key}:`, {
       layerCount,
       isOnMap,
+      bounds: bounds ? `${bounds._southWest?.lat.toFixed(2)},${bounds._southWest?.lng.toFixed(2)} → ${bounds._northEast?.lat.toFixed(2)},${bounds._northEast?.lng.toFixed(2)}` : 'no bounds',
       action: isOnMap ? 'already on map' : 'adding to map...'
     });
 
     if (!isOnMap && layerCount > 0) {
       grp.addTo(map);
       console.log(`[AMA] ✅ ${key} forcefully added to map!`);
+
+      // ✅ بررسی که واقعاً اضافه شد
+      setTimeout(() => {
+        if (map.hasLayer(grp)) {
+          console.log(`[AMA] ✓ ${key} confirmed on map`);
+        } else {
+          console.error(`[AMA] ✗ ${key} FAILED to add to map!`);
+        }
+      }, 100);
     }
   });
   console.log('[AMA] ═══════════════════════════════════════');
