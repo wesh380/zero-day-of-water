@@ -29,7 +29,7 @@ const OptimizedNavigation = () => {
             {/* عنوان رسمی */}
             <div className="flex items-center gap-2">
               <span className="font-medium">
-                درگاه رسمی داده‌های انرژی و آب خراسان رضوی
+                درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
               </span>
             </div>
           </div>

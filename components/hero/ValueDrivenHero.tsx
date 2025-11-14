@@ -198,7 +198,7 @@ export default function ValueDrivenHero() {
           >
             <Database className="w-5 h-5 text-blue-600" />
             <span className="text-blue-700 font-medium">
-              درگاه رسمی داده‌های انرژی و آب خراسان رضوی
+              درگاه رسمی داده‌های خانه هم‌افزایی انرژی و آب خراسان رضوی
             </span>
           </motion.div>
 
