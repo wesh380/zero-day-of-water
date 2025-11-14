@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
@@ -277,7 +278,12 @@ export default function HomePage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-4">
                   <Droplet className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div>
+                <AnimatedCounter
+                  end={500}
+                  duration={2500}
+                  suffix="M+"
+                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
+                />
                 <p className="text-gray-700 font-medium text-base leading-relaxed">
                   متر مکعب
                   <br />
@@ -292,7 +298,12 @@ export default function HomePage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg mb-4">
                   <Zap className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div>
+                <AnimatedCounter
+                  end={15}
+                  duration={2000}
+                  suffix="+"
+                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
+                />
                 <p className="text-gray-700 font-medium text-base leading-relaxed">
                   سد و منبع
                   <br />
@@ -307,7 +318,12 @@ export default function HomePage() {
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
                   <TrendingUp className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div>
+                <AnimatedCounter
+                  end={1000}
+                  duration={2500}
+                  suffix="+"
+                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
+                />
                 <p className="text-gray-700 font-medium text-base leading-relaxed">
                   نقطه
                   <br />
