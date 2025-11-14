@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator } from "lucide-react"
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator, BarChart3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
@@ -266,98 +266,105 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-4 text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
               پلتفرم در یک نگاه
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-600 font-medium max-w-3xl mx-auto">
               آمار و ارقام کلیدی خانه هم‌افزایی
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-            {/* Stat 1 - روزانه بازدید */}
-            <div className="rounded-2xl bg-card border-2 border-blue-200 backdrop-blur p-8 text-center hover:border-blue-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-4">
-                  <TrendingUp className="w-10 h-10 text-white" />
-                </div>
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-2xl font-medium text-gray-600">روزانه</span>
-                  <AnimatedCounter
-                    end={50}
-                    duration={2000}
-                    suffix="+"
-                    className="text-5xl md:text-6xl font-bold text-primary"
-                  />
-                </div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
-                  بازدید
-                  <br />
-                  <span className="text-sm text-gray-500">Daily Active Users</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Stat 2 - جمعیت تحت پوشش */}
-            <div className="rounded-2xl bg-card border-2 border-green-200 backdrop-blur p-8 text-center hover:border-green-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg mb-4">
-                  <Users className="w-10 h-10 text-white" />
-                </div>
-                <div className="flex items-baseline justify-center gap-1">
-                  <AnimatedCounter
-                    end={3.5}
-                    duration={2500}
-                    decimals={1}
-                    suffix=""
-                    className="text-5xl md:text-6xl font-bold text-primary"
-                  />
-                  <span className="text-3xl font-bold text-primary">M</span>
-                </div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
-                  جمعیت تحت پوشش
-                  <br />
-                  <span className="text-sm text-gray-500">Population Served</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Stat 3 - داشبوردها */}
-            <div className="rounded-2xl bg-card border-2 border-purple-200 backdrop-blur p-8 text-center hover:border-purple-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
-                  <LayoutDashboard className="w-10 h-10 text-white" />
-                </div>
-                <AnimatedCounter
-                  end={12}
-                  duration={2000}
-                  suffix=""
-                  className="text-5xl md:text-6xl font-bold text-primary"
-                />
-                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
-                  داشبورد تخصصی
-                  <br />
-                  <span className="text-sm text-gray-500">Specialized Analytics</span>
-                </p>
-              </div>
-            </div>
-
-            {/* Stat 4 - ماشین‌حساب */}
-            <div className="rounded-2xl bg-card border-2 border-orange-200 backdrop-blur p-8 text-center hover:border-orange-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-4">
-                  <Calculator className="w-10 h-10 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {/* Card 1 - ماشین‌حساب (Small) */}
+            <div className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <div className="mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
+                  <Calculator className="w-8 h-8 text-white" />
                 </div>
                 <AnimatedCounter
                   end={8}
                   duration={1800}
                   suffix=""
-                  className="text-5xl md:text-6xl font-bold text-primary"
+                  className="text-3xl md:text-4xl font-bold text-orange-700 mb-1"
                 />
-                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
+                <p className="text-lg font-semibold text-orange-900 mt-1">
                   ماشین‌حساب
-                  <br />
-                  <span className="text-sm text-gray-500">Smart Calculators</span>
+                </p>
+                <p className="text-sm text-orange-700/70 mt-1">
+                  Smart Calculators
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 - داشبورد (Standard) */}
+            <div className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <div className="mb-4">
+                <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
+                  <BarChart3 className="w-9 h-9 text-white" />
+                </div>
+                <AnimatedCounter
+                  end={12}
+                  duration={2000}
+                  suffix=""
+                  className="text-4xl md:text-5xl font-bold text-blue-700 mb-1"
+                />
+                <p className="text-lg font-semibold text-blue-900 mt-1">
+                  داشبورد تخصصی
+                </p>
+                <p className="text-sm text-blue-700/70 mt-1">
+                  Specialized Analytics
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3 - جمعیت (HERO) */}
+            <div className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-8 text-center hover:bg-green-200 hover:shadow-2xl hover:shadow-green-300/60 transition-all duration-300 hover:scale-110 cursor-pointer relative overflow-hidden">
+              {/* Background Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+              <div className="relative z-10">
+                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all">
+                  <Users className="w-12 h-12 text-white" />
+                </div>
+                <div className="flex items-baseline justify-center gap-1 mb-2">
+                  <AnimatedCounter
+                    end={3.5}
+                    duration={2500}
+                    decimals={1}
+                    suffix=""
+                    className="text-6xl md:text-7xl font-black text-green-700"
+                  />
+                  <span className="text-4xl md:text-5xl font-black text-green-700">M</span>
+                </div>
+                <p className="text-xl md:text-2xl font-bold text-green-900 mt-2">
+                  جمعیت تحت پوشش
+                </p>
+                <p className="text-base text-green-700/80 mt-1 font-medium">
+                  Population Served
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4 - کاربران روزانه (Standard) */}
+            <div className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-2xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <div className="mb-4">
+                <div className="inline-flex items-center justify-center w-18 h-18 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-3 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-9 h-9 text-white" />
+                </div>
+                <div className="flex items-baseline justify-center gap-1 mb-1">
+                  <span className="text-lg font-semibold text-purple-600">روزانه</span>
+                  <AnimatedCounter
+                    end={50}
+                    duration={2000}
+                    suffix="+"
+                    className="text-4xl md:text-5xl font-bold text-purple-700"
+                  />
+                </div>
+                <p className="text-lg font-semibold text-purple-900 mt-1">
+                  بازدید فعال
+                </p>
+                <p className="text-sm text-purple-700/70 mt-1">
+                  Daily Active Users
                 </p>
               </div>
             </div>
