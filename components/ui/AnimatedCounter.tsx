@@ -7,13 +7,15 @@ interface AnimatedCounterProps {
   duration?: number;
   suffix?: string;
   className?: string;
+  decimals?: number;
 }
 
 export default function AnimatedCounter({
   end,
   duration = 2000,
   suffix = '',
-  className = ''
+  className = '',
+  decimals = 0
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +61,7 @@ export default function AnimatedCounter({
 
       // استفاده از easeOutCubic برای انیمیشن نرم‌تر
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-      const currentCount = Math.floor(easeOutCubic * end);
+      const currentCount = easeOutCubic * end;
 
       setCount(currentCount);
 
@@ -73,9 +75,16 @@ export default function AnimatedCounter({
     requestAnimationFrame(updateCount);
   }, [isVisible, end, duration]);
 
+  const formatNumber = (num: number) => {
+    if (decimals > 0) {
+      return num.toFixed(decimals);
+    }
+    return Math.floor(num).toLocaleString('en-US');
+  };
+
   return (
     <div ref={elementRef} className={className}>
-      {count.toLocaleString('en-US')}{suffix}
+      {formatNumber(count)}{suffix}
     </div>
   );
 }

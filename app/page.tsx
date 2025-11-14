@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft } from "lucide-react"
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
@@ -267,82 +267,97 @@ export default function HomePage() {
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
-              وضعیت آب و انرژی خراسان رضوی در یک نگاه
+              پلتفرم در یک نگاه
             </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              آمار و ارقام کلیدی خانه هم‌افزایی
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-            {/* Stat 1 */}
+            {/* Stat 1 - روزانه بازدید */}
             <div className="rounded-2xl bg-card border-2 border-blue-200 backdrop-blur p-8 text-center hover:border-blue-400 hover:shadow-xl transition-all">
               <div className="mb-6">
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-4">
-                  <Droplet className="w-10 h-10 text-white" />
-                </div>
-                <AnimatedCounter
-                  end={500}
-                  duration={2500}
-                  suffix="M+"
-                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
-                />
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  متر مکعب
-                  <br />
-                  داده آب
-                </p>
-              </div>
-            </div>
-
-            {/* Stat 2 */}
-            <div className="rounded-2xl bg-card border-2 border-yellow-200 backdrop-blur p-8 text-center hover:border-yellow-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg mb-4">
-                  <Zap className="w-10 h-10 text-white" />
-                </div>
-                <AnimatedCounter
-                  end={15}
-                  duration={2000}
-                  suffix="+"
-                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
-                />
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  سد و منبع
-                  <br />
-                  تحت پوشش
-                </p>
-              </div>
-            </div>
-
-            {/* Stat 3 */}
-            <div className="rounded-2xl bg-card border-2 border-purple-200 backdrop-blur p-8 text-center hover:border-purple-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
                   <TrendingUp className="w-10 h-10 text-white" />
                 </div>
-                <AnimatedCounter
-                  end={1000}
-                  duration={2500}
-                  suffix="+"
-                  className="text-5xl md:text-6xl font-bold text-primary mb-2"
-                />
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  نقطه
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-2xl font-medium text-gray-600">روزانه</span>
+                  <AnimatedCounter
+                    end={50}
+                    duration={2000}
+                    suffix="+"
+                    className="text-5xl md:text-6xl font-bold text-primary"
+                  />
+                </div>
+                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
+                  بازدید
                   <br />
-                  مانیتورینگ
+                  <span className="text-sm text-gray-500">Daily Active Users</span>
                 </p>
               </div>
             </div>
 
-            {/* Stat 4 */}
+            {/* Stat 2 - جمعیت تحت پوشش */}
             <div className="rounded-2xl bg-card border-2 border-green-200 backdrop-blur p-8 text-center hover:border-green-400 hover:shadow-xl transition-all">
               <div className="mb-6">
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg mb-4">
-                  <Clock className="w-10 h-10 text-white" />
+                  <Users className="w-10 h-10 text-white" />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  داده
+                <div className="flex items-baseline justify-center gap-1">
+                  <AnimatedCounter
+                    end={3.5}
+                    duration={2500}
+                    decimals={1}
+                    suffix=""
+                    className="text-5xl md:text-6xl font-bold text-primary"
+                  />
+                  <span className="text-3xl font-bold text-primary">M</span>
+                </div>
+                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
+                  جمعیت تحت پوشش
                   <br />
-                  Real-time
+                  <span className="text-sm text-gray-500">Population Served</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Stat 3 - داشبوردها */}
+            <div className="rounded-2xl bg-card border-2 border-purple-200 backdrop-blur p-8 text-center hover:border-purple-400 hover:shadow-xl transition-all">
+              <div className="mb-6">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
+                  <LayoutDashboard className="w-10 h-10 text-white" />
+                </div>
+                <AnimatedCounter
+                  end={12}
+                  duration={2000}
+                  suffix=""
+                  className="text-5xl md:text-6xl font-bold text-primary"
+                />
+                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
+                  داشبورد تخصصی
+                  <br />
+                  <span className="text-sm text-gray-500">Specialized Analytics</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Stat 4 - ماشین‌حساب */}
+            <div className="rounded-2xl bg-card border-2 border-orange-200 backdrop-blur p-8 text-center hover:border-orange-400 hover:shadow-xl transition-all">
+              <div className="mb-6">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 shadow-lg mb-4">
+                  <Calculator className="w-10 h-10 text-white" />
+                </div>
+                <AnimatedCounter
+                  end={8}
+                  duration={1800}
+                  suffix=""
+                  className="text-5xl md:text-6xl font-bold text-primary"
+                />
+                <p className="text-gray-700 font-medium text-base leading-relaxed mt-2">
+                  ماشین‌حساب
+                  <br />
+                  <span className="text-sm text-gray-500">Smart Calculators</span>
                 </p>
               </div>
             </div>
