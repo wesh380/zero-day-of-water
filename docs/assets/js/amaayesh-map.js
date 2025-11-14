@@ -302,8 +302,13 @@ async function __refreshBoundary(map, opts={}) {
   }
 
   // ✅ ساخت boundary جدید فقط با polygons (نه markers)
+  // فیلتر کردن فقط Polygon و MultiPolygon features
   window.boundary = L.geoJSON(src, {
     pane:'boundary',
+    filter: (feature) => {
+      const geomType = feature?.geometry?.type;
+      return geomType === 'Polygon' || geomType === 'MultiPolygon';
+    },
     style:{ color:'#475569', weight:1.5, fill:false, opacity:0.7 }
   }).addTo(map);
 
@@ -2184,18 +2189,40 @@ async function ama_bootstrap(){
       dams: '#60a5fa'    // آبی
     };
 
-    return L.divIcon({
-      className: `custom-marker marker-${type}`,
-      html: `
-        <div class="marker-container">
-          <div class="marker-icon" style="color: ${colors[type]}">${icons[type]}</div>
-          <div class="marker-pulse" style="background: ${colors[type]}33"></div>
-        </div>
-      `,
-      iconSize: [36, 36],
-      iconAnchor: [18, 36],
-      popupAnchor: [0, -36]
-    });
+    // ✅ اعتبارسنجی type
+    if (!icons[type]) {
+      console.warn(`[AMA] Unknown icon type: ${type}, using default`);
+      return L.divIcon({
+        className: `custom-marker marker-default`,
+        html: `
+          <div class="marker-container">
+            <div class="marker-icon" style="color: #38bdf8">📍</div>
+            <div class="marker-pulse" style="background: #38bdf833"></div>
+          </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+      });
+    }
+
+    try {
+      return L.divIcon({
+        className: `custom-marker marker-${type}`,
+        html: `
+          <div class="marker-container">
+            <div class="marker-icon" style="color: ${colors[type]}">${icons[type]}</div>
+            <div class="marker-pulse" style="background: ${colors[type]}33"></div>
+          </div>
+        `,
+        iconSize: [36, 36],
+        iconAnchor: [18, 36],
+        popupAnchor: [0, -36]
+      });
+    } catch (e) {
+      console.error(`[AMA] Error creating DivIcon:`, e);
+      return null;
+    }
   }
 
   // سبک پایه برای نقاط - فقط برای circleMarker fallback
@@ -2220,24 +2247,38 @@ async function ama_bootstrap(){
     if (!gj) return null;
     return L.geoJSON(gj, {
       pane: 'points',
+      filter: (feature) => {
+        // فقط Point features را پردازش کن
+        const geomType = feature?.geometry?.type;
+        return geomType === 'Point';
+      },
       pointToLayer: (feature, latlng) => {
-        const marker = L.marker(latlng, {
-          icon: createCustomIcon(kind)
-        });
+        try {
+          const icon = createCustomIcon(kind);
+          if (!icon) {
+            console.error(`[AMA] Failed to create icon for ${kind}`);
+            return null;
+          }
 
-        // اضافه کردن popup با اطلاعات
-        const props = feature.properties || {};
-        const popupContent = `
-          <div class="custom-popup" dir="rtl">
-            <h3>${props.name_fa || props.name || 'نام نامشخص'}</h3>
-            <p><strong>شهرستان:</strong> ${props.county || '-'}</p>
-            ${props.capacity_mw ? `<p><strong>ظرفیت:</strong> ${props.capacity_mw} مگاوات</p>` : ''}
-            ${props.wind_class ? `<p><strong>کلاس باد:</strong> ${props.wind_class}</p>` : ''}
-          </div>
-        `;
-        marker.bindPopup(popupContent);
+          const marker = L.marker(latlng, { icon });
 
-        return marker;
+          // اضافه کردن popup با اطلاعات
+          const props = feature.properties || {};
+          const popupContent = `
+            <div class="custom-popup" dir="rtl">
+              <h3>${props.name_fa || props.name || 'نام نامشخص'}</h3>
+              <p><strong>شهرستان:</strong> ${props.county || '-'}</p>
+              ${props.capacity_mw ? `<p><strong>ظرفیت:</strong> ${props.capacity_mw} مگاوات</p>` : ''}
+              ${props.wind_class ? `<p><strong>کلاس باد:</strong> ${props.wind_class}</p>` : ''}
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+
+          return marker;
+        } catch (e) {
+          console.error(`[AMA] Error creating marker for ${kind}:`, e);
+          return null;
+        }
       }
     });
   }
@@ -2252,10 +2293,14 @@ async function ama_bootstrap(){
   function addPolyGroup(key, gj){
     if(!gj) return;
     const style = key==='province'
-      ? { color:'#64748b', weight:3, opacity:0.9, fillOpacity:0.05, fillColor:'#0ea5e9' }  // ✅ خاکستری-آبی با fill کم‌رنگ
-      : { color:'#0ea5e9', weight:1, opacity:0.6, fillOpacity:0 };
+      ? { color:'#0ea5e9', weight:4, opacity:1, fillOpacity:0.08, fillColor:'#0ea5e9' }  // ✅ بهبود visibility با border کلفت‌تر و رنگ واضح‌تر
+      : { color:'#38bdf8', weight:2, opacity:0.8, fillOpacity:0 };
     const layer = L.geoJSON(gj, {
       pane: 'polygons',
+      filter: (feature) => {
+        const geomType = feature?.geometry?.type;
+        return geomType === 'Polygon' || geomType === 'MultiPolygon';
+      },
       style: () => style
     });
     AMA.G[key].clearLayers();
