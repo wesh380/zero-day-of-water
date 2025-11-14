@@ -31,14 +31,11 @@ function trackAnalyticsEvent(action, params = {}) {
 // Choropleth flag (opt-in) + debug marker control
 AMA.flags = AMA.flags || {};
 AMA.flags.debugCountyMarker = false;
-AMA.flags.disableMarkerIcons = true;
+AMA.flags.disableMarkerIcons = false;  // ✅ غیرفعال - چون از DivIcon استفاده می‌کنیم
 const CHORO_ON = !!AMA.flags.enableChoropleth;
 
-// soft-disable default Marker icons when flag is on
-if (AMA.flags.disableMarkerIcons && typeof L !== 'undefined' && L && L.Marker && L.Marker.prototype){
-  const _initIcon = L.Marker.prototype._initIcon;
-  L.Marker.prototype._initIcon = function(){ /* no-op: hide image icon */ };
-}
+// حذف کد قدیمی که marker icons را disable می‌کرد
+// چون حالا از DivIcon استفاده می‌کنیم
 
 ;(function(){
   window.__AMA_UI_VERSION = 'dock-probe-v1';
@@ -2149,46 +2146,92 @@ async function ama_bootstrap(){
     window.__countiesGeoAll = countiesFC || { type:'FeatureCollection', features:[] };
   }
 
-  // سبک پایه برای نقاط
-  function pointStyle(kind){
-    const colors = {
-      wind: '#00ff00',    // ✅ سبز فسفری برای test!
-      solar: '#ff00ff',   // ✅ صورتی فسفری برای test!
-      dams: '#00ffff'     // ✅ آبی فسفری برای test!
+  // ✅ تابع ساخت custom icon با emoji
+  function createCustomIcon(type) {
+    const icons = {
+      wind: '💨',
+      solar: '☀️',
+      dams: '💧'
     };
-    return {
-      radius: 10,         // ✅ بزرگتر برای test!
-      weight: 3,          // ✅ ضخیم‌تر برای test!
-      opacity: 1,
-      fillOpacity: 0.9,   // ✅ پررنگ‌تر برای test!
-      color: colors[kind] || '#00ff00',
-      fillColor: colors[kind] || '#00ff00'
-    };
-  }
 
-  // ساخت لایه GeoJSON با circleMarker
-  function asCircleLayer(gj, kind){
-    if (!gj) return null;
-    return L.geoJSON(gj, {
-      pane: 'points',  // مشخص کردن pane
-      pointToLayer: (_f, latlng)=> L.circleMarker(latlng, pointStyle(kind))
+    const colors = {
+      wind: '#38bdf8',   // آبی روشن
+      solar: '#fbbf24',  // زرد
+      dams: '#60a5fa'    // آبی
+    };
+
+    return L.divIcon({
+      className: `custom-marker marker-${type}`,
+      html: `
+        <div class="marker-container">
+          <div class="marker-icon" style="color: ${colors[type]}">${icons[type]}</div>
+          <div class="marker-pulse" style="background: ${colors[type]}33"></div>
+        </div>
+      `,
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -36]
     });
   }
 
-  // افزودن ایمن به رجیستری بدون مارکر آیکنی
+  // سبک پایه برای نقاط - فقط برای circleMarker fallback
+  function pointStyle(kind){
+    const colors = {
+      wind: '#38bdf8',
+      solar: '#fbbf24',
+      dams: '#60a5fa'
+    };
+    return {
+      radius: 8,
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.8,
+      color: colors[kind] || '#38bdf8',
+      fillColor: colors[kind] || '#38bdf8'
+    };
+  }
+
+  // ✅ ساخت لایه GeoJSON با DivIcon markers
+  function asMarkerLayer(gj, kind){
+    if (!gj) return null;
+    return L.geoJSON(gj, {
+      pane: 'points',
+      pointToLayer: (feature, latlng) => {
+        const marker = L.marker(latlng, {
+          icon: createCustomIcon(kind)
+        });
+
+        // اضافه کردن popup با اطلاعات
+        const props = feature.properties || {};
+        const popupContent = `
+          <div class="custom-popup" dir="rtl">
+            <h3>${props.name_fa || props.name || 'نام نامشخص'}</h3>
+            <p><strong>شهرستان:</strong> ${props.county || '-'}</p>
+            ${props.capacity_mw ? `<p><strong>ظرفیت:</strong> ${props.capacity_mw} مگاوات</p>` : ''}
+            ${props.wind_class ? `<p><strong>کلاس باد:</strong> ${props.wind_class}</p>` : ''}
+          </div>
+        `;
+        marker.bindPopup(popupContent);
+
+        return marker;
+      }
+    });
+  }
+
+  // افزودن ایمن به رجیستری با DivIcon
   function setPointGroup(key, gj){
     const grp = AMA.G[key]; if (!grp) return;
     grp.clearLayers();
-    const lyr = asCircleLayer(gj, key); if (lyr) grp.addLayer(lyr);
+    const lyr = asMarkerLayer(gj, key); if (lyr) grp.addLayer(lyr);
   }
 
   function addPolyGroup(key, gj){
     if(!gj) return;
     const style = key==='province'
-      ? { color:'#ff0000', weight:4, opacity:1, fillOpacity:0.1, fillColor:'#ff0000' }  // ✅ قرمز و ضخیم برای test!
-      : { color:'#0ea5e9', weight:2, opacity:1, fillOpacity:0 };
+      ? { color:'#64748b', weight:3, opacity:0.9, fillOpacity:0.05, fillColor:'#0ea5e9' }  // ✅ خاکستری-آبی با fill کم‌رنگ
+      : { color:'#0ea5e9', weight:1, opacity:0.6, fillOpacity:0 };
     const layer = L.geoJSON(gj, {
-      pane: 'polygons',  // مشخص کردن pane
+      pane: 'polygons',
       style: () => style
     });
     AMA.G[key].clearLayers();
@@ -2229,30 +2272,7 @@ async function ama_bootstrap(){
     dams: AMA.G.dams?.getLayers().length || 0
   });
 
-  function coerceMarkersToCircles(groupKey){
-    const grp = AMA.G[groupKey]; if (!grp) return;
-    const toAdd = [], toRemove = [];
-    grp.eachLayer(l=>{
-      if (l instanceof L.GeoJSON){
-        l.eachLayer(inn=>{
-          if (inn instanceof L.Marker && typeof inn.getLatLng==='function'){
-            const ll = inn.getLatLng();
-            toRemove.push(inn);
-            toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
-          }
-        });
-      } else if (l instanceof L.Marker && typeof l.getLatLng==='function'){
-        const ll = l.getLatLng();
-        toRemove.push(l);
-        toAdd.push(L.circleMarker(ll, pointStyle(groupKey)));
-      }
-    });
-    toRemove.forEach(x=> grp.removeLayer(x));
-    toAdd.forEach(x=> grp.addLayer(x));
-  }
-
-  ['wind','solar','dams'].forEach(k=>{ coerceMarkersToCircles(k); });
-  setTimeout(()=> ['wind','solar','dams'].forEach(k=> coerceMarkersToCircles(k)), 0);
+  // ✅ حذف coerceMarkersToCircles - چون از DivIcon استفاده می‌کنیم
 
   // استفاده از tile provider با fallback
   const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
