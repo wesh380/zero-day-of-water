@@ -122,18 +122,6 @@ const OptimizedNavigation = () => {
 
               {/* منوی اصلی با آیکون */}
               <a
-                href="/dashboards/"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-blue-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
-              >
-                <div className="w-8 h-8 bg-blue-100/80 backdrop-blur-sm rounded-lg flex items-center justify-center group-hover:bg-blue-200/90 transition-all shadow-sm">
-                  <TrendingUp className="w-4 h-4 text-blue-600" />
-                </div>
-                <span className="font-medium text-gray-700 group-hover:text-blue-600 transition-colors">
-                  داشبوردها
-                </span>
-              </a>
-
-              <a
                 href="/calculators/"
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-purple-50/80 backdrop-blur-sm transition-all group hover:shadow-md"
               >
@@ -221,10 +209,6 @@ const OptimizedNavigation = () => {
         {mobileOpen && (
           <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100/50 animate-slideDown shadow-lg">
             <div className="px-4 py-4 space-y-2">
-              <a href="/dashboards/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 transition-colors">
-                <TrendingUp className="w-5 h-5 text-blue-600" />
-                <span className="font-medium text-gray-700">داشبوردها</span>
-              </a>
               <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors">
                 <Zap className="w-5 h-5 text-purple-600" />
                 <span className="font-medium text-gray-700">محاسبه‌گر</span>
