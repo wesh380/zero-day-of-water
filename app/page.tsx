@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft } from "lucide-react"
+import { Menu, X, Phone, Zap, Droplet, Droplets, ChevronDown, TrendingUp, Clock, Users, ChevronLeft, LayoutDashboard, Calculator, BarChart3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import AnimatedCounter from "@/components/ui/AnimatedCounter"
 import ValueDrivenHero from "@/components/hero/ValueDrivenHero"
 import GovernancePrinciples from "@/components/sections/GovernancePrinciples"
 import DataJourney from "@/components/sections/DataJourney"
@@ -247,6 +248,100 @@ const OptimizedNavigation = () => {
         .animate-slideDown {
           animation: slideDown 0.3s ease-out;
         }
+
+        /* Stats Cards Animations */
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-up {
+          0%, 100% { transform: translateY(0px); opacity: 0.1; }
+          50% { transform: translateY(-15px); opacity: 0.3; }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
+        }
+
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+          50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.8); }
+        }
+
+        @keyframes chart-grow {
+          0%, 100% { transform: scaleY(1); }
+          50% { transform: scaleY(1.1); }
+        }
+
+        @keyframes trend-pulse {
+          0%, 100% { transform: translateY(0) rotate(45deg); }
+          50% { transform: translateY(-3px) rotate(45deg); }
+        }
+
+        @keyframes grid-fade {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.7; }
+        }
+
+        .animate-float-slow {
+          animation: float-slow 3s ease-in-out infinite;
+        }
+
+        .animate-float-delay-1 {
+          animation: float-slow 3.5s ease-in-out infinite;
+          animation-delay: 0.5s;
+        }
+
+        .animate-float-delay-2 {
+          animation: float-slow 4s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+
+        .animate-float-delay-3 {
+          animation: float-slow 3.2s ease-in-out infinite;
+          animation-delay: 1.5s;
+        }
+
+        .animate-float-up {
+          animation: float-up 2.5s ease-in-out infinite;
+        }
+
+        .animate-float-up-delay-1 {
+          animation: float-up 3s ease-in-out infinite;
+          animation-delay: 0.4s;
+        }
+
+        .animate-float-up-delay-2 {
+          animation: float-up 2.8s ease-in-out infinite;
+          animation-delay: 0.8s;
+        }
+
+        .animate-float-up-delay-3 {
+          animation: float-up 3.2s ease-in-out infinite;
+          animation-delay: 1.2s;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .animate-chart-grow {
+          animation: chart-grow 2s ease-in-out infinite;
+        }
+
+        .animate-trend-pulse {
+          animation: trend-pulse 2s ease-in-out infinite;
+        }
+
+        .animate-grid-fade {
+          animation: grid-fade 3s ease-in-out infinite;
+        }
       `}</style>
     </>
   );
@@ -261,72 +356,158 @@ export default function HomePage() {
       <DataJourney />
 
       {/* Stats Section */}
-      <section id="stats" className="relative z-10 py-24 px-6">
+      <section id="stats" className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
-              وضعیت آب و انرژی خراسان رضوی در یک نگاه
+          <div className="text-center mb-12">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+              آمار این سایت در یک نگاه
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-            {/* Stat 1 */}
-            <div className="rounded-2xl bg-card border-2 border-blue-200 backdrop-blur p-8 text-center hover:border-blue-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mb-4">
-                  <Droplet className="w-10 h-10 text-white" />
-                </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">500M+</div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  متر مکعب
-                  <br />
-                  داده آب
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {/* Card 1 - ماشین‌حساب (Small) */}
+            <div
+              className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار ماشین‌حساب‌ها: 8 ماشین‌حساب هوشمند"
+              tabIndex={0}
+            >
+              {/* Floating Math Symbols Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-4 left-4 text-3xl font-bold text-orange-600 animate-float-slow">÷</div>
+                <div className="absolute top-6 right-6 text-2xl font-bold text-orange-600 animate-float-delay-1">×</div>
+                <div className="absolute bottom-8 left-6 text-2xl font-bold text-orange-600 animate-float-delay-2">+</div>
+                <div className="absolute bottom-4 right-8 text-3xl font-bold text-orange-600 animate-float-delay-3">=</div>
+              </div>
+
+              <div className="mb-4 relative z-10">
+                <Calculator className="w-6 h-6 text-orange-500 mb-3 mx-auto" />
+                <AnimatedCounter
+                  end={8}
+                  duration={1800}
+                  suffix=""
+                  className="text-3xl md:text-4xl font-extrabold text-orange-700 mb-1 tracking-tight"
+                />
+                <p className="text-lg font-semibold text-orange-900 mt-1 leading-tight">
+                  ماشین‌حساب
+                </p>
+                <p className="text-sm text-orange-700/70 mt-1 leading-relaxed">
+                  Smart Calculators
                 </p>
               </div>
             </div>
 
-            {/* Stat 2 */}
-            <div className="rounded-2xl bg-card border-2 border-yellow-200 backdrop-blur p-8 text-center hover:border-yellow-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg mb-4">
-                  <Zap className="w-10 h-10 text-white" />
+            {/* Card 2 - داشبورد (Standard) */}
+            <div
+              className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار داشبوردها: 12 داشبورد تخصصی تحلیلی"
+              tabIndex={0}
+            >
+              {/* Grid Pattern Background */}
+              <div className="absolute inset-0 opacity-5 pointer-events-none">
+                <div className="grid grid-cols-4 grid-rows-4 gap-2 h-full p-4">
+                  {[...Array(16)].map((_, i) => (
+                    <div key={i} className="border border-blue-400 rounded animate-grid-fade" style={{animationDelay: `${i * 0.1}s`}}></div>
+                  ))}
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">15+</div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  سد و منبع
-                  <br />
-                  تحت پوشش
+              </div>
+
+              <div className="mb-4 relative z-10">
+                <BarChart3 className="w-6 h-6 text-blue-500 mb-3 mx-auto" />
+                <AnimatedCounter
+                  end={12}
+                  duration={2000}
+                  suffix=""
+                  className="text-4xl md:text-5xl font-extrabold text-blue-700 mb-1 tracking-tight"
+                />
+                <p className="text-lg font-semibold text-blue-900 mt-1 leading-tight">
+                  داشبورد تخصصی
+                </p>
+                <p className="text-sm text-blue-700/70 mt-1 leading-relaxed">
+                  Specialized Analytics
                 </p>
               </div>
             </div>
 
-            {/* Stat 3 */}
-            <div className="rounded-2xl bg-card border-2 border-purple-200 backdrop-blur p-8 text-center hover:border-purple-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mb-4">
-                  <TrendingUp className="w-10 h-10 text-white" />
+            {/* Card 3 - جمعیت (HERO) */}
+            <div
+              className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-6 md:p-8 text-center hover:bg-green-200 shadow-xl hover:shadow-2xl shadow-green-300/40 hover:shadow-green-300/70 transition-all duration-300 hover:scale-[1.01] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار جمعیت تحت پوشش: 3.5 میلیون نفر"
+              tabIndex={0}
+            >
+              {/* Floating User Icons Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-6 left-8 animate-float-slow">
+                  <Users className="w-6 h-6 text-green-600" />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">1000+</div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  نقطه
-                  <br />
-                  مانیتورینگ
+                <div className="absolute top-10 right-10 animate-float-delay-1">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="absolute bottom-12 left-12 animate-float-delay-2">
+                  <Users className="w-4 h-4 text-green-600" />
+                </div>
+                <div className="absolute bottom-8 right-14 animate-float-delay-3">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+              </div>
+
+              {/* Background Gradient Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+              <div className="relative z-10">
+                <Users className="w-8 h-8 text-green-600 mb-3 mx-auto" />
+                <div className="flex items-baseline justify-center gap-2 mb-2 leading-none">
+                  <AnimatedCounter
+                    end={3.5}
+                    duration={2500}
+                    decimals={1}
+                    suffix=""
+                    className="text-5xl md:text-6xl lg:text-7xl font-black text-green-700 tracking-tight"
+                  />
+                  <span className="text-xl md:text-2xl lg:text-3xl font-bold text-green-700">میلیون</span>
+                </div>
+                <p className="text-lg md:text-xl lg:text-2xl font-bold text-green-900 mt-2 leading-tight">
+                  جمعیت تحت پوشش
+                </p>
+                <p className="text-sm md:text-base text-green-700/80 mt-1 font-medium leading-relaxed">
+                  Population Served
                 </p>
               </div>
             </div>
 
-            {/* Stat 4 */}
-            <div className="rounded-2xl bg-card border-2 border-green-200 backdrop-blur p-8 text-center hover:border-green-400 hover:shadow-xl transition-all">
-              <div className="mb-6">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg mb-4">
-                  <Clock className="w-10 h-10 text-white" />
+            {/* Card 4 - کاربران روزانه (Standard) */}
+            <div
+              className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار کاربران فعال: بیش از 50 کاربر فعال روزانه"
+              tabIndex={0}
+            >
+              {/* Floating Arrows Background */}
+              <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <div className="absolute top-4 left-6 text-3xl animate-float-up">↗</div>
+                <div className="absolute top-8 right-8 text-2xl animate-float-up-delay-1">↑</div>
+                <div className="absolute bottom-10 left-10 text-xl animate-float-up-delay-2">✨</div>
+                <div className="absolute bottom-6 right-6 text-3xl animate-float-up-delay-3">↗</div>
+              </div>
+
+              <div className="mb-4 relative z-10">
+                <TrendingUp className="w-6 h-6 text-purple-500 mb-3 mx-auto" />
+                <div className="flex items-baseline justify-center gap-1 mb-1">
+                  <AnimatedCounter
+                    end={50}
+                    duration={2000}
+                    suffix="+"
+                    className="text-4xl md:text-5xl font-extrabold text-purple-700 tracking-tight"
+                  />
                 </div>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">24/7</div>
-                <p className="text-gray-700 font-medium text-base leading-relaxed">
-                  داده
-                  <br />
-                  Real-time
+                <p className="text-lg font-semibold text-purple-900 mt-1 leading-tight">
+                  کاربر فعال روزانه
+                </p>
+                <p className="text-sm text-purple-700/70 mt-1 leading-relaxed">
+                  Daily Active Users
                 </p>
               </div>
             </div>
@@ -335,9 +516,9 @@ export default function HomePage() {
       </section>
 
       {/* Energy Map Section */}
-      <section id="features" className="relative z-10 py-24 px-6">
+      <section id="features" className="relative z-10 py-12 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
+          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
             <div className="text-center">
               <a
                 href="./amaayesh/index.html"
@@ -355,26 +536,25 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-24 px-6">
+      <footer className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-12">
+          <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
               {/* Brand Section */}
               <div className="lg:col-span-2">
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-center gap-2 mb-4">
                   <img src="/assets/img/logo/wesh360.svg" alt="WESH360" className="w-6 h-6" />
                   <span className="text-xl font-semibold">WESH360</span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-pretty">
-                  پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی
-                  داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
+                <p className="text-muted-foreground leading-relaxed">
+                  پلتفرم مدیریت هوشمند آب و انرژی در خراسان رضوی. ما با رعایت امنیت سایبری و حکمرانی داده، داشبوردهای تعاملی برای آگاهی‌بخشی و هم‌افزایی ارائه می‌دهیم.
                 </p>
               </div>
 
               {/* Links Section 1 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">داشبوردها</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">داشبوردها</h3>
                 <ul className="space-y-3">
                   {["آب", "برق", "گاز و فرآورده‌های نفتی", "محیط زیست"].map((item) => (
                     <li key={item}>
@@ -391,7 +571,7 @@ export default function HomePage() {
 
               {/* Links Section 2 */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider mb-6">منابع</h3>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">منابع</h3>
                 <ul className="space-y-3">
                   {["پژوهش", "ماشین‌حساب", "ارتباط با ما", "سیاست امنیت"].map((item) => (
                     <li key={item}>

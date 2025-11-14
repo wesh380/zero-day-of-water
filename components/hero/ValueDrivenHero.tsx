@@ -13,6 +13,7 @@ const resources = [
     name: 'آب',
     color: '#3B82F6',
     gradient: 'from-blue-600 to-cyan-600',
+    gradientColors: { from: '#2563eb', to: '#0891b2' },
     glow: 'rgba(59, 130, 246, 0.4)',
     problem: 'بحران آب خراسان رضوی',
     solution: 'مدیریت هوشمند مصرف',
@@ -29,7 +30,8 @@ const resources = [
     icon: Zap,
     name: 'برق',
     color: '#F59E0B',
-    gradient: 'from-yellow-600 to-orange-600',
+    gradient: 'from-orange-600 to-red-700',
+    gradientColors: { from: '#ea580c', to: '#b91c1c' },
     glow: 'rgba(245, 158, 11, 0.4)',
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
@@ -47,6 +49,7 @@ const resources = [
     name: 'گاز',
     color: '#EF4444',
     gradient: 'from-red-600 to-pink-600',
+    gradientColors: { from: '#dc2626', to: '#db2777' },
     glow: 'rgba(239, 68, 68, 0.4)',
     problem: 'کمبود در فصل سرما',
     solution: 'مدیریت تقاضا و عرضه',
@@ -64,6 +67,7 @@ const resources = [
     name: 'فرآورده‌های نفتی',
     color: '#10B981',
     gradient: 'from-green-600 to-emerald-600',
+    gradientColors: { from: '#16a34a', to: '#059669' },
     glow: 'rgba(16, 185, 129, 0.4)',
     problem: 'پایش کیفیت و توزیع',
     solution: 'شفافیت در زنجیره تأمین',
@@ -165,13 +169,13 @@ export default function ValueDrivenHero() {
 
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-20"
+        className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-12"
       >
         {/* Top Status Bar */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-8"
         >
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-full px-4 py-2 shadow-sm">
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -188,13 +192,13 @@ export default function ValueDrivenHero() {
         </motion.div>
 
         {/* Main Content */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-8"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
           >
             <Database className="w-5 h-5 text-blue-600" />
             <span className="text-blue-700 font-medium">
@@ -207,9 +211,9 @@ export default function ValueDrivenHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-8"
+            className="mb-6"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
               <span className="text-gray-900">چالش‌های </span>
               <AnimatePresence mode="wait">
                 <motion.span
@@ -218,8 +222,9 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className={`inline-block bg-gradient-to-r ${currentResource.gradient} text-transparent bg-clip-text`}
+                  className="inline-block text-transparent"
                   style={{
+                    background: `linear-gradient(to right, ${currentResource.gradientColors.from}, ${currentResource.gradientColors.to})`,
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text'
