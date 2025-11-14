@@ -367,7 +367,12 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* Card 1 - ماشین‌حساب (Small) */}
-            <div className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+            <div
+              className="group rounded-3xl bg-orange-50 border-2 border-orange-400 p-6 text-center hover:bg-orange-100 hover:shadow-xl hover:shadow-orange-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار ماشین‌حساب‌ها: 8 ماشین‌حساب هوشمند"
+              tabIndex={0}
+            >
               {/* Floating Math Symbols Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
                 <div className="absolute top-4 left-4 text-3xl font-bold text-orange-600 animate-float-slow">÷</div>
@@ -384,19 +389,24 @@ export default function HomePage() {
                   end={8}
                   duration={1800}
                   suffix=""
-                  className="text-3xl md:text-4xl font-bold text-orange-700 mb-1"
+                  className="text-3xl md:text-4xl font-extrabold text-orange-700 mb-1 tracking-tight"
                 />
-                <p className="text-lg font-semibold text-orange-900 mt-1">
+                <p className="text-lg font-semibold text-orange-900 mt-1 leading-tight">
                   ماشین‌حساب
                 </p>
-                <p className="text-sm text-orange-700/70 mt-1">
+                <p className="text-sm text-orange-700/70 mt-1 leading-relaxed">
                   Smart Calculators
                 </p>
               </div>
             </div>
 
             {/* Card 2 - داشبورد (Standard) */}
-            <div className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+            <div
+              className="group rounded-3xl bg-blue-50 border-2 border-blue-400 p-6 text-center hover:bg-blue-100 hover:shadow-xl hover:shadow-blue-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار داشبوردها: 12 داشبورد تخصصی تحلیلی"
+              tabIndex={0}
+            >
               {/* Grid Pattern Background */}
               <div className="absolute inset-0 opacity-5 pointer-events-none">
                 <div className="grid grid-cols-4 grid-rows-4 gap-2 h-full p-4">
@@ -414,19 +424,24 @@ export default function HomePage() {
                   end={12}
                   duration={2000}
                   suffix=""
-                  className="text-4xl md:text-5xl font-bold text-blue-700 mb-1"
+                  className="text-4xl md:text-5xl font-extrabold text-blue-700 mb-1 tracking-tight"
                 />
-                <p className="text-lg font-semibold text-blue-900 mt-1">
+                <p className="text-lg font-semibold text-blue-900 mt-1 leading-tight">
                   داشبورد تخصصی
                 </p>
-                <p className="text-sm text-blue-700/70 mt-1">
+                <p className="text-sm text-blue-700/70 mt-1 leading-relaxed">
                   Specialized Analytics
                 </p>
               </div>
             </div>
 
             {/* Card 3 - جمعیت (HERO) */}
-            <div className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-8 text-center hover:bg-green-200 hover:shadow-2xl hover:shadow-green-300/60 transition-all duration-300 hover:scale-110 cursor-pointer relative overflow-hidden">
+            <div
+              className="md:col-span-2 xl:col-span-1 group rounded-3xl bg-green-100 border-3 border-green-500 p-6 md:p-8 text-center hover:bg-green-200 shadow-xl hover:shadow-2xl shadow-green-300/40 hover:shadow-green-300/70 transition-all duration-300 hover:scale-[1.01] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار جمعیت تحت پوشش: 3.5 میلیون نفر"
+              tabIndex={0}
+            >
               {/* Floating User Icons Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
                 <div className="absolute top-6 left-8 animate-float-slow">
@@ -447,30 +462,35 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all animate-pulse-glow">
-                  <Users className="w-12 h-12 text-white" />
+                <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-2xl mb-3 md:mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all animate-pulse-glow">
+                  <Users className="w-10 h-10 md:w-12 md:h-12 text-white" />
                 </div>
-                <div className="flex items-baseline justify-center gap-2 mb-2">
+                <div className="flex items-baseline justify-center gap-2 mb-2 leading-none">
                   <AnimatedCounter
                     end={3.5}
                     duration={2500}
                     decimals={1}
                     suffix=""
-                    className="text-6xl md:text-7xl font-black text-green-700"
+                    className="text-5xl md:text-6xl lg:text-7xl font-black text-green-700 tracking-tight"
                   />
-                  <span className="text-2xl md:text-3xl font-bold text-green-700">میلیون</span>
+                  <span className="text-xl md:text-2xl lg:text-3xl font-bold text-green-700">میلیون</span>
                 </div>
-                <p className="text-xl md:text-2xl font-bold text-green-900 mt-2">
+                <p className="text-lg md:text-xl lg:text-2xl font-bold text-green-900 mt-2 leading-tight">
                   جمعیت تحت پوشش
                 </p>
-                <p className="text-base text-green-700/80 mt-1 font-medium">
+                <p className="text-sm md:text-base text-green-700/80 mt-1 font-medium leading-relaxed">
                   Population Served
                 </p>
               </div>
             </div>
 
             {/* Card 4 - کاربران روزانه (Standard) */}
-            <div className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-2xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-105 cursor-pointer relative overflow-hidden">
+            <div
+              className="group rounded-3xl bg-purple-50 border-2 border-purple-400 p-6 text-center hover:bg-purple-100 hover:shadow-xl hover:shadow-purple-200/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
+              role="article"
+              aria-label="آمار کاربران فعال: بیش از 50 کاربر فعال روزانه"
+              tabIndex={0}
+            >
               {/* Floating Arrows Background */}
               <div className="absolute inset-0 opacity-10 pointer-events-none">
                 <div className="absolute top-4 left-6 text-3xl animate-float-up">↗</div>
@@ -484,18 +504,17 @@ export default function HomePage() {
                   <TrendingUp className="w-9 h-9 text-white animate-trend-pulse" />
                 </div>
                 <div className="flex items-baseline justify-center gap-1 mb-1">
-                  <span className="text-lg font-semibold text-purple-600">روزانه</span>
                   <AnimatedCounter
                     end={50}
                     duration={2000}
                     suffix="+"
-                    className="text-4xl md:text-5xl font-bold text-purple-700"
+                    className="text-4xl md:text-5xl font-extrabold text-purple-700 tracking-tight"
                   />
                 </div>
-                <p className="text-lg font-semibold text-purple-900 mt-1">
-                  بازدید فعال
+                <p className="text-lg font-semibold text-purple-900 mt-1 leading-tight">
+                  کاربر فعال روزانه
                 </p>
-                <p className="text-sm text-purple-700/70 mt-1">
+                <p className="text-sm text-purple-700/70 mt-1 leading-relaxed">
                   Daily Active Users
                 </p>
               </div>
