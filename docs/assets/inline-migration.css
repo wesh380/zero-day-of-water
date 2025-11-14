@@ -23,7 +23,7 @@
 .dot-dashed{border:2px dashed #cbd5e1} .select-none{user-select:none} .pe-none{pointer-events:none} .cursor-move{cursor:move}
 
 /* z-index */
-.z-400{z-index:400} .z-500{z-index:500} .z-650{z-index:650}
+.z-400{z-index:400} .z-500{z-index:500} .z-600{z-index:600} .z-650{z-index:650}
 
 /* QR vendor replacements */
 .qr-table{border:0;border-collapse:collapse;padding:0;margin:var(--m)}
