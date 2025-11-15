@@ -13,12 +13,14 @@
   <!-- ✅ Critical CSS: Preload for faster rendering -->
   <link rel="preload" href="/assets/css-bundles-dist/core.bundle.css" as="style">
   <link rel="preload" href="/assets/css-bundles-dist/layout.bundle.css" as="style">
-  <link rel="preload" href="/assets/css/map-inline.css" as="style">
 
   <!-- ✅ Critical CSS: Load immediately -->
   <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
   <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
-  <link rel="stylesheet" href="/assets/css/map-inline.css">
+
+  <!-- ✅ Map CSS: Async loading to reduce render-blocking -->
+  <link rel="preload" href="/assets/css/map-inline.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/css/map-inline.css"></noscript>
 
   <!-- ✅ Non-Critical CSS: Async loading -->
   <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -308,7 +310,7 @@
           })
           .then(() => {
             console.log('[Performance] ✨ All Leaflet dependencies loaded, loading map...');
-            return loadScript('/assets/js/amaayesh-map.js', true); // module
+            return loadScript('/assets/js/amaayesh-map.min.js', true); // module (minified)
           })
           .then(() => {
             console.log('[Performance] 🗺️ Map script loaded, loading UI enhancements...');
@@ -345,19 +347,29 @@
             }
           });
         }, {
-          rootMargin: '200px', // شروع بارگذاری 200px قبل از viewport
+          rootMargin: '800px', // ✅ شروع بارگذاری 800px قبل از viewport برای LCP بهتر
           threshold: 0.01
         });
 
         observer.observe(mapElement);
 
-        // Fallback: بارگذاری بعد از 3 ثانیه حتی اگر map در viewport نباشد
+        // ✅ بارگذاری eager با requestIdleCallback برای بهبود LCP
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            if (!scriptsLoaded) {
+              console.log('[Performance] 💤 Browser idle, preloading scripts...');
+              loadLeafletScripts();
+            }
+          }, { timeout: 1000 });
+        }
+
+        // Fallback: بارگذاری بعد از 1.5 ثانیه (کاهش از 3s برای LCP بهتر)
         setTimeout(() => {
           if (!scriptsLoaded) {
-            console.log('[Performance] ⏱️ Fallback: Loading scripts after 3s');
+            console.log('[Performance] ⏱️ Fallback: Loading scripts after 1.5s');
             loadLeafletScripts();
           }
-        }, 3000);
+        }, 1500);
       }
 
       // شروع بعد از DOM ready
