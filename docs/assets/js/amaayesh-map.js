@@ -2190,6 +2190,26 @@ async function ama_bootstrap(){
     safeLoad(pathsResolved.dams),
   ]);
 
+  // ✅ بررسی و logging geometry types
+  const analyzeGeometryTypes = (fc, name) => {
+    if (!fc || !fc.features) return { total: 0, polygons: 0, points: 0, other: 0 };
+    const types = { total: fc.features.length, polygons: 0, points: 0, other: 0 };
+    fc.features.forEach(f => {
+      const t = f?.geometry?.type;
+      if (t === 'Polygon' || t === 'MultiPolygon') types.polygons++;
+      else if (t === 'Point') types.points++;
+      else types.other++;
+    });
+    console.log(`[AMA] ${name}:`, types);
+    return types;
+  };
+
+  analyzeGeometryTypes(countiesFC, 'counties');
+  analyzeGeometryTypes(provinceFC, 'province');
+  analyzeGeometryTypes(windFC, 'wind');
+  analyzeGeometryTypes(solarFC, 'solar');
+  analyzeGeometryTypes(damsFC, 'dams');
+
   console.log('[AMA] Data loaded:', {
     countiesFC: countiesFC ? `${countiesFC.features?.length || 0} features` : 'null',
     provinceFC: provinceFC ? `${provinceFC.features?.length || 0} features` : 'null',

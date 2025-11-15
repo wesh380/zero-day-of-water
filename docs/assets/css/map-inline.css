@@ -46,6 +46,15 @@ html, body { height:100% }
   border: none !important;
 }
 
+/* ✅ CRITICAL: Hide default Leaflet markers (broken icons from Point features) */
+/* فقط custom-marker نمایش داده شود، بقیه مخفی شوند */
+.leaflet-marker-icon:not(.custom-marker) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .marker-container {
   position: relative;
   display: flex;
