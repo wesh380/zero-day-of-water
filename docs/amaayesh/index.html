@@ -293,6 +293,22 @@
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
+
+  <!-- ✅ Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('[SW] Registered:', registration.scope);
+          })
+          .catch((error) => {
+            console.warn('[SW] Registration failed:', error);
+          });
+      });
+    }
+  </script>
+
   <!-- Statsfa Website Analytics Start -->
   <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
   <!-- Statsfa Website Analytics End -->
