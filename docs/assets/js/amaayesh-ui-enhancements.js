@@ -20,12 +20,41 @@
     });
   };
 
-  // ✅ اضافه کردن Legend به نقشه
+  // ✅ اضافه کردن Legend به نقشه با Intersection Observer
   const addLegend = (map) => {
     const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function() {
-      const div = L.DomUtil.create('div', 'map-legend');
+      const div = L.DomUtil.create('div', 'map-legend legend-loading');
+
+      // ✅ افزودن Intersection Observer برای بهینه‌سازی عملکرد
+      const observerOptions = {
+        root: null,
+        rootMargin: '50px',
+        threshold: 0.1
+      };
+
+      const observerCallback = (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('legend-visible');
+            entry.target.classList.remove('legend-hidden');
+            console.log('[AMA-UI] Legend is now visible');
+          } else {
+            entry.target.classList.add('legend-hidden');
+            entry.target.classList.remove('legend-visible');
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+      // مشاهده المان بعد از کمی تاخیر
+      setTimeout(() => {
+        div.classList.remove('legend-loading');
+        observer.observe(div);
+      }, 100);
+
       div.innerHTML = `
         <div class="legend-header">
           <h3>راهنمای نقشه</h3>
