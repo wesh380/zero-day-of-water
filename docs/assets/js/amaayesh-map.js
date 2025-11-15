@@ -2056,9 +2056,9 @@ async function actuallyLoadManifest(){
   }
   window.__amaHealthReport = __amaHealthReport;
 
-  // === Persona mode chips (owner/edu/invest/ind) ===
+  // === Persona mode chips & Tool Dock removed per user request ===
+  // ابزار فرمت عدد برای استفاده در سایر بخش‌ها
   (function(){
-    // ابزار فرمت عدد: 12345.6 -> "۱۲٬۳۴۶"
     function toFaDigits(str){ return String(str).replace(/[0-9]/g, d=>'۰۱۲۳۴۵۶۷۸۹'[+d]); }
     function fmtNumberFa(n, {digits=0}={}) {
       const x = isFinite(+n) ? (+n).toFixed(digits) : '0';
@@ -2067,109 +2067,7 @@ async function actuallyLoadManifest(){
       return toFaDigits(parts.join(parts[1] ? '٫' : ''));
     }
     window.__AMA_fmtNumberFa = fmtNumberFa;
-
-    const modes = [
-      {id:'owner',  icon:'👤', label:'شهروند'},
-      {id:'edu',    icon:'🎓', label:'یادگیری'},
-      {id:'invest', icon:'💼', label:'سرمایه‌گذار'},
-      {id:'ind',    icon:'🏭', label:'صنعت'},
-    ];
-    let currentMode = localStorage.getItem('ama-mode') || 'owner';
-
-    const ctl = L.control({position:'topleft'});
-    ctl.onAdd = function() {
-      const div = L.DomUtil.create('div','ama-modes');
-      div.innerHTML = modes.map(m=>
-        `\n      <button class="chip ${m.id===currentMode?'active':''}" data-mode="${m.id}" title="${m.label}">\n        <span class="i">${m.icon}</span><span class="l">${m.label}</span>\n      </button>`).join('');
-      L.DomEvent.disableClickPropagation(div);
-      div.querySelectorAll('.chip').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          currentMode = btn.getAttribute('data-mode');
-          if (window.AMA_DEBUG) console.log('[ama:mode]', currentMode);
-          localStorage.setItem('ama-mode', currentMode);
-          div.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b===btn));
-          applyMode();
-        });
-      });
-      return div;
-    };
-    ctl.addTo(map);
-
-      function applyMode(){
-        const wantTop = (currentMode==='invest' || currentMode==='ind');
-        // Top-10 control
-        if (wantTop) {
-          if (window.__AMA_topPanel && !window.__AMA_topPanel._map) window.__AMA_topPanel.addTo(map);
-          window.__AMA_renderTop10?.();
-        } else {
-          if (window.__AMA_topPanel && window.__AMA_topPanel._map) map.removeControl(window.__AMA_topPanel);
-        }
-        const _re = window.reevaluateLegendPosition || window.reEvaluateLegendPosition;
-        if (typeof _re === 'function') { try { _re(); } catch(_){} }
-
-      }
-
-      function resetAll(){
-        if(boundary?.getBounds) map.fitBounds(boundary.getBounds(), {padding:[12,12]});
-        else map.setView([36.3,59.6],7);
-
-        currentMode = 'owner';
-        localStorage.setItem('ama-mode', currentMode);
-        const modeDiv = ctl.getContainer ? ctl.getContainer() : null;
-        modeDiv?.querySelectorAll('.chip').forEach(b=>b.classList.toggle('active', b.dataset.mode==='owner'));
-        applyMode();
-
-        window.legend?.reset?.();
-        safeClearGroup(searchLayer);
-        currentSort.key='P0'; currentSort.dir='desc';
-        window.__AMA_renderTop10?.();
-      }
-
-      applyMode();
-
-      // === Tool Dock ===
-      function makePanel(title, bodyHtml, key){
-        const ctl = L.control({position:'topleft'});
-        ctl.onAdd = function(){
-          const wrap=L.DomUtil.create('div','ama-panel map-panel');
-          wrap.innerHTML=`<div class="ama-panel-hd">${title}<button class="close-btn" aria-label="بستن">×</button></div><div class="ama-panel-bd">${bodyHtml}</div>`;
-          const close=wrap.querySelector('.close-btn');
-          close.onclick=()=>{ map.removeControl(ctl); };
-          wrap.addEventListener('keydown',e=>{ if(e.key==='Escape'){ map.removeControl(ctl); }});
-          L.DomEvent.disableClickPropagation(wrap);
-          return initAmaPanel(wrap, key || title);
-        };
-        return ctl;
-      }
-
-      const panels={
-        layers: makePanel('لایه‌ها','<div id="ama-layer-panel"></div>','layers'),
-        tools: makePanel('ابزارها','<div id="ama-tools-panel"></div>','tools'),
-        download: makePanel('دانلود','<button id="ama-dl-csv">دانلود CSV</button>','download')
-      };
-
-      const dockCtl=L.control({position:'topleft'});
-      dockCtl.onAdd=function(){
-        const div=L.DomUtil.create('div','tool-dock map-panel');
-        div.innerHTML=`<button class="dock-btn" data-panel="layers" aria-label="لایه‌ها">🗂</button>
-        <button class="dock-btn" data-panel="tools" aria-label="ابزارها">🛠</button>
-        <button class="dock-btn" data-panel="download" aria-label="دانلود">⬇</button>
-        <button class="dock-btn dock-reset" data-action="reset" aria-label="بازنشانی">↺</button>`;
-        return div;
-      };
-      dockCtl.addTo(map);
-      const dockEl=dockCtl.getContainer();
-      dockEl.querySelectorAll('button[data-panel]').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const key=btn.dataset.panel; const p=panels[key];
-          if(!p._map) p.addTo(map); else map.removeControl(p);
-        });
-      });
-      dockEl.querySelector('button[data-action="reset"]').addEventListener('click',e=>{e.preventDefault(); resetAll();});
-
-      panels.layers.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const body=wrap.querySelector('.ama-panel-bd'); body.innerHTML='<label><input type="checkbox" data-layer="wind" checked/> لایه باد</label><label><input type="checkbox" data-layer="sites" checked/> سایت‌ها</label>'; body.querySelectorAll('input[data-layer]').forEach(ch=>{ ch.addEventListener('change',()=>{ const lay=ch.dataset.layer; const LAY = lay==='wind'?window.windChoroplethLayer:window.windSitesLayer; if(LAY){ if(ch.checked) map.addLayer(LAY); else safeRemoveLayer(map, LAY);} });}); return wrap; }; })(panels.layers.onAdd);
-      panels.download.onAdd = (function(orig){ return function(){ const wrap=orig.call(this); const btn=wrap.querySelector('#ama-dl-csv'); btn?.addEventListener('click',()=>{ const rows=polysFC.features.map(f=>f.properties); const csv=makeTopCSV(rows); downloadBlob('kpi.csv',csv); }); return wrap; }; })(panels.download.onAdd);
-    })();
+  })();
 }
 
 async function ama_bootstrap(){
