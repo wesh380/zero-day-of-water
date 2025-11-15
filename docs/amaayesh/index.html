@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <!-- CSS Bundles - Phase 2 Optimization -->
-  <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
-  <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  
+
+  <!-- ✅ Performance Optimization: DNS Prefetch & Preconnect -->
+  <link rel="dns-prefetch" href="//tile.openstreetmap.org">
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="//statsfa.com">
+  <link rel="dns-prefetch" href="//cdn.porsline.ir">
+
+  <!-- ✅ Critical CSS: Preload for faster rendering -->
+  <link rel="preload" href="/assets/css-bundles-dist/core.bundle.css" as="style">
+  <link rel="preload" href="/assets/css-bundles-dist/layout.bundle.css" as="style">
+  <link rel="preload" href="/assets/css/map-inline.css" as="style">
+
+  <!-- ✅ Critical CSS: Load immediately -->
+  <link rel="stylesheet" href="/assets/css-bundles-dist/core.bundle.css">
+  <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
+  <link rel="stylesheet" href="/assets/css/map-inline.css">
+
+  <!-- ✅ Non-Critical CSS: Async loading -->
+  <link rel="preload" href="/assets/vendor/leaflet/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css"></noscript>
+
+  <link rel="preload" href="/assets/css/map-overrides.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/css/map-overrides.css"></noscript>
+
+  <link rel="preload" href="/assets/legend.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/legend.css"></noscript>
+
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wesh360.ir/amaayesh/">
   <meta property="og:title" content="نقشه آمایش انرژی خراسان رضوی">
@@ -25,12 +48,15 @@
   <link rel="manifest" href="/manifest.webmanifest"/>
   <link rel="mask-icon" href="/assets/img/logo/wesh360.svg" color="#0ea5e9"/>
   <meta name="theme-color" content="#0ea5e9"/>
-  <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css" />
-  <link rel="stylesheet" href="/assets/css/map-overrides.css" />
-  <link rel="stylesheet" href="../assets/legend.css"/>
-  <link rel="stylesheet" href="/assets/css/map-inline.css" />
   <script src="/assets/js/nav-utils.js" defer></script>
   <meta name="build-id" content="ama-20250906">
+
+  <!-- ✅ CSS Async Loading Polyfill -->
+  <script>
+    /* loadCSS: Async CSS loader - https://github.com/filamentgroup/loadCSS */
+    !function(e){"use strict";var t=function(t,n,r){var o,i=e.document,l=i.createElement("link");if(n)o=n;else{var a=(i.body||i.getElementsByTagName("head")[0]).childNodes;o=a[a.length-1]}var s=i.styleSheets;l.rel="stylesheet",l.href=t,l.media="only x",function e(t){if(i.body)return t();setTimeout(function(){e(t)})}(function(){o.parentNode.insertBefore(l,n?o:o.nextSibling)});var d=function(e){for(var t=l.href,n=s.length;n--;)if(s[n].href===t)return e();setTimeout(function(){d(e)})};return l.addEventListener&&l.addEventListener("load",r),l.onloadcssdefined=d,d(r),l};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+  </script>
+
   <script>
     /* Suppress Cloudflare Beacon Errors */
     window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('statsfa.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
@@ -237,14 +263,101 @@
 
   <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 ⬢ Energy Spatial Planning ⬢ Leaflet</footer>
 
-  <!-- ✅ Optimized Script Loading with defer for better performance -->
-  <script defer src="/assets/vendor/leaflet/leaflet.js"></script>
-  <script defer src="/assets/js/leaflet-icon-patch.js"></script>
-  <script defer src="/assets/vendor/leaflet.polylineDecorator.min.js"></script>
-  <script type="module" src="/assets/js/amaayesh-map.js"></script>
-  <script defer src="/assets/js/panel-direct-wire.js"></script>
-  <script defer src="/assets/js/ama-diag.js"></script>
-  <script defer src="/assets/js/amaayesh-ui-enhancements.js"></script>
+  <!-- ✅ Lazy Loading: Load Leaflet only when map is visible -->
+  <script>
+    /* Leaflet Lazy Loader - بارگذاری هوشمند نقشه */
+    (function() {
+      'use strict';
+
+      let scriptsLoaded = false;
+
+      function loadLeafletScripts() {
+        if (scriptsLoaded) return;
+        scriptsLoaded = true;
+
+        console.log('[Performance] 📦 Loading Leaflet scripts...');
+
+        const scripts = [
+          '/assets/vendor/leaflet/leaflet.js',
+          '/assets/js/leaflet-icon-patch.js',
+          '/assets/vendor/leaflet.polylineDecorator.min.js',
+        ];
+
+        let loadedCount = 0;
+
+        function loadScript(src) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.defer = true;
+            script.onload = () => {
+              loadedCount++;
+              console.log(`[Performance] ✅ Loaded ${loadedCount}/${scripts.length}: ${src}`);
+              resolve();
+            };
+            script.onerror = () => reject(new Error(`Failed to load ${src}`));
+            document.head.appendChild(script);
+          });
+        }
+
+        // بارگذاری serial برای dependency order
+        Promise.all(scripts.map(loadScript))
+          .then(() => {
+            console.log('[Performance] ✨ All Leaflet scripts loaded');
+            // بارگذاری اسکریپت‌های وابسته
+            const mapScript = document.createElement('script');
+            mapScript.type = 'module';
+            mapScript.src = '/assets/js/amaayesh-map.js';
+            document.head.appendChild(mapScript);
+
+            loadScript('/assets/js/panel-direct-wire.js');
+            loadScript('/assets/js/ama-diag.js');
+            loadScript('/assets/js/amaayesh-ui-enhancements.js');
+          })
+          .catch(err => console.error('[Performance] ❌ Script loading failed:', err));
+      }
+
+      // ✅ Intersection Observer: بارگذاری فقط وقتی نقشه در viewport است
+      function initLazyLoading() {
+        const mapElement = document.getElementById('map');
+        if (!mapElement) {
+          console.warn('[Performance] ⚠️ Map element not found, loading scripts immediately');
+          loadLeafletScripts();
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              console.log('[Performance] 👁️ Map is visible, loading scripts...');
+              loadLeafletScripts();
+              observer.disconnect();
+            }
+          });
+        }, {
+          rootMargin: '200px', // شروع بارگذاری 200px قبل از viewport
+          threshold: 0.01
+        });
+
+        observer.observe(mapElement);
+
+        // Fallback: بارگذاری بعد از 3 ثانیه حتی اگر map در viewport نباشد
+        setTimeout(() => {
+          if (!scriptsLoaded) {
+            console.log('[Performance] ⏱️ Fallback: Loading scripts after 3s');
+            loadLeafletScripts();
+          }
+        }, 3000);
+      }
+
+      // شروع بعد از DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLazyLoading);
+      } else {
+        initLazyLoading();
+      }
+    })();
+  </script>
   <script>
     (function(){
       const mapEl = document.getElementById('map');
