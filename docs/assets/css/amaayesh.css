@@ -103,8 +103,22 @@
 .ama-dock .btn:active { transform: translateY(1px); }
 
 /* Zoom control tweaks */
-.leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden}
+.leaflet-control-zoom{box-shadow:0 4px 16px rgba(0,0,0,.25);border-radius:12px;overflow:hidden;z-index:1000 !important;}
 .leaflet-control-zoom a{border-radius:0}
+
+/* Leaflet controls positioning - avoid overlap with panels */
+.leaflet-top.leaflet-left {
+  z-index: 1000;
+}
+
+.leaflet-top.leaflet-right {
+  z-index: 1000;
+}
+
+.leaflet-bottom.leaflet-left,
+.leaflet-bottom.leaflet-right {
+  z-index: 1000;
+}
 /* === Force dark (black) theme for guidance panels === */
 .map-panel {
   background: #000 !important;
