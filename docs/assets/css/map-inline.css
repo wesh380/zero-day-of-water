@@ -159,6 +159,304 @@ html, body { height:100% }
   transform: scale(1.05);
 }
 
+/* ✅ Polygon borders - force visibility */
+.province-border {
+  stroke: #ef4444 !important;
+  stroke-width: 5px !important;
+  stroke-opacity: 1 !important;
+  fill-opacity: 0.03 !important;
+}
+
+.county-border {
+  stroke: #94a3b8 !important;
+  stroke-width: 2px !important;
+  stroke-opacity: 0.8 !important;
+}
+
+/* ✅ Polygon tooltip styling */
+.polygon-tooltip {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 2px solid #ef4444 !important;
+  border-radius: 8px !important;
+  color: #f1f5f9 !important;
+  font-family: 'Vazirmatn', 'Vazir', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  direction: rtl !important;
+  text-align: center !important;
+}
+
+.polygon-tooltip::before {
+  border-top-color: #ef4444 !important;
+}
+
+/* ✅ Map Legend Styles */
+.map-legend {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Vazirmatn', 'Vazir', sans-serif;
+  direction: rtl;
+  max-width: 280px;
+  border: 2px solid #ef4444;
+}
+
+.legend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ef4444;
+}
+
+.legend-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.legend-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #ef4444;
+  padding: 0 8px;
+  line-height: 1;
+}
+
+.legend-toggle:hover {
+  color: #dc2626;
+}
+
+.legend-content {
+  font-size: 13px;
+}
+
+.legend-section {
+  margin-bottom: 12px;
+}
+
+.legend-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+.legend-line {
+  display: inline-block;
+  width: 30px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.legend-province {
+  background: #ef4444;
+  height: 5px;
+}
+
+.legend-county {
+  background: #94a3b8;
+  height: 2px;
+}
+
+.legend-marker {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.legend-help ul {
+  margin: 8px 0 0 0;
+  padding-right: 20px;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.legend-help li {
+  margin-bottom: 4px;
+}
+
+/* ✅ Map Info Panel */
+.map-info-panel {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: 'Vazirmatn', 'Vazir', sans-serif;
+  direction: rtl;
+  color: #f1f5f9;
+  min-width: 220px;
+  border: 2px solid #0ea5e9;
+}
+
+.map-info-panel h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0ea5e9;
+  border-bottom: 2px solid #0ea5e9;
+  padding-bottom: 4px;
+}
+
+.map-info-panel p {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.map-info-hint {
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ✅ Map Control Buttons */
+.map-control-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #0ea5e9;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-control-btn:hover {
+  background: #0ea5e9;
+  color: white;
+  transform: scale(1.1);
+}
+
+.map-control-btn:active {
+  transform: scale(0.95);
+}
+
+/* ✅ Tour/Guide Overlay */
+.tour-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tour-dialog {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  font-family: 'Vazirmatn', 'Vazir', sans-serif;
+  direction: rtl;
+  text-align: right;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.tour-dialog h2 {
+  margin: 0 0 16px 0;
+  color: #0f172a;
+  font-size: 24px;
+}
+
+.tour-dialog p {
+  margin: 12px 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.tour-dialog ul {
+  margin: 12px 0;
+  padding-right: 24px;
+  color: #475569;
+  line-height: 1.8;
+}
+
+.tour-dialog li {
+  margin-bottom: 8px;
+}
+
+.tour-close-btn {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 16px;
+  font-family: 'Vazirmatn', 'Vazir', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.tour-close-btn:hover {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
+.tour-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.tour-checkbox input {
+  cursor: pointer;
+}
+
 @media (max-width:768px){
   .is-mobile{ flex-direction:column; }
   .is-mobile #map{ height:60vh; }
@@ -171,5 +469,15 @@ html, body { height:100% }
   .marker-container {
     width: 32px;
     height: 32px;
+  }
+
+  .map-legend {
+    max-width: 240px;
+    font-size: 12px;
+  }
+
+  .tour-dialog {
+    padding: 24px;
+    font-size: 14px;
   }
 }
