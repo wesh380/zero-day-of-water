@@ -76,7 +76,7 @@
 
       toggleBtn.addEventListener('click', () => {
         isCollapsed = !isCollapsed;
-        content.style.display = isCollapsed ? 'none' : 'block';
+        content.classList.toggle('hidden', isCollapsed);
         toggleBtn.textContent = isCollapsed ? '+' : '−';
       });
 
