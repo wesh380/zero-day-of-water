@@ -1326,9 +1326,12 @@ async function actuallyLoadManifest(){
       const solarPath = paths.solar;
       const damsPath  = paths.dams;
 
-      const windGeojson  = windPath  ? await loadJSON(windPath,  { layerKey:'wind_sites' }) : null;
-      const solarGeojson = solarPath ? await loadJSON(solarPath, { layerKey:'solar', fallbacks:[ normalizeName(solarPath) ] }) : null;
-      const damsGeojson  = damsPath  ? await loadJSON(damsPath,  { layerKey:'dams',  fallbacks:[ normalizeName(damsPath) ] }) : null;
+      // ✅ بارگذاری موازی (parallel) به جای serial برای بهبود LCP
+      const [windGeojson, solarGeojson, damsGeojson] = await Promise.all([
+        windPath  ? loadJSON(windPath,  { layerKey:'wind_sites' }) : Promise.resolve(null),
+        solarPath ? loadJSON(solarPath, { layerKey:'solar' }) : Promise.resolve(null),
+        damsPath  ? loadJSON(damsPath,  { layerKey:'dams' }) : Promise.resolve(null),
+      ]);
 
       if (windGeojson) windSitesGeo = windGeojson;
       if (damsPath && !damsGeojson) showToast('عدم دسترسی به داده‌ها: ' + damsPath);
