@@ -72,7 +72,6 @@
         const closeBtn = document.getElementById('mobile-sidebar-close');
         const panelsContainer = document.getElementById('mobile-panels-container');
         const layerDock = document.getElementById('ama-layer-dock');
-        const topDock = document.getElementById('ama-top-dock');
 
         if (!menuBtn || !sidebar || !overlay) return;
 
@@ -87,17 +86,11 @@
             if (layerDock && !panelsContainer.contains(layerDock)) {
               panelsContainer.appendChild(layerDock);
             }
-            if (topDock && !panelsContainer.contains(topDock)) {
-              panelsContainer.appendChild(topDock);
-            }
           } else if (!isMobile && wasMobile) {
             // Switched to desktop - move panels back
             const main = document.querySelector('.ama-main');
             if (layerDock && panelsContainer.contains(layerDock)) {
               main.appendChild(layerDock);
-            }
-            if (topDock && panelsContainer.contains(topDock)) {
-              main.appendChild(topDock);
             }
             closeSidebar();
           }
@@ -240,97 +233,18 @@
         <label data-layer-toggle="dams"><input type="checkbox"> سد</label>
       </div>
     </aside>
-
-    <!-- پنل سمت چپ -->
-    <aside id="ama-top-dock" class="ama-panel map-panel ama-top-dock">
-      <div class="ama-panel-header">
-        <h2 class="ama-panel-title">برترین‌ها</h2>
-        <span class="ama-top-badge">Top 10</span>
-      </div>
-      <table class="ama-top-table">
-        <thead class="ama-top-thead">
-          <tr><th class="ama-top-th">رتبه</th><th class="ama-top-th">شهرسان</th><th class="ama-top-th">پتانسیل (MW)</th></tr>
-        </thead>
-        <tbody id="ama-top10"></tbody>
-      </table>
-    </aside>
   </main>
 
   <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 ⬢ Energy Spatial Planning ⬢ Leaflet</footer>
 
-  <!-- ✅ Optimized Lazy Loading for Leaflet Scripts -->
-  <script>
-    /* Lazy Loading Manager برای بهینه‌سازی بارگذاری اسکریپت‌ها */
-    (function() {
-      'use strict';
-
-      const scriptsToLoad = [
-        { src: '/assets/vendor/leaflet/leaflet.js', priority: 1, defer: true },
-        { src: '/assets/js/leaflet-icon-patch.js', priority: 2, defer: true },
-        { src: '/assets/vendor/leaflet.polylineDecorator.min.js', priority: 3, defer: true },
-        { src: '/assets/js/amaayesh-map.js', priority: 4, type: 'module' },
-        { src: '/assets/js/panel-direct-wire.js', priority: 5, defer: true },
-        { src: '/assets/js/ama-diag.js', priority: 6, defer: true },
-        { src: '/assets/js/amaayesh-ui-enhancements.js', priority: 7, defer: true }
-      ];
-
-      let loadedCount = 0;
-
-      function loadScript(config) {
-        return new Promise((resolve, reject) => {
-          const script = document.createElement('script');
-          script.src = config.src;
-
-          if (config.type === 'module') {
-            script.type = 'module';
-          } else if (config.defer) {
-            script.defer = true;
-          }
-
-          script.onload = () => {
-            loadedCount++;
-            console.log(`[LazyLoad] ✅ Loaded: ${config.src} (${loadedCount}/${scriptsToLoad.length})`);
-            resolve();
-          };
-
-          script.onerror = () => {
-            console.warn(`[LazyLoad] ⚠️ Failed: ${config.src}`);
-            reject(new Error(`Failed to load ${config.src}`));
-          };
-
-          document.body.appendChild(script);
-        });
-      }
-
-      function initLazyLoading() {
-        // بارگذاری به ترتیب اولویت
-        const sortedScripts = scriptsToLoad.sort((a, b) => a.priority - b.priority);
-
-        // بارگذاری همزمان اسکریپت‌های مستقل
-        const leafletCore = sortedScripts.slice(0, 3); // Leaflet + patches
-        const appScripts = sortedScripts.slice(3);    // App-specific scripts
-
-        Promise.all(leafletCore.map(loadScript))
-          .then(() => {
-            console.log('[LazyLoad] 📦 Leaflet core loaded');
-            return Promise.all(appScripts.map(loadScript));
-          })
-          .then(() => {
-            console.log('[LazyLoad] ✨ All scripts loaded successfully');
-          })
-          .catch(err => {
-            console.error('[LazyLoad] ❌ Loading error:', err);
-          });
-      }
-
-      // شروع بارگذاری بعد از DOM ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLazyLoading);
-      } else {
-        initLazyLoading();
-      }
-    })();
-  </script>
+  <!-- ✅ Optimized Script Loading with defer for better performance -->
+  <script defer src="/assets/vendor/leaflet/leaflet.js"></script>
+  <script defer src="/assets/js/leaflet-icon-patch.js"></script>
+  <script defer src="/assets/vendor/leaflet.polylineDecorator.min.js"></script>
+  <script type="module" src="/assets/js/amaayesh-map.js"></script>
+  <script defer src="/assets/js/panel-direct-wire.js"></script>
+  <script defer src="/assets/js/ama-diag.js"></script>
+  <script defer src="/assets/js/amaayesh-ui-enhancements.js"></script>
   <script>
     (function(){
       const mapEl = document.getElementById('map');

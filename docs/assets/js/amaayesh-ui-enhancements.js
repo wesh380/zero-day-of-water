@@ -25,12 +25,9 @@
     const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function() {
-      const div = L.DomUtil.create('div', 'map-legend');
+      const div = L.DomUtil.create('div', 'map-legend legend-loading');
 
       // ✅ افزودن Intersection Observer برای بهینه‌سازی عملکرد
-      div.style.opacity = '0';
-      div.style.transition = 'opacity 0.3s ease-in-out';
-
       const observerOptions = {
         root: null,
         rootMargin: '50px',
@@ -40,11 +37,11 @@
       const observerCallback = (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
             entry.target.classList.add('legend-visible');
+            entry.target.classList.remove('legend-hidden');
             console.log('[AMA-UI] Legend is now visible');
           } else {
-            entry.target.style.opacity = '0.7';
+            entry.target.classList.add('legend-hidden');
             entry.target.classList.remove('legend-visible');
           }
         });
@@ -54,6 +51,7 @@
 
       // مشاهده المان بعد از کمی تاخیر
       setTimeout(() => {
+        div.classList.remove('legend-loading');
         observer.observe(div);
       }, 100);
 
