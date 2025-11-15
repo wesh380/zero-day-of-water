@@ -7,6 +7,10 @@ next-env.d.ts
 docs/index.html.backup
 *.tsbuildinfo
 
+# GeoJSON optimization intermediates
+docs/data/amaayesh/*.backup
+docs/data/amaayesh/*optimized*.geojson
+
 # debug artifacts
 docs/assets/*-test.png
 docs/debug/
