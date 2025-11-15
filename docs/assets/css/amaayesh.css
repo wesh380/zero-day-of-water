@@ -143,3 +143,262 @@
 
 /* Optional: darker overlay for sidepanel */
 #ama-sp-overlay { background: rgba(0,0,0,.3) !important; }
+
+/* ===== Responsive Styles ===== */
+
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) {
+  .map-panel {
+    max-width: 280px;
+    font-size: 13px;
+  }
+
+  .ama-panel {
+    width: 280px !important;
+  }
+
+  .ama-sidepanel {
+    max-width: 320px;
+  }
+}
+
+/* Mobile: max-width 768px */
+@media (max-width: 768px) {
+  /* Map panels */
+  .map-panel {
+    max-width: 100%;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .legend-dock {
+    max-width: 100%;
+  }
+
+  .legend-dock .chip {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .legend-dock .legend-head {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .legend-dock ul.swatches li {
+    padding: 5px;
+    gap: 6px;
+  }
+
+  .legend-dock .sw {
+    width: 24px;
+    height: 12px;
+  }
+
+  .legend-dock .legend-meta {
+    font-size: 11px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Tool dock */
+  .tool-dock {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .tool-dock .dock-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  /* Layers dock */
+  .layers-dock {
+    max-width: 100%;
+  }
+
+  .layers-dock .ld-tabs {
+    gap: 6px;
+  }
+
+  .layers-dock .ld-tabs button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .layers-dock .ld-pane label {
+    padding: 6px;
+    min-height: 40px;
+    font-size: 13px;
+  }
+
+  /* KPI switcher */
+  .ama-kpi-switch {
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .ama-kpi-switch .chip {
+    padding: 8px 10px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  /* Sidepanel */
+  .ama-sidepanel {
+    right: 8px;
+    top: 72px;
+    bottom: 8px;
+    max-width: calc(100% - 16px);
+    width: calc(100% - 16px);
+    padding: 16px;
+  }
+
+  .ama-sidepanel .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  /* Top-10 panel */
+  .ama-panel {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .ama-panel-hd {
+    font-size: 14px;
+  }
+
+  .ama-panel-bd {
+    max-height: 250px;
+    font-size: 12px;
+  }
+
+  .ama-row {
+    grid-template-columns: 25px 1fr 1fr 1fr 1fr;
+    gap: 4px;
+    padding: 3px;
+    font-size: 11px;
+  }
+
+  /* Modal */
+  .ama-modal .ama-modal-content {
+    width: 95%;
+    max-width: 95%;
+    padding: 16px;
+    font-size: 13px;
+  }
+
+  /* Dock */
+  .ama-dock {
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .ama-dock .btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  /* Reset button */
+  .ama-reset {
+    height: 40px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  /* Zoom control */
+  .leaflet-control-zoom a {
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* Small Mobile: max-width 480px */
+@media (max-width: 480px) {
+  .map-panel {
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .legend-dock .chip {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .legend-dock .legend-head {
+    font-size: 12px;
+  }
+
+  .legend-dock ul.swatches li {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .legend-dock .sw {
+    width: 20px;
+    height: 10px;
+  }
+
+  .tool-dock .dock-btn,
+  .ama-dock .btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .layers-dock .ld-tabs button {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .layers-dock .ld-pane label {
+    padding: 5px;
+    min-height: 36px;
+    font-size: 12px;
+  }
+
+  .ama-kpi-switch .chip {
+    padding: 6px 8px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 11px;
+  }
+
+  .ama-sidepanel {
+    padding: 12px;
+  }
+
+  .ama-panel-hd {
+    font-size: 13px;
+  }
+
+  .ama-panel-bd {
+    font-size: 11px;
+  }
+
+  .ama-row {
+    grid-template-columns: 22px 1fr 1fr 1fr 1fr;
+    gap: 3px;
+    padding: 2px;
+    font-size: 10px;
+  }
+
+  .ama-reset {
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .leaflet-control-zoom a {
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+    font-size: 16px !important;
+  }
+}

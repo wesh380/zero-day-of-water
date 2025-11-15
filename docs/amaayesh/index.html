@@ -34,6 +34,34 @@
   <script>
     /* Suppress Cloudflare Beacon Errors */
     window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('statsfa.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
+
+    /* Responsive Mobile Detection */
+    (function() {
+      function updateMobileClass() {
+        const main = document.querySelector('.ama-main');
+        if (!main) return;
+
+        if (window.innerWidth <= 768) {
+          main.classList.add('is-mobile');
+        } else {
+          main.classList.remove('is-mobile');
+        }
+      }
+
+      // Initial check
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateMobileClass);
+      } else {
+        updateMobileClass();
+      }
+
+      // Update on resize with debounce
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateMobileClass, 250);
+      });
+    })();
   </script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
@@ -66,7 +94,7 @@
       </div>
     </header>
 
-<main id="main" role="main" class="flex relative ama-main is-mobile">
+<main id="main" role="main" class="flex relative ama-main">
     <!-- ظرف نقشه: id باید «map» بماند -->
     <div id="map"></div>
 
