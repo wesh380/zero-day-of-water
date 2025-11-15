@@ -134,7 +134,40 @@
         // Event listeners
         menuBtn.addEventListener('click', toggleSidebar);
         closeBtn?.addEventListener('click', closeSidebar);
-        overlay.addEventListener('click', closeSidebar);
+
+        // ✅ بهبود یافته: بستن با کلیک روی overlay (فقط خود overlay نه محتوا)
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) {
+            closeSidebar();
+          }
+        });
+
+        // ✅ افزودن Swipe برای بستن Sidebar
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        sidebar.addEventListener('touchstart', function(e) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        sidebar.addEventListener('touchmove', function(e) {
+          touchEndX = e.touches[0].clientX;
+          touchEndY = e.touches[0].clientY;
+        }, { passive: true });
+
+        sidebar.addEventListener('touchend', function(e) {
+          const diffX = touchEndX - touchStartX;
+          const diffY = Math.abs(touchEndY - touchStartY);
+
+          // اگر بیش از 100px به راست swipe شد و حرکت عمودی کمتر از 50px بود
+          // (برای اطمینان از اینکه swipe افقی است نه scroll عمودی)
+          if (diffX > 100 && diffY < 50) {
+            closeSidebar();
+          }
+        }, { passive: true });
 
         // Close on Escape key
         document.addEventListener('keydown', function(e) {
@@ -225,14 +258,79 @@
 
   <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 ⬢ Energy Spatial Planning ⬢ Leaflet</footer>
 
-  <!-- supercluster optional (CDN removed due to CSP). Use local vendor if added. -->
-  <script defer src="/assets/vendor/leaflet/leaflet.js"></script>
-  <script defer src="/assets/js/leaflet-icon-patch.js"></script>
-  <script defer src="/assets/vendor/leaflet.polylineDecorator.min.js"></script>
-  <script type="module" src="/assets/js/amaayesh-map.js"></script>
-  <script defer src="/assets/js/panel-direct-wire.js"></script>
-  <script defer src="/assets/js/ama-diag.js"></script>
-  <script defer src="/assets/js/amaayesh-ui-enhancements.js"></script>
+  <!-- ✅ Optimized Lazy Loading for Leaflet Scripts -->
+  <script>
+    /* Lazy Loading Manager برای بهینه‌سازی بارگذاری اسکریپت‌ها */
+    (function() {
+      'use strict';
+
+      const scriptsToLoad = [
+        { src: '/assets/vendor/leaflet/leaflet.js', priority: 1, defer: true },
+        { src: '/assets/js/leaflet-icon-patch.js', priority: 2, defer: true },
+        { src: '/assets/vendor/leaflet.polylineDecorator.min.js', priority: 3, defer: true },
+        { src: '/assets/js/amaayesh-map.js', priority: 4, type: 'module' },
+        { src: '/assets/js/panel-direct-wire.js', priority: 5, defer: true },
+        { src: '/assets/js/ama-diag.js', priority: 6, defer: true },
+        { src: '/assets/js/amaayesh-ui-enhancements.js', priority: 7, defer: true }
+      ];
+
+      let loadedCount = 0;
+
+      function loadScript(config) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = config.src;
+
+          if (config.type === 'module') {
+            script.type = 'module';
+          } else if (config.defer) {
+            script.defer = true;
+          }
+
+          script.onload = () => {
+            loadedCount++;
+            console.log(`[LazyLoad] ✅ Loaded: ${config.src} (${loadedCount}/${scriptsToLoad.length})`);
+            resolve();
+          };
+
+          script.onerror = () => {
+            console.warn(`[LazyLoad] ⚠️ Failed: ${config.src}`);
+            reject(new Error(`Failed to load ${config.src}`));
+          };
+
+          document.body.appendChild(script);
+        });
+      }
+
+      function initLazyLoading() {
+        // بارگذاری به ترتیب اولویت
+        const sortedScripts = scriptsToLoad.sort((a, b) => a.priority - b.priority);
+
+        // بارگذاری همزمان اسکریپت‌های مستقل
+        const leafletCore = sortedScripts.slice(0, 3); // Leaflet + patches
+        const appScripts = sortedScripts.slice(3);    // App-specific scripts
+
+        Promise.all(leafletCore.map(loadScript))
+          .then(() => {
+            console.log('[LazyLoad] 📦 Leaflet core loaded');
+            return Promise.all(appScripts.map(loadScript));
+          })
+          .then(() => {
+            console.log('[LazyLoad] ✨ All scripts loaded successfully');
+          })
+          .catch(err => {
+            console.error('[LazyLoad] ❌ Loading error:', err);
+          });
+      }
+
+      // شروع بارگذاری بعد از DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLazyLoading);
+      } else {
+        initLazyLoading();
+      }
+    })();
+  </script>
   <script>
     (function(){
       const mapEl = document.getElementById('map');

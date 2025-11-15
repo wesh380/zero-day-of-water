@@ -2064,8 +2064,19 @@ async function ama_bootstrap(){
   window.__combinedGeo = provinceFC;
   console.log('[AHA] all-counties.features =', (window.__countiesGeoAll?.features||[]).length);
 
-  // ✅ 1. ایجاد map
-  const map = window.__AMA_MAP || AMA.map || L.map('map', { preferCanvas:true, zoomControl:true });
+  // ✅ 1. ایجاد map با تنظیمات بهینه شده برای موبایل
+  const map = window.__AMA_MAP || AMA.map || L.map('map', {
+    preferCanvas: true,
+    zoomControl: true,
+    tap: true,                    // ✅ فعال کردن tap events برای موبایل
+    tapTolerance: 15,             // ✅ تلرانس بیشتر برای انگشت (پیشفرض: 15)
+    touchZoom: true,              // ✅ زوم با لمس
+    bounceAtZoomLimits: false,    // ✅ غیرفعال کردن bounce در حداکثر/حداقل زوم
+    zoomSnap: 0.5,                // ✅ زوم نرم‌تر (پیشفرض: 1)
+    wheelPxPerZoomLevel: 120,     // ✅ حساسیت زوم با موس
+    tapHold: true,                // ✅ فعال کردن tap & hold
+    touchExtend: true             // ✅ بهبود تاچ در دستگاه‌های لمسی
+  });
   window.__AMA_MAP = map;
 
   // ✅ Diagnostic: بررسی map container
