@@ -11,9 +11,14 @@ html, body { height:100% }
 .ama-main{ isolation:isolate; }
 
 .ama-panel{ position:absolute; z-index:1001; pointer-events:auto; background:rgba(255,255,255,.9); backdrop-filter:saturate(150%) blur(4px); border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,.12); padding:12px; overflow:hidden; display:flex; flex-direction:column; }
-.map-panel{ max-height:100dvh; overflow:auto; }
-.ama-layer-dock{ top:16px; right:16px; width:320px; color:#000; }
-.ama-top-dock{ top:16px; left:16px; width:280px; }
+.map-panel{ max-height:calc(100dvh - 32px); overflow:auto; }
+.ama-layer-dock{ top:16px; right:16px; width:320px; max-width:calc(50% - 24px); color:#000; }
+.ama-top-dock{ top:16px; left:16px; width:280px; max-width:calc(50% - 24px); }
+
+/* Prevent map interaction through panels */
+#map { pointer-events: auto; }
+.ama-main { pointer-events: none; }
+.ama-main > * { pointer-events: auto; }
 
 .ama-panel-bd{ overflow:auto; }
 
@@ -457,11 +462,278 @@ html, body { height:100% }
   cursor: pointer;
 }
 
-@media (max-width:768px){
-  .is-mobile{ flex-direction:column; }
-  .is-mobile #map{ height:60vh; }
-  .is-mobile .ama-panel{ position:static; width:clamp(260px,90%,480px); margin:12px auto 0; }
+/* ===== Mobile Sidebar ===== */
 
+/* Hamburger Menu Button - Hidden by default, shown in mobile */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1100;
+  width: 48px;
+  height: 48px;
+  background: rgba(14, 165, 233, 0.95);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(14, 165, 233, 1);
+  transform: scale(1.05);
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Sidebar */
+.mobile-sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 360px;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 1200;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-sidebar.open {
+  right: 0;
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mobile-sidebar-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0ea5e9;
+  margin: 0;
+}
+
+.mobile-sidebar-close {
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-sidebar-close:hover {
+  color: #0ea5e9;
+  transform: scale(1.1);
+}
+
+.mobile-sidebar-content {
+  padding: 16px;
+}
+
+#mobile-panels-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#mobile-panels-container .ama-panel {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+#mobile-panels-container .ama-panel-header {
+  border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+  background: rgba(14, 165, 233, 0.05);
+}
+
+#mobile-panels-container .ama-panel-title {
+  color: #0ea5e9;
+}
+
+/* Sidebar Overlay */
+.mobile-sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1150;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-sidebar-overlay.active {
+  opacity: 1;
+}
+
+/* ===== Responsive Design ===== */
+
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) {
+  .ama-layer-dock {
+    width: 280px;
+    max-width: calc(50% - 24px);
+  }
+
+  .ama-top-dock {
+    width: 260px;
+    max-width: calc(50% - 24px);
+  }
+
+  .ama-panel {
+    font-size: 13px;
+    max-height: calc(100vh - 32px);
+  }
+
+  .ama-panel-title {
+    font-size: 15px;
+  }
+
+  /* Stack panels vertically on smaller tablets if needed */
+  @media (max-width: 900px) {
+    .ama-top-dock {
+      top: auto;
+      bottom: 16px;
+      left: 16px;
+    }
+  }
+}
+
+/* Mobile: max-width 768px */
+@media (max-width: 768px) {
+  /* Show mobile menu button and sidebar */
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .mobile-sidebar,
+  .mobile-sidebar-overlay {
+    display: block;
+  }
+
+  /* Hide original panels in mobile - they'll be in sidebar */
+  .ama-layer-dock,
+  .ama-top-dock {
+    display: none !important;
+  }
+
+  /* Main layout adjustments */
+  .is-mobile {
+    flex-direction: column;
+  }
+
+  .is-mobile #map {
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    min-height: 100vh;
+  }
+
+  .is-mobile .ama-panel {
+    position: static;
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Header adjustments */
+  .ama-panel-header {
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+
+  .ama-panel-title {
+    font-size: 14px;
+  }
+
+  .ama-settings-btn {
+    font-size: 20px;
+  }
+
+  /* Tabs responsive */
+  .ama-tabs {
+    gap: 4px;
+  }
+
+  .ama-tab-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  /* Table responsive */
+  .ama-top-table {
+    font-size: 11px;
+  }
+
+  .ama-top-th {
+    padding: 4px;
+  }
+
+  /* Checkbox grid */
+  .ama-checkbox-grid {
+    gap: 6px;
+  }
+
+  .ama-checkbox-grid label {
+    font-size: 13px;
+  }
+
+  /* Markers */
   .marker-icon {
     font-size: 24px;
   }
@@ -471,13 +743,101 @@ html, body { height:100% }
     height: 32px;
   }
 
+  /* Legend */
   .map-legend {
     max-width: 240px;
     font-size: 12px;
+    padding: 12px;
   }
 
+  /* Tour dialog */
   .tour-dialog {
     padding: 24px;
     font-size: 14px;
+  }
+
+  /* Info panel */
+  .map-info-panel {
+    min-width: 180px;
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .map-info-panel h4 {
+    font-size: 14px;
+  }
+
+  .map-info-panel p {
+    font-size: 12px;
+  }
+}
+
+/* Small Mobile: max-width 480px */
+@media (max-width: 480px) {
+  .is-mobile #map {
+    height: 50vh;
+    min-height: 350px;
+  }
+
+  .ama-layer-dock,
+  .ama-top-dock {
+    bottom: 4px !important;
+    left: 4px !important;
+    right: 4px !important;
+    width: calc(100% - 8px) !important;
+    padding: 8px;
+  }
+
+  .ama-top-dock {
+    top: 68px !important;
+  }
+
+  .ama-panel-title {
+    font-size: 13px;
+  }
+
+  .ama-tab-btn {
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+
+  .ama-top-table {
+    font-size: 10px;
+  }
+
+  .ama-checkbox-grid label {
+    font-size: 12px;
+  }
+
+  .map-legend {
+    max-width: 200px;
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .tour-dialog {
+    padding: 20px;
+    font-size: 13px;
+    width: 95%;
+  }
+
+  .tour-dialog h2 {
+    font-size: 20px;
+  }
+
+  .marker-icon {
+    font-size: 20px;
+  }
+
+  .marker-container {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Footer adjustments */
+  footer {
+    font-size: 10px !important;
+    padding: 1rem 0.5rem !important;
+    margin-top: 1rem !important;
   }
 }
