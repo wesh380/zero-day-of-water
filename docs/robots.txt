@@ -1,12 +1,46 @@
 # robots.txt for wesh360.ir
-# Generated: 2025-11-05
+# Generated: 2025-11-15
+# Optimized for AI Crawlers and Search Engines
 
+# Default rules for all crawlers
 User-agent: *
 Allow: /
 Disallow: /test/
 Disallow: /assets/vendor/
 Disallow: /assets/partials/
 Disallow: /*.dev.html$
+Disallow: /api/
+Disallow: /admin/
+
+# AI Crawlers - ChatGPT
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# AI Crawlers - Google Bard/Gemini Extended
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# AI Crawlers - Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# AI Crawlers - Common Crawl (used by many LLMs for training)
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# AI Crawlers - Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
 
 # Sitemaps
 Sitemap: https://wesh360.ir/sitemap.xml
