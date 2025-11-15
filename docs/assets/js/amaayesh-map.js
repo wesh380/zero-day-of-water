@@ -1844,13 +1844,24 @@ async function ama_bootstrap(){
   window.__AMA_BASE_PATHS = pathsResolved;
 
   async function safeLoad(p){ return p ? await getJSONwithFallback(p) : null; }
-  const [countiesFC, provinceFC, windFC, solarFC, damsFC] = await Promise.all([
+
+  // ✅ Lazy loading strategy: فقط countiesFC را eager load می‌کنیم
+  // provinceFC (4.1MB) فقط اگر countiesFC موجود نبود یا zoom out شد load می‌شود
+  const [countiesFC, windFC, solarFC, damsFC] = await Promise.all([
     safeLoad(pathsResolved.counties),
-    safeLoad(pathsResolved.province),
     safeLoad(pathsResolved.wind),
     safeLoad(pathsResolved.solar),
     safeLoad(pathsResolved.dams),
   ]);
+
+  // provinceFC را فقط اگر countiesFC نداریم بارگذاری کن (fallback)
+  let provinceFC = null;
+  if (!countiesFC && pathsResolved.province) {
+    console.log('[AMA] counties not found, loading province as fallback...');
+    provinceFC = await safeLoad(pathsResolved.province);
+  } else if (countiesFC) {
+    console.log('[AMA] counties loaded, province will be lazy-loaded on demand');
+  }
 
   // ✅ بررسی و logging geometry types
   const analyzeGeometryTypes = (fc, name) => {
@@ -2112,10 +2123,32 @@ async function ama_bootstrap(){
 
   // ✅ 3. حالا populate کردن groups (با pane های آماده)
   addPolyGroup('counties', countiesData);
-  addPolyGroup('province', provinceFC);
+  addPolyGroup('province', provinceFC); // فقط اگر از قبل load شده (fallback mode)
   setPointGroup('wind', windFC);
   setPointGroup('solar', solarFC);
   setPointGroup('dams', damsFC);
+
+  // ✅ Lazy load provinceFC on zoom out (اگر از قبل load نشده)
+  if (!provinceFC && pathsResolved.province) {
+    let provinceFCLoaded = false;
+    map.on('zoomend', async function() {
+      const zoom = map.getZoom();
+      if (zoom < 10 && !provinceFCLoaded) {
+        provinceFCLoaded = true;
+        console.log('[AMA] 🗺️ Zoom < 10 detected, lazy-loading province boundary (4.1MB)...');
+        try {
+          const loadedProvinceFC = await safeLoad(pathsResolved.province);
+          if (loadedProvinceFC) {
+            addPolyGroup('province', loadedProvinceFC);
+            console.log('[AMA] ✅ Province boundary loaded and added to map');
+          }
+        } catch (e) {
+          console.error('[AMA] ❌ Failed to lazy-load province:', e);
+        }
+      }
+    });
+    console.log('[AMA] 📍 Province lazy-loader registered (will load on zoom < 10)');
+  }
 
   console.log('[AMA] Groups populated:', {
     counties: AMA.G.counties?.getLayers().length || 0,
