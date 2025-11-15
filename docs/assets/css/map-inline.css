@@ -635,11 +635,14 @@ html, body { height:100% }
   background: rgba(0, 0, 0, 0.6);
   z-index: 1150;
   opacity: 0;
+  pointer-events: none; /* ✅ غیرفعال کردن click روی overlay وقتی بسته است */
   transition: opacity 0.3s ease;
 }
 
 .mobile-sidebar-overlay.active {
+  display: block; /* ✅ فقط وقتی active است نمایش بده */
   opacity: 1;
+  pointer-events: auto; /* ✅ فعال کردن click فقط وقتی باز است */
 }
 
 /* ===== Responsive Design ===== */
@@ -682,10 +685,12 @@ html, body { height:100% }
     display: flex;
   }
 
-  .mobile-sidebar,
-  .mobile-sidebar-overlay {
+  .mobile-sidebar {
     display: block;
   }
+
+  /* ✅ Overlay را فعال نکن - فقط با .active class فعال می‌شود */
+  /* .mobile-sidebar-overlay باید با JavaScript کنترل شود */
 
   /* Hide original panels in mobile - they'll be in sidebar */
   .ama-layer-dock,
