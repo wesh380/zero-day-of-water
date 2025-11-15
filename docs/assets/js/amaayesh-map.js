@@ -856,10 +856,28 @@ async function joinWindWeightsOnAll(){
     async function ensureAdminBase(){
       if (baseAdminGroup) return;
       const countiesGJ = window.__countiesGeoAll;
+
+      // ✅ پیش-فیلتر برای حذف Point features از countiesGJ
+      const polygonOnlyGJ = {
+        type: 'FeatureCollection',
+        features: (countiesGJ?.features || []).filter(f => {
+          const geomType = f?.geometry?.type;
+          return geomType === 'Polygon' || geomType === 'MultiPolygon';
+        })
+      };
+      console.log(`[AMA] ensureAdminBase: filtered ${countiesGJ?.features?.length || 0} → ${polygonOnlyGJ.features.length} polygons`);
+
       baseAdminGroup = L.featureGroup([], { pane:'polygons' });
       baseAdminGroup.__AMA_PROTECTED = true;
       baseAdminGroup.addTo(map);
-      countiesFill = L.geoJSON(countiesGJ, { pane:'polygons', renderer:canvasRenderer, style:{ fillOpacity:0.05, color:'#444', weight:0.7 } });
+
+      // ✅ استفاده از polygonOnlyGJ بجای countiesGJ + pointToLayer برای skip کردن Point ها
+      countiesFill = L.geoJSON(polygonOnlyGJ, {
+        pane:'polygons',
+        renderer:canvasRenderer,
+        pointToLayer: () => null,  // ✅ CRITICAL: skip Point features
+        style:{ fillOpacity:0.05, color:'#444', weight:0.7 }
+      });
       countiesFill.__AMA_PROTECTED = true;
       baseAdminGroup.addLayer(countiesFill);
       window.__AMA_COUNTIES_SOURCE = countiesGJ;
