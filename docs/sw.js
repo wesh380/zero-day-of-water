@@ -1,8 +1,8 @@
 // Service Worker برای WESH360 - Amaayesh Map Caching
-// Version 1.0.0
+// Version 2.0.0 - Phase 3 Optimizations
 
-const CACHE_NAME = 'wesh360-amaayesh-v1';
-const DATA_CACHE = 'wesh360-data-v1';
+const CACHE_NAME = 'wesh360-amaayesh-v2';
+const DATA_CACHE = 'wesh360-data-v2';
 
 // فایل‌های critical که باید cache شوند
 const CRITICAL_ASSETS = [
@@ -20,7 +20,7 @@ const GEOJSON_FILES = [
   '/data/amaayesh/wind_sites.geojson',
   '/data/amaayesh/solar_sites.geojson',
   '/data/amaayesh/dams.geojson',
-  // provinceFC را cache نمی‌کنیم چون 4.1MB است و lazy load می‌شود
+  '/data/amaayesh/khorasan_razavi_combined.geojson', // ✅ Optimized: 769KB (was 4.1MB)
 ];
 
 // Install: pre-cache critical assets
