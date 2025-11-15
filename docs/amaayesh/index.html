@@ -10,6 +10,9 @@
   <link rel="dns-prefetch" href="//statsfa.com">
   <link rel="dns-prefetch" href="//cdn.porsline.ir">
 
+  <!-- ✅ Preload Leaflet for faster LCP -->
+  <link rel="preload" href="/assets/vendor/leaflet/leaflet.js" as="script">
+
   <!-- ✅ Critical CSS: Preload for faster rendering -->
   <link rel="preload" href="/assets/css-bundles-dist/core.bundle.css" as="style">
   <link rel="preload" href="/assets/css-bundles-dist/layout.bundle.css" as="style">
@@ -265,121 +268,14 @@
 
   <footer class="mt-6 py-6 text-center text-slate-400 text-xs">WESH360 ⬢ Energy Spatial Planning ⬢ Leaflet</footer>
 
-  <!-- ✅ Lazy Loading: Load Leaflet only when map is visible -->
-  <script>
-    /* Leaflet Lazy Loader - بارگذاری هوشمند نقشه */
-    (function() {
-      'use strict';
-
-      let scriptsLoaded = false;
-
-      function loadLeafletScripts() {
-        if (scriptsLoaded) return;
-        scriptsLoaded = true;
-
-        console.log('[Performance] 📦 Loading Leaflet scripts...');
-
-        function loadScript(src, isModule = false) {
-          return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            if (isModule) {
-              script.type = 'module';
-            }
-            script.onload = () => {
-              console.log(`[Performance] ✅ Loaded: ${src}`);
-              resolve();
-            };
-            script.onerror = () => {
-              console.error(`[Performance] ❌ Failed to load: ${src}`);
-              reject(new Error(`Failed to load ${src}`));
-            };
-            document.head.appendChild(script);
-          });
-        }
-
-        // ✅ بارگذاری SERIAL برای حفظ dependency order
-        loadScript('/assets/vendor/leaflet/leaflet.js')
-          .then(() => {
-            console.log('[Performance] 🗺️ Leaflet core loaded, loading patches...');
-            return loadScript('/assets/js/leaflet-icon-patch.js');
-          })
-          .then(() => {
-            console.log('[Performance] 🎨 Icon patch loaded, loading decorator...');
-            return loadScript('/assets/vendor/leaflet.polylineDecorator.min.js');
-          })
-          .then(() => {
-            console.log('[Performance] ✨ All Leaflet dependencies loaded, loading map...');
-            return loadScript('/assets/js/amaayesh-map.min.js', true); // module (minified)
-          })
-          .then(() => {
-            console.log('[Performance] 🗺️ Map script loaded, loading UI enhancements...');
-            // بارگذاری موازی اسکریپت‌های مستقل
-            return Promise.all([
-              loadScript('/assets/js/panel-direct-wire.js'),
-              loadScript('/assets/js/ama-diag.js'),
-              loadScript('/assets/js/amaayesh-ui-enhancements.js')
-            ]);
-          })
-          .then(() => {
-            console.log('[Performance] 🎉 All scripts loaded successfully!');
-          })
-          .catch(err => {
-            console.error('[Performance] 💥 Critical error loading scripts:', err);
-          });
-      }
-
-      // ✅ Intersection Observer: بارگذاری فقط وقتی نقشه در viewport است
-      function initLazyLoading() {
-        const mapElement = document.getElementById('map');
-        if (!mapElement) {
-          console.warn('[Performance] ⚠️ Map element not found, loading scripts immediately');
-          loadLeafletScripts();
-          return;
-        }
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              console.log('[Performance] 👁️ Map is visible, loading scripts...');
-              loadLeafletScripts();
-              observer.disconnect();
-            }
-          });
-        }, {
-          rootMargin: '800px', // ✅ شروع بارگذاری 800px قبل از viewport برای LCP بهتر
-          threshold: 0.01
-        });
-
-        observer.observe(mapElement);
-
-        // ✅ بارگذاری eager با requestIdleCallback برای بهبود LCP
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => {
-            if (!scriptsLoaded) {
-              console.log('[Performance] 💤 Browser idle, preloading scripts...');
-              loadLeafletScripts();
-            }
-          }, { timeout: 1000 });
-        }
-
-        // Fallback: بارگذاری بعد از 1.5 ثانیه (کاهش از 3s برای LCP بهتر)
-        setTimeout(() => {
-          if (!scriptsLoaded) {
-            console.log('[Performance] ⏱️ Fallback: Loading scripts after 1.5s');
-            loadLeafletScripts();
-          }
-        }, 1500);
-      }
-
-      // شروع بعد از DOM ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initLazyLoading);
-      } else {
-        initLazyLoading();
-      }
-    })();
-  </script>
+  <!-- ✅ Eager Loading: Load Leaflet immediately for better LCP -->
+  <script src="/assets/vendor/leaflet/leaflet.js" defer></script>
+  <script src="/assets/js/leaflet-icon-patch.js" defer></script>
+  <script src="/assets/vendor/leaflet.polylineDecorator.min.js" defer></script>
+  <script src="/assets/js/amaayesh-map.min.js" type="module"></script>
+  <script src="/assets/js/panel-direct-wire.js" defer></script>
+  <script src="/assets/js/ama-diag.js" defer></script>
+  <script src="/assets/js/amaayesh-ui-enhancements.js" defer></script>
   <script>
     (function(){
       const mapEl = document.getElementById('map');
