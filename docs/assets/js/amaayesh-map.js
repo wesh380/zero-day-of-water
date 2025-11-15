@@ -2373,14 +2373,45 @@ async function ama_bootstrap(){
       })
     };
 
+    // ✅ Style بهینه شده برای نمایش واضح مرزها
     const style = key==='province'
-      ? { color:'#0ea5e9', weight:4, opacity:1, fillOpacity:0, fillColor:'transparent', fill: false, className: 'province-border' }  // ✅ مرز استان - کلفت و واضح
-      : { color:'#64748b', weight:1, opacity:0.5, fillOpacity:0, fill: false, className: 'county-border' };  // ✅ مرز شهرستان‌ها - نازک و کم‌رنگ
+      ? {
+          color: '#ef4444',        // قرمز روشن برای تضاد بالا
+          weight: 5,               // خیلی کلفت
+          opacity: 1,              // کاملاً مات
+          fillOpacity: 0.03,       // fill خیلی کم‌رنگ برای نمایش area
+          fillColor: '#ef444410',  // قرمز شفاف
+          fill: true,
+          className: 'province-border',
+          interactive: false       // غیرفعال کردن interaction
+        }
+      : {
+          color: '#94a3b8',        // خاکستری روشن‌تر
+          weight: 2,               // متوسط
+          opacity: 0.8,            // نسبتاً واضح
+          fillOpacity: 0,
+          fill: false,
+          className: 'county-border',
+          interactive: false
+        };
 
     const layer = L.geoJSON(polygonOnlyFC, {
       pane: 'polygons',
       pointToLayer: () => null,  // ✅ CRITICAL: skip Point features
-      style: () => style
+      style: () => style,
+      onEachFeature: (feature, layer) => {
+        // ✅ اضافه کردن tooltip برای نمایش نام
+        if (feature.properties) {
+          const name = feature.properties.name_fa || feature.properties.name || feature.properties.NAME || '';
+          if (name) {
+            layer.bindTooltip(name, {
+              permanent: false,
+              direction: 'center',
+              className: 'polygon-tooltip'
+            });
+          }
+        }
+      }
     });
 
     AMA.G[key].clearLayers();
