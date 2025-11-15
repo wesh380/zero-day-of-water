@@ -277,44 +277,54 @@
 
         console.log('[Performance] 📦 Loading Leaflet scripts...');
 
-        const scripts = [
-          '/assets/vendor/leaflet/leaflet.js',
-          '/assets/js/leaflet-icon-patch.js',
-          '/assets/vendor/leaflet.polylineDecorator.min.js',
-        ];
-
-        let loadedCount = 0;
-
-        function loadScript(src) {
+        function loadScript(src, isModule = false) {
           return new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.src = src;
-            script.defer = true;
+            if (isModule) {
+              script.type = 'module';
+            }
             script.onload = () => {
-              loadedCount++;
-              console.log(`[Performance] ✅ Loaded ${loadedCount}/${scripts.length}: ${src}`);
+              console.log(`[Performance] ✅ Loaded: ${src}`);
               resolve();
             };
-            script.onerror = () => reject(new Error(`Failed to load ${src}`));
+            script.onerror = () => {
+              console.error(`[Performance] ❌ Failed to load: ${src}`);
+              reject(new Error(`Failed to load ${src}`));
+            };
             document.head.appendChild(script);
           });
         }
 
-        // بارگذاری serial برای dependency order
-        Promise.all(scripts.map(loadScript))
+        // ✅ بارگذاری SERIAL برای حفظ dependency order
+        loadScript('/assets/vendor/leaflet/leaflet.js')
           .then(() => {
-            console.log('[Performance] ✨ All Leaflet scripts loaded');
-            // بارگذاری اسکریپت‌های وابسته
-            const mapScript = document.createElement('script');
-            mapScript.type = 'module';
-            mapScript.src = '/assets/js/amaayesh-map.js';
-            document.head.appendChild(mapScript);
-
-            loadScript('/assets/js/panel-direct-wire.js');
-            loadScript('/assets/js/ama-diag.js');
-            loadScript('/assets/js/amaayesh-ui-enhancements.js');
+            console.log('[Performance] 🗺️ Leaflet core loaded, loading patches...');
+            return loadScript('/assets/js/leaflet-icon-patch.js');
           })
-          .catch(err => console.error('[Performance] ❌ Script loading failed:', err));
+          .then(() => {
+            console.log('[Performance] 🎨 Icon patch loaded, loading decorator...');
+            return loadScript('/assets/vendor/leaflet.polylineDecorator.min.js');
+          })
+          .then(() => {
+            console.log('[Performance] ✨ All Leaflet dependencies loaded, loading map...');
+            return loadScript('/assets/js/amaayesh-map.js', true); // module
+          })
+          .then(() => {
+            console.log('[Performance] 🗺️ Map script loaded, loading UI enhancements...');
+            // بارگذاری موازی اسکریپت‌های مستقل
+            return Promise.all([
+              loadScript('/assets/js/panel-direct-wire.js'),
+              loadScript('/assets/js/ama-diag.js'),
+              loadScript('/assets/js/amaayesh-ui-enhancements.js')
+            ]);
+          })
+          .then(() => {
+            console.log('[Performance] 🎉 All scripts loaded successfully!');
+          })
+          .catch(err => {
+            console.error('[Performance] 💥 Critical error loading scripts:', err);
+          });
       }
 
       // ✅ Intersection Observer: بارگذاری فقط وقتی نقشه در viewport است
