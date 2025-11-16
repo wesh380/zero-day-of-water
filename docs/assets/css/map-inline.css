@@ -8,9 +8,14 @@ html, body { height:100% }
   width:100%;
 }
 
+/* ✅ CLS Fix: CSS Containment for layout stability */
 .ama-main{
   isolation: isolate;
   position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  contain: layout; /* ✅ Prevent layout shifts */
   /* ✅ حذف pointer-events: none برای جلوگیری از مشکل در موبایل */
 }
 
@@ -26,6 +31,7 @@ html, body { height:100% }
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  contain: layout style; /* ✅ Isolate panel layout */
 }
 
 .map-panel{ max-height:calc(100dvh - 32px); overflow:auto; }
@@ -35,9 +41,13 @@ html, body { height:100% }
 /* ✅ بهبود یافته: Prevent map interaction through panels - Mobile-friendly */
 #map {
   pointer-events: auto;
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
   z-index: 1; /* زیرتر از پنل‌ها */
   touch-action: pan-x pan-y; /* بهبود تاچ در موبایل */
+  contain: layout style; /* ✅ Prevent map-induced layout shifts */
 }
 
 .ama-panel-bd{ overflow:auto; }
@@ -65,10 +75,12 @@ html, body { height:100% }
 .ama-top-thead{ background:#f9fafb; color:#4b5563; }
 .ama-top-th{ padding:6px; }
 
-/* ✅ Custom Marker Styles */
+/* ✅ Custom Marker Styles - CLS Optimized */
 .custom-marker {
   background: transparent !important;
   border: none !important;
+  will-change: transform; /* ✅ Optimize for animations */
+  contain: layout style paint; /* ✅ Prevent marker layout shifts */
 }
 
 /* ✅ CRITICAL: Hide default Leaflet markers (broken icons from Point features) */
@@ -98,8 +110,9 @@ html, body { height:100% }
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
+  contain: layout style paint; /* ✅ Isolate marker rendering */
+  width: 36px; /* ✅ Reserve space */
+  height: 36px; /* ✅ Reserve space */
 }
 
 .marker-icon {
