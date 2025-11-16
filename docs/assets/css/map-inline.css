@@ -12,6 +12,9 @@ html, body { height:100% }
 .ama-main{
   isolation: isolate;
   position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   contain: layout; /* ✅ Prevent layout shifts */
   /* ✅ حذف pointer-events: none برای جلوگیری از مشکل در موبایل */
 }
@@ -38,7 +41,10 @@ html, body { height:100% }
 /* ✅ بهبود یافته: Prevent map interaction through panels - Mobile-friendly */
 #map {
   pointer-events: auto;
-  position: relative;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
   z-index: 1; /* زیرتر از پنل‌ها */
   touch-action: pan-x pan-y; /* بهبود تاچ در موبایل */
   contain: layout style; /* ✅ Prevent map-induced layout shifts */
