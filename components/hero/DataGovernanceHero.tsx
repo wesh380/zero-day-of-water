@@ -281,10 +281,18 @@ export default function DataGovernanceHero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-blue-500 hover:bg-blue-600 rounded-full font-bold text-white shadow-lg shadow-blue-500/50 transition-colors flex items-center gap-2"
+            className="group relative px-8 py-4 bg-blue-500 rounded-full font-bold text-white shadow-lg shadow-blue-500/50 overflow-hidden"
           >
-            <ShieldCheck className="w-5 h-5" />
-            کاوش در داده‌های حاکمیتی
+            <span className="relative z-10 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5" />
+              کاوش در داده‌های حاکمیتی
+            </span>
+            <motion.div
+              className="absolute inset-0 bg-blue-600"
+              initial={{ x: '100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
           </motion.button>
 
           <motion.button

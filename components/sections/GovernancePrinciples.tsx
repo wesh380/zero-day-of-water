@@ -117,6 +117,21 @@ export default function GovernancePrinciples() {
                 className="group relative"
               >
                 <div className="relative h-full bg-white backdrop-blur-xl border-2 border-gray-300 rounded-2xl p-6 overflow-hidden transition-all duration-300 group-hover:border-gray-400 group-hover:shadow-xl group-hover:shadow-gray-200">
+                  {/* Background Overlay */}
+                  <motion.div
+                    className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity"
+                    style={{
+                      backgroundColor: principle.color.includes('from-blue') ? '#3b82f6' :
+                                      principle.color.includes('from-green') ? '#10b981' :
+                                      principle.color.includes('from-purple') ? '#a855f7' :
+                                      principle.color.includes('from-orange') ? '#f97316' :
+                                      principle.color.includes('from-yellow') ? '#eab308' :
+                                      principle.color.includes('from-red') ? '#ef4444' :
+                                      principle.color.includes('from-indigo') ? '#6366f1' :
+                                      '#14b8a6'
+                    }}
+                  />
+
                   {/* Icon */}
                   <div className="inline-flex p-4 rounded-xl mb-4" style={{
                     backgroundColor: principle.color.includes('from-blue') ? '#3b82f6' :
@@ -174,8 +189,14 @@ export default function GovernancePrinciples() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 transition-colors">
-            بیشتر بدانید →
+          <button className="group relative px-8 py-4 bg-blue-600 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 overflow-hidden">
+            <span className="relative z-10">بیشتر بدانید →</span>
+            <motion.div
+              className="absolute inset-0 bg-blue-700"
+              initial={{ x: '100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
           </button>
         </motion.div>
       </div>

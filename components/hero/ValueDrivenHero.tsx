@@ -305,6 +305,15 @@ export default function ValueDrivenHero() {
                       : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
+                  {/* Background Effect */}
+                  <div
+                    className="absolute inset-0 rounded-2xl transition-opacity"
+                    style={{
+                      backgroundColor: `${resource.color}20`,
+                      opacity: isActive || isHovered ? 1 : 0.3
+                    }}
+                  />
+
                   <div className="relative z-10">
                     {/* Icon */}
                     <motion.div
@@ -406,6 +415,14 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
+                  {/* Hover overlay */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
+                    style={{
+                      backgroundColor: pillar.lightColor || pillar.color
+                    }}
+                  />
+
                   <div className="relative z-10">
                     <Icon
                       className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
@@ -435,11 +452,19 @@ export default function ValueDrivenHero() {
             href="/dashboards/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 transition-colors flex items-center gap-3 justify-center"
+            className="group relative px-10 py-5 bg-blue-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden flex items-center gap-3 justify-center"
             aria-label="دسترسی به داشبورد آمار و گزارش‌های تخصصی"
           >
-            <BarChart3 className="w-6 h-6" aria-hidden="true" />
-            مشاهده آمار و گزارش‌ها
+            <span className="relative z-10 flex items-center gap-3">
+              <BarChart3 className="w-6 h-6" aria-hidden="true" />
+              مشاهده آمار و گزارش‌ها
+            </span>
+            <motion.div
+              className="absolute inset-0 bg-blue-700"
+              initial={{ x: '100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
           </motion.a>
 
           <motion.a

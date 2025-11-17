@@ -146,6 +146,13 @@ export default function DataJourney() {
                       ))}
                     </div>
 
+                    {/* Hover Effect */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        backgroundColor: `${step.color}10`
+                      }}
+                    />
                   </motion.div>
                 </motion.div>
               );

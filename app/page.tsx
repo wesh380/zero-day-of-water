@@ -181,10 +181,11 @@ const OptimizedNavigation = () => {
               {/* دکمه CTA اصلی */}
               <a
                 href="/dashboards/"
-                className="relative flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-400/30"
+                className="relative flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-blue-400/30"
               >
-                <TrendingUp className="w-5 h-5 drop-shadow-md" />
-                <span className="drop-shadow-md">مشاهده آمار و گزارش‌ها</span>
+                <div className="absolute inset-0 bg-blue-700 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <TrendingUp className="w-5 h-5 relative z-10 drop-shadow-md" />
+                <span className="relative z-10 drop-shadow-md">مشاهده آمار و گزارش‌ها</span>
               </a>
             </div>
 
@@ -471,6 +472,9 @@ export default function HomePage() {
                   <Users className="w-5 h-5 text-green-600" />
                 </div>
               </div>
+
+              {/* Background Effect */}
+              <div className="absolute inset-0 bg-green-100 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
                 <Users className="w-8 h-8 text-green-600 mb-3 mx-auto" />
