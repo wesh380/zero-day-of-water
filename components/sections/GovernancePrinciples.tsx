@@ -17,56 +17,56 @@ const principles = [
     icon: Shield,
     title: 'امنیت و حریم خصوصی',
     description: 'رمزنگاری end-to-end و کنترل دسترسی چندلایه',
-    metrics: ['256-bit encryption', 'RBAC', '2FA'],
+    metrics: ['رمزنگاری پیشرفته', 'کنترل دسترسی نقش‌محور', 'حفاظت از حریم خصوصی'],
     color: 'from-blue-500 to-cyan-500'
   },
   {
     icon: FileCheck,
     title: 'کیفیت داده',
     description: 'اعتبارسنجی، پاکسازی و استانداردسازی خودکار',
-    metrics: ['95% accuracy', 'Auto-validation', 'Clean pipeline'],
+    metrics: ['اعتبارسنجی خودکار', 'پایش مستمر خطا', 'دقت و سلامت داده'],
     color: 'from-green-500 to-emerald-500'
   },
   {
     icon: Users,
     title: 'مالکیت و مسئولیت',
     description: 'تعریف واضح نقش‌ها و Data Stewardship',
-    metrics: ['Clear ownership', 'Accountability', 'Audit trail'],
+    metrics: ['تعیین مالک داده', 'زنجیره ثبت تغییرات', 'چارچوب پاسخ‌گویی'],
     color: 'from-purple-500 to-pink-500'
   },
   {
     icon: GitBranch,
     title: 'یکپارچگی و استاندارد',
     description: 'یکسان‌سازی فرمت‌ها و metadata management',
-    metrics: ['Unified schema', 'Metadata catalog', 'Standards'],
+    metrics: ['کاتالوگ داده و استانداردسازی فراداده', 'طرح‌واره‌ی یکپارچه', 'الزامات واحد داده'],
     color: 'from-orange-500 to-red-500'
   },
   {
     icon: Eye,
     title: 'شفافیت و ردیابی',
     description: 'Data lineage و تاریخچه کامل تغییرات',
-    metrics: ['Full lineage', 'Change history', 'Transparency'],
+    metrics: ['ردیابی منشأ داده', 'ثبت جامع تغییرات', 'شفافیت در جریان داده'],
     color: 'from-yellow-500 to-orange-500'
   },
   {
     icon: Lock,
     title: 'انطباق با قوانین',
     description: 'Compliance خودکار با استانداردهای ملی و بین‌المللی',
-    metrics: ['GDPR ready', 'ISO compliant', 'Legal ready'],
+    metrics: ['انطباق با استانداردها', 'آمادگی برای ممیزی', 'رعایت اصول حفاظت داده'],
     color: 'from-red-500 to-pink-500'
   },
   {
     icon: Target,
     title: 'هدف‌مندی کسب‌وکار',
     description: 'تراز داده با اهداف استراتژیک سازمان',
-    metrics: ['Business aligned', 'KPI driven', 'ROI focused'],
+    metrics: ['همترازی با اهداف سازمانی', 'تحلیل شاخص‌های کلیدی', 'پایش بازده سرمایه‌گذاری'],
     color: 'from-indigo-500 to-purple-500'
   },
   {
     icon: Workflow,
     title: 'خودکارسازی فرآیند',
     description: 'Data pipeline و governance workflow خودکار',
-    metrics: ['Auto workflows', 'Smart alerts', '24/7 monitoring'],
+    metrics: ['جریان‌های کاری خودکار', 'سامانه هشدار هوشمند', 'نظارت پیوسته'],
     color: 'from-teal-500 to-green-500'
   }
 ];
@@ -90,7 +90,7 @@ export default function GovernancePrinciples() {
           </div>
 
           <h2 className="text-5xl font-black text-gray-900 mb-3">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
+            <span className="text-blue-700">
               هشت ستون
             </span>
             {' '}حکمرانی داده

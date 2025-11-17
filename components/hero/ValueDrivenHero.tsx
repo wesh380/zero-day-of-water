@@ -228,12 +228,9 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block text-transparent"
+                  className="inline-block"
                   style={{
-                    background: `linear-gradient(to right, ${currentResource.gradientColors.from}, ${currentResource.gradientColors.to})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
+                    color: currentResource.color
                   }}
                 >
                   {currentResource.name}
@@ -398,7 +395,7 @@ export default function ValueDrivenHero() {
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">حکمرانی داده</span>؟
+              چرا <span className="text-blue-700">حکمرانی داده</span>؟
             </h2>
             <p className="text-gray-600">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
