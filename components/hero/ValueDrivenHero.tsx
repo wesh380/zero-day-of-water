@@ -135,7 +135,7 @@ export default function ValueDrivenHero() {
   const currentResource = resources[activeResource];
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <section className="relative min-h-screen overflow-hidden bg-gray-50">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[size:64px_64px]" />
@@ -202,7 +202,7 @@ export default function ValueDrivenHero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
+            className="inline-flex items-center gap-2 bg-blue-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
             role="complementary"
             aria-label="نشان رسمی سازمان"
           >
@@ -228,12 +228,9 @@ export default function ValueDrivenHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block text-transparent"
+                  className="inline-block"
                   style={{
-                    background: `linear-gradient(to right, ${currentResource.gradientColors.from}, ${currentResource.gradientColors.to})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
+                    color: currentResource.color
                   }}
                 >
                   {currentResource.name}
@@ -308,11 +305,11 @@ export default function ValueDrivenHero() {
                       : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
-                  {/* Gradient Background */}
+                  {/* Background Effect */}
                   <div
                     className="absolute inset-0 rounded-2xl transition-opacity"
                     style={{
-                      background: `radial-gradient(circle at top right, ${resource.color}30, transparent)`,
+                      backgroundColor: `${resource.color}20`,
                       opacity: isActive || isHovered ? 1 : 0.3
                     }}
                   />
@@ -320,7 +317,8 @@ export default function ValueDrivenHero() {
                   <div className="relative z-10">
                     {/* Icon */}
                     <motion.div
-                      className={`inline-flex p-4 rounded-xl mb-4 bg-gradient-to-br ${resource.gradient}`}
+                      className="inline-flex p-4 rounded-xl mb-4"
+                      style={{ backgroundColor: resource.color }}
                       animate={{
                         rotate: isActive ? [0, 5, -5, 0] : 0,
                       }}
@@ -398,7 +396,7 @@ export default function ValueDrivenHero() {
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">حکمرانی داده</span>؟
+              چرا <span className="text-blue-600">حکمرانی داده</span>؟
             </h2>
             <p className="text-gray-600">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
@@ -417,11 +415,11 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
-                  {/* Gradient overlay on hover */}
+                  {/* Hover overlay */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
+                      backgroundColor: pillar.lightColor || pillar.color
                     }}
                   />
 
@@ -454,7 +452,7 @@ export default function ValueDrivenHero() {
             href="/dashboards/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
+            className="group relative px-10 py-5 bg-blue-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden flex items-center gap-3 justify-center"
             aria-label="دسترسی به داشبورد آمار و گزارش‌های تخصصی"
           >
             <span className="relative z-10 flex items-center gap-3">
@@ -462,7 +460,7 @@ export default function ValueDrivenHero() {
               مشاهده آمار و گزارش‌ها
             </span>
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-blue-600"
+              className="absolute inset-0 bg-blue-700"
               initial={{ x: '100%' }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}

@@ -66,8 +66,9 @@ export default function DataJourney() {
         >
           <h2 className="text-5xl font-black text-gray-900 mb-3">
             سفر داده از
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
-              {' '}خام تا ارزش
+            {' '}
+            <span className="text-cyan-600">
+              خام تا ارزش
             </span>
           </h2>
           <p className="text-gray-600 text-lg">
@@ -78,7 +79,7 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-orange-600 via-green-600 to-cyan-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
+          <div className="absolute top-1/2 left-0 right-0 h-2 bg-blue-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {journeySteps.map((step, index) => {
@@ -97,7 +98,7 @@ export default function DataJourney() {
                   <div
                     className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-2xl z-10 shadow-lg border-4 border-white"
                     style={{
-                      background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`
+                      backgroundColor: step.color
                     }}
                   >
                     {index + 1}
@@ -145,11 +146,11 @@ export default function DataJourney() {
                       ))}
                     </div>
 
-                    {/* Glow Effect */}
+                    {/* Hover Effect */}
                     <motion.div
                       className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{
-                        background: `radial-gradient(circle at center, ${step.color}10, transparent)`
+                        backgroundColor: `${step.color}10`
                       }}
                     />
                   </motion.div>

@@ -51,7 +51,7 @@ export default function DataGovernanceHero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 overflow-hidden">
+    <section className="relative min-h-screen bg-slate-900 overflow-hidden">
       {/* Animated Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
 
@@ -124,7 +124,7 @@ export default function DataGovernanceHero() {
           >
             <span className="text-white">از داده خام تا</span>
             <br />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 text-transparent bg-clip-text">
+            <span className="text-cyan-400">
               تصمیم هوشمند
             </span>
           </motion.h1>
@@ -159,7 +159,7 @@ export default function DataGovernanceHero() {
                 scale: { duration: 2, repeat: Infinity },
                 rotate: { duration: 20, repeat: Infinity, ease: "linear" }
               }}
-              className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-2xl shadow-blue-500/50"
+              className="w-32 h-32 rounded-full bg-blue-500 flex items-center justify-center shadow-2xl shadow-blue-500/50"
             >
               <Database className="w-16 h-16 text-white" />
             </motion.div>
@@ -281,14 +281,14 @@ export default function DataGovernanceHero() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full font-bold text-white shadow-lg shadow-blue-500/50 overflow-hidden"
+            className="group relative px-8 py-4 bg-blue-500 rounded-full font-bold text-white shadow-lg shadow-blue-500/50 overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5" />
               کاوش در داده‌های حاکمیتی
             </span>
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500"
+              className="absolute inset-0 bg-blue-600"
               initial={{ x: '100%' }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
