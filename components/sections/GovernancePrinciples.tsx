@@ -90,7 +90,7 @@ export default function GovernancePrinciples() {
           </div>
 
           <h2 className="text-5xl font-black text-gray-900 mb-3">
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
+            <span className="text-blue-600">
               هشت ستون
             </span>
             {' '}حکمرانی داده

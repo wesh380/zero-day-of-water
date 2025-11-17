@@ -67,7 +67,7 @@ export default function DataJourney() {
           <h2 className="text-5xl font-black text-gray-900 mb-3">
             سفر داده از
             {' '}
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
+            <span className="text-cyan-600">
               خام تا ارزش
             </span>
           </h2>

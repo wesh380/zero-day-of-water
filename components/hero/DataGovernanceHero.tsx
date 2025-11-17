@@ -124,7 +124,7 @@ export default function DataGovernanceHero() {
           >
             <span className="text-white">از داده خام تا</span>
             <br />
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">
+            <span className="text-cyan-400">
               تصمیم هوشمند
             </span>
           </motion.h1>

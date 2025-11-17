@@ -379,10 +379,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 text-transparent bg-clip-text">
-                آمار این سایت در یک نگاه
-              </span>
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance text-blue-600">
+              آمار این سایت در یک نگاه
             </h2>
           </div>
 

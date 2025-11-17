@@ -398,7 +398,7 @@ export default function ValueDrivenHero() {
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="bg-gradient-to-r from-blue-600 to-cyan-600 text-transparent bg-clip-text">حکمرانی داده</span>؟
+              چرا <span className="text-blue-600">حکمرانی داده</span>؟
             </h2>
             <p className="text-gray-600">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
