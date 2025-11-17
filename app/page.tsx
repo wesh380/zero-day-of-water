@@ -563,7 +563,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <div className="rounded-3xl bg-card ring-1 ring-border backdrop-blur p-8">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
               {/* Brand Section */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 mb-4">
@@ -599,7 +599,25 @@ export default function HomePage() {
                 </ul>
               </div>
 
-              {/* Links Section 2 */}
+              {/* Links Section 2 - Partner Websites */}
+              <div>
+                <h3 className="text-sm font-bold uppercase tracking-wider mb-4">سایت‌های همکار</h3>
+                <ul className="space-y-3">
+                  <li>
+                    <a
+                      href="https://wesh.ir"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm leading-relaxed flex items-center gap-2"
+                    >
+                      <span>🔗</span>
+                      <span>wesh.ir</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Links Section 3 */}
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-wider mb-4">منابع</h3>
                 <ul className="space-y-3">
