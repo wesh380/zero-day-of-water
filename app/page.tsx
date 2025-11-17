@@ -52,7 +52,7 @@ const OptimizedNavigation = () => {
   return (
     <>
       {/* Top Bar - اطلاعات رسمی */}
-      <div className="bg-blue-600 text-white py-2 px-4 text-sm">
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 text-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
             {/* عنوان رسمی */}

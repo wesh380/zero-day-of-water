@@ -54,7 +54,7 @@ export default function FAQ() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <section id="faq" className="relative z-10 py-16 px-6 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section id="faq" className="relative z-10 py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
