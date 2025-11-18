@@ -78,7 +78,7 @@ export default function DataJourney() {
         {/* Journey Flow */}
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-purple-600 via-pink-600 via-orange-600 via-green-600 to-cyan-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
+          <div className="absolute top-1/2 left-0 right-0 h-2 bg-blue-600 -translate-y-1/2 hidden lg:block rounded-full shadow-lg" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
             {journeySteps.map((step, index) => {
@@ -96,9 +96,7 @@ export default function DataJourney() {
                   {/* Step Number */}
                   <div
                     className="absolute -top-5 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white font-black text-2xl z-10 shadow-lg border-4 border-white"
-                    style={{
-                      background: `linear-gradient(135deg, ${step.color}, ${step.color}dd)`
-                    }}
+                    style={{ backgroundColor: step.color }}
                   >
                     {index + 1}
                   </div>
@@ -144,14 +142,6 @@ export default function DataJourney() {
                         </div>
                       ))}
                     </div>
-
-                    {/* Glow Effect */}
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{
-                        background: `radial-gradient(circle at center, ${step.color}10, transparent)`
-                      }}
-                    />
                   </motion.div>
                 </motion.div>
               );

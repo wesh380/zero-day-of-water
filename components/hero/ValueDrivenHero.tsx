@@ -135,7 +135,7 @@ export default function ValueDrivenHero() {
   const currentResource = resources[activeResource];
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <section className="relative min-h-screen overflow-hidden bg-gray-50">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[size:64px_64px]" />
@@ -202,7 +202,7 @@ export default function ValueDrivenHero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
+            className="inline-flex items-center gap-2 bg-blue-100 border border-blue-300 rounded-full px-6 py-3 mb-6"
             role="complementary"
             aria-label="نشان رسمی سازمان"
           >
@@ -317,7 +317,8 @@ export default function ValueDrivenHero() {
                   <div className="relative z-10">
                     {/* Icon */}
                     <motion.div
-                      className={`inline-flex p-4 rounded-xl mb-4 bg-gradient-to-br ${resource.gradient}`}
+                      className="inline-flex p-4 rounded-xl mb-4"
+                      style={{ backgroundColor: resource.color }}
                       animate={{
                         rotate: isActive ? [0, 5, -5, 0] : 0,
                       }}
@@ -451,19 +452,11 @@ export default function ValueDrivenHero() {
             href="/dashboards/"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative px-10 py-5 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 overflow-hidden"
+            className="px-10 py-5 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 transition-colors flex items-center gap-3"
             aria-label="دسترسی به داشبورد آمار و گزارش‌های تخصصی"
           >
-            <span className="relative z-10 flex items-center gap-3">
-              <BarChart3 className="w-6 h-6" aria-hidden="true" />
-              مشاهده آمار و گزارش‌ها
-            </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-blue-600"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
+            <BarChart3 className="w-6 h-6" aria-hidden="true" />
+            مشاهده آمار و گزارش‌ها
           </motion.a>
 
           <motion.a
