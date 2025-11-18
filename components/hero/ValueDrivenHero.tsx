@@ -453,6 +453,7 @@ export default function ValueDrivenHero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="px-10 py-5 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white text-lg shadow-xl shadow-blue-500/30 transition-colors flex items-center gap-3"
+            style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
             aria-label="دسترسی به داشبورد آمار و گزارش‌های تخصصی"
           >
             <BarChart3 className="w-6 h-6" aria-hidden="true" />

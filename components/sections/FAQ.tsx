@@ -54,7 +54,7 @@ export default function FAQ() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <section id="faq" className="relative z-10 py-16 px-6 bg-gradient-to-br from-gray-50 to-blue-50">
+      <section id="faq" className="relative z-10 py-16 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
@@ -118,6 +118,7 @@ export default function FAQ() {
             <a
               href="/contact"
               className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+              style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
             >
               تماس با پشتیبانی
             </a>

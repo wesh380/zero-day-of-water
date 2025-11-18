@@ -182,6 +182,7 @@ const OptimizedNavigation = () => {
               <a
                 href="/dashboards/"
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
               >
                 <TrendingUp className="w-5 h-5" />
                 <span>مشاهده آمار و گزارش‌ها</span>
@@ -224,6 +225,7 @@ const OptimizedNavigation = () => {
               <a
                 href="/dashboards/"
                 className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold mt-4 transition-colors"
+                style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
               >
                 <TrendingUp className="w-5 h-5" />
                 مشاهده آمار و گزارش‌ها

@@ -165,7 +165,10 @@ export default function GovernancePrinciples() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 transition-colors">
+          <button
+            className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-full font-bold text-white shadow-lg shadow-blue-500/30 transition-colors"
+            style={{ backgroundColor: '#2563eb', color: '#ffffff' }}
+          >
             بیشتر بدانید →
           </button>
         </motion.div>
