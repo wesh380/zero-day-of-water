@@ -181,11 +181,10 @@ const OptimizedNavigation = () => {
               {/* دکمه CTA اصلی */}
               <a
                 href="/dashboards/"
-                className="relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden group border border-blue-400/30"
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <TrendingUp className="w-5 h-5 relative z-10 drop-shadow-md" />
-                <span className="relative z-10 drop-shadow-md">مشاهده آمار و گزارش‌ها</span>
+                <TrendingUp className="w-5 h-5" />
+                <span>مشاهده آمار و گزارش‌ها</span>
               </a>
             </div>
 
@@ -224,7 +223,7 @@ const OptimizedNavigation = () => {
 
               <a
                 href="/dashboards/"
-                className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-full font-bold mt-4"
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold mt-4 transition-colors"
               >
                 <TrendingUp className="w-5 h-5" />
                 مشاهده آمار و گزارش‌ها
@@ -379,7 +378,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
+            <h2 className="text-5xl md:text-7xl font-black tracking-tight text-balance text-blue-700">
               آمار این سایت در یک نگاه
             </h2>
           </div>
