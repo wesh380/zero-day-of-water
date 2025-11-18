@@ -1,3 +1,22 @@
+/* ===== Water Dashboard Color Palette & Design System ===== */
+:root {
+  /* Primary Water Colors */
+  --water-primary: #1E40AF;
+  --water-secondary: #3B82F6;
+  --water-accent: #60A5FA;
+  --water-light: #DBEAFE;
+
+  /* Status Colors for Water Data */
+  --water-critical: #EF4444;
+  --water-warning: #F59E0B;
+  --water-normal: #10B981;
+  --water-low: #6B7280;
+
+  /* Background Gradients */
+  --water-gradient: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  --water-card-gradient: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
+}
+
 /* ===== Base (desktop) styles ===== */
 /* Note: Using CSS Variables for theme support */
 body { background-color: var(--color-bg-primary, #f0f4f8); }
@@ -49,6 +68,37 @@ body { background-color: var(--color-bg-primary, #f0f4f8); }
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   color: var(--color-simulator-text, #065f46);
+}
+
+/* ===== Water Card Hierarchy System ===== */
+/* کارت‌های اطلاعات اصلی */
+.water-primary-card {
+  background: var(--water-card-gradient);
+  border: 1px solid var(--water-light);
+  border-top: 4px solid var(--water-primary);
+  box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.1);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+
+/* کارت‌های هشدار و بحران */
+.water-alert-card {
+  background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+  border: 1px solid #FECACA;
+  border-top: 4px solid var(--water-critical);
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+
+/* کارت‌های پیش‌بینی و آینده‌نگر */
+.water-future-card {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 1px solid #BBF7D0;
+  border-top: 4px solid var(--water-normal);
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1);
+  border-radius: 18px;
+  padding: 1.5rem;
 }
 
 .water-drop-container {
@@ -165,7 +215,39 @@ input[type=range]::-moz-range-thumb {
   z-index: 1000;
 }
 
-/* ===== Mobile overrides ===== */
+/* ===== Water Dashboard 12-Column Grid System ===== */
+.water-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* استاندارد سایز باکس‌ها */
+.water-card-small {
+  grid-column: span 3;
+  min-height: 200px;
+}
+
+.water-card-medium {
+  grid-column: span 6;
+  min-height: 300px;
+}
+
+.water-card-large {
+  grid-column: span 12;
+  min-height: 400px;
+}
+
+.water-card-full {
+  grid-column: 1 / -1;
+  min-height: 500px;
+}
+
+/* ===== Responsive Breakpoints ===== */
+
+/* موبایل اول - Mobile First */
 @media (max-width: 768px) {
   .cards {
     grid-template-columns: 1fr;
@@ -188,6 +270,31 @@ input[type=range]::-moz-range-thumb {
     height: 35vw;
     max-width: 120px;
     max-height: 120px;
+  }
+
+  /* Grid system responsive for mobile */
+  .water-dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .water-card-small,
+  .water-card-medium,
+  .water-card-large {
+    grid-column: 1;
+    min-height: auto;
+  }
+}
+
+/* تبلت - Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .water-card-small {
+    grid-column: span 6;
+  }
+
+  .water-card-medium {
+    grid-column: span 12;
   }
 }
 
