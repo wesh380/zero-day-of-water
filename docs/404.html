@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صفحه پیدا نشد | WESH360</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-start: #0b1f3a;
+      --bg-end: #050505;
+      --accent: #00d1ff;
+      --accent-soft: rgba(0, 209, 255, 0.3);
+      --text-primary: #f5f7fb;
+      --text-secondary: #b5c2d9;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle at top, rgba(0, 185, 255, 0.2), transparent 40%),
+        linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    main {
+      width: min(1100px, 100%);
+      background: rgba(7, 12, 24, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 32px;
+      padding: clamp(1.5rem, 3vw, 3rem);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: rgba(0, 209, 255, 0.1);
+      color: var(--accent);
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .figure {
+      text-align: center;
+    }
+
+    .figure h1 {
+      font-size: clamp(5rem, 18vw, 10rem);
+      margin: 0;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-shadow: 0 0 15px rgba(0, 209, 255, 0.6), 0 0 30px rgba(0, 209, 255, 0.4), 0 0 60px rgba(0, 209, 255, 0.2);
+    }
+
+    .content h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin: 0 0 1rem;
+      line-height: 1.4;
+    }
+
+    .content p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .actions a {
+      text-decoration: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      transition: background 0.3s ease, transform 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+      font-weight: 600;
+    }
+
+    .actions a.primary {
+      background: var(--accent);
+      color: #00121f;
+      border-color: rgba(0, 209, 255, 0.8);
+    }
+
+    .actions a:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .actions a.primary:hover {
+      background: #20e1ff;
+    }
+
+    .cards {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(18, 23, 41, 0.85);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .card p,
+    .card ul {
+      margin: 0;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card ul li {
+      padding-right: 1.2rem;
+      position: relative;
+    }
+
+    .card ul li::before {
+      content: "•";
+      position: absolute;
+      right: 0;
+      color: var(--accent);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      main {
+        border-radius: 20px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="badge">سامانه حکمرانی داده آب و انرژی – WESH360</span>
+    <section class="hero">
+      <div class="content">
+        <h2>صفحه‌ای که دنبالش هستید، در این مدار داده نیست.</h2>
+        <p>
+          احتمالاً لینک تغییر کرده، صفحه هنوز ساخته نشده یا به نسخه‌ی جدیدی منتقل شده است.
+          می‌توانید از مسیرهای زیر برای بازگشت به جریان داده استفاده کنید.
+        </p>
+        <div class="actions">
+          <a class="primary" href="/">بازگشت به صفحه‌ی اصلی</a>
+          <a href="/water/">داشبوردهای آب</a>
+          <a href="/gas/">داشبوردهای گاز</a>
+          <a href="/solar/">محاسبه‌گرهای خورشیدی</a>
+        </div>
+      </div>
+      <div class="figure">
+        <h1>404</h1>
+      </div>
+    </section>
+    <section class="cards">
+      <article class="card">
+        <h3>تغییر لینک‌ها و نسخه‌های جدید</h3>
+        <p>
+          در به‌روزرسانی‌های اخیر، مسیر برخی داشبوردها و گزارش‌ها جابه‌جا شده‌اند. اگر لینک قدیمی
+          را ذخیره کرده‌اید، نسخه‌ی جدید را از صفحه‌ی اصلی یا مرکز داده WESH360 دریافت کنید.
+        </p>
+      </article>
+      <article class="card">
+        <h3>مسیرهای پیشنهادی</h3>
+        <ul>
+          <li>نمای کلی وضعیت آب مشهد</li>
+          <li>نقشه دینامیک هریرود</li>
+          <li>ماشین‌حساب هزینه‌ی آب</li>
+          <li>گزارش‌های اقلیمی</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
