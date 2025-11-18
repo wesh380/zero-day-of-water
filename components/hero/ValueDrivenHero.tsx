@@ -21,9 +21,9 @@ const resources = [
     impact: 'کاهش اتلاف',
     link: '/water/hub',
     features: [
-      { icon: Eye, text: 'پایش لحظه‌ای مصرف' },
-      { icon: AlertTriangle, text: 'هشدار نشت و اتلاف' },
-      { icon: BarChart3, text: 'تحلیل الگوی مصرف' }
+      { icon: Eye, text: 'مصورسازی لحظه‌ای موجودی سدهای دوستی، طرق و کارده' },
+      { icon: AlertTriangle, text: 'پیش‌بینی روز صفر آب مشهد بر اساس ذخیره سدها' },
+      { icon: BarChart3, text: 'ماشین‌حساب ردپای آب غذا و پیشنهادهای هوش مصنوعی' }
     ]
   },
   {
@@ -39,9 +39,9 @@ const resources = [
     impact: 'کاهش قطعی',
     link: '/electricity/',
     features: [
-      { icon: Target, text: 'پیش‌بینی پیک‌بار' },
-      { icon: TrendingUp, text: 'بهینه‌سازی توزیع' },
-      { icon: Clock, text: 'مدیریت بار شبکه' }
+      { icon: Target, text: 'پایش شاخص‌های خاموشی و کیفیت توزیع تقریباً برخط' },
+      { icon: TrendingUp, text: 'نمودار پیک روزانه و ساعتی مصرف برق' },
+      { icon: Clock, text: 'راهنمای مصرف بسته به ساعت‌های شبانه‌روز' }
     ]
   },
   {
@@ -57,9 +57,9 @@ const resources = [
     impact: 'توزیع عادلانه',
     link: '/gas/',
     features: [
-      { icon: Users, text: 'اولویت‌بندی مصرف' },
-      { icon: Eye, text: 'نظارت فشار شبکه' },
-      { icon: Lightbulb, text: 'راهکار صرفه‌جویی' }
+      { icon: Users, text: 'پایش مصرف روزانه گاز و تراز شبکه' },
+      { icon: Eye, text: 'تحلیل اولیه شدت کربن سوخت‌های مختلف' },
+      { icon: Lightbulb, text: 'نسخه آزمایشی؛ بخشی از ابزارها در حال توسعه است' }
     ]
   },
   {
@@ -75,9 +75,9 @@ const resources = [
     impact: 'کاهش تقلب',
     link: '/gas/',
     features: [
-      { icon: ShieldCheck, text: 'تضمین کیفیت' },
-      { icon: Eye, text: 'ردیابی زنجیره' },
-      { icon: CheckCircle2, text: 'گزارش استاندارد' }
+      { icon: ShieldCheck, text: 'دسترسی به داده‌های رسمی ذخایر بنزین و گازوئیل' },
+      { icon: Eye, text: 'نمودار پایه تأمین فرآورده‌ها و روند مصرف' },
+      { icon: CheckCircle2, text: 'گزارش‌های آرشیوی برای پایش عرضه سوخت' }
     ]
   }
 ];
