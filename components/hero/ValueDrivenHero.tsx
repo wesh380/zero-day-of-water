@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Droplet, Zap, Flame, Droplets, Database, ShieldCheck, TrendingUp, Network, Eye, Clock, Users, Target, BarChart3, Lightbulb, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 // Value Propositions واقعی - نه داده فیک
@@ -80,6 +81,13 @@ const resources = [
     ]
   }
 ];
+
+const ctaTexts: Record<(typeof resources)[number]['id'], string> = {
+  electricity: 'ورود به داشبورد برق',
+  water: 'ورود به داشبورد آب',
+  gas: 'ورود به داشبورد گاز',
+  oil: 'ورود به داشبورد فرآورده‌های نفتی'
+};
 
 // Data Governance Pillars - واقعی
 const governancePillars = [
@@ -280,7 +288,7 @@ export default function ValueDrivenHero() {
             const isHovered = hoveredResource === index;
 
             return (
-              <Link href={resource.link} key={resource.id} aria-label={`مشاهده داشبورد ${resource.name}`}>
+              <div key={resource.id} aria-label={`کارت ${resource.name}: ${resource.problem} - راه‌حل: ${resource.solution}`}>
                 <motion.div
                   onHoverStart={() => setHoveredResource(index)}
                   onHoverEnd={() => setHoveredResource(null)}
@@ -289,7 +297,6 @@ export default function ValueDrivenHero() {
                   whileTap={{ scale: 0.98 }}
                   className="relative cursor-pointer group"
                   role="article"
-                  aria-label={`کارت ${resource.name}: ${resource.problem} - راه‌حل: ${resource.solution}`}
                 >
                 <motion.div
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
@@ -355,6 +362,19 @@ export default function ValueDrivenHero() {
                       })}
                     </div>
 
+                    {/* CTA Button */}
+                    <div className="mt-6">
+                      <Button
+                        asChild
+                        className="w-full text-sm font-bold text-white shadow-lg hover:shadow-xl"
+                        style={{ backgroundColor: resource.color }}
+                      >
+                        <Link href={resource.link} aria-label={`ورود به داشبورد ${resource.name}`}>
+                          {ctaTexts[resource.id]}
+                        </Link>
+                      </Button>
+                    </div>
+
                     {/* Hover Action */}
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -382,7 +402,7 @@ export default function ValueDrivenHero() {
                   )}
                 </motion.div>
               </motion.div>
-              </Link>
+              </div>
             );
           })}
         </motion.div>
