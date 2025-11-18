@@ -61,6 +61,7 @@
     </header>
 <main id="main" role="main">
     <h1>محاسبه‌گر نیروگاه خورشیدی</h1>
+    <p class="badge experimental-badge">نسخه آزمایشی – داده‌ها و فرمول‌ها در حال اعتبارسنجی هستند.</p>
     <div class="legend">
       <p>تنظیمات پیش‌فرض از فایل پیکربندی خوانده می‌شود و با ورودی‌های شما ترکیب خواهد شد.</p>
       <p>پس از به‌روزرسانی اعداد، روی دکمه «محاسبه» کلیک کنید تا سناریوهای سرمایه‌گذاری و جریمه را ببینید.</p>
@@ -71,6 +72,7 @@
         <h2 id="inputs-title">ورودی‌ها</h2>
         <p>پارامترهای قانونی، مالی و فنی پروژه را تنظیم کنید.</p>
       </header>
+      <p class="sample-scenario-text">در حال حاضر، اعداد بر اساس یک سناریوی نمونه برای یک مصرف‌کننده صنعتی با مصرف سالانه حدود ۱٫۲ میلیون کیلووات‌ساعت و نیروگاه ۵۰۰ کیلوواتی تنظیم شده است. شما می‌توانید این اعداد را متناسب با وضعیت خودتان تغییر دهید.</p>
       <form data-solar-form novalidate>
         <div class="form-grid">
           <fieldset class="field-group">
@@ -162,9 +164,11 @@
 
         <div class="actions">
           <button type="submit" class="primary" data-action="calculate" data-testid="btn-calculate">محاسبه</button>
+          <!-- JS می‌تواند متن «در حال محاسبه…» را در المان زیر نمایش دهد -->
+          <span id="solar-calc-loading" aria-live="polite" class="solar-calc-loading"></span>
           <button type="button" class="secondary" data-action="reset" data-testid="btn-reset">بازنشانی</button>
         </div>
-        <p class="form-error" data-solar-error role="alert"></p>
+        <p class="form-error" data-solar-error role="alert">لطفاً مقادیر ورودی را تکمیل یا اصلاح کنید. در صورت تداوم خطا با تیم WESH360 تماس بگیرید.</p>
       </form>
     </section>
 
@@ -214,7 +218,7 @@
             <div class="comparison-card" data-testid="comparison-card">
               <div class="comparison-row">
                 <div class="comparison-header">
-                  <div class="bar-label">سرمایه‌گذاری</div>
+                  <div class="bar-label">برآورد سرمایه‌گذاری نیروگاه پیشنهادی</div>
                   <div class="bar-value" id="comparison-investment-value" data-testid="comparison-investment-value">—</div>
                 </div>
                 <div class="progress-row">
@@ -224,7 +228,7 @@
               </div>
               <div class="comparison-row">
                 <div class="comparison-header">
-                  <div class="bar-label">جریمه</div>
+                  <div class="bar-label">برآورد مجموع جریمه در صورت عدم احداث نیروگاه</div>
                   <div class="bar-value" id="comparison-penalty-value" data-testid="comparison-penalty-value">—</div>
                 </div>
                 <div class="progress-row">
@@ -234,12 +238,23 @@
               </div>
               <div class="comparison-row ratio-row">
                 <div class="comparison-header">
-                  <div class="bar-label">نسبت جریمه/سرمایه</div>
+                  <div class="bar-label">نسبت جریمه به سرمایه‌گذاری</div>
                   <div class="bar-value" id="comparison-ratio" data-testid="comparison-ratio">—</div>
                 </div>
               </div>
+              <p class="comparison-note">اگر نیروگاه احداث نشود، برآورد مجموع جریمه طی دوره تحلیل می‌تواند هم‌تراز یا حتی بیش از هزینه سرمایه‌گذاری یک نیروگاه خورشیدی در همین بازه باشد.</p>
             </div>
           </div>
+        </div>
+
+        <div class="info-box assumptions-box">
+          <h3>فرضیات و محدودیت‌های این ماشین‌حساب</h3>
+          <ul>
+            <li>قیمت‌ها و نرخ‌ها بر اساس آخرین داده‌های تقریبی موجود در زمان توسعه ابزار تنظیم شده‌اند و ممکن است با مصوبات جدید تفاوت داشته باشند.</li>
+            <li>این نتایج یک برآورد اولیه هستند و جایگزین مشاوره تخصصی مالی، حقوقی یا مهندسی نمی‌شوند.</li>
+            <li>شرایط واقعی قرارداد، نرخ‌های بانکی، تعرفه‌ها و جریمه‌ها می‌تواند نتایج را به‌طور قابل توجهی تغییر دهد.</li>
+            <li>این صفحه بخشی از ماشین‌حساب‌های آزمایشی WESH360 است و در حال به‌روزرسانی و اعتبارسنجی مداوم است.</li>
+          </ul>
         </div>
 
         <aside>
