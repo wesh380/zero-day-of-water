@@ -115,12 +115,12 @@
       <div class="stat-wrap grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="stat badge-warn">
           <div class="label">قیمت پیشنهادی واقعی (به ازای هر مترمکعب)</div>
-          <div id="true-price" class="value">—</div>
+          <div id="true-price" class="value" data-testid="bill-amount">—</div>
           <span class="badge" id="true-price-unit">تومان</span>
         </div>
         <div class="stat badge-success">
           <div class="label">قیمت نهایی برای مصرف‌کننده (پس از یارانه/تخفیف)</div>
-          <div id="final-price" class="value">—</div>
+          <div id="final-price" class="value" data-testid="consumer-bill">—</div>
           <span class="badge" id="final-price-unit">تومان</span>
         </div>
       </div>
@@ -132,7 +132,7 @@
             <thead>
               <tr><th>آیتم</th><th>سهم</th><th>پیشرفت</th><th>هزینه</th></tr>
             </thead>
-            <tbody id="breakdown-body"><!-- filled by JS --></tbody>
+            <tbody id="breakdown-body" data-testid="cost-breakdown"><!-- filled by JS --></tbody>
           </table>
         </div>
         <div id="tbl-hint" class="hint mt-8">مقادیر با تغییر ورودی‌ها به‌روزرسانی می‌شوند.</div>
@@ -152,7 +152,7 @@
 
       <div class="card dash-card note space-y-3">
         <h3>جمع‌بندی تحلیل</h3>
-        <div id="analysis-summary">—</div>
+        <div id="analysis-summary" data-testid="analysis-summary">—</div>
       </div>
     </div>
 

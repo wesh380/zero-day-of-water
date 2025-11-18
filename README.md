@@ -226,6 +226,10 @@ If the preview throws a CORS error, verify that the origin uses `process.env.URL
 - Deploy Preview: Node 22 (canary)
 - هدف: اطمینان از سازگاری با Node 22 قبل از مهاجرت Production.
 
+## Playwright production smoke tests
+
+برای آزمایش خودکار صفحه‌های اصلی دیپلوی‌شده می‌توانید به [TESTING.md](./TESTING.md) مراجعه کنید. این فایل نحوه نصب Playwright، نحوه اجرای `npx playwright test` و پوشش هر یک از سه spec (smoke، buttons، calculators) را توضیح می‌دهد.
+
 ## تنظیمات ویندوز
 
 پس از هر بار به‌روزرسانی فایل `backend/.env` (مثلا تغییر مقادیر ALLOWED_ORIGINS یا مسیرهای دایرکتوری)? سرویس‌های اجرا شده روی ویندوز مانند API و worker را ری‌استارت کنید تا تنظیمات جدید اعمال شود.

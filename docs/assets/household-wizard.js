@@ -26,6 +26,11 @@
   const EF = { electricity: 0.45, gas: 0.20, water: 0.0003 }; // kgCO2e per unit (provisional)
 
   const LABEL_THRESHOLDS = { low: 0.90, high: 1.10 }; // 90% and 110%
+  const ensureTestId = (node, testId) => {
+    if (node && !node.dataset.testid) {
+      node.dataset.testid = testId;
+    }
+  };
   function classify(perCapita, target){
     if (!target || !Number.isFinite(perCapita)) return { key:'na', text:'—', level:'na' };
     const ratio = perCapita / target;
@@ -115,12 +120,25 @@
   }
 
   function renderNumbers(m){
-    $('#k-percapita').textContent = m.perCapita.toFixed(2);
-    $('#k-target').textContent = m.target.toFixed(2);
-    $('#k-delta').textContent = `${m.delta.toFixed(2)} (${m.percent.toFixed(1)}٪)`;
-    $('#k-score').textContent = String(m.score);
-    $('#k-co2e').textContent = m.co2e.toFixed(3) + ' kg';
+    const perCapitaNode = $('#k-percapita');
+    const targetNode = $('#k-target');
+    const deltaNode = $('#k-delta');
+    const scoreNode = $('#k-score');
+    const co2Node = $('#k-co2e');
     const chip = document.getElementById('k-label');
+
+    ensureTestId(perCapitaNode, 'household-per-capita');
+    ensureTestId(targetNode, 'household-target');
+    ensureTestId(deltaNode, 'household-delta');
+    ensureTestId(scoreNode, 'household-score');
+    ensureTestId(co2Node, 'household-co2');
+    ensureTestId(chip, 'household-label');
+
+    if (perCapitaNode) perCapitaNode.textContent = m.perCapita.toFixed(2);
+    if (targetNode) targetNode.textContent = m.target.toFixed(2);
+    if (deltaNode) deltaNode.textContent = `${m.delta.toFixed(2)} (${m.percent.toFixed(1)}٪)`;
+    if (scoreNode) scoreNode.textContent = String(m.score);
+    if (co2Node) co2Node.textContent = m.co2e.toFixed(3) + ' kg';
     if (chip){
       const label = classify(m.perCapita, m.target);
       chip.textContent = label.text;
