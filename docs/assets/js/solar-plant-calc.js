@@ -240,17 +240,23 @@ export function calculateMetrics(config, inputs = {}) {
 }
 
 export function annualRequiredShare(year, legal) {
-  if (!legal) {
+  if (!legal || !legal.isObliged) {
     return 0;
   }
+
   const startYear = Number(legal.startYear) || 0;
   if (year < startYear) {
     return 0;
   }
-  const stepCount = year - startYear + 1;
+
   const ramp = Number(legal.rampPerYearPct) || 0;
-  const cap = Number(legal.capSharePct) || 0;
-  return Math.min(cap, Math.max(0, stepCount * ramp));
+  const baseShare = Number(legal.capSharePct) || 0;
+  const capShareMax = isFiniteNumber(legal.capSharePctMax) ? Number(legal.capSharePctMax) : baseShare;
+
+  const yearsSinceStart = year - startYear;
+  const requiredShare = baseShare + yearsSinceStart * ramp;
+
+  return Math.max(0, Math.min(capShareMax, requiredShare));
 }
 
 export function computeProducedEnergy(capacityKW, specificYield, prLossPct) {
@@ -266,15 +272,14 @@ export function computePenaltySeries({ year, horizonYears, annualConsumption, le
   const growthFactor = 1 + ((Number(pricing.greenBoardGrowthPct) || 0) / 100);
   const basePenaltyPrice = Number(pricing.greenBoard) || 0;
   const consumption = Number(annualConsumption) || 0;
-  const obliged = Boolean(legal?.isObliged);
 
   for (let index = 0; index < horizonYears; index += 1) {
     const calendarYear = year + index;
-    const requiredSharePct = obliged ? annualRequiredShare(calendarYear, legal) : 0;
+    const requiredSharePct = annualRequiredShare(calendarYear, legal);
     const requiredEnergy = (requiredSharePct / 100) * consumption;
     const penaltyPrice = basePenaltyPrice * Math.pow(growthFactor, index);
-    const shortfall = Math.max(requiredEnergy - producedEnergy, 0);
-    const penalty = obliged ? shortfall * penaltyPrice : 0;
+    const shortageEnergy = Math.max(requiredEnergy - producedEnergy, 0);
+    const penalty = shortageEnergy * penaltyPrice;
 
     rows.push({
       index,
@@ -282,7 +287,7 @@ export function computePenaltySeries({ year, horizonYears, annualConsumption, le
       requiredSharePct,
       requiredEnergy,
       producedEnergy,
-      shortfall,
+      shortageEnergy,
       penalty,
       penaltyPrice
     });
