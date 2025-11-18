@@ -61,6 +61,49 @@ const RESULT_IDS = {
   requiredEnergy: "result-required-energy"
 };
 
+const RESULT_BINDINGS = {
+  totalCapex: {
+    getter: (result) => result?.metrics?.totalCapex,
+    formatter: formatCurrency
+  },
+  firstYearRevenue: {
+    getter: (result) => result?.metrics?.firstYearRevenue,
+    formatter: formatCurrency
+  },
+  firstYearOm: {
+    getter: (result) => result?.metrics?.firstYearOM,
+    formatter: formatCurrency
+  },
+  simplePayback: {
+    getter: (result) => result?.metrics?.simplePaybackYears,
+    formatter: formatYears
+  },
+  discountedPayback: {
+    getter: (result) => result?.metrics?.discountedPaybackYears,
+    formatter: formatYears
+  },
+  npv: {
+    getter: (result) => result?.metrics?.npv,
+    formatter: formatCurrency
+  },
+  irr: {
+    getter: (result) => result?.metrics?.irr,
+    formatter: formatPercent
+  },
+  totalPenalty: {
+    getter: (result) => result?.metrics?.totalPenalty,
+    formatter: formatCurrency
+  },
+  producedEnergy: {
+    getter: (result) => result?.producedEnergy,
+    formatter: formatEnergy
+  },
+  requiredEnergy: {
+    getter: (result) => result?.penaltySeries?.[0]?.requiredEnergy ?? 0,
+    formatter: formatEnergy
+  }
+};
+
 const COMPARISON_IDS = {
   investmentValue: "comparison-investment-value",
   penaltyValue: "comparison-penalty-value",
@@ -119,7 +162,7 @@ export async function initSolarPlantCalculator(root = document) {
 
   try {
     const inputs = collectInputs();
-    const result = calculateMetrics(config, inputs);
+    const result = calculateMetrics(effectiveConfig, inputs);
     renderResults(result);
   } catch (error) {
     console.error("solar-plant-calc: initial render failed", error);
@@ -240,17 +283,23 @@ export function calculateMetrics(config, inputs = {}) {
 }
 
 export function annualRequiredShare(year, legal) {
-  if (!legal) {
+  if (!legal || !legal.isObliged) {
     return 0;
   }
+
   const startYear = Number(legal.startYear) || 0;
   if (year < startYear) {
     return 0;
   }
-  const stepCount = year - startYear + 1;
+
   const ramp = Number(legal.rampPerYearPct) || 0;
-  const cap = Number(legal.capSharePct) || 0;
-  return Math.min(cap, Math.max(0, stepCount * ramp));
+  const baseShare = Number(legal.capSharePct) || 0;
+  const capShareMax = isFiniteNumber(legal.capSharePctMax) ? Number(legal.capSharePctMax) : baseShare;
+
+  const yearsSinceStart = year - startYear;
+  const requiredShare = baseShare + yearsSinceStart * ramp;
+
+  return Math.max(0, Math.min(capShareMax, requiredShare));
 }
 
 export function computeProducedEnergy(capacityKW, specificYield, prLossPct) {
@@ -266,15 +315,14 @@ export function computePenaltySeries({ year, horizonYears, annualConsumption, le
   const growthFactor = 1 + ((Number(pricing.greenBoardGrowthPct) || 0) / 100);
   const basePenaltyPrice = Number(pricing.greenBoard) || 0;
   const consumption = Number(annualConsumption) || 0;
-  const obliged = Boolean(legal?.isObliged);
 
   for (let index = 0; index < horizonYears; index += 1) {
     const calendarYear = year + index;
-    const requiredSharePct = obliged ? annualRequiredShare(calendarYear, legal) : 0;
+    const requiredSharePct = annualRequiredShare(calendarYear, legal);
     const requiredEnergy = (requiredSharePct / 100) * consumption;
     const penaltyPrice = basePenaltyPrice * Math.pow(growthFactor, index);
-    const shortfall = Math.max(requiredEnergy - producedEnergy, 0);
-    const penalty = obliged ? shortfall * penaltyPrice : 0;
+    const shortageEnergy = Math.max(requiredEnergy - producedEnergy, 0);
+    const penalty = shortageEnergy * penaltyPrice;
 
     rows.push({
       index,
@@ -282,7 +330,7 @@ export function computePenaltySeries({ year, horizonYears, annualConsumption, le
       requiredSharePct,
       requiredEnergy,
       producedEnergy,
-      shortfall,
+      shortageEnergy,
       penalty,
       penaltyPrice
     });
@@ -434,17 +482,20 @@ function cacheDomReferences(root) {
   }
 
   for (const [key, id] of Object.entries(RESULT_IDS)) {
-    state.results[key] = root.getElementById(id) || null;
+    state.results[key] = root.querySelector(`[data-result="${key}"]`) || (id ? root.getElementById(id) : null);
   }
 
+  const getComparisonNode = (key) =>
+    root.querySelector(`[data-comparison="${key}"]`) || (COMPARISON_IDS[key] ? root.getElementById(COMPARISON_IDS[key]) : null);
+
   state.comparison = {
-    investmentValue: root.getElementById(COMPARISON_IDS.investmentValue) || null,
-    penaltyValue: root.getElementById(COMPARISON_IDS.penaltyValue) || null,
-    investmentProgress: root.getElementById(COMPARISON_IDS.investmentProgress) || null,
-    investmentProgressLabel: root.getElementById(COMPARISON_IDS.investmentProgressLabel) || null,
-    penaltyProgress: root.getElementById(COMPARISON_IDS.penaltyProgress) || null,
-    penaltyProgressLabel: root.getElementById(COMPARISON_IDS.penaltyProgressLabel) || null,
-    ratioValue: root.getElementById(COMPARISON_IDS.ratioValue) || null
+    investmentValue: getComparisonNode("investmentValue"),
+    penaltyValue: getComparisonNode("penaltyValue"),
+    investmentProgress: getComparisonNode("investmentProgress"),
+    investmentProgressLabel: getComparisonNode("investmentProgressLabel"),
+    penaltyProgress: getComparisonNode("penaltyProgress"),
+    penaltyProgressLabel: getComparisonNode("penaltyProgressLabel"),
+    ratioValue: getComparisonNode("ratioValue")
   };
 }
 
@@ -551,20 +602,12 @@ function renderResults(result) {
     return;
   }
 
-  const metrics = result.metrics;
+  for (const [key, binding] of Object.entries(RESULT_BINDINGS)) {
+    const formattedValue = binding.formatter(binding.getter(result));
+    setResultText(key, formattedValue);
+  }
 
-  setResultText("totalCapex", formatCurrency(metrics.totalCapex));
-  setResultText("firstYearRevenue", formatCurrency(metrics.firstYearRevenue));
-  setResultText("firstYearOm", formatCurrency(metrics.firstYearOM));
-  setResultText("simplePayback", formatYears(metrics.simplePaybackYears));
-  setResultText("discountedPayback", formatYears(metrics.discountedPaybackYears));
-  setResultText("npv", formatCurrency(metrics.npv));
-  setResultText("irr", formatPercent(metrics.irr));
-  setResultText("totalPenalty", formatCurrency(metrics.totalPenalty));
-  setResultText("producedEnergy", formatEnergy(result.producedEnergy));
-  setResultText("requiredEnergy", formatEnergy(result.penaltySeries[0]?.requiredEnergy ?? 0));
-
-  renderComparison(metrics);
+  renderComparison(result.metrics);
 }
 
 function renderComparison(metrics) {
