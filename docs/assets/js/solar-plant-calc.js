@@ -76,11 +76,11 @@ const RESULT_BINDINGS = {
   },
   simplePayback: {
     getter: (result) => result?.metrics?.simplePaybackYears,
-    formatter: formatYears
+    formatter: formatPaybackYears
   },
   discountedPayback: {
     getter: (result) => result?.metrics?.discountedPaybackYears,
-    formatter: formatYears
+    formatter: formatPaybackYears
   },
   npv: {
     getter: (result) => result?.metrics?.npv,
@@ -88,7 +88,7 @@ const RESULT_BINDINGS = {
   },
   irr: {
     getter: (result) => result?.metrics?.irr,
-    formatter: formatPercent
+    formatter: formatIrr
   },
   totalPenalty: {
     getter: (result) => result?.metrics?.totalPenalty,
@@ -221,8 +221,10 @@ export function calculateMetrics(config, inputs = {}) {
     capacityKW: fallbackNumber(inputs.capacityKW, defaults.capacityKW)
   };
 
+  const manualCapexTotal = parseNumber(inputs.capexTotal);
   const impliedCapex = finance.capexPerKW * scenario.capacityKW;
-  scenario.capexTotal = fallbackNumber(inputs.capexTotal, defaults.capexTotal ?? impliedCapex);
+  const totalCapex = Number.isFinite(manualCapexTotal) ? manualCapexTotal : impliedCapex;
+  scenario.totalCapex = totalCapex;
 
   const producedEnergy = computeProducedEnergy(scenario.capacityKW, finance.specificYield, finance.prLossPct);
 
@@ -244,7 +246,7 @@ export function calculateMetrics(config, inputs = {}) {
   const omSeries = revenueSeries.map((value) => value * (finance.omPctOfRevenue / 100));
 
   const cashflows = buildCashflows({
-    capexTotal: scenario.capexTotal,
+    capexTotal: totalCapex,
     revenueSeries,
     omSeries
   });
@@ -269,7 +271,7 @@ export function calculateMetrics(config, inputs = {}) {
     cashflows,
     discountedCashflows,
     metrics: {
-      totalCapex: scenario.capexTotal,
+      totalCapex,
       firstYearRevenue: revenueSeries[0] ?? 0,
       firstYearOM: omSeries[0] ?? 0,
       simplePaybackYears,
@@ -711,6 +713,20 @@ function formatPercent(value) {
   }
   const display = numericValue * 100;
   return `${percentFormatter.format(display)}٪`;
+}
+
+function formatPaybackYears(value) {
+  if (value === null || value === undefined || !Number.isFinite(value)) {
+    return "بازگشت سرمایه در افق تحلیل رخ نمی‌دهد";
+  }
+  return formatYears(value);
+}
+
+function formatIrr(value) {
+  if (value === null || value === undefined || !Number.isFinite(value)) {
+    return "بازده داخلی قابل محاسبه نیست (جریان نقدی منفی در افق تحلیل)";
+  }
+  return formatPercent(value);
 }
 
 function fallbackNumber(value, fallback) {
