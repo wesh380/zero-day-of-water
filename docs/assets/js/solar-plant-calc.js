@@ -1,4 +1,32 @@
-﻿const CONFIG_URL = "/config/solar-calculator.json";
+const CONFIG_URL = "/config/solar-calculator.json";
+
+const EMBEDDED_FALLBACK_CONFIG = Object.freeze({
+  legal: {
+    isObliged: true,
+    startYear: 1403,
+    rampPerYearPct: 5,
+    capSharePct: 20
+  },
+  pricing: {
+    greenBoard: 56000,
+    greenBoardGrowthPct: 20,
+    gridPrice: null
+  },
+  finance: {
+    capexPerKW: 320000000,
+    specificYield: 1600,
+    prLossPct: 15,
+    omPctOfRevenue: 3,
+    discountPct: 25,
+    horizonYears: 20
+  },
+  defaults: {
+    year: 1403,
+    annualConsumption: 1200000,
+    capacityKW: 500,
+    projectType: "rooftop"
+  }
+});
 
 const FIELD_IDS = {
   year: "input-year",
@@ -70,14 +98,20 @@ const state = {
 
 export async function initSolarPlantCalculator(root = document) {
   const config = await loadConfig(CONFIG_URL);
-  if (!config) {
+  const effectiveConfig = config ?? cloneConfig(EMBEDDED_FALLBACK_CONFIG);
+
+  if (!effectiveConfig) {
     console.error("solar-plant-calc: config not available");
     return;
   }
 
+  if (!config) {
+    console.warn("solar-plant-calc: remote config missing, using embedded defaults");
+  }
+
   state.root = root;
-  state.config = config;
-  state.defaults = computeDefaults(config);
+  state.config = effectiveConfig;
+  state.defaults = computeDefaults(effectiveConfig);
 
   cacheDomReferences(root);
   prefillForm();
@@ -716,6 +750,18 @@ function showError(message) {
 
 function isFiniteNumber(value) {
   return Number.isFinite(Number(value));
+}
+
+function cloneConfig(config) {
+  if (!config) {
+    return null;
+  }
+  try {
+    return JSON.parse(JSON.stringify(config));
+  } catch (error) {
+    console.warn("solar-plant-calc: failed to clone fallback config", error);
+    return null;
+  }
 }
 
 if (typeof window !== "undefined") {
