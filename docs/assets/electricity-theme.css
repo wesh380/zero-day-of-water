@@ -1,16 +1,17 @@
 :root{
-  --bg:#0B1220; --bg2:#0F172A; --muted:#94A3B8;
-  --primary:#22D3EE; --accent:#FACC15; --success:#34D399; --danger:#F87171;
-  --radius:1rem; --pad:1.25rem; --maxw:68.75rem;
+  --bg:#f8fafc; --bg2:#ffffff; --muted:#64748b;
+  --primary:#eab308; --accent:#f59e0b; --success:#34D399; --danger:#F87171;
+  --radius:1rem; --pad:1.5rem; --maxw:68.75rem;
 }
-[dir="rtl"] body{background:radial-gradient(75rem 37.5rem at 50% -10%, #16254a 0%, var(--bg) 50%, #060a14 100%); color:#fff; font-family:'Vazirmatn', sans-serif;}
+[dir="rtl"] body{background:linear-gradient(to bottom, #fef3c7 0%, #fffbeb 15%, #ffffff 35%); color:#1e293b; font-family:'Vazirmatn', sans-serif; min-height:100vh;}
 [dir="rtl"][data-page="electricity-peak"] body{background:#f1f5f9; color:#1e293b;}
 [dir="rtl"][data-page="electricity-tariff"] body{background:#f1f5f9; color:#1e293b;}
 .container{max-width:var(--maxw); margin-inline:auto;}
 .page-title{font-weight:800; font-size:clamp(1.375rem,3.4vw,2.25rem); text-align:center; margin:1.25rem 0 1.75rem;}
-.card{background:var(--bg2); border:.0625rem solid rgba(255,255,255,.08); border-radius:var(--radius);
-      padding:var(--pad); box-shadow:0 .875rem 1.875rem rgba(0,0,0,.35); min-height:12rem;}
-.card h3{margin:0 0 .5rem; font-weight:800;}
+.card{background:var(--bg2); border:.0625rem solid #e2e8f0; border-radius:var(--radius);
+      padding:var(--pad); box-shadow:0 .25rem 1rem rgba(0,0,0,.08); min-height:20rem; transition: all 0.3s ease;}
+.card:hover{box-shadow:0 .5rem 1.5rem rgba(0,0,0,.12); transform:translateY(-0.25rem);}
+.card h3{margin:0 0 .5rem; font-weight:800; color:#0f172a;}
 .card p{margin:0; color:var(--muted); font-size:.95rem;}
 
 .title-with-icon{display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;}
