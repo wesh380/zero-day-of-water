@@ -40,7 +40,10 @@
   }
 
   forms.forEach((form) => {
-    if (form.dataset.netlifyManual === 'true') return;
-    form.addEventListener('submit', submitWithFetch);
+    const { netlifyManual, netlifyFetch } = form.dataset;
+    if (netlifyManual === 'true') return;
+    if (netlifyFetch === 'true') {
+      form.addEventListener('submit', submitWithFetch);
+    }
   });
 })();
