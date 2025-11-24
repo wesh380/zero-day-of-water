@@ -22,7 +22,7 @@
     const target = form.getAttribute('action') || '/';
 
     try {
-      const response = await fetch('/', {
+      const response = await fetch(target, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: encoded,
