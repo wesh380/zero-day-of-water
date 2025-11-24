@@ -62,6 +62,11 @@ self.addEventListener('fetch', (event) => {
   const {request} = event;
   const url = new URL(request.url);
 
+  // Let non-GET requests (form submissions, API POST/PUT) pass through untouched
+  if (request.method !== 'GET') {
+    return;
+  }
+
   // فقط same-origin requests را cache کنیم
   if (url.origin !== location.origin) {
     // برای OpenStreetMap tiles: Network first

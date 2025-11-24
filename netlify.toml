@@ -4,7 +4,24 @@
   node_version = "18"
 
 [build.processing]
-  skip_processing = true
+  skip_processing = false
+
+[build.processing.css]
+  bundle = false
+  minify = false
+
+[build.processing.js]
+  bundle = false
+  minify = false
+
+[build.processing.html]
+  pretty_urls = false
+
+[build.processing.images]
+  compress = false
+
+[build.processing.forms]
+  enabled = true
 
 [build.environment]
   CI = "true"
