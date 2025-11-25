@@ -97,8 +97,9 @@
 
       const menuItems = [
         { icon: '💧', label: 'داشبورد آب', href: '/water/hub' },
-        { icon: '⚡', label: 'داشبورد برق', href: '/electricity/hub' },
-        { icon: '🔥', label: 'داشبورد گاز', href: '/gas/hub' },
+        // Hub URLs for برق و گاز به مسیر اصلی هاب منتقل شده‌اند ( /electricity/ و /gas/ ) تا لینک‌ها 404 ندهند
+        { icon: '⚡', label: 'داشبورد برق', href: '/electricity/' },
+        { icon: '🔥', label: 'داشبورد گاز', href: '/gas/' },
         { icon: '🧮', label: 'ماشین‌حساب', href: '/calculators/' },
       ];
 
