@@ -17,21 +17,26 @@ export const metadata: Metadata = {
 
 const electricityDashboards = [
   {
-    href: "/electricity/peak.html",
-    title: "مدیریت پیک مصرف",
-    description: "تحلیل پیک روزانه و ساعتی و هشدارهای مدیریت بار برای کاهش هزینه.",
-    icon: <BatteryCharging className="w-6 h-6 text-amber-500" aria-hidden />, // Option A: real route that links to static HTML
-  },
-  {
     href: "/electricity/quality.html",
-    title: "کیفیت توزیع برق",
-    description: "شاخص‌های قابلیت اطمینان، آمار خاموشی و پروفایل کیفیت توزیع.",
+    title: "کیفیت شبکه و توزیع برق",
+    description: "نمایش شاخص‌های قابلیت اطمینان، آمار خاموشی‌ها و پروفایل کیفیت توزیع برق در استان.",
+    cta: "ورود به داشبورد کیفیت برق",
     icon: <ShieldCheck className="w-6 h-6 text-blue-500" aria-hidden />,
   },
   {
+    href: "/electricity/peak.html",
+    title: "پایش و مدیریت پیک مصرف",
+    description:
+      "تحلیل پیک روزانه و ساعتی، شناسایی دوره‌های اوج بار و ارائه‌ی پیشنهادهای مدیریت بار برای کاهش هزینه و ریسک خاموشی.",
+    cta: "ورود به داشبورد پیک مصرف",
+    icon: <BatteryCharging className="w-6 h-6 text-amber-500" aria-hidden />,
+  },
+  {
     href: "/electricity/power-tariff.html",
-    title: "محاسبه تعرفه برق",
-    description: "محاسبه تعرفه و تحلیل هزینه بر اساس الگوی مصرف فعلی.",
+    title: "محاسبه و شبیه‌سازی تعرفه برق",
+    description:
+      "محاسبه مبلغ قبض و شبیه‌سازی سناریوهای مختلف تعرفه بر اساس الگوی مصرف فعلی برای تصمیم‌گیری بهتر.",
+    cta: "ورود به ابزار محاسبه تعرفه",
     icon: <Wallet className="w-6 h-6 text-emerald-500" aria-hidden />,
   },
 ]
@@ -55,16 +60,15 @@ export default function ElectricityPage() {
             <div className="flex items-center gap-3">
               <Gauge className="h-10 w-10 text-blue-600" aria-hidden />
               <h1 className="text-3xl font-black leading-tight text-slate-900 sm:text-4xl">
-                داشبوردهای برق خراسان رضوی
+                هاب داشبوردهای برق خراسان رضوی
               </h1>
             </div>
             <p className="max-w-3xl text-lg leading-relaxed text-slate-700">
-              این صفحه مسیریابی رسمی /electricity/ است تا خطای ۴۰۴ برطرف شود و کاربران بتوانند از همین‌جا به
-              داشبوردهای استاتیک موجود برسند. لینک‌های زیر همان فایل‌های HTML موجود در docs/electricity هستند.
+              از این صفحه می‌توانید به همه‌ی داشبوردهای تحلیلی برق استان دسترسی پیدا کنید؛ از کیفیت شبکه و خاموشی‌ها تا
+              مدیریت پیک مصرف و محاسبه‌ی تعرفه.
             </p>
             <div className="rounded-xl bg-blue-50/70 p-4 text-sm text-blue-900 ring-1 ring-blue-200">
-              مسیر فعلی با رویکرد <strong>Option A</strong> ساخته شده است: یک روت واقعی در Next.js که به داشبوردهای استاتیک
-              متصل می‌شود؛ بنابراین URLهای /electricity/ و زیرصفحات HTML همچنان بدون تغییر در Netlify سرو می‌شوند.
+              برای شروع، یکی از کارت‌های زیر را انتخاب کنید. هر کارت شما را به یک داشبورد تعاملی جداگانه می‌برد.
             </div>
           </div>
         </div>
@@ -85,7 +89,7 @@ export default function ElectricityPage() {
             </div>
             <p className="text-sm leading-relaxed text-slate-700">{item.description}</p>
             <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-600">
-              مشاهده داشبورد
+              {item.cta}
               <span aria-hidden>→</span>
             </span>
           </Link>
@@ -94,11 +98,24 @@ export default function ElectricityPage() {
 
       <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">راهنمای صحت‌سنجی</h3>
+          <h3 className="text-lg font-semibold text-slate-900">راهنمای دسترسی و نسخه‌ی ساده داشبوردها</h3>
           <ul className="mt-3 list-disc space-y-1 pe-5 text-sm text-slate-700">
-            <li>باز کردن /electricity/ باید دیگر صفحه ۴۰۴ نباشد و همین هاب را نمایش دهد.</li>
-            <li>لینک‌ها به /electricity/peak.html، /electricity/quality.html و /electricity/power-tariff.html باید فعال باشند.</li>
-            <li>فایل‌های HTML استاتیک در docs/electricity بدون تغییر باقی می‌مانند و توسط Netlify از publish=docs سرو می‌شوند.</li>
+            <li>اگر در بارگذاری داشبوردها مشکل داشتید، می‌توانید نسخه‌ی ساده‌ی HTML را هم ببینید.</li>
+            <li>
+              <Link href="/electricity/quality.html" className="text-amber-600 hover:text-amber-700">
+                نسخه ساده کیفیت برق
+              </Link>
+            </li>
+            <li>
+              <Link href="/electricity/peak.html" className="text-amber-600 hover:text-amber-700">
+                نسخه ساده پیک مصرف برق
+              </Link>
+            </li>
+            <li>
+              <Link href="/electricity/power-tariff.html" className="text-amber-600 hover:text-amber-700">
+                نسخه ساده محاسبه تعرفه برق
+              </Link>
+            </li>
           </ul>
         </div>
       </section>
