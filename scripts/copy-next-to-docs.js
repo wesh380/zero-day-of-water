@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 /**
- * Copy Next.js static export to docs directory
- * This script copies the Next.js landing page to replace the existing HTML landing page
+ * Copy Next.js static export to docs directory.
+ *
+ * Why: Netlify publishes docs/, so we need every exported Next.js route
+ * (including the new /electricity/ and /gas/ hubs) copied alongside the
+ * long-lived static dashboards. The previous logic only moved index.html,
+ * which meant electricity/gas hubs never reached production and stayed 404.
  */
 
 const fs = require('fs');
@@ -19,38 +23,46 @@ if (!fs.existsSync(sourceDir)) {
 }
 
 try {
-  // Copy index.html to docs/
-  const indexSource = path.join(sourceDir, 'index.html');
-  const indexTarget = path.join(targetDir, 'index.html');
+  // Copy all exported assets except we handle _next specially to avoid stale bundles.
+  const entries = fs.readdirSync(sourceDir);
 
-  if (fs.existsSync(indexSource)) {
-    // Backup old index.html
-    const backupPath = path.join(targetDir, 'index.html.backup');
-    if (fs.existsSync(indexTarget)) {
-      fs.copyFileSync(indexTarget, backupPath);
-      console.log('✅ Backed up old index.html');
+  entries.forEach((entry) => {
+    const sourcePath = path.join(sourceDir, entry);
+    const targetPath = path.join(targetDir, entry);
+    const stats = fs.statSync(sourcePath);
+
+    if (entry === '_next') {
+      if (fs.existsSync(targetPath)) {
+        fs.rmSync(targetPath, { recursive: true, force: true });
+      }
+      fs.cpSync(sourcePath, targetPath, { recursive: true });
+      console.log('✅ Copied _next directory to docs/');
+      return;
     }
 
-    fs.copyFileSync(indexSource, indexTarget);
-    console.log('✅ Copied index.html to docs/');
-  }
+    // For top-level HTML pages (index, sitemap, robots, hubs, etc.), overwrite so the export wins.
+    if (stats.isFile()) {
+      // Keep a backup of the landing page like before.
+      if (entry === 'index.html' && fs.existsSync(targetPath)) {
+        const backupPath = path.join(targetDir, 'index.html.backup');
+        fs.copyFileSync(targetPath, backupPath);
+        console.log('✅ Backed up old index.html');
+      }
 
-  // Copy _next directory if it exists
-  const nextDirSource = path.join(sourceDir, '_next');
-  const nextDirTarget = path.join(targetDir, '_next');
-
-  if (fs.existsSync(nextDirSource)) {
-    // Remove old _next directory
-    if (fs.existsSync(nextDirTarget)) {
-      fs.rmSync(nextDirTarget, { recursive: true, force: true });
+      fs.copyFileSync(sourcePath, targetPath);
+      console.log(`✅ Copied file ${entry} to docs/`);
+      return;
     }
 
-    // Copy new _next directory
-    fs.cpSync(nextDirSource, nextDirTarget, { recursive: true });
-    console.log('✅ Copied _next directory to docs/');
-  }
+    // Directories like /electricity and /gas contain the exported hub pages.
+    if (stats.isDirectory()) {
+      fs.mkdirSync(targetPath, { recursive: true });
+      fs.cpSync(sourcePath, targetPath, { recursive: true });
+      console.log(`✅ Copied directory ${entry} to docs/`);
+    }
+  });
 
-  console.log('✨ Next.js static export copied successfully!');
+  console.log('✨ Next.js static export copied successfully, including /electricity/ and /gas/.');
 } catch (error) {
   console.error('❌ Error copying Next.js export:', error.message);
   // Don't fail the build, just warn
