@@ -25,10 +25,7 @@
   <link rel="mask-icon" href="/assets/img/logo/wesh360.svg" color="#0ea5e9">
   <meta name="theme-color" content="#0ea5e9">
   <script src="/assets/js/nav-utils.js" defer></script>
-  <script>
-    /* Suppress Cloudflare Beacon Errors */
-    window.addEventListener('error',function(e){if(e.target&&e.target.src&&(e.target.src.includes('statsfa.com')||e.target.src.includes('beacon.min.js'))){e.preventDefault();e.stopPropagation();return false;}},true);
-  </script>
+  <script src="/assets/js/cloudflare-beacon-suppress.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
@@ -303,49 +300,10 @@
   <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
   <!-- Statsfa Website Analytics End -->
   <!-- دکمه ثبت بازخورد Porsline -->
-  <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
+  <a class="porsline-button-wrapper" href="#porsline-side-tab">
     بازخورد دهید
   </a>
-  <script>
-    // Load Porsline script immediately with async for better performance
-    (function() {
-      try {
-        var js,q,d=document,
-          gi=d.getElementById,
-          ce=d.createElement,
-          gt=d.getElementsByTagName,
-          id="porsline-share",
-          b="https://cdn.porsline.ir/static/panel/v2/statics/";
-        if(!gi.call(d,id)) {
-          js=ce.call(d,"script");
-          js.id = id;
-          js.setAttribute("data-position","right");
-          js.src=b+"side-tab.js";
-          js.async = true;
-          js.onerror = function() {
-            console.warn('Porsline script failed to load');
-          };
-          q=gt.call(d,"script")[0];
-          q.parentNode.insertBefore(js,q);
-        }
-      } catch(e) {
-        console.warn('Porsline initialization error:', e.message);
-      }
-    })();
-
-    var clzdTiLuIp = function (ifid) {
-      try {
-        const el = document.getElementById(ifid);
-        if (el) {
-          el.fetchPriority = 'high';
-          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0";
-        }
-      } catch(e) {
-        console.warn('Porsline iframe error:', e.message);
-      }
-    };
-  </script>
+  <script src="/assets/js/porsline-widget.js" defer></script>
 </body>
 </html>
 
