@@ -18,13 +18,17 @@ const gasDashboards = [
   {
     href: "/gas/energy.html",
     title: "مصرف و مدیریت گاز",
-    description: "پایش مصرف گاز طبیعی و روندهای بهینه‌سازی برای مشترکین استان.",
-    icon: <Flame className="w-6 h-6 text-orange-500" aria-hidden />, // Option A hub pointing to static HTML
+    description:
+      "پایش مصرف گاز طبیعی، روندهای فصلی و سناریوهای بهینه‌سازی برای مشترکین خانگی، صنعتی و تجاری.",
+    cta: "ورود به داشبورد مصرف گاز",
+    icon: <Flame className="w-6 h-6 text-orange-500" aria-hidden />,
   },
   {
     href: "/gas/fuel-carbon.html",
-    title: "سوخت و شدت کربن",
-    description: "محاسبه شدت کربن سوخت‌ها و گزارش اثرات زیست‌محیطی.",
+    title: "سوخت‌ها و شدت کربن",
+    description:
+      "محاسبه شدت کربن انواع سوخت، مقایسه سناریوها و تهیه خروجی برای گزارش‌های زیست‌محیطی و تصمیم‌گیری سیاستی.",
+    cta: "ورود به داشبورد شدت کربن",
     icon: <Leaf className="w-6 h-6 text-emerald-500" aria-hidden />,
   },
 ]
@@ -45,15 +49,16 @@ export default function GasPage() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-10 w-10 text-emerald-600" aria-hidden />
-              <h1 className="text-3xl font-black leading-tight text-slate-900 sm:text-4xl">هاب داشبوردهای گاز</h1>
+              <h1 className="text-3xl font-black leading-tight text-slate-900 sm:text-4xl">
+                هاب داشبوردهای گاز خراسان رضوی
+              </h1>
             </div>
             <p className="max-w-3xl text-lg leading-relaxed text-slate-700">
-              برای جلوگیری از خطای ۴۰۴، مسیر /gas/ اکنون یک صفحه استاتیک در Next.js است که کاربران را به داشبوردهای استاتیک
-              موجود در docs/gas متصل می‌کند.
+              مرکز یکپارچه برای مشاهده و تحلیل مصرف گاز، سوخت‌ها و شدت کربن در استان.
             </p>
             <div className="rounded-xl bg-emerald-50/80 p-4 text-sm text-emerald-900 ring-1 ring-emerald-200">
-              لینک‌ها زیر همچنان به فایل‌های HTML فعلی اشاره می‌کنند تا فرآیند انتشار Netlify (publish=docs) تغییر نکند و
-              صفحه‌های energy.html و fuel-carbon.html بدون وقفه کار کنند.
+              از طریق کارت‌های زیر می‌توانید به داشبوردهای تحلیلی گاز دسترسی پیدا کنید؛ هر داشبورد برای یک نیاز مشخص طراحی
+              شده است.
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@ export default function GasPage() {
             </div>
             <p className="text-sm leading-relaxed text-slate-700">{item.description}</p>
             <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">
-              مشاهده داشبورد
+              {item.cta}
               <span aria-hidden>→</span>
             </span>
           </Link>
@@ -83,11 +88,19 @@ export default function GasPage() {
 
       <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-emerald-200 bg-white/90 p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-slate-900">راهنمای صحت‌سنجی</h3>
+          <h3 className="text-lg font-semibold text-slate-900">دسترسی به نسخه‌های ساده داشبورد گاز</h3>
           <ul className="mt-3 list-disc space-y-1 pe-5 text-sm text-slate-700">
-            <li>/gas/ باید بدون خطا لود شود و کارت‌های زیر را نمایش دهد.</li>
-            <li>لینک‌های /gas/energy.html و /gas/fuel-carbon.html باید مانند قبل در دسترس باشند.</li>
-            <li>سایت همچنان از docs/ سرو می‌شود و فایل‌های استاتیک حفظ شده‌اند.</li>
+            <li>اگر داشبورد اصلی برای شما لود نشد، می‌توانید نسخه‌ی ساده HTML را استفاده کنید.</li>
+            <li>
+              <Link href="/gas/energy.html" className="text-emerald-600 hover:text-emerald-700">
+                نسخه ساده داشبورد مصرف گاز
+              </Link>
+            </li>
+            <li>
+              <Link href="/gas/fuel-carbon.html" className="text-emerald-600 hover:text-emerald-700">
+                نسخه ساده داشبورد شدت کربن سوخت‌ها
+              </Link>
+            </li>
           </ul>
         </div>
       </section>
