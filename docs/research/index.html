@@ -144,74 +144,414 @@
           <h2 id="requestTitle" class="text-lg font-bold" tabindex="-1">درخواست دسترسی/تهیه داده</h2>
           <button class="text-slate-500 hover:text-slate-700" data-close aria-label="بستن">×</button>
         </div>
-        <form id="requestForm" name="research-request" method="POST" action="/research/thanks.html" data-netlify="true" netlify data-netlify-honeypot="bot-field" data-netlify-fetch="true" class="space-y-4">
-          <input type="hidden" name="form-name" value="research-request" />
+        <form id="requestForm" name="student-data-request" method="POST" action="/research/thanks.html" data-netlify="true" netlify data-netlify-honeypot="bot-field" data-netlify-fetch="true" class="space-y-6">
+          <input type="hidden" name="form-name" value="student-data-request" />
+          <input type="hidden" name="source" value="wesh360" />
           <p class="hidden"><label>فیلد ربات: <input name="bot-field" /></label></p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block mb-1 text-sm" for="req-name">نام و سازمان/دانشگاه</label>
-              <input id="req-name" name="نام و سازمان" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm" for="req-email">ایمیل کاری (اختیاری)</label>
-              <input id="req-email" name="ایمیل" type="email" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-          </div>
-          <div>
-            <label class="block mb-1 text-sm" for="req-summary">خلاصه پژوهش (۳–۵ خط)</label>
-            <textarea id="req-summary" name="خلاصه پژوهش" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" rows="3"></textarea>
-          </div>
-          <div>
-            <span class="block mb-1 text-sm">حوزه‌ها</span>
-            <div class="flex flex-wrap gap-3">
-              <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="حوزه‌ها" value="آب" class="accent-sky-600" /> آب</label>
-              <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="حوزه‌ها" value="برق" class="accent-sky-600" /> برق</label>
-              <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="حوزه‌ها" value="گاز" class="accent-sky-600" /> گاز</label>
-              <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="حوزه‌ها" value="فرآورده‌ها" class="accent-sky-600" /> فرآورده‌ها</label>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block mb-1 text-sm" for="req-time">بازه زمانی مدنظر</label>
-              <input id="req-time" name="بازه زمانی" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm" for="req-geo">سطح جغرافیا</label>
-              <input id="req-geo" name="سطح جغرافیا" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block mb-1 text-sm" for="req-agg">سطح تجمیع</label>
-              <input id="req-agg" name="سطح تجمیع" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm" for="req-vars">متغیرهای کلیدی</label>
-              <input id="req-vars" name="متغیرهای کلیدی" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-          </div>
-          <div>
-            <label class="block mb-1 text-sm" for="req-purpose">هدف استفاده</label>
-            <select id="req-purpose" name="هدف استفاده" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
-              <option value="پژوهش">پژوهش</option>
-              <option value="آموزش">آموزش</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label class="block mb-1 text-sm" for="req-date">فوریت/تاریخ مدنظر (اختیاری)</label>
-              <input id="req-date" name="تاریخ مدنظر" type="date" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm" for="req-link">پیوست لینک (اختیاری)</label>
-              <input id="req-link" name="پیوست لینک" type="url" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">A) مشخصات دانشجو</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="student_full_name">نام و نام خانوادگی *</label>
+                <input id="student_full_name" name="student_full_name" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_university">نام دانشگاه *</label>
+                <input id="student_university" name="student_university" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_id">شماره دانشجویی *</label>
+                <input id="student_id" name="student_id" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_level">مقطع تحصیلی *</label>
+                <select id="student_level" name="student_level" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+                  <option value="دکتری">دکتری</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_major">رشته و گرایش *</label>
+                <input id="student_major" name="student_major" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_faculty">دانشکده / گروه آموزشی</label>
+                <input id="student_faculty" name="student_faculty" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_national_id">شماره ملی</label>
+                <input id="student_national_id" name="student_national_id" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_phone">شماره تماس (موبایل) *</label>
+                <input id="student_phone" name="student_phone" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_email_academic">ایمیل دانشگاهی *</label>
+                <input id="student_email_academic" name="student_email_academic" type="email" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="student_email_alt">ایمیل دیگر (در صورت وجود)</label>
+                <input id="student_email_alt" name="student_email_alt" type="email" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
             </div>
           </div>
-          <div class="space-y-2">
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" required class="accent-sky-600" /> می‌پذیرم داده‌ها فقط در سطح عمومی، تجمیعی و با تاخیر ایمن ارائه می‌شود.</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" required class="accent-sky-600" /> در خروجی، منبع WESH360 را درج می‌کنم.</label>
-            <label class="flex items-center gap-2 text-sm"><input type="checkbox" required class="accent-sky-600" /> درخواست من با ماده 107 قانون برنامه پنجساله هفتم پیشرفت و خط قرمز امنیت داده هم‌راستاست.</label>
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">B) مشخصات پژوهش</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="research_title">عنوان پایان‌نامه / رساله / پروژه *</label>
+                <input id="research_title" name="research_title" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="research_type">نوع پژوهش *</label>
+                <select id="research_type" name="research_type" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="پایان‌نامه">پایان‌نامه</option>
+                  <option value="رساله">رساله</option>
+                  <option value="طرح پژوهشی">طرح پژوهشی</option>
+                  <option value="پروژه درسی">پروژه درسی</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="research_nature">ماهیت پژوهش</label>
+                <select id="research_nature" name="research_nature" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="کاربردی">کاربردی</option>
+                  <option value="توسعه‌ای">توسعه‌ای</option>
+                  <option value="بنیادی">بنیادی</option>
+                </select>
+              </div>
+              <div>
+                <span class="block mb-1 text-sm">حوزه موضوعی *</span>
+                <div class="flex flex-wrap gap-3">
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="آب" required class="accent-sky-600" /> آب</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="برق" class="accent-sky-600" /> برق</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="گاز" class="accent-sky-600" /> گاز</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="انرژی‌های تجدیدپذیر" class="accent-sky-600" /> انرژی‌های تجدیدپذیر</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="محیط زیست" class="accent-sky-600" /> محیط زیست</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="مدیریت شهری" class="accent-sky-600" /> مدیریت شهری</label>
+                  <label class="flex items-center gap-1 text-sm"><input type="checkbox" name="research_topics" value="سایر" class="accent-sky-600" /> سایر</label>
+                </div>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="supervisor_name">نام و نام خانوادگی استاد راهنما *</label>
+                <input id="supervisor_name" name="supervisor_name" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="supervisor_email">ایمیل استاد راهنما *</label>
+                <input id="supervisor_email" name="supervisor_email" type="email" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="supervisor_phone">شماره تماس استاد راهنما (در صورت امکان)</label>
+                <input id="supervisor_phone" name="supervisor_phone" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="research_goal">هدف اصلی پژوهش (۲–۳ خط) *</label>
+                <textarea id="research_goal" name="research_goal" rows="3" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></textarea>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="research_benefit_for_org">مزیت انجام این پژوهش برای سازمان صاحب داده (۲–۳ خط) *</label>
+                <textarea id="research_benefit_for_org" name="research_benefit_for_org" rows="3" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></textarea>
+              </div>
+            </div>
           </div>
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">C) مشخصات سازمان صاحب داده</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="org_name">نام دستگاه اجرایی / سازمان *</label>
+                <input id="org_name" name="org_name" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="org_department">نام اداره / مدیریت مرتبط *</label>
+                <input id="org_department" name="org_department" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="org_contact_person">نام و سمت فرد مخاطب (در صورت وجود)</label>
+                <input id="org_contact_person" name="org_contact_person" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="org_contact_info">راه ارتباطی سازمان (ایمیل رسمی / تلفن / نمابر)</label>
+                <input id="org_contact_info" name="org_contact_info" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">D) مشخصات داده درخواستی</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="dataset_title">عنوان دیتاست درخواستی *</label>
+                <input id="dataset_title" name="dataset_title" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="dataset_domain">حوزه داده *</label>
+                <select id="dataset_domain" name="dataset_domain" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="مصرف">مصرف</option>
+                  <option value="تولید">تولید</option>
+                  <option value="شبکه">شبکه</option>
+                  <option value="مالی">مالی</option>
+                  <option value="سایر">سایر</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="date_from">دوره زمانی مورد نیاز – از تاریخ *</label>
+                <input id="date_from" name="date_from" type="date" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="date_to">دوره زمانی – تا تاریخ *</label>
+                <input id="date_to" name="date_to" type="date" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="time_resolution">دقت زمانی داده *</label>
+                <select id="time_resolution" name="time_resolution" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="ساعتی">ساعتی</option>
+                  <option value="روزانه">روزانه</option>
+                  <option value="ماهانه">ماهانه</option>
+                  <option value="سالانه">سالانه</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="geo_level">سطح جغرافیایی داده *</label>
+                <select id="geo_level" name="geo_level" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="محله">محله</option>
+                  <option value="ناحیه">ناحیه</option>
+                  <option value="شهر">شهر</option>
+                  <option value="شهرستان">شهرستان</option>
+                  <option value="استان">استان</option>
+                  <option value="ملی">ملی</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="aggregation_level">سطح تجمیع داده *</label>
+                <select id="aggregation_level" name="aggregation_level" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="ردیف مشترک">ردیف مشترک</option>
+                  <option value="تجمیعی">تجمیعی</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="privacy_type">نوع داده از نظر حریم خصوصی</label>
+                <textarea id="privacy_type" name="privacy_type" rows="2" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></textarea>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="preferred_format">فرمت ترجیحی داده *</label>
+                <select id="preferred_format" name="preferred_format" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                  <option value="" disabled selected>انتخاب کنید...</option>
+                  <option value="Excel">Excel</option>
+                  <option value="CSV">CSV</option>
+                  <option value="Access">Access</option>
+                  <option value="Text">Text</option>
+                  <option value="سایر">سایر</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <p class="text-sm font-medium">جدول متغیرهای موردنیاز</p>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm border border-slate-200">
+                  <thead class="bg-slate-50">
+                    <tr>
+                      <th class="border border-slate-200 px-2 py-1 text-right">نام متغیر</th>
+                      <th class="border border-slate-200 px-2 py-1 text-right">توضیح</th>
+                      <th class="border border-slate-200 px-2 py-1 text-right">واحد</th>
+                      <th class="border border-slate-200 px-2 py-1 text-right">الزام</th>
+                      <th class="border border-slate-200 px-2 py-1 text-right">ملاحظات</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var1_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var1_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var1_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var1_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var1_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var2_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var2_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var2_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var2_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var2_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var3_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var3_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var3_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var3_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var3_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var4_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var4_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var4_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var4_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var4_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var5_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var5_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var5_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var5_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var5_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var6_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var6_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var6_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var6_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var6_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var7_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var7_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var7_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var7_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var7_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var8_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var8_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var8_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var8_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var8_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var9_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var9_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var9_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var9_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var9_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                    <tr>
+                      <td class="border border-slate-200 p-2"><input name="var10_name" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var10_desc" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2"><input name="var10_unit" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                      <td class="border border-slate-200 p-2">
+                        <select name="var10_required" class="w-full border border-slate-300 rounded px-2 py-1">
+                          <option value="" disabled selected>انتخاب کنید...</option>
+                          <option value="اجباری">اجباری</option>
+                          <option value="اختیاری">اختیاری</option>
+                        </select>
+                      </td>
+                      <td class="border border-slate-200 p-2"><input name="var10_notes" class="w-full border border-slate-300 rounded px-2 py-1" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">E) نحوه استفاده از داده و تعهدات دانشجو</h3>
+            <div class="space-y-2 text-sm leading-6">
+              <p>با ارسال این فرم، دانشجو موارد زیر را می‌پذیرد:</p>
+              <ul class="list-disc pr-5 space-y-1">
+                <li>استفاده از داده صرفا در چارچوب موضوع پژوهش اعلام‌شده انجام می‌شود.</li>
+                <li>حفظ محرمانگی و عدم اشتراک‌گذاری داده خام با اشخاص ثالث الزامی است.</li>
+                <li>هرگونه انتشار خروجی باید بدون اشاره به داده‌های حساس و با ذکر منبع WESH360 باشد.</li>
+                <li>در صورت تغییر دامنه یا هدف پژوهش، درخواست جدید ارسال خواهد شد.</li>
+              </ul>
+              <label class="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="student_commitment" required class="accent-sky-600" />
+                موارد فوق را مطالعه کرده‌ام و متعهد به رعایت آن هستم.
+              </label>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block mb-1 text-sm" for="student_signature_name">نام و نام خانوادگی دانشجو *</label>
+                <input id="student_signature_name" name="student_signature_name" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="form_date">تاریخ تکمیل فرم</label>
+                <input id="form_date" name="form_date" type="date" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="text-base font-semibold">F) تایید استاد راهنما (اختیاری)</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="md:col-span-2">
+                <label class="block mb-1 text-sm" for="supervisor_comment">نظر استاد راهنما درخصوص ضرورت دسترسی به این داده (۲–۳ خط)</label>
+                <textarea id="supervisor_comment" name="supervisor_comment" rows="3" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></textarea>
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="supervisor_confirm_name">نام و نام خانوادگی استاد راهنما</label>
+                <input id="supervisor_confirm_name" name="supervisor_confirm_name" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+              <div>
+                <label class="block mb-1 text-sm" for="supervisor_confirm_signature">فیلد امضا / مهر</label>
+                <input id="supervisor_confirm_signature" name="supervisor_confirm_signature" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="w-full rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-400">ارسال</button>
         </form>
       </div>
