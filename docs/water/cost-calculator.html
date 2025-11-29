@@ -163,18 +163,21 @@
         <div class="group space-y-2.5">
           <label for="cost_production">هزینه تولید هر مترمکعب (تومان)</label>
           <div class="inline flex items-center gap-2.5">
-            <input id="cost_production" type="number" min="0" step="100" value="2000" aria-describedby="cost_production_r">
+          <input id="cost_production" type="number" min="0" max="200000" step="100" value="2000" aria-describedby="cost_production_r error-cost_production" required>
           </div>
+          <div class="field-error" data-error-for="cost_production" id="error-cost_production" aria-live="polite"></div>
           <input id="cost_production_r" type="range" min="0" max="10000" step="100" value="2000">
         </div>
         <div class="group space-y-2.5">
           <label for="cost_energy">هزینه انرژی (تومان)</label>
-          <input id="cost_energy" type="number" min="0" step="50" value="2000">
+          <input id="cost_energy" type="number" min="0" max="200000" step="50" value="2000" required>
+          <div class="field-error" data-error-for="cost_energy" id="error-cost_energy" aria-live="polite"></div>
           <input id="cost_energy_r" type="range" min="0" max="10000" step="50" value="2000">
         </div>
         <div class="group space-y-2.5">
           <label for="loss_network">درصد هدررفت شبکه (%)</label>
-          <input id="loss_network" type="number" min="0" max="100" step="1" value="20">
+          <input id="loss_network" type="number" min="0" max="100" step="1" value="20" required>
+          <div class="field-error" data-error-for="loss_network" id="error-loss_network" aria-live="polite"></div>
           <input id="loss_network_r" type="range" min="0" max="100" step="1" value="20">
         </div>
       </div>
@@ -183,12 +186,14 @@
         <h3>۲) عوامل اقتصادی و مدیریتی</h3>
         <div class="group space-y-2.5">
           <label for="maintenance">هزینه نگهداری و تعمیرات (تومان)</label>
-          <input id="maintenance" type="number" min="0" step="50" value="1500">
+          <input id="maintenance" type="number" min="0" max="200000" step="50" value="1500" required>
+          <div class="field-error" data-error-for="maintenance" id="error-maintenance" aria-live="polite"></div>
           <input id="maintenance_r" type="range" min="0" max="10000" step="50" value="1500">
         </div>
         <div class="group space-y-2.5">
           <label for="hidden_subsidy">درصد یارانه پنهان (%)</label>
-          <input id="hidden_subsidy" type="number" min="0" max="100" step="1" value="25">
+          <input id="hidden_subsidy" type="number" min="0" max="100" step="1" value="25" required>
+          <div class="field-error" data-error-for="hidden_subsidy" id="error-hidden_subsidy" aria-live="polite"></div>
           <input id="hidden_subsidy_r" type="range" min="0" max="100" step="1" value="25">
         </div>
       </div>
@@ -197,7 +202,8 @@
         <h3>۳) محیطی و اجتماعی</h3>
         <div class="group space-y-2.5">
           <label for="power_change">درصد تغییر قیمتی برق (%)</label>
-          <input id="power_change" type="number" min="-100" max="100" step="1" value="0">
+          <input id="power_change" type="number" min="-100" max="100" step="1" value="0" required>
+          <div class="field-error" data-error-for="power_change" id="error-power_change" aria-live="polite"></div>
           <input id="power_change_r" type="range" min="-100" max="100" step="1" value="0">
         </div>
       </div>

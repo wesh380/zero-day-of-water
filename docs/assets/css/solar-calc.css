@@ -114,6 +114,17 @@ h3 {
   background: #fff;
 }
 
+.field .input-error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.field-error {
+  color: #dc2626;
+  font-size: 0.82rem;
+  min-height: 1rem;
+}
+
 .field input[type="number"]::-webkit-outer-spin-button,
 .field input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
