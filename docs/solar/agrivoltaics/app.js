@@ -73,7 +73,8 @@ const Section = ({
 }, title), /*#__PURE__*/React.createElement("div", {
   className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
 }, children));
-  const NumberInput = ({
+const normalizeNumberValue = value => value === null || value === undefined ? "" : value;
+const NumberInput = ({
   label,
   value,
   onChange,
@@ -98,8 +99,11 @@ const Section = ({
     min: min,
     max: max,
     required: required,
-    value: value,
-    onChange: e => onChange(Number(e.target.value)),
+    value: normalizeNumberValue(value),
+    onChange: e => {
+      const raw = e.target.value;
+      onChange(raw === "" ? null : Number(raw));
+    },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
     className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
@@ -138,9 +142,11 @@ const KPI = ({
 }, /*#__PURE__*/React.createElement("div", {
   className: "text-gray-300 text-sm"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400"
-}, value), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-xs text-gray-400 mt-1"
+  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
+}, /*#__PURE__*/React.createElement("span", {
+  className: "inline-block max-w-full"
+}, value)), sub && /*#__PURE__*/React.createElement("div", {
+  className: "text-xs text-gray-400 mt-1 text-center leading-snug"
 }, sub));
 const KV = ({
   k,
@@ -213,36 +219,49 @@ function validateState(state, simpleMode) {
 }
 
 async function saveScenario(state, setShareLink) {
-  const res = await apiFetch("/api/save-scenario", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      state
-    })
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    alert(err.message || "ذخیره نشد؛ بعداً دوباره امتحان کن.");
-    return;
+  try {
+    const res = await apiFetch("/api/save-scenario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        state
+      })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      alert(err.message || "ذخیره نشد؛ بعداً دوباره امتحان کن.");
+      return;
+    }
+    const {
+      id
+    } = await res.json();
+    const share = `${location.origin}${location.pathname}?id=${encodeURIComponent(id)}`;
+    setShareLink(share);
+  } catch (err) {
+    console.error("agrivoltaics: save scenario failed", err);
+    alert("ذخیره سناریو ممکن نیست؛ بعداً دوباره امتحان کن.");
   }
-  const {
-    id
-  } = await res.json();
-  const share = `${location.origin}${location.pathname}?id=${encodeURIComponent(id)}`;
-  setShareLink(share);
 }
 async function loadScenarioById(id, setState) {
   if (!id) return;
-  const res = await apiFetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    alert(err.message || "خواندن نشد؛ بعداً دوباره امتحان کن.");
-    return;
+  try {
+    const res = await apiFetch(`/api/get-scenario?id=${encodeURIComponent(id)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      alert(err.message || "خواندن نشد؛ بعداً دوباره امتحان کن.");
+      return;
+    }
+    const saved = await res.json();
+    if (saved) setState(prev => ({
+      ...prev,
+      ...saved
+    }));
+  } catch (err) {
+    console.error("agrivoltaics: load scenario failed", err);
+    alert("دریافت سناریو ممکن نشد؛ بعداً دوباره امتحان کن.");
   }
-  const saved = await res.json();
-  if (saved) setState(saved);
 }
 function AgrivoltaicsKhorasan() {
   const [simple, setSimple] = useState(true);
@@ -405,6 +424,9 @@ function AgrivoltaicsKhorasan() {
     time_horizon_years: 25,
     discount_rate_pct: 12,
     currency: "ریال",
+    energy_for_irrigation_kWh_per_m3: soils["loam"].pump_kWh_m3,
+    irrigation_energy_tariff: waterSources["well_electric_subsidized"].elec_tariff,
+    water_unit_cost: waterSources["well_electric_subsidized"].water_cost,
     baseline_yield_t_per_ha: cropProfiles["زعفران"].yield_t_ha,
     expected_yield_change_pct_under_AGV: cropProfiles["زعفران"].baseYieldChange,
     crop_price_per_t: cropProfiles["زعفران"].price_per_t,
@@ -517,10 +539,9 @@ function AgrivoltaicsKhorasan() {
   }, [validation.valid]);
   const shouldCompute = validation.valid;
   const errorKeys = Object.keys(validation.errors || {});
-  const hasErrors = Object.keys(errors || {}).length > 0;
-  const readyForOutput = shouldCompute && !hasErrors;
+  const readyForOutput = shouldCompute;
   if (!shouldCompute && errorKeys.length) {
-    console.warn("agrivoltaics: validation failed", errorKeys.join(", "));
+    console.error("agrivoltaics: validation failed", errorKeys);
   }
 
   let area = 0;
@@ -618,7 +639,7 @@ function AgrivoltaicsKhorasan() {
     water_m3_base = area * nz(s.water_use_baseline_m3_per_ha);
     water_cost_base = water_m3_base * nz(s.water_unit_cost);
     irrigation_energy_base_kWh = water_m3_base * nz(s.energy_for_irrigation_kWh_per_m3);
-    irrigation_energy_cost_base = irrigation_energy_base_kWh * nz(s.irrigation_energy_tariff || 0);
+    irrigation_energy_cost_base = irrigation_energy_base_kWh * nz(s.irrigation_energy_tariff);
     yield_change = 1 + pct(s.expected_yield_change_pct_under_AGV) + pct(s.crop_quality_premium_or_discount_pct);
     ag_yield_agv = nz(s.baseline_yield_t_per_ha) * area * yield_change;
     ag_rev_agv = ag_yield_agv * nz(s.crop_price_per_t);
@@ -626,7 +647,7 @@ function AgrivoltaicsKhorasan() {
     water_m3_agv = water_m3_base * (1 + pct(s.water_use_change_under_AGV_pct));
     water_cost_agv = water_m3_agv * nz(s.water_unit_cost);
     irrigation_energy_agv_kWh = water_m3_agv * nz(s.energy_for_irrigation_kWh_per_m3);
-    irrigation_energy_cost_agv = irrigation_energy_agv_kWh * nz(s.irrigation_energy_tariff || 0);
+    irrigation_energy_cost_agv = irrigation_energy_agv_kWh * nz(s.irrigation_energy_tariff);
     net_yield_factor = (1 - pct(s.soiling_loss_pct)) * pct(s.availability_pct);
     curtail = 1 - pct(s.curtailment_pct);
     kWp = nz(s.pv_capacity_kWp_total);
@@ -807,6 +828,10 @@ function AgrivoltaicsKhorasan() {
   const downloadPDF = () => {
     if (!readyForOutput) {
       setGlobalError("ابتدا ورودی‌ها را کامل کنید.");
+      return;
+    }
+    if (!window.jspdf) {
+      alert("تولید PDF هنوز آماده نیست.");
       return;
     }
     const {
@@ -1103,7 +1128,7 @@ function AgrivoltaicsKhorasan() {
     error: errors.energy_for_irrigation_kWh_per_m3
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u0628\u0631\u0642 \u0628\u0631\u0627\u06CC \u067E\u0645\u067E\u0627\u0698 (\u0631\u06CC\u0627\u0644/kWh)",
-    value: s.irrigation_energy_tariff || 0,
+    value: s.irrigation_energy_tariff,
     onChange: v => set("irrigation_energy_tariff", v),
     step: 50,
     min: 0,
