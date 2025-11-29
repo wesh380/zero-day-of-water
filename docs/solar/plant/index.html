@@ -76,11 +76,13 @@
             <legend>قانون / مصرف</legend>
             <div class="field">
               <label for="input-year">سال ارزیابی</label>
-              <input type="number" id="input-year" min="1300" max="1500" data-testid="input-year" placeholder="مثلاً ۱۴۰۳">
+              <input type="number" id="input-year" min="1300" max="1500" data-testid="input-year" placeholder="مثلاً ۱۴۰۳" aria-describedby="error-input-year" required>
+              <div class="field-error" data-error-for="input-year" id="error-input-year" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-annual-consumption">مصرف سالانه (کیلووات‌ساعت)</label>
-              <input type="number" id="input-annual-consumption" min="0" step="1000" data-testid="input-annual-consumption" placeholder="مثلاً ۱٬۲۰۰٬۰۰۰">
+              <input type="number" id="input-annual-consumption" min="0" max="100000000" step="1000" data-testid="input-annual-consumption" placeholder="مثلاً ۱٬۲۰۰٬۰۰۰" aria-describedby="error-input-annual-consumption" required>
+              <div class="field-error" data-error-for="input-annual-consumption" id="error-input-annual-consumption" aria-live="polite"></div>
             </div>
             <div class="field">
               <label class="toggle-row" for="input-is-obliged">
@@ -90,11 +92,13 @@
             </div>
             <div class="field">
               <label for="input-ramp-pct">افزایش سالانه سهم (%)</label>
-              <input type="number" id="input-ramp-pct" min="0" step="0.1" data-testid="input-ramp-pct" placeholder="مثلاً ۵">
+              <input type="number" id="input-ramp-pct" min="0" max="100" step="0.1" data-testid="input-ramp-pct" placeholder="مثلاً ۵" aria-describedby="error-input-ramp-pct" required>
+              <div class="field-error" data-error-for="input-ramp-pct" id="error-input-ramp-pct" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-cap-share-pct">سقف سهم سبز (%)</label>
-              <input type="number" id="input-cap-share-pct" min="0" max="100" step="0.1" data-testid="input-cap-share-pct" placeholder="مثلاً ۲۰">
+              <input type="number" id="input-cap-share-pct" min="0" max="100" step="0.1" data-testid="input-cap-share-pct" placeholder="مثلاً ۲۰" aria-describedby="error-input-cap-share-pct" required>
+              <div class="field-error" data-error-for="input-cap-share-pct" id="error-input-cap-share-pct" aria-live="polite"></div>
             </div>
           </fieldset>
 
@@ -102,36 +106,44 @@
             <legend>مالی</legend>
             <div class="field">
               <label for="input-green-board">قیمت مصوب سبز (ریال/کیلووات‌ساعت)</label>
-              <input type="number" id="input-green-board" min="0" step="100" data-testid="input-green-board" placeholder="مثلاً ۵۶٬۰۰۰">
+              <input type="number" id="input-green-board" min="0" max="500000" step="100" data-testid="input-green-board" placeholder="مثلاً ۵۶٬۰۰۰" aria-describedby="error-input-green-board" required>
+              <div class="field-error" data-error-for="input-green-board" id="error-input-green-board" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-green-board-growth">رشد سالانه قیمت سبز (%)</label>
-              <input type="number" id="input-green-board-growth" min="0" step="0.1" data-testid="input-green-board-growth" placeholder="مثلاً ۲۰">
+              <input type="number" id="input-green-board-growth" min="0" max="100" step="0.1" data-testid="input-green-board-growth" placeholder="مثلاً ۲۰" aria-describedby="error-input-green-board-growth" required>
+              <div class="field-error" data-error-for="input-green-board-growth" id="error-input-green-board-growth" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-grid-price">قیمت فروش به شبکه (در صورت وجود)</label>
-              <input type="number" id="input-grid-price" min="0" step="100" data-testid="input-grid-price" placeholder="مثلاً ۴۵٬۰۰۰">
+              <input type="number" id="input-grid-price" min="0" max="500000" step="100" data-testid="input-grid-price" placeholder="مثلاً ۴۵٬۰۰۰" aria-describedby="error-input-grid-price">
+              <div class="field-error" data-error-for="input-grid-price" id="error-input-grid-price" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-capex-per-kw">سرمایه‌گذاری هر کیلووات (ریال)</label>
-              <input type="number" id="input-capex-per-kw" min="0" step="1000000" data-testid="input-capex-per-kw" placeholder="مثلاً ۳۲۰٬۰۰۰٬۰۰۰">
+              <input type="number" id="input-capex-per-kw" min="0" max="10000000000" step="1000000" data-testid="input-capex-per-kw" placeholder="مثلاً ۳۲۰٬۰۰۰٬۰۰۰" aria-describedby="error-input-capex-per-kw" required>
+              <div class="field-error" data-error-for="input-capex-per-kw" id="error-input-capex-per-kw" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-capex-total">سرمایه‌گذاری کل (در صورت محاسبه دستی)</label>
-              <input type="number" id="input-capex-total" min="0" step="1000000" data-testid="input-capex-total" placeholder="مثلاً ۱۶۰٬۰۰۰٬۰۰۰٬۰۰۰">
+              <input type="number" id="input-capex-total" min="0" max="1000000000000" step="1000000" data-testid="input-capex-total" placeholder="مثلاً ۱۶۰٬۰۰۰٬۰۰۰٬۰۰۰" aria-describedby="error-input-capex-total">
+              <div class="field-error" data-error-for="input-capex-total" id="error-input-capex-total" aria-live="polite"></div>
               <small class="field-hint">در صورت وارد کردن سرمایه‌گذاری کل، عدد فوق جایگزین حاصل‌ضرب ظرفیت × سرمایه‌گذاری هر کیلووات می‌شود.</small>
             </div>
             <div class="field">
               <label for="input-om-pct">هزینه O&amp;M از درآمد (%)</label>
-              <input type="number" id="input-om-pct" min="0" step="0.1" data-testid="input-om-pct" placeholder="مثلاً ۳">
+              <input type="number" id="input-om-pct" min="0" max="100" step="0.1" data-testid="input-om-pct" placeholder="مثلاً ۳" aria-describedby="error-input-om-pct" required>
+              <div class="field-error" data-error-for="input-om-pct" id="error-input-om-pct" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-discount-pct">نرخ تنزیل (%)</label>
-              <input type="number" id="input-discount-pct" min="0" step="0.1" data-testid="input-discount-pct" placeholder="مثلاً ۲۵">
+              <input type="number" id="input-discount-pct" min="0" max="100" step="0.1" data-testid="input-discount-pct" placeholder="مثلاً ۲۵" aria-describedby="error-input-discount-pct" required>
+              <div class="field-error" data-error-for="input-discount-pct" id="error-input-discount-pct" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-horizon-years">دوره تحلیل (سال)</label>
-              <input type="number" id="input-horizon-years" min="1" max="40" data-testid="input-horizon-years" placeholder="مثلاً ۲۰">
+              <input type="number" id="input-horizon-years" min="1" max="40" data-testid="input-horizon-years" placeholder="مثلاً ۲۰" aria-describedby="error-input-horizon-years" required>
+              <div class="field-error" data-error-for="input-horizon-years" id="error-input-horizon-years" aria-live="polite"></div>
             </div>
           </fieldset>
 
@@ -147,15 +159,18 @@
             </div>
             <div class="field">
               <label for="input-capacity-kw">ظرفیت پیشنهادی (کیلووات)</label>
-              <input type="number" id="input-capacity-kw" min="0" step="1" data-testid="input-capacity-kw" placeholder="مثلاً ۵۰۰">
+              <input type="number" id="input-capacity-kw" min="0" max="100000" step="1" data-testid="input-capacity-kw" placeholder="مثلاً ۵۰۰" aria-describedby="error-input-capacity-kw" required>
+              <div class="field-error" data-error-for="input-capacity-kw" id="error-input-capacity-kw" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-specific-yield">بازده ویژه (کیلووات‌ساعت/کیلووات)</label>
-              <input type="number" id="input-specific-yield" min="0" step="1" data-testid="input-specific-yield" placeholder="مثلاً ۱۶۰۰">
+              <input type="number" id="input-specific-yield" min="0" max="3000" step="1" data-testid="input-specific-yield" placeholder="مثلاً ۱۶۰۰" aria-describedby="error-input-specific-yield" required>
+              <div class="field-error" data-error-for="input-specific-yield" id="error-input-specific-yield" aria-live="polite"></div>
             </div>
             <div class="field">
               <label for="input-pr-loss-pct">اتلاف عملکردی PR (%)</label>
-              <input type="number" id="input-pr-loss-pct" min="0" max="100" step="0.1" data-testid="input-pr-loss-pct" placeholder="مثلاً ۱۵">
+              <input type="number" id="input-pr-loss-pct" min="0" max="100" step="0.1" data-testid="input-pr-loss-pct" placeholder="مثلاً ۱۵" aria-describedby="error-input-pr-loss-pct" required>
+              <div class="field-error" data-error-for="input-pr-loss-pct" id="error-input-pr-loss-pct" aria-live="polite"></div>
             </div>
           </fieldset>
         </div>
