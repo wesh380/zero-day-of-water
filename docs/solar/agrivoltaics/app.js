@@ -73,24 +73,42 @@ const Section = ({
 }, title), /*#__PURE__*/React.createElement("div", {
   className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
 }, children));
-const NumberInput = ({
+  const NumberInput = ({
   label,
   value,
   onChange,
-  step = 1
-}) => /*#__PURE__*/React.createElement("label", {
-  className: "flex flex-col gap-1 text-sm"
-}, /*#__PURE__*/React.createElement("span", {
-  className: "text-gray-200"
-}, label), /*#__PURE__*/React.createElement("input", {
-  dir: "ltr",
-  type: "number",
-  step: step,
-  value: value,
-  onChange: e => onChange(Number(e.target.value)),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500",
-  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
-}));
+  step = 1,
+  min,
+  max,
+  required,
+  inputId,
+  error
+}) => {
+  const errorId = inputId ? `${inputId}-error` : undefined;
+  const hasError = Boolean(error);
+  return /*#__PURE__*/React.createElement("label", {
+    className: "flex flex-col gap-1 text-sm"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "text-gray-200"
+  }, label), /*#__PURE__*/React.createElement("input", {
+    id: inputId,
+    dir: "ltr",
+    type: "number",
+    step: step,
+    min: min,
+    max: max,
+    required: required,
+    value: value,
+    onChange: e => onChange(Number(e.target.value)),
+    "aria-invalid": hasError ? "true" : undefined,
+    "aria-describedby": errorId,
+    className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
+    style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+  }), /*#__PURE__*/React.createElement("div", {
+    id: errorId,
+    className: "text-red-400 text-xs min-h-[1rem]"
+  }, error || ""));
+};
 const Select = ({
   label,
   value,
@@ -134,6 +152,66 @@ const KV = ({
 }, k), /*#__PURE__*/React.createElement("div", {
   className: "text-sm md:text-base font-semibold text-gray-100 mt-0.5"
 }, v));
+
+function validateState(state, simpleMode) {
+  const scheme = state?.grid_scheme;
+  const rules = [
+    { key: "salinity_EC", min: 0, max: 30, required: true },
+    { key: "project_area_ha", min: 0, max: 1000, required: true, positive: true },
+    { key: "baseline_yield_t_per_ha", min: 0, max: 30, required: true, positive: true },
+    { key: "expected_yield_change_pct_under_AGV", min: -100, max: 200, required: true },
+    { key: "crop_price_per_t", min: 0, max: 10000000000, required: true, positive: true },
+    { key: "ag_opex_baseline_per_ha", min: 0, max: 10000000000, required: true, positive: true },
+    { key: "ag_opex_change_under_AGV_pct", min: -100, max: 200, required: true },
+    { key: "water_use_baseline_m3_per_ha", min: 0, max: 50000, required: true, positive: true },
+    { key: "water_use_change_under_AGV_pct", min: -100, max: 200, required: true },
+    { key: "crop_quality_premium_or_discount_pct", min: -100, max: 100, required: false },
+    { key: "energy_for_irrigation_kWh_per_m3", min: 0, max: 20, required: true, positive: true },
+    { key: "irrigation_energy_tariff", min: 0, max: 500000, required: true },
+    { key: "water_unit_cost", min: 0, max: 500000, required: true },
+    { key: "ppa_or_fit_tariff", min: 0, max: 500000, required: true },
+    { key: "self_consumption_share_pct", min: 0, max: 100, required: true },
+    { key: "net_metering_buy_price", min: 0, max: 500000, required: !simpleMode && (scheme === "NetMetering" || scheme === "SelfConsumption") },
+    { key: "net_metering_sell_price", min: 0, max: 500000, required: !simpleMode && scheme === "NetMetering" },
+    { key: "pv_capacity_kWp_total", min: 0, max: 1000000, required: true, positive: true },
+    { key: "specific_yield_kWh_per_kWp_year", min: 0, max: 4000, required: true, positive: true },
+    { key: "module_price_per_kWp", min: 0, max: 10000000000, required: true, positive: true },
+    { key: "mounting_structure_cost_per_kWp", min: 0, max: 5000000000, required: true, positive: true },
+    { key: "inverter_BOS_cost_per_kWp", min: 0, max: 5000000000, required: true, positive: true },
+    { key: "grid_interconnection_lump_sum", min: 0, max: 100000000000, required: true, positive: true },
+    { key: "EPC_soft_cost_pct_of_capex", min: 0, max: 50, required: !simpleMode },
+    { key: "annual_pv_degradation_pct", min: 0, max: 10, required: !simpleMode },
+    { key: "soiling_loss_pct", min: 0, max: 30, required: !simpleMode },
+    { key: "availability_pct", min: 0, max: 100, required: !simpleMode },
+    { key: "pv_om_cost_per_kWp_year", min: 0, required: true }
+  ];
+
+  const errors = {};
+
+  for (const rule of rules) {
+    const value = state?.[rule.key];
+    const empty = value === null || value === undefined || Number.isNaN(value);
+    if (rule.required && (empty || !Number.isFinite(value))) {
+      errors[rule.key] = "این فیلد الزامی است";
+      continue;
+    }
+    if (!rule.required && empty) {
+      continue;
+    }
+    if (rule.positive && Number(value) <= 0) {
+      errors[rule.key] = "مقدار باید بزرگ‌تر از صفر باشد";
+      continue;
+    }
+    if ((rule.min !== undefined && Number(value) < rule.min) || (rule.max !== undefined && Number(value) > rule.max)) {
+      const min = rule.min ?? "";
+      const max = rule.max ?? "";
+      errors[rule.key] = `باید بین ${min} و ${max} باشد`;
+    }
+  }
+
+  return { valid: Object.keys(errors).length === 0, errors };
+}
+
 async function saveScenario(state, setShareLink) {
   const res = await apiFetch("/api/save-scenario", {
     method: "POST",
@@ -169,6 +247,7 @@ async function loadScenarioById(id, setState) {
 function AgrivoltaicsKhorasan() {
   const [simple, setSimple] = useState(true);
   const [shareLink, setShareLink] = React.useState("");
+  const [errors, setErrors] = useState({});
 
   // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
@@ -425,94 +504,153 @@ function AgrivoltaicsKhorasan() {
       crop_price_per_t: crop.price_per_t
     }));
   }, [s.region, s.crop_type, s.dust_level, s.water_source, s.soil_type, s.salinity_EC]);
-  const area = nz(s.project_area_ha);
-  const years = Math.max(1, Math.floor(nz(s.time_horizon_years)));
-  const capex_per_kWp_sub = nz(s.module_price_per_kWp) + nz(s.mounting_structure_cost_per_kWp) + nz(s.inverter_BOS_cost_per_kWp);
-  const capex_kWp_with_soft = capex_per_kWp_sub * (1 + pct(s.EPC_soft_cost_pct_of_capex));
-  const subsidy = capex_kWp_with_soft * pct(s.subsidy_capex_pct);
-  const capex_total = Math.max(0, nz(s.pv_capacity_kWp_total) * (capex_kWp_with_soft - subsidy) + nz(s.grid_interconnection_lump_sum));
-  const pv_om_annual = nz(s.pv_capacity_kWp_total) * nz(s.pv_om_cost_per_kWp_year);
-  const insurance_annual = capex_total * pct(s.insurance_cost_pct_of_asset_value_per_year);
-  const land_lease_annual = area * nz(s.land_lease_cost_per_ha_year);
-  const ag_yield_baseline = nz(s.baseline_yield_t_per_ha) * area;
-  const ag_rev_baseline = ag_yield_baseline * nz(s.crop_price_per_t);
-  const ag_opex_baseline_total = area * nz(s.ag_opex_baseline_per_ha);
-  const water_m3_base = area * nz(s.water_use_baseline_m3_per_ha);
-  const water_cost_base = water_m3_base * nz(s.water_unit_cost);
-  const irrigation_energy_base_kWh = water_m3_base * nz(s.energy_for_irrigation_kWh_per_m3);
-  const irrigation_energy_cost_base = irrigation_energy_base_kWh * nz(s.irrigation_energy_tariff || 0);
-  const yield_change = 1 + pct(s.expected_yield_change_pct_under_AGV) + pct(s.crop_quality_premium_or_discount_pct);
-  const ag_yield_agv = nz(s.baseline_yield_t_per_ha) * area * yield_change;
-  const ag_rev_agv = ag_yield_agv * nz(s.crop_price_per_t);
-  const ag_opex_agv_total = area * nz(s.ag_opex_baseline_per_ha) * (1 + pct(s.ag_opex_change_under_AGV_pct));
-  const water_m3_agv = water_m3_base * (1 + pct(s.water_use_change_under_AGV_pct));
-  const water_cost_agv = water_m3_agv * nz(s.water_unit_cost);
-  const irrigation_energy_agv_kWh = water_m3_agv * nz(s.energy_for_irrigation_kWh_per_m3);
-  const irrigation_energy_cost_agv = irrigation_energy_agv_kWh * nz(s.irrigation_energy_tariff || 0);
-  const net_yield_factor = (1 - pct(s.soiling_loss_pct)) * pct(s.availability_pct);
-  const curtail = 1 - pct(s.curtailment_pct);
-  const kWp = nz(s.pv_capacity_kWp_total);
-  const annualPV = y => kWp * nz(s.specific_yield_kWh_per_kWp_year) * net_yield_factor * curtail * Math.pow(1 - pct(s.annual_pv_degradation_pct), y);
-  const tariffEscal = y => Math.pow(1 + pct(s.tariff_escalation_pct_per_year), y);
-  const elecRevenueYear = y => {
-    const kWh = annualPV(y);
-    const scheme = s.grid_scheme;
-    if (scheme === "PPA/FIT") return kWh * nz(s.ppa_or_fit_tariff) * tariffEscal(y);
-    if (scheme === "SelfConsumption") {
+  const validation = useMemo(() => validateState(s, simple), [s, simple]);
+  useEffect(() => {
+    setErrors(validation.errors || {});
+  }, [validation]);
+  const shouldCompute = validation.valid;
+  const errorKeys = Object.keys(validation.errors || {});
+  const hasErrors = Object.keys(errors || {}).length > 0;
+  if (!shouldCompute && errorKeys.length) {
+    console.warn("agrivoltaics: validation failed", errorKeys.join(", "));
+  }
+
+  let area = 0;
+  let years = 0;
+  let capex_per_kWp_sub = 0;
+  let capex_kWp_with_soft = 0;
+  let subsidy = 0;
+  let capex_total = 0;
+  let pv_om_annual = 0;
+  let insurance_annual = 0;
+  let land_lease_annual = 0;
+  let ag_yield_baseline = 0;
+  let ag_rev_baseline = 0;
+  let ag_opex_baseline_total = 0;
+  let water_m3_base = 0;
+  let water_cost_base = 0;
+  let irrigation_energy_base_kWh = 0;
+  let irrigation_energy_cost_base = 0;
+  let yield_change = 0;
+  let ag_yield_agv = 0;
+  let ag_rev_agv = 0;
+  let ag_opex_agv_total = 0;
+  let water_m3_agv = 0;
+  let water_cost_agv = 0;
+  let irrigation_energy_agv_kWh = 0;
+  let irrigation_energy_cost_agv = 0;
+  let net_yield_factor = 0;
+  let curtail = 0;
+  let kWp = 0;
+  let annualPV = () => 0;
+  let tariffEscal = () => 1;
+  let elecRevenueYear = () => 0;
+  let carbonRevenueYear = () => 0;
+  let baselineAnnualNet = () => 0;
+  let agvAnnualNetBeforePV = () => 0;
+  let agvAnnualNet = () => 0;
+  let cashflowsBaseline = [];
+  let cashflowsAGV = [];
+  let cashflowsAGV_WithCapex = [];
+  let cashflowsBaseline_ZeroCapex = [];
+  let cashflowsIncremental = [];
+  let npv = () => 0;
+  let irr = () => null;
+  let NPV_incremental = 0;
+  let IRR_incremental = null;
+  let decisionText = () => "—";
+  let totalPVkWhYear1 = 0;
+
+  if (shouldCompute) {
+    area = nz(s.project_area_ha);
+    years = Math.max(1, Math.floor(nz(s.time_horizon_years)));
+    capex_per_kWp_sub = nz(s.module_price_per_kWp) + nz(s.mounting_structure_cost_per_kWp) + nz(s.inverter_BOS_cost_per_kWp);
+    capex_kWp_with_soft = capex_per_kWp_sub * (1 + pct(s.EPC_soft_cost_pct_of_capex));
+    subsidy = capex_kWp_with_soft * pct(s.subsidy_capex_pct);
+    capex_total = Math.max(0, nz(s.pv_capacity_kWp_total) * (capex_kWp_with_soft - subsidy) + nz(s.grid_interconnection_lump_sum));
+    pv_om_annual = nz(s.pv_capacity_kWp_total) * nz(s.pv_om_cost_per_kWp_year);
+    insurance_annual = capex_total * pct(s.insurance_cost_pct_of_asset_value_per_year);
+    land_lease_annual = area * nz(s.land_lease_cost_per_ha_year);
+    ag_yield_baseline = nz(s.baseline_yield_t_per_ha) * area;
+    ag_rev_baseline = ag_yield_baseline * nz(s.crop_price_per_t);
+    ag_opex_baseline_total = area * nz(s.ag_opex_baseline_per_ha);
+    water_m3_base = area * nz(s.water_use_baseline_m3_per_ha);
+    water_cost_base = water_m3_base * nz(s.water_unit_cost);
+    irrigation_energy_base_kWh = water_m3_base * nz(s.energy_for_irrigation_kWh_per_m3);
+    irrigation_energy_cost_base = irrigation_energy_base_kWh * nz(s.irrigation_energy_tariff || 0);
+    yield_change = 1 + pct(s.expected_yield_change_pct_under_AGV) + pct(s.crop_quality_premium_or_discount_pct);
+    ag_yield_agv = nz(s.baseline_yield_t_per_ha) * area * yield_change;
+    ag_rev_agv = ag_yield_agv * nz(s.crop_price_per_t);
+    ag_opex_agv_total = area * nz(s.ag_opex_baseline_per_ha) * (1 + pct(s.ag_opex_change_under_AGV_pct));
+    water_m3_agv = water_m3_base * (1 + pct(s.water_use_change_under_AGV_pct));
+    water_cost_agv = water_m3_agv * nz(s.water_unit_cost);
+    irrigation_energy_agv_kWh = water_m3_agv * nz(s.energy_for_irrigation_kWh_per_m3);
+    irrigation_energy_cost_agv = irrigation_energy_agv_kWh * nz(s.irrigation_energy_tariff || 0);
+    net_yield_factor = (1 - pct(s.soiling_loss_pct)) * pct(s.availability_pct);
+    curtail = 1 - pct(s.curtailment_pct);
+    kWp = nz(s.pv_capacity_kWp_total);
+    annualPV = y => kWp * nz(s.specific_yield_kWh_per_kWp_year) * net_yield_factor * curtail * Math.pow(1 - pct(s.annual_pv_degradation_pct), y);
+    tariffEscal = y => Math.pow(1 + pct(s.tariff_escalation_pct_per_year), y);
+    elecRevenueYear = y => {
+      const kWh = annualPV(y);
+      const scheme = s.grid_scheme;
+      if (scheme === "PPA/FIT") return kWh * nz(s.ppa_or_fit_tariff) * tariffEscal(y);
+      if (scheme === "SelfConsumption") {
+        const selfShare = Math.max(0, Math.min(1, pct(s.self_consumption_share_pct)));
+        const self_kWh = kWh * selfShare;
+        return self_kWh * nz(s.net_metering_buy_price) * tariffEscal(y);
+      }
       const selfShare = Math.max(0, Math.min(1, pct(s.self_consumption_share_pct)));
       const self_kWh = kWh * selfShare;
-      return self_kWh * nz(s.net_metering_buy_price) * tariffEscal(y);
-    }
-    const selfShare = Math.max(0, Math.min(1, pct(s.self_consumption_share_pct)));
-    const self_kWh = kWh * selfShare;
-    const export_kWh = kWh * (1 - selfShare);
-    const avoided = self_kWh * nz(s.net_metering_buy_price) * tariffEscal(y);
-    const sold = export_kWh * nz(s.net_metering_sell_price) * tariffEscal(y);
-    return avoided + sold;
-  };
-  const carbonRevenueYear = y => annualPV(y) / 1000 * nz(s.avoided_co2_t_per_MWh) * nz(s.carbon_credit_price_per_tCO2);
-  const baselineAnnualNet = () => ag_rev_baseline - ag_opex_baseline_total - water_cost_base - irrigation_energy_cost_base - land_lease_annual;
-  const agvAnnualNetBeforePV = () => ag_rev_agv - ag_opex_agv_total - water_cost_agv - irrigation_energy_cost_agv - land_lease_annual;
-  const agvAnnualNet = y => agvAnnualNetBeforePV() + elecRevenueYear(y) + carbonRevenueYear(y) - pv_om_annual - insurance_annual;
-  const cashflowsBaseline = Array.from({
-    length: years
-  }, () => baselineAnnualNet());
-  const cashflowsAGV = Array.from({
-    length: years
-  }, (_, y) => agvAnnualNet(y));
-  const cashflowsAGV_WithCapex = [-capex_total, ...cashflowsAGV];
-  const cashflowsBaseline_ZeroCapex = [0, ...cashflowsBaseline];
-  const cashflowsIncremental = cashflowsAGV_WithCapex.map((v, i) => v - (cashflowsBaseline_ZeroCapex[i] ?? 0));
-  const npv = (ratePct, arr) => arr.reduce((acc, cf, i) => acc + cf / Math.pow(1 + ratePct / 100, i), 0);
-  const irr = arr => {
-    let lo = -0.9,
-      hi = 1.0;
-    const f = r => arr.reduce((a, c, i) => a + c / Math.pow(1 + r, i), 0);
-    let flo = f(lo),
-      fhi = f(hi);
-    if (isNaN(flo) || isNaN(fhi) || flo * fhi > 0) return null;
-    for (let k = 0; k < 80; k++) {
-      const mid = (lo + hi) / 2,
-        fm = f(mid);
-      if (Math.abs(fm) < 1e-3) return mid;
-      if (flo * fm < 0) {
-        hi = mid;
-        fhi = fm;
-      } else {
-        lo = mid;
-        flo = fm;
+      const export_kWh = kWh * (1 - selfShare);
+      const avoided = self_kWh * nz(s.net_metering_buy_price) * tariffEscal(y);
+      const sold = export_kWh * nz(s.net_metering_sell_price) * tariffEscal(y);
+      return avoided + sold;
+    };
+    carbonRevenueYear = y => annualPV(y) / 1000 * nz(s.avoided_co2_t_per_MWh) * nz(s.carbon_credit_price_per_tCO2);
+    baselineAnnualNet = () => ag_rev_baseline - ag_opex_baseline_total - water_cost_base - irrigation_energy_cost_base - land_lease_annual;
+    agvAnnualNetBeforePV = () => ag_rev_agv - ag_opex_agv_total - water_cost_agv - irrigation_energy_cost_agv - land_lease_annual;
+    agvAnnualNet = y => agvAnnualNetBeforePV() + elecRevenueYear(y) + carbonRevenueYear(y) - pv_om_annual - insurance_annual;
+    cashflowsBaseline = Array.from({
+      length: years
+    }, () => baselineAnnualNet());
+    cashflowsAGV = Array.from({
+      length: years
+    }, (_, y) => agvAnnualNet(y));
+    cashflowsAGV_WithCapex = [-capex_total, ...cashflowsAGV];
+    cashflowsBaseline_ZeroCapex = [0, ...cashflowsBaseline];
+    cashflowsIncremental = cashflowsAGV_WithCapex.map((v, i) => v - (cashflowsBaseline_ZeroCapex[i] ?? 0));
+    npv = (ratePct, arr) => arr.reduce((acc, cf, i) => acc + cf / Math.pow(1 + ratePct / 100, i), 0);
+    irr = arr => {
+      let lo = -0.9,
+        hi = 1.0;
+      const f = r => arr.reduce((a, c, i) => a + c / Math.pow(1 + r, i), 0);
+      let flo = f(lo),
+        fhi = f(hi);
+      if (isNaN(flo) || isNaN(fhi) || flo * fhi > 0) return null;
+      for (let k = 0; k < 80; k++) {
+        const mid = (lo + hi) / 2,
+          fm = f(mid);
+        if (Math.abs(fm) < 1e-3) return mid;
+        if (flo * fm < 0) {
+          hi = mid;
+          fhi = fm;
+        } else {
+          lo = mid;
+          flo = fm;
+        }
       }
-    }
-    return (lo + hi) / 2;
-  };
-  const NPV_incremental = npv(s.discount_rate_pct, cashflowsIncremental);
-  const IRR_incremental = irr(cashflowsIncremental);
-  const decisionText = () => {
-    if (NPV_incremental > 0 && (IRR_incremental ?? 0) > s.discount_rate_pct / 100) return "به‌صرفه";
-    if (Math.abs(NPV_incremental) < 0.05 * capex_total) return "تقریباً سر به سر";
-    return "به‌صرفه نیست";
-  };
-  const totalPVkWhYear1 = annualPV(0);
+      return (lo + hi) / 2;
+    };
+    NPV_incremental = npv(s.discount_rate_pct, cashflowsIncremental);
+    IRR_incremental = irr(cashflowsIncremental);
+    decisionText = () => {
+      if (NPV_incremental > 0 && (IRR_incremental ?? 0) > s.discount_rate_pct / 100) return "به‌صرفه";
+      if (Math.abs(NPV_incremental) < 0.05 * capex_total) return "تقریباً سر به سر";
+      return "به‌صرفه نیست";
+    };
+    totalPVkWhYear1 = annualPV(0);
+  }
   const Chart = ({
     data,
     title,
@@ -609,14 +747,26 @@ function AgrivoltaicsKhorasan() {
     className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
     onClick: () => setSimple(v => !v)
   }, "\u062D\u0627\u0644\u062A ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
-    onClick: downloadCSV,
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    onClick: () => {
+      if (hasErrors) return;
+      downloadCSV();
+    },
+    disabled: hasErrors,
+    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${hasErrors ? 'opacity-50 cursor-not-allowed' : ''}`
   }, "\u062F\u0627\u0646\u0644\u0648\u062F CSV"), /*#__PURE__*/React.createElement("button", {
-    onClick: downloadPDF,
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    onClick: () => {
+      if (hasErrors) return;
+      downloadPDF();
+    },
+    disabled: hasErrors,
+    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${hasErrors ? 'opacity-50 cursor-not-allowed' : ''}`
   }, "\u062F\u0627\u0646\u0644\u0648\u062F PDF"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => saveScenario(s, setShareLink),
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    onClick: () => {
+      if (hasErrors) return;
+      saveScenario(s, setShareLink);
+    },
+    disabled: hasErrors,
+    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${hasErrors ? 'opacity-50 cursor-not-allowed' : ''}`
   }, "\u0630\u062E\u06CC\u0631\u0647 \u0633\u0646\u0627\u0631\u06CC\u0648"), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       const id = prompt("کُد/لینک را وارد کنید:");
@@ -676,7 +826,12 @@ function AgrivoltaicsKhorasan() {
     label: "\u0634\u0648\u0631\u06CC \u0622\u0628/\u062E\u0627\u06A9 (EC dS/m)",
     value: s.salinity_EC,
     onChange: v => set("salinity_EC", v),
-    step: 0.5
+    step: 0.5,
+    min: 0,
+    max: 30,
+    required: true,
+    inputId: "salinity_EC",
+    error: errors.salinity_EC
   })), /*#__PURE__*/React.createElement("p", {
     className: "text-xs text-gray-400 mt-3"
   }, "* \u0627\u06AF\u0631 \u0645\u0646\u0637\u0642\u0647 \u062F\u0642\u06CC\u0642 \u0634\u0645\u0627 \u062F\u0631 \u0644\u06CC\u0633\u062A \u0646\u06CC\u0633\u062A\u060C \u0646\u0632\u062F\u06CC\u06A9\u200C\u062A\u0631\u06CC\u0646 \u0645\u0646\u0637\u0642\u0647 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F \u0648 \u0627\u0639\u062F\u0627\u062F \u0631\u0627 \u06A9\u0645\u06CC \u062A\u0646\u0638\u06CC\u0645 \u06A9\u0646\u06CC\u062F.")), /*#__PURE__*/React.createElement("div", {
@@ -715,64 +870,123 @@ function AgrivoltaicsKhorasan() {
     label: "\u0645\u0633\u0627\u062D\u062A \u0632\u0645\u06CC\u0646 (\u0647\u06A9\u062A\u0627\u0631)",
     value: s.project_area_ha,
     onChange: v => set("project_area_ha", v),
-    step: 0.1
+    step: 0.1,
+    min: 0,
+    max: 1000,
+    required: true,
+    inputId: "project_area_ha",
+    error: errors.project_area_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0639\u0645\u0644\u06A9\u0631\u062F \u0641\u0639\u0644\u06CC (\u062A\u0646/\u0647\u06A9\u062A\u0627\u0631)",
     value: s.baseline_yield_t_per_ha,
     onChange: v => set("baseline_yield_t_per_ha", v),
-    step: 0.1
+    step: 0.1,
+    min: 0,
+    max: 30,
+    required: true,
+    inputId: "baseline_yield_t_per_ha",
+    error: errors.baseline_yield_t_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062A\u063A\u06CC\u06CC\u0631 \u0639\u0645\u0644\u06A9\u0631\u062F \u0632\u06CC\u0631 \u067E\u0646\u0644 (%)",
     value: s.expected_yield_change_pct_under_AGV,
     onChange: v => set("expected_yield_change_pct_under_AGV", v),
-    step: 0.5
+    step: 0.5,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "expected_yield_change_pct_under_AGV",
+    error: errors.expected_yield_change_pct_under_AGV
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0645\u062D\u0635\u0648\u0644 (\u0631\u06CC\u0627\u0644/\u062A\u0646)",
     value: s.crop_price_per_t,
     onChange: v => set("crop_price_per_t", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "crop_price_per_t",
+    error: errors.crop_price_per_t
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (\u0631\u06CC\u0627\u0644/\u0647\u06A9\u062A\u0627\u0631)",
     value: s.ag_opex_baseline_per_ha,
     onChange: v => set("ag_opex_baseline_per_ha", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "ag_opex_baseline_per_ha",
+    error: errors.ag_opex_baseline_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062A\u063A\u06CC\u06CC\u0631 \u0647\u0632\u06CC\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (%)",
     value: s.ag_opex_change_under_AGV_pct,
     onChange: v => set("ag_opex_change_under_AGV_pct", v),
-    step: 0.5
+    step: 0.5,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "ag_opex_change_under_AGV_pct",
+    error: errors.ag_opex_change_under_AGV_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0645\u0635\u0631\u0641 \u0622\u0628 \u0641\u0639\u0644\u06CC (m\xB3/\u0647\u06A9\u062A\u0627\u0631)",
     value: s.water_use_baseline_m3_per_ha,
     onChange: v => set("water_use_baseline_m3_per_ha", v),
-    step: 10
+    step: 10,
+    min: 0,
+    max: 50000,
+    required: true,
+    inputId: "water_use_baseline_m3_per_ha",
+    error: errors.water_use_baseline_m3_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062A\u063A\u06CC\u06CC\u0631 \u0645\u0635\u0631\u0641 \u0622\u0628 (%)",
     value: s.water_use_change_under_AGV_pct,
     onChange: v => set("water_use_change_under_AGV_pct", v),
-    step: 1
+    step: 1,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "water_use_change_under_AGV_pct",
+    error: errors.water_use_change_under_AGV_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0634\u06CC\u0631\u06CC\u0646\u06CC/\u062A\u0644\u062E\u06CC \u0642\u06CC\u0645\u062A (\u06A9\u06CC\u0641\u06CC\u062A) (%)",
     value: s.crop_quality_premium_or_discount_pct,
     onChange: v => set("crop_quality_premium_or_discount_pct", v),
-    step: 0.5
+    step: 0.5,
+    min: -100,
+    max: 100,
+    inputId: "crop_quality_premium_or_discount_pct",
+    error: errors.crop_quality_premium_or_discount_pct
   })), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F2) \u0622\u0628\u06CC\u0627\u0631\u06CC \u0648 \u0628\u0631\u0642 \u0645\u0632\u0631\u0639\u0647"
   }, /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0628\u0631\u0642 \u067E\u0645\u067E\u0627\u0698 \u0622\u0628 (kWh \u0628\u0631\u0627\u06CC \u0647\u0631 m\xB3)",
     value: s.energy_for_irrigation_kWh_per_m3,
     onChange: v => set("energy_for_irrigation_kWh_per_m3", v),
-    step: 0.01
+    step: 0.01,
+    min: 0,
+    max: 20,
+    required: true,
+    inputId: "energy_for_irrigation_kWh_per_m3",
+    error: errors.energy_for_irrigation_kWh_per_m3
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u0628\u0631\u0642 \u0628\u0631\u0627\u06CC \u067E\u0645\u067E\u0627\u0698 (\u0631\u06CC\u0627\u0644/kWh)",
     value: s.irrigation_energy_tariff || 0,
     onChange: v => set("irrigation_energy_tariff", v),
-    step: 50
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "irrigation_energy_tariff",
+    error: errors.irrigation_energy_tariff
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u0622\u0628 \u062E\u0631\u06CC\u062F\u0627\u0631\u06CC\u200C\u0634\u062F\u0647 (\u0631\u06CC\u0627\u0644/m\xB3)",
     value: s.water_unit_cost,
     onChange: v => set("water_unit_cost", v),
-    step: 100
+    step: 100,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "water_unit_cost",
+    error: errors.water_unit_cost
   }), /*#__PURE__*/React.createElement(Select, {
     label: "\u0637\u0631\u062D \u0645\u0635\u0631\u0641/\u0641\u0631\u0648\u0634 \u0628\u0631\u0642",
     value: s.grid_scheme,
@@ -791,78 +1005,150 @@ function AgrivoltaicsKhorasan() {
     label: "\u0642\u06CC\u0645\u062A \u062A\u0636\u0645\u06CC\u0646\u06CC/\u0641\u0631\u0648\u0634 (\u0631\u06CC\u0627\u0644/kWh)",
     value: s.ppa_or_fit_tariff,
     onChange: v => set("ppa_or_fit_tariff", v),
-    step: 50
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "ppa_or_fit_tariff",
+    error: errors.ppa_or_fit_tariff
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0633\u0647\u0645 \u0645\u0635\u0631\u0641 \u062F\u0631 \u0645\u0632\u0631\u0639\u0647 (%)",
     value: s.self_consumption_share_pct,
     onChange: v => set("self_consumption_share_pct", v),
-    step: 1
+    step: 1,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "self_consumption_share_pct",
+    error: errors.self_consumption_share_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u062E\u0631\u06CC\u062F \u0627\u0632 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
     value: s.net_metering_buy_price,
     onChange: v => set("net_metering_buy_price", v),
-    step: 50
+    step: 50,
+    min: 0,
+    max: 500000,
+    inputId: "net_metering_buy_price",
+    error: errors.net_metering_buy_price
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
     value: s.net_metering_sell_price,
     onChange: v => set("net_metering_sell_price", v),
-    step: 50
+    step: 50,
+    min: 0,
+    max: 500000,
+    inputId: "net_metering_sell_price",
+    error: errors.net_metering_sell_price
   })), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F3) \u0628\u0631\u0642 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC (\u0627\u0646\u062F\u0627\u0632\u0647 \u0648 \u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u062E\u062A)"
   }, /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0638\u0631\u0641\u06CC\u062A \u06A9\u0644 \u0633\u0627\u0645\u0627\u0646\u0647 (kWp)",
     value: s.pv_capacity_kWp_total,
-    onChange: v => set("pv_capacity_kWp_total", v)
+    onChange: v => set("pv_capacity_kWp_total", v),
+    min: 0,
+    max: 1000000,
+    required: true,
+    inputId: "pv_capacity_kWp_total",
+    error: errors.pv_capacity_kWp_total
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062A\u0648\u0644\u06CC\u062F \u0648\u06CC\u0698\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 (kWh/kWp)",
     value: s.specific_yield_kWh_per_kWp_year,
     onChange: v => set("specific_yield_kWh_per_kWp_year", v),
-    step: 10
+    step: 10,
+    min: 0,
+    max: 4000,
+    required: true,
+    inputId: "specific_yield_kWh_per_kWp_year",
+    error: errors.specific_yield_kWh_per_kWp_year
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0642\u06CC\u0645\u062A \u067E\u0646\u0644 (\u0631\u06CC\u0627\u0644/kWp)",
     value: s.module_price_per_kWp,
     onChange: v => set("module_price_per_kWp", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "module_price_per_kWp",
+    error: errors.module_price_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0632\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
     value: s.mounting_structure_cost_per_kWp,
     onChange: v => set("mounting_structure_cost_per_kWp", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 5000000000,
+    required: true,
+    inputId: "mounting_structure_cost_per_kWp",
+    error: errors.mounting_structure_cost_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0627\u06CC\u0646\u0648\u0631\u062A\u0631 \u0648 \u06A9\u0627\u0628\u0644\u200C\u06A9\u0634\u06CC (\u0631\u06CC\u0627\u0644/kWp)",
     value: s.inverter_BOS_cost_per_kWp,
     onChange: v => set("inverter_BOS_cost_per_kWp", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 5000000000,
+    required: true,
+    inputId: "inverter_BOS_cost_per_kWp",
+    error: errors.inverter_BOS_cost_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0647\u0632\u06CC\u0646\u0647 \u0627\u062A\u0635\u0627\u0644 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u06CC\u06A9\u062C\u0627)",
     value: s.grid_interconnection_lump_sum,
     onChange: v => set("grid_interconnection_lump_sum", v),
-    step: 1000000
+    step: 1000000,
+    min: 0,
+    max: 100000000000,
+    required: true,
+    inputId: "grid_interconnection_lump_sum",
+    error: errors.grid_interconnection_lump_sum
   }), !simple && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062E\u062F\u0645\u0627\u062A/\u0645\u062C\u0648\u0632/\u0637\u0631\u0627\u062D\u06CC (%)",
     value: s.EPC_soft_cost_pct_of_capex,
     onChange: v => set("EPC_soft_cost_pct_of_capex", v),
-    step: 0.5
+    step: 0.5,
+    min: 0,
+    max: 50,
+    required: !simple,
+    inputId: "EPC_soft_cost_pct_of_capex",
+    error: errors.EPC_soft_cost_pct_of_capex
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u06A9\u0627\u0647\u0634 \u0631\u0627\u0646\u062F\u0645\u0627\u0646 \u067E\u0646\u0644 (% \u0633\u0627\u0644\u0627\u0646\u0647)",
     value: s.annual_pv_degradation_pct,
     onChange: v => set("annual_pv_degradation_pct", v),
-    step: 0.1
+    step: 0.1,
+    min: 0,
+    max: 10,
+    required: !simple,
+    inputId: "annual_pv_degradation_pct",
+    error: errors.annual_pv_degradation_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u06A9\u062B\u06CC\u0641\u06CC \u067E\u0646\u0644 (\u066A)",
     value: s.soiling_loss_pct,
     onChange: v => set("soiling_loss_pct", v),
-    step: 0.5
+    step: 0.5,
+    min: 0,
+    max: 30,
+    required: !simple,
+    inputId: "soiling_loss_pct",
+    error: errors.soiling_loss_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062F\u0633\u062A\u0631\u0633\u200C\u067E\u0630\u06CC\u0631\u06CC \u0633\u0627\u0645\u0627\u0646\u0647 (\u066A)",
     value: s.availability_pct,
     onChange: v => set("availability_pct", v),
-    step: 0.5
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: !simple,
+    inputId: "availability_pct",
+    error: errors.availability_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0646\u06AF\u0647\u062F\u0627\u0631\u06CC \u0633\u0627\u0644\u0627\u0646\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
     value: s.pv_om_cost_per_kWp_year,
     onChange: v => set("pv_om_cost_per_kWp_year", v),
-    step: 10000
+    step: 10000,
+    min: 0,
+    required: true,
+    inputId: "pv_om_cost_per_kWp_year",
+    error: errors.pv_om_cost_per_kWp_year
   }))), /*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {

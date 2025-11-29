@@ -23,6 +23,75 @@
     r.addEventListener('input', sync(r, n));
   }
 
+  const fieldRules = {
+    cost_production: { min: 0, max: 200000, required: true, positive: true },
+    cost_energy: { min: 0, max: 200000, required: true, positive: true },
+    loss_network: { min: 0, max: 100, required: true },
+    maintenance: { min: 0, max: 200000, required: true, positive: true },
+    hidden_subsidy: { min: 0, max: 100, required: true },
+    power_change: { min: -100, max: 100, required: true },
+  };
+
+  let lastValidModel = null;
+
+  function parseNumberInput(id) {
+    const el = document.getElementById(id);
+    if (!el) return { value: NaN, empty: true };
+    const raw = String(el.value ?? '').trim();
+    return { value: num(raw), empty: raw === '' };
+  }
+
+  function setFieldError(id, message) {
+    const input = document.getElementById(id);
+    const errorEl = document.querySelector(`[data-error-for="${id}"]`);
+    if (!input || !errorEl) return;
+    if (message) {
+      input.classList.add('input-error');
+      input.setAttribute('aria-invalid', 'true');
+      if (!errorEl.id) errorEl.id = `error-${id}`;
+      const existing = input.getAttribute('aria-describedby') || '';
+      const tokens = new Set(existing.split(/\s+/).filter(Boolean));
+      tokens.add(errorEl.id);
+      input.setAttribute('aria-describedby', Array.from(tokens).join(' '));
+      errorEl.textContent = message;
+    } else {
+      input.classList.remove('input-error');
+      input.removeAttribute('aria-invalid');
+      errorEl.textContent = '';
+    }
+  }
+
+  function validateInputs() {
+    const model = {};
+    const errors = {};
+
+    for (const [key, rule] of Object.entries(fieldRules)) {
+      const { value, empty } = parseNumberInput(key);
+      if (rule.required && (empty || Number.isNaN(value))) {
+        errors[key] = 'این فیلد الزامی است';
+        continue;
+      }
+      if (!rule.required && empty) {
+        continue;
+      }
+      if (rule.positive && value <= 0) {
+        errors[key] = 'مقدار باید بزرگ‌تر از صفر باشد';
+        continue;
+      }
+      if (value < rule.min || value > rule.max) {
+        errors[key] = `باید بین ${rule.min} و ${rule.max} باشد`;
+        continue;
+      }
+      model[key] = value;
+    }
+
+    const valid = Object.keys(errors).length === 0;
+    if (valid) {
+      lastValidModel = model;
+    }
+    return { valid, errors, model: valid ? model : null };
+  }
+
   // ===== Calculation (KEEP YOUR CURRENT FORMULAS!)
   function compute(model){
     const { cost_production, cost_energy, loss_network, maintenance, hidden_subsidy, power_change } = model;
@@ -46,7 +115,7 @@
 
   // ===== UI update
   let chart; // Chart.js instance
-  function updateUI(res){
+  function updateUI(res, model){
     // کادرهای آماری
     $('#true-price').textContent = fmt(res.truePrice);
     $('#final-price').textContent = fmt(res.finalPrice);
@@ -86,12 +155,15 @@
     // حساسیت (نمونه)
     const deltas = [10,-10];
     const items = [];
-    deltas.forEach(d=>{
-      const m = getModel();
-      m.cost_energy = m.cost_energy*(1+d/100);
-      const r = compute(m);
-      items.push(`<li>تغییر ${d>0?'+':'−'}۱۰٪ در هزینه انرژی → قیمت واقعی: ${fmt(r.truePrice)} تومان</li>`);
-    });
+    const baseModel = model || lastValidModel;
+    if (baseModel) {
+      deltas.forEach(d=>{
+        const m = { ...baseModel };
+        m.cost_energy = m.cost_energy*(1+d/100);
+        const r = compute(m);
+        items.push(`<li>تغییر ${d>0?'+':'−'}۱۰٪ در هزینه انرژی → قیمت واقعی: ${fmt(r.truePrice)} تومان</li>`);
+      });
+    }
     $('#sensitivity-list').innerHTML = items.join('');
 
     // جمع‌بندی
@@ -100,20 +172,18 @@
     } است. با اعمال یارانه پنهان، قیمت نهایی حدود ${fmt(res.finalPrice)} تومان برآورد می‌شود.`;
   }
 
-  function getModel(){
-    return {
-      cost_production: num($('#cost_production').value),
-      cost_energy: num($('#cost_energy').value),
-      loss_network: num($('#loss_network').value),
-      maintenance: num($('#maintenance').value),
-      hidden_subsidy: num($('#hidden_subsidy').value),
-      power_change: num($('#power_change').value),
-    };
+  function renderValidationErrors(errors){
+    Object.keys(fieldRules).forEach(id => {
+      setFieldError(id, errors?.[id] || '');
+    });
   }
 
   function recalc(){
-    const res = compute(getModel()); // اینجا از فرمول‌های واقعی پروژه استفاده کنید
-    updateUI(res);
+    const validation = validateInputs();
+    renderValidationErrors(validation.errors);
+    if (!validation.valid || !validation.model) return;
+    const res = compute(validation.model); // اینجا از فرمول‌های واقعی پروژه استفاده کنید
+    updateUI(res, validation.model);
   }
 
   // ===== Boot

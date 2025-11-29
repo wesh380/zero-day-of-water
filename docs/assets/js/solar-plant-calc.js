@@ -554,6 +554,9 @@ function handleCalculate() {
   clearError();
   try {
     const inputs = collectInputs();
+    if (!inputs) {
+      return;
+    }
     const result = calculateMetrics(state.config, inputs);
     renderResults(result);
   } catch (error) {
@@ -565,9 +568,13 @@ function handleCalculate() {
 function handleReset() {
   state.form?.reset();
   prefillForm();
+  renderFieldErrors({});
   clearError();
   try {
     const inputs = collectInputs();
+    if (!inputs) {
+      return;
+    }
     const result = calculateMetrics(state.config, inputs);
     renderResults(result);
   } catch (error) {
@@ -596,7 +603,93 @@ function collectInputs() {
   values.specificYield = parseNumber(state.fields.specificYield?.value);
   values.prLossPct = parseNumber(state.fields.prLossPct?.value);
 
+  const validation = validateSolarInputs(values);
+  renderFieldErrors(validation.errors);
+  if (!validation.valid) {
+    showError("لطفاً خطاهای مشخص‌شده را برطرف کنید.");
+    return null;
+  }
+  clearError();
+
   return values;
+}
+
+function validateSolarInputs(values) {
+  const errors = {};
+
+  const rules = [
+    { key: "year", min: 1300, max: 1500, required: true },
+    { key: "annualConsumption", min: 0, max: 100000000, required: true, positive: true },
+    { key: "rampPerYearPct", min: 0, max: 100, required: true },
+    { key: "capSharePct", min: 0, max: 100, required: true },
+    { key: "greenBoard", min: 0, max: 500000, required: true },
+    { key: "greenBoardGrowthPct", min: 0, max: 100, required: true },
+    { key: "gridPrice", min: 0, max: 500000, required: false },
+    { key: "capexPerKW", min: 0, max: 10000000000, required: true, positive: true },
+    { key: "capexTotal", min: 0, max: 1000000000000, required: false, positive: true },
+    { key: "omPctOfRevenue", min: 0, max: 100, required: true },
+    { key: "discountPct", min: 0, max: 100, required: true },
+    { key: "horizonYears", min: 1, max: 40, required: true, positive: true },
+    { key: "capacityKW", min: 0, max: 100000, required: true, positive: true },
+    { key: "specificYield", min: 0, max: 3000, required: true, positive: true },
+    { key: "prLossPct", min: 0, max: 100, required: true }
+  ];
+
+  for (const rule of rules) {
+    const value = values[rule.key];
+    const empty = value === null || value === undefined || value === "";
+    if (rule.required && (empty || !Number.isFinite(value))) {
+      errors[rule.key] = "این فیلد الزامی است";
+      continue;
+    }
+    if (!rule.required && empty) {
+      continue;
+    }
+    if (rule.positive && Number(value) <= 0) {
+      errors[rule.key] = "مقدار باید بزرگ‌تر از صفر باشد";
+      continue;
+    }
+    if ((rule.min !== undefined && Number(value) < rule.min) || (rule.max !== undefined && Number(value) > rule.max)) {
+      const min = rule.min ?? "";
+      const max = rule.max ?? "";
+      errors[rule.key] = `باید بین ${min} و ${max} باشد`;
+      continue;
+    }
+  }
+
+  return { valid: Object.keys(errors).length === 0, errors };
+}
+
+function renderFieldErrors(errors = {}) {
+  Object.keys(FIELD_IDS).forEach((key) => {
+    setFieldError(key, errors[key]);
+  });
+}
+
+function setFieldError(key, message) {
+  const id = FIELD_IDS[key];
+  const input = state.fields[key];
+  const errorEl = state.form?.querySelector(`[data-error-for="${id}"]`);
+  if (!input || !errorEl) {
+    return;
+  }
+
+  if (message) {
+    input.classList.add("input-error");
+    input.setAttribute("aria-invalid", "true");
+    if (!errorEl.id) {
+      errorEl.id = `error-${id}`;
+    }
+    const existing = input.getAttribute("aria-describedby") || "";
+    const tokens = new Set(existing.split(/\s+/).filter(Boolean));
+    tokens.add(errorEl.id);
+    input.setAttribute("aria-describedby", Array.from(tokens).join(" "));
+    errorEl.textContent = message;
+  } else {
+    input.classList.remove("input-error");
+    input.removeAttribute("aria-invalid");
+    errorEl.textContent = "";
+  }
 }
 
 function renderResults(result) {
