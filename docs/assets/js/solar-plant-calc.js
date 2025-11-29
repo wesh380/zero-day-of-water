@@ -162,8 +162,12 @@ export async function initSolarPlantCalculator(root = document) {
 
   try {
     const inputs = collectInputs();
-    const result = calculateMetrics(effectiveConfig, inputs);
-    renderResults(result);
+    const result = inputs ? calculateMetrics(effectiveConfig, inputs) : null;
+    if (result && validateResultPayload(result, inputs)) {
+      renderResults(result);
+    } else {
+      renderResults(null);
+    }
   } catch (error) {
     console.error("solar-plant-calc: initial render failed", error);
     showError("محاسبات اولیه با مشکل مواجه شد.");
@@ -227,6 +231,14 @@ export function calculateMetrics(config, inputs = {}) {
   scenario.totalCapex = totalCapex;
 
   const producedEnergy = computeProducedEnergy(scenario.capacityKW, finance.specificYield, finance.prLossPct);
+  if (scenario.capacityKW > 0 && finance.specificYield > 0 && producedEnergy <= 0) {
+    console.warn("solar-plant-calc: انرژی تولیدی صفر/منفی با ظرفیت و بازده مثبت", {
+      capacityKW: scenario.capacityKW,
+      specificYield: finance.specificYield,
+      prLossPct: finance.prLossPct,
+      producedEnergy
+    });
+  }
 
   const penaltySeries = computePenaltySeries({
     year: scenario.year,
@@ -555,9 +567,15 @@ function handleCalculate() {
   try {
     const inputs = collectInputs();
     if (!inputs) {
+      renderResults(null);
       return;
     }
     const result = calculateMetrics(state.config, inputs);
+    if (!validateResultPayload(result, inputs)) {
+      showError("نتایج محاسبه نشد؛ لطفاً ورودی‌ها را بررسی کنید.");
+      renderResults(null);
+      return;
+    }
     renderResults(result);
   } catch (error) {
     console.error("solar-plant-calc: calculation failed", error);
@@ -573,9 +591,14 @@ function handleReset() {
   try {
     const inputs = collectInputs();
     if (!inputs) {
+      renderResults(null);
       return;
     }
     const result = calculateMetrics(state.config, inputs);
+    if (!validateResultPayload(result, inputs)) {
+      renderResults(null);
+      return;
+    }
     renderResults(result);
   } catch (error) {
     console.error("solar-plant-calc: reset calculation failed", error);
@@ -660,6 +683,43 @@ function validateSolarInputs(values) {
   return { valid: Object.keys(errors).length === 0, errors };
 }
 
+function validateResultPayload(result, inputs) {
+  if (!result || !result.metrics) {
+    console.error("solar-plant-calc: نتیجه محاسبه وجود ندارد", { result, inputs });
+    return false;
+  }
+
+  const metrics = result.metrics;
+  const numericFields = [
+    metrics.totalCapex,
+    metrics.firstYearRevenue,
+    metrics.firstYearOM,
+    metrics.simplePaybackYears,
+    metrics.discountedPaybackYears,
+    metrics.npv,
+    metrics.irr,
+    metrics.totalPenalty,
+    result.producedEnergy,
+    result.penaltySeries?.[0]?.requiredEnergy ?? 0
+  ];
+
+  const allFinite = numericFields.every((value) => Number.isFinite(Number(value)) || value === null);
+  if (!allFinite) {
+    console.error("solar-plant-calc: مقادیر خروجی نامعتبر", { metrics, inputs });
+    return false;
+  }
+
+  if (Number(inputs.capacityKW) > 0 && Number(metrics.firstYearRevenue) <= 0) {
+    console.warn("solar-plant-calc: درآمد سال اول صفر/منفی در حالی‌که ظرفیت مثبت است", {
+      capacityKW: inputs.capacityKW,
+      specificYield: inputs.specificYield,
+      firstYearRevenue: metrics.firstYearRevenue
+    });
+  }
+
+  return true;
+}
+
 function renderFieldErrors(errors = {}) {
   Object.keys(FIELD_IDS).forEach((key) => {
     setFieldError(key, errors[key]);
@@ -694,6 +754,8 @@ function setFieldError(key, message) {
 
 function renderResults(result) {
   if (!result) {
+    Object.keys(RESULT_BINDINGS).forEach((key) => setResultText(key, "—"));
+    renderComparison(null);
     return;
   }
 
@@ -706,6 +768,15 @@ function renderResults(result) {
 }
 
 function renderComparison(metrics) {
+  if (!metrics) {
+    setComparisonText("investmentValue", "—");
+    setComparisonText("penaltyValue", "—");
+    setComparisonProgress("investmentProgress", 0, "investmentProgressLabel");
+    setComparisonProgress("penaltyProgress", 0, "penaltyProgressLabel");
+    setComparisonText("ratioValue", "—");
+    return;
+  }
+
   const investment = Number(metrics.totalCapex) || 0;
   const penalty = Number(metrics.totalPenalty) || 0;
 
