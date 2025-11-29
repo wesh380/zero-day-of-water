@@ -129,7 +129,7 @@ const OptimizedNavigation = () => {
                   <Zap className="w-4 h-4 text-purple-600" />
                 </div>
                 <span className="font-medium text-gray-700 group-hover:text-purple-600 transition-colors">
-                  محاسبه‌گر
+                  محاسبه‌گر (آزمایشی)
                 </span>
               </a>
 
@@ -211,7 +211,7 @@ const OptimizedNavigation = () => {
             <div className="px-4 py-4 space-y-2">
               <a href="/calculators/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 transition-colors">
                 <Zap className="w-5 h-5 text-purple-600" />
-                <span className="font-medium text-gray-700">محاسبه‌گر</span>
+                <span className="font-medium text-gray-700">محاسبه‌گر (آزمایشی)</span>
               </a>
               <a href="/research/" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-green-50 transition-colors">
                 <Droplets className="w-5 h-5 text-green-600" />
