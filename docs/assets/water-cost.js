@@ -92,6 +92,19 @@
     return { valid, errors, model: valid ? model : null };
   }
 
+  function isResultUsable(res, model) {
+    const numbers = [res?.truePrice, res?.finalPrice, ...(res?.breakdown || []).map(b => b.share)];
+    const allFinite = numbers.every(Number.isFinite);
+    if (!allFinite) {
+      console.error('water-cost: نتیجه نامعتبر است', { res, model });
+      return false;
+    }
+    if ((model?.cost_production ?? 0) > 0 && (model?.cost_energy ?? 0) > 0 && res.truePrice <= 0) {
+      console.warn('water-cost: قیمت محاسبه‌شده صفر/منفی است در حالی‌که ورودی‌ها مثبت هستند', model);
+    }
+    return true;
+  }
+
   // ===== Calculation (KEEP YOUR CURRENT FORMULAS!)
   function compute(model){
     const { cost_production, cost_energy, loss_network, maintenance, hidden_subsidy, power_change } = model;
@@ -183,6 +196,7 @@
     renderValidationErrors(validation.errors);
     if (!validation.valid || !validation.model) return;
     const res = compute(validation.model); // اینجا از فرمول‌های واقعی پروژه استفاده کنید
+    if (!isResultUsable(res, validation.model)) return;
     updateUI(res, validation.model);
   }
 
