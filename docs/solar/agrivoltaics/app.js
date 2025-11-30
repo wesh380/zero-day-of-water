@@ -67,11 +67,11 @@ const Section = ({
   title,
   children
 }) => /*#__PURE__*/React.createElement("section", {
-  className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
+  className: "bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm"
 }, /*#__PURE__*/React.createElement("h2", {
-  className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
+  className: "text-sky-900 text-base md:text-lg font-bold mb-4"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
+  className: "grid md:grid-cols-2 lg:grid-cols-3 gap-4"
 }, children));
 const normalizeNumberValue = value => value === null || value === undefined ? "" : value;
 const NumberInput = ({
@@ -90,7 +90,7 @@ const NumberInput = ({
   return /*#__PURE__*/React.createElement("label", {
     className: "flex flex-col gap-1 text-sm"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200"
+    className: "text-slate-700"
   }, label), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -106,11 +106,10 @@ const NumberInput = ({
     },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
-    className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
-    style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+    className: `w-full rounded-xl border px-3 py-2 text-right text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 shadow-inner ${hasError ? 'border-rose-400 focus:ring-rose-200' : 'border-slate-200 focus:border-sky-500 focus:ring-sky-200'}`
   }), /*#__PURE__*/React.createElement("div", {
     id: errorId,
-    className: "text-red-400 text-xs min-h-[1rem]"
+    className: "text-rose-500 text-xs min-h-[1rem]"
   }, error || ""));
 };
 const Select = ({
@@ -121,42 +120,40 @@ const Select = ({
 }) => /*#__PURE__*/React.createElement("label", {
   className: "flex flex-col gap-1 text-sm"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "text-gray-200"
+  className: "text-slate-700"
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
-  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+  className: "w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-right text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-200"
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
   value: o.value,
-  className: "bg-neutral-900 text-white",
-  style: {color: '#ffffff', backgroundColor: '#171717'}
+  className: "bg-white text-slate-900"
 }, o.label))));
 const KPI = ({
   title,
   value,
   sub
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl"
+  className: "rounded-2xl bg-gradient-to-b from-sky-50 to-white border border-sky-100 p-4 shadow-sm"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-300 text-sm"
+  className: "text-slate-600 text-sm"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
+  className: "text-xl md:text-2xl font-extrabold mt-1 text-sky-900 text-center leading-tight break-words"
 }, /*#__PURE__*/React.createElement("span", {
   className: "inline-block max-w-full"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-xs text-gray-400 mt-1 text-center leading-snug"
+  className: "text-xs text-slate-500 mt-1 text-center leading-snug"
 }, sub));
 const KV = ({
   k,
   v
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "rounded-xl bg-neutral-900/50 border border-neutral-800 p-3"
+  className: "rounded-xl bg-slate-50 border border-slate-200 p-3"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-400 text-xs"
+  className: "text-slate-500 text-xs"
 }, k), /*#__PURE__*/React.createElement("div", {
-  className: "text-sm md:text-base font-semibold text-gray-100 mt-0.5"
+  className: "text-sm md:text-base font-semibold text-slate-900 mt-0.5"
 }, v));
 
 function validateState(state, simpleMode) {
@@ -269,6 +266,7 @@ function AgrivoltaicsKhorasan() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [globalError, setGlobalError] = useState("");
+  const [activeTab, setActiveTab] = useState("summary");
 
   // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
@@ -750,22 +748,32 @@ function AgrivoltaicsKhorasan() {
   const displayCashflowsAGV = readyForOutput ? cashflowsAGV : [];
   const displayElecRevenueYear = readyForOutput ? elecRevenueYear : () => 0;
   const displayCarbonRevenueYear = readyForOutput ? carbonRevenueYear : () => 0;
-  const tableRows = displayCashflowsAGV.map((_, i) => /*#__PURE__*/React.createElement("tr", {
-    key: i,
-    className: "border-b border-neutral-900 hover:bg-neutral-900/40"
+  const [yearFilter, setYearFilter] = useState("");
+  const tableData = displayCashflowsAGV.map((_, i) => ({
+    year: i + 1,
+    energy: energyOrDash("annualPV", displayAnnualPV(i), "kWh"),
+    elec: moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i)),
+    baseline: moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i]),
+    withPanels: moneyOrDash("cashflowsAGV", displayCashflowsAGV[i]),
+    incremental: moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null)
+  }));
+  const filteredTable = yearFilter ? tableData.filter(row => `${row.year}`.includes(yearFilter.trim())) : tableData;
+  const tableRows = filteredTable.map(row => /*#__PURE__*/React.createElement("tr", {
+    key: row.year,
+    className: "border-b border-slate-200 hover:bg-sky-50"
   }, /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, i + 1), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, energyOrDash("annualPV", displayAnnualPV(i), "kWh")), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i))), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsAGV", displayCashflowsAGV[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null))));
+    className: "py-3 font-semibold text-slate-900"
+  }, row.year), /*#__PURE__*/React.createElement("td", {
+    className: "py-3"
+  }, row.energy), /*#__PURE__*/React.createElement("td", {
+    className: "py-3"
+  }, row.elec), /*#__PURE__*/React.createElement("td", {
+    className: "py-3"
+  }, row.baseline), /*#__PURE__*/React.createElement("td", {
+    className: "py-3"
+  }, row.withPanels), /*#__PURE__*/React.createElement("td", {
+    className: "py-3"
+  }, row.incremental)));
   const disableActions = !readyForOutput || isLoading;
   const Chart = ({
     data,
@@ -786,9 +794,9 @@ function AgrivoltaicsKhorasan() {
     const path = data.map((v, i) => `${i === 0 ? 'M' : 'L'}${scaleX(i)},${scaleY(v)}`).join(' ');
     const zeroY = scaleY(0);
     return /*#__PURE__*/React.createElement("div", {
-      className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4"
+      className: "rounded-2xl bg-white border border-slate-200 p-4 shadow-sm"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "text-gray-300 text-sm mb-2"
+      className: "text-slate-700 text-sm mb-2"
     }, title), /*#__PURE__*/React.createElement("svg", {
       width: w,
       height: h,
@@ -803,7 +811,7 @@ function AgrivoltaicsKhorasan() {
     }), /*#__PURE__*/React.createElement("path", {
       d: path,
       fill: "none",
-      stroke: "#10b981",
+      stroke: "#0ea5e9",
       strokeWidth: "2"
     })));
   };
@@ -858,6 +866,7 @@ function AgrivoltaicsKhorasan() {
     }
     doc.save("agrivoltaics-report.pdf");
   };
+
   const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
     className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
   }, /*#__PURE__*/React.createElement("div", {
@@ -870,130 +879,32 @@ function AgrivoltaicsKhorasan() {
   }, /*#__PURE__*/React.createElement("button", {
     className: "px-3 py-2 rounded bg-emerald-600 text-white",
     onClick: () => navigator.clipboard.writeText(shareLink)
-  }, "\u06A9\u067E\u06CC \u0644\u06CC\u0646\u06A9"), /*#__PURE__*/React.createElement("button", {
+  }, "کپی لینک"), /*#__PURE__*/React.createElement("button", {
     className: "px-3 py-2 rounded bg-gray-300",
     onClick: () => setShareLink("")
-  }, "\u0628\u0633\u062A\u0646")))) : null;
-  return /*#__PURE__*/React.createElement("div", {
-    dir: "rtl",
-    className: "min-h-screen w-full bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-4 py-6 md:py-10 md:px-8"
-  }, /*#__PURE__*/React.createElement("header", {
-    className: "max-w-7xl mx-auto mb-6 md:mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    className: "text-2xl md:text-3xl font-extrabold tracking-tight"
-  }, "\u0645\u0627\u0634\u06CC\u0646\u200C\u062D\u0633\u0627\u0628 \u0641\u0648\u062A\u0648\u06A9\u0650\u0634\u062A \u2013 \u0648\u06CC\u0698\u0647 \u062E\u0631\u0627\u0633\u0627\u0646 \u0631\u0636\u0648\u06CC"), /*#__PURE__*/React.createElement("p", {
-    className: "text-sm md:text-base text-gray-300 mt-2"
-  }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 text-xs text-gray-400 space-y-1"
-  }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
-}, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 flex-wrap"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: handleRecompute,
-    disabled: isLoading,
-    className: `px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
-  }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
-    className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
-    onClick: () => setSimple(v => !v)
-  }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      downloadCSV();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      downloadPDF();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      saveScenario(s, setShareLink);
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      handleAsyncSimulate();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      const id = prompt("کُد/لینک را وارد کنید:");
-      const onlyId = (id || "").split("id=").pop();
-      loadScenarioById(onlyId, setS);
-    },
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
-  }, "بازکردن از لینک"))),
-  globalError && /*#__PURE__*/React.createElement("div", {
-    className: "text-red-400 text-sm mt-2",
-    role: "alert"
-  }, globalError), /*#__PURE__*/React.createElement("main", {
-  }, /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
-  }, "\u06F0) \u0645\u0646\u0637\u0642\u0647 \u0648 \u0634\u0631\u0627\u06CC\u0637 \u0645\u062D\u0644\u06CC"), /*#__PURE__*/React.createElement("div", {
+  }, "بستن")))) : null;
+  const summaryInfo = /*#__PURE__*/React.createElement("div", {
     className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
-  }, /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u0646\u0637\u0642\u0647",
-    value: s.region,
-    onChange: v => set("region", v),
-    options: Object.entries(regions).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u062D\u0635\u0648\u0644",
-    value: s.crop_type,
-    onChange: v => set("crop_type", v),
-    options: Object.keys(cropProfiles).map(k => ({
-      value: k,
-      label: needsFix(k) ? latin1ToUtf8(k) : k
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u0646\u0628\u0639 \u0622\u0628",
-    value: s.water_source,
-    onChange: v => set("water_source", v),
-    options: Object.entries(waterSources).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u06AF\u0631\u062F \u0648 \u063A\u0628\u0627\u0631",
-    value: s.dust_level,
-    onChange: v => set("dust_level", v),
-    options: Object.entries(dustLevels).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0646\u0648\u0639 \u062E\u0627\u06A9",
-    value: s.soil_type,
-    onChange: v => set("soil_type", v),
-    options: Object.entries(soils).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0634\u0648\u0631\u06CC \u0622\u0628/\u062E\u0627\u06A9 (EC dS/m)",
-    value: s.salinity_EC,
-    onChange: v => set("salinity_EC", v),
-    step: 0.5,
-    min: 0,
-    max: 30,
-    required: true,
-    inputId: "salinity_EC",
-    error: errors.salinity_EC
-  })), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs text-gray-400 mt-3"
-  }, "* \u0627\u06AF\u0631 \u0645\u0646\u0637\u0642\u0647 \u062F\u0642\u06CC\u0642 \u0634\u0645\u0627 \u062F\u0631 \u0644\u06CC\u0633\u062A \u0646\u06CC\u0633\u062A\u060C \u0646\u0632\u062F\u06CC\u06A9\u200C\u062A\u0631\u06CC\u0646 \u0645\u0646\u0637\u0642\u0647 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F \u0648 \u0627\u0639\u062F\u0627\u062F \u0631\u0627 \u06A9\u0645\u06CC \u062A\u0646\u0638\u06CC\u0645 \u06A9\u0646\u06CC\u062F.")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(KV, {
+    k: "منطقه انتخابی",
+    v: needsFix(regions[s.region]?.title) ? latin1ToUtf8(regions[s.region]?.title) : regions[s.region]?.title
+  }), /*#__PURE__*/React.createElement(KV, {
+    k: "محصول",
+    v: s.crop_type
+  }), /*#__PURE__*/React.createElement(KV, {
+    k: "منبع آب",
+    v: needsFix(waterSources[s.water_source]?.title) ? latin1ToUtf8(waterSources[s.water_source]?.title) : waterSources[s.water_source]?.title
+  }), /*#__PURE__*/React.createElement(KV, {
+    k: "نوع خاک",
+    v: needsFix(soils[s.soil_type]?.title) ? latin1ToUtf8(soils[s.soil_type]?.title) : soils[s.soil_type]?.title
+  }), /*#__PURE__*/React.createElement(KV, {
+    k: "طرح مصرف/فروش برق",
+    v: s.grid_scheme === "PPA/FIT" ? "فروش تضمینی" : s.grid_scheme === "NetMetering" ? "تراز با شبکه" : "مصرف در مزرعه"
+  }), /*#__PURE__*/React.createElement(KV, {
+    k: "ظرفیت کل پنل (kWp)",
+    v: fmt(s.pv_capacity_kWp_total)
+  }));
+  const kpiGrid = /*#__PURE__*/React.createElement("div", {
     className: "grid md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4"
   }, /*#__PURE__*/React.createElement(KPI, {
     title: "هزینه اولیه ساخت",
@@ -1015,303 +926,20 @@ function AgrivoltaicsKhorasan() {
     title: "سود سالانه تقریبی",
     value: displayIRR == null ? 'نامشخص' : `${(displayIRR * 100).toFixed(1)} %`,
     sub: "هرچه بیشتر، بهتر"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: `rounded-2xl p-4 border shadow-xl ${decisionText() === 'به‌صرفه' ? 'bg-emerald-900/30 border-emerald-700' : decisionText() === 'تقریباً سر به سر' ? 'bg-yellow-900/30 border-yellow-700' : 'bg-rose-900/30 border-rose-700'}`
+  }));
+  const decisionCard = /*#__PURE__*/React.createElement("div", {
+    className: `rounded-2xl p-4 border shadow-sm ${decisionText() === 'به‌صرفه' ? 'bg-emerald-50 border-emerald-200' : decisionText() === 'تقریباً سر به سر' ? 'bg-amber-50 border-amber-200' : 'bg-rose-50 border-rose-200'}`
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-sm"
-  }, "\u062E\u0644\u0627\u0635\u0647 \u062A\u0635\u0645\u06CC\u0645:"), /*#__PURE__*/React.createElement("div", {
-    className: "text-lg font-bold mt-1"
+    className: "text-sm text-slate-700"
+  }, "خلاصه تصمیم:"), /*#__PURE__*/React.createElement("div", {
+    className: "text-lg font-bold mt-1 text-slate-900"
   }, decisionText()), /*#__PURE__*/React.createElement("div", {
-    className: "text-xs text-gray-300 mt-1"
-  }, "\u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F \u0648 \u0628\u0627\u0632\u06AF\u0634\u062A \u0633\u0631\u0645\u0627\u06CC\u0647 \u062F\u0631 \u0686\u0646\u062F \u0633\u0627\u0644 \u0627\u0648\u0644 \u0631\u062E \u062F\u0647\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u0627\u0642\u062A\u0635\u0627\u062F\u06CC \u0627\u0633\u062A.")), /*#__PURE__*/React.createElement(Section, {
-    title: "\u06F1) \u0627\u0637\u0644\u0627\u0639\u0627\u062A \u0632\u0645\u06CC\u0646 \u0648 \u0645\u062D\u0635\u0648\u0644"
-  }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0645\u0633\u0627\u062D\u062A \u0632\u0645\u06CC\u0646 (\u0647\u06A9\u062A\u0627\u0631)",
-    value: s.project_area_ha,
-    onChange: v => set("project_area_ha", v),
-    step: 0.1,
-    min: 0,
-    max: 1000,
-    required: true,
-    inputId: "project_area_ha",
-    error: errors.project_area_ha
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0639\u0645\u0644\u06A9\u0631\u062F \u0641\u0639\u0644\u06CC (\u062A\u0646/\u0647\u06A9\u062A\u0627\u0631)",
-    value: s.baseline_yield_t_per_ha,
-    onChange: v => set("baseline_yield_t_per_ha", v),
-    step: 0.1,
-    min: 0,
-    max: 30,
-    required: true,
-    inputId: "baseline_yield_t_per_ha",
-    error: errors.baseline_yield_t_per_ha
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0639\u0645\u0644\u06A9\u0631\u062F \u0632\u06CC\u0631 \u067E\u0646\u0644 (%)",
-    value: s.expected_yield_change_pct_under_AGV,
-    onChange: v => set("expected_yield_change_pct_under_AGV", v),
-    step: 0.5,
-    min: -100,
-    max: 200,
-    required: true,
-    inputId: "expected_yield_change_pct_under_AGV",
-    error: errors.expected_yield_change_pct_under_AGV
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0645\u062D\u0635\u0648\u0644 (\u0631\u06CC\u0627\u0644/\u062A\u0646)",
-    value: s.crop_price_per_t,
-    onChange: v => set("crop_price_per_t", v),
-    step: 1000000,
-    min: 0,
-    max: 10000000000,
-    required: true,
-    inputId: "crop_price_per_t",
-    error: errors.crop_price_per_t
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (\u0631\u06CC\u0627\u0644/\u0647\u06A9\u062A\u0627\u0631)",
-    value: s.ag_opex_baseline_per_ha,
-    onChange: v => set("ag_opex_baseline_per_ha", v),
-    step: 1000000,
-    min: 0,
-    max: 10000000000,
-    required: true,
-    inputId: "ag_opex_baseline_per_ha",
-    error: errors.ag_opex_baseline_per_ha
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0647\u0632\u06CC\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (%)",
-    value: s.ag_opex_change_under_AGV_pct,
-    onChange: v => set("ag_opex_change_under_AGV_pct", v),
-    step: 0.5,
-    min: -100,
-    max: 200,
-    required: true,
-    inputId: "ag_opex_change_under_AGV_pct",
-    error: errors.ag_opex_change_under_AGV_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0645\u0635\u0631\u0641 \u0622\u0628 \u0641\u0639\u0644\u06CC (m\xB3/\u0647\u06A9\u062A\u0627\u0631)",
-    value: s.water_use_baseline_m3_per_ha,
-    onChange: v => set("water_use_baseline_m3_per_ha", v),
-    step: 10,
-    min: 0,
-    max: 50000,
-    required: true,
-    inputId: "water_use_baseline_m3_per_ha",
-    error: errors.water_use_baseline_m3_per_ha
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0645\u0635\u0631\u0641 \u0622\u0628 (%)",
-    value: s.water_use_change_under_AGV_pct,
-    onChange: v => set("water_use_change_under_AGV_pct", v),
-    step: 1,
-    min: -100,
-    max: 200,
-    required: true,
-    inputId: "water_use_change_under_AGV_pct",
-    error: errors.water_use_change_under_AGV_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0634\u06CC\u0631\u06CC\u0646\u06CC/\u062A\u0644\u062E\u06CC \u0642\u06CC\u0645\u062A (\u06A9\u06CC\u0641\u06CC\u062A) (%)",
-    value: s.crop_quality_premium_or_discount_pct,
-    onChange: v => set("crop_quality_premium_or_discount_pct", v),
-    step: 0.5,
-    min: -100,
-    max: 100,
-    inputId: "crop_quality_premium_or_discount_pct",
-    error: errors.crop_quality_premium_or_discount_pct
-  })), /*#__PURE__*/React.createElement(Section, {
-    title: "\u06F2) \u0622\u0628\u06CC\u0627\u0631\u06CC \u0648 \u0628\u0631\u0642 \u0645\u0632\u0631\u0639\u0647"
-  }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0628\u0631\u0642 \u067E\u0645\u067E\u0627\u0698 \u0622\u0628 (kWh \u0628\u0631\u0627\u06CC \u0647\u0631 m\xB3)",
-    value: s.energy_for_irrigation_kWh_per_m3,
-    onChange: v => set("energy_for_irrigation_kWh_per_m3", v),
-    step: 0.01,
-    min: 0,
-    max: 20,
-    required: true,
-    inputId: "energy_for_irrigation_kWh_per_m3",
-    error: errors.energy_for_irrigation_kWh_per_m3
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0628\u0631\u0642 \u0628\u0631\u0627\u06CC \u067E\u0645\u067E\u0627\u0698 (\u0631\u06CC\u0627\u0644/kWh)",
-    value: s.irrigation_energy_tariff,
-    onChange: v => set("irrigation_energy_tariff", v),
-    step: 50,
-    min: 0,
-    max: 500000,
-    required: true,
-    inputId: "irrigation_energy_tariff",
-    error: errors.irrigation_energy_tariff
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0622\u0628 \u062E\u0631\u06CC\u062F\u0627\u0631\u06CC\u200C\u0634\u062F\u0647 (\u0631\u06CC\u0627\u0644/m\xB3)",
-    value: s.water_unit_cost,
-    onChange: v => set("water_unit_cost", v),
-    step: 100,
-    min: 0,
-    max: 500000,
-    required: true,
-    inputId: "water_unit_cost",
-    error: errors.water_unit_cost
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0637\u0631\u062D \u0645\u0635\u0631\u0641/\u0641\u0631\u0648\u0634 \u0628\u0631\u0642",
-    value: s.grid_scheme,
-    onChange: v => set("grid_scheme", v),
-    options: [{
-      value: "PPA/FIT",
-      label: "فروش تضمینی"
-    }, {
-      value: "NetMetering",
-      label: "تراز با شبکه"
-    }, {
-      value: "SelfConsumption",
-      label: "مصرف در مزرعه"
-    }]
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u062A\u0636\u0645\u06CC\u0646\u06CC/\u0641\u0631\u0648\u0634 (\u0631\u06CC\u0627\u0644/kWh)",
-    value: s.ppa_or_fit_tariff,
-    onChange: v => set("ppa_or_fit_tariff", v),
-    step: 50,
-    min: 0,
-    max: 500000,
-    required: true,
-    inputId: "ppa_or_fit_tariff",
-    error: errors.ppa_or_fit_tariff
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0633\u0647\u0645 \u0645\u0635\u0631\u0641 \u062F\u0631 \u0645\u0632\u0631\u0639\u0647 (%)",
-    value: s.self_consumption_share_pct,
-    onChange: v => set("self_consumption_share_pct", v),
-    step: 1,
-    min: 0,
-    max: 100,
-    required: true,
-    inputId: "self_consumption_share_pct",
-    error: errors.self_consumption_share_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u062E\u0631\u06CC\u062F \u0627\u0632 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
-    value: s.net_metering_buy_price,
-    onChange: v => set("net_metering_buy_price", v),
-    step: 50,
-    min: 0,
-    max: 500000,
-    inputId: "net_metering_buy_price",
-    error: errors.net_metering_buy_price
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
-    value: s.net_metering_sell_price,
-    onChange: v => set("net_metering_sell_price", v),
-    step: 50,
-    min: 0,
-    max: 500000,
-    inputId: "net_metering_sell_price",
-    error: errors.net_metering_sell_price
-  })), /*#__PURE__*/React.createElement(Section, {
-    title: "\u06F3) \u0628\u0631\u0642 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC (\u0627\u0646\u062F\u0627\u0632\u0647 \u0648 \u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u062E\u062A)"
-  }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0638\u0631\u0641\u06CC\u062A \u06A9\u0644 \u0633\u0627\u0645\u0627\u0646\u0647 (kWp)",
-    value: s.pv_capacity_kWp_total,
-    onChange: v => set("pv_capacity_kWp_total", v),
-    min: 0,
-    max: 1000000,
-    required: true,
-    inputId: "pv_capacity_kWp_total",
-    error: errors.pv_capacity_kWp_total
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u0648\u0644\u06CC\u062F \u0648\u06CC\u0698\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 (kWh/kWp)",
-    value: s.specific_yield_kWh_per_kWp_year,
-    onChange: v => set("specific_yield_kWh_per_kWp_year", v),
-    step: 10,
-    min: 0,
-    max: 4000,
-    required: true,
-    inputId: "specific_yield_kWh_per_kWp_year",
-    error: errors.specific_yield_kWh_per_kWp_year
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u067E\u0646\u0644 (\u0631\u06CC\u0627\u0644/kWp)",
-    value: s.module_price_per_kWp,
-    onChange: v => set("module_price_per_kWp", v),
-    step: 1000000,
-    min: 0,
-    max: 10000000000,
-    required: true,
-    inputId: "module_price_per_kWp",
-    error: errors.module_price_per_kWp
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0632\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
-    value: s.mounting_structure_cost_per_kWp,
-    onChange: v => set("mounting_structure_cost_per_kWp", v),
-    step: 1000000,
-    min: 0,
-    max: 5000000000,
-    required: true,
-    inputId: "mounting_structure_cost_per_kWp",
-    error: errors.mounting_structure_cost_per_kWp
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0627\u06CC\u0646\u0648\u0631\u062A\u0631 \u0648 \u06A9\u0627\u0628\u0644\u200C\u06A9\u0634\u06CC (\u0631\u06CC\u0627\u0644/kWp)",
-    value: s.inverter_BOS_cost_per_kWp,
-    onChange: v => set("inverter_BOS_cost_per_kWp", v),
-    step: 1000000,
-    min: 0,
-    max: 5000000000,
-    required: true,
-    inputId: "inverter_BOS_cost_per_kWp",
-    error: errors.inverter_BOS_cost_per_kWp
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0627\u062A\u0635\u0627\u0644 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u06CC\u06A9\u062C\u0627)",
-    value: s.grid_interconnection_lump_sum,
-    onChange: v => set("grid_interconnection_lump_sum", v),
-    step: 1000000,
-    min: 0,
-    max: 100000000000,
-    required: true,
-    inputId: "grid_interconnection_lump_sum",
-    error: errors.grid_interconnection_lump_sum
-  }), !simple && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062E\u062F\u0645\u0627\u062A/\u0645\u062C\u0648\u0632/\u0637\u0631\u0627\u062D\u06CC (%)",
-    value: s.EPC_soft_cost_pct_of_capex,
-    onChange: v => set("EPC_soft_cost_pct_of_capex", v),
-    step: 0.5,
-    min: 0,
-    max: 50,
-    required: !simple,
-    inputId: "EPC_soft_cost_pct_of_capex",
-    error: errors.EPC_soft_cost_pct_of_capex
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u06A9\u0627\u0647\u0634 \u0631\u0627\u0646\u062F\u0645\u0627\u0646 \u067E\u0646\u0644 (% \u0633\u0627\u0644\u0627\u0646\u0647)",
-    value: s.annual_pv_degradation_pct,
-    onChange: v => set("annual_pv_degradation_pct", v),
-    step: 0.1,
-    min: 0,
-    max: 10,
-    required: !simple,
-    inputId: "annual_pv_degradation_pct",
-    error: errors.annual_pv_degradation_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u06A9\u062B\u06CC\u0641\u06CC \u067E\u0646\u0644 (\u066A)",
-    value: s.soiling_loss_pct,
-    onChange: v => set("soiling_loss_pct", v),
-    step: 0.5,
-    min: 0,
-    max: 30,
-    required: !simple,
-    inputId: "soiling_loss_pct",
-    error: errors.soiling_loss_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062F\u0633\u062A\u0631\u0633\u200C\u067E\u0630\u06CC\u0631\u06CC \u0633\u0627\u0645\u0627\u0646\u0647 (\u066A)",
-    value: s.availability_pct,
-    onChange: v => set("availability_pct", v),
-    step: 0.5,
-    min: 0,
-    max: 100,
-    required: !simple,
-    inputId: "availability_pct",
-    error: errors.availability_pct
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0646\u06AF\u0647\u062F\u0627\u0631\u06CC \u0633\u0627\u0644\u0627\u0646\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
-    value: s.pv_om_cost_per_kWp_year,
-    onChange: v => set("pv_om_cost_per_kWp_year", v),
-    step: 10000,
-    min: 0,
-    required: true,
-    inputId: "pv_om_cost_per_kWp_year",
-    error: errors.pv_om_cost_per_kWp_year
-}))), /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
+    className: "text-xs text-slate-600 mt-1"
+  }, "اگر «ارزش امروز» مثبت باشد و بازگشت سرمایه در چند سال اول رخ دهد، معمولاً طرح اقتصادی است."));
+  const financeSnapshot = /*#__PURE__*/React.createElement("section", {
+    className: "rounded-2xl border border-slate-200 bg-white shadow-sm p-4 md:p-6"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "text-lg font-bold text-slate-900 mb-3"
   }, "نتایج خلاصه"), /*#__PURE__*/React.createElement("div", {
     className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
   }, /*#__PURE__*/React.createElement(KV, {
@@ -1338,7 +966,20 @@ function AgrivoltaicsKhorasan() {
   }), /*#__PURE__*/React.createElement(KV, {
     k: "بیمه سالانه",
     v: moneyOrDash("insurance_annual", readyForOutput ? insurance_annual : null)
-  }))), /*#__PURE__*/React.createElement("div", {
+  })));
+  const summaryContent = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    className: "rounded-2xl border border-slate-200 bg-white shadow-sm p-4 md:p-6 space-y-5"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-2"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "text-2xl font-black text-sky-900"
+  }, "خلاصه نتایج محاسبه شده"), /*#__PURE__*/React.createElement("p", {
+    className: "text-sm md:text-base text-slate-700"
+  }, "تمام اعداد بر اساس ورودی‌های فعلی محاسبه شده‌اند و در کارت‌های زیر خلاصه شده‌اند.")), kpiGrid, /*#__PURE__*/React.createElement("div", {
+    className: "grid md:grid-cols-3 gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "md:col-span-2"
+  }, summaryInfo), decisionCard)), financeSnapshot, /*#__PURE__*/React.createElement("div", {
     className: "grid lg:grid-cols-2 gap-4"
   }, /*#__PURE__*/React.createElement(Chart, {
     title: "جریان نقدی افزایشی هر سال",
@@ -1354,32 +995,575 @@ function AgrivoltaicsKhorasan() {
       title: "جمعِ جریان نقدی از شروع پروژه",
       data: cum
     });
-  })()), /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl overflow-x-auto"
+  })()));
+  const inputsContent = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Section, {
+    title: "۰) منطقه و شرایط محلی"
+  }, /*#__PURE__*/React.createElement(Select, {
+    label: "منطقه",
+    value: s.region,
+    onChange: v => set("region", v),
+    options: Object.entries(regions).map(([k, v]) => ({
+      value: k,
+      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+    }))
+  }), /*#__PURE__*/React.createElement(Select, {
+    label: "محصول",
+    value: s.crop_type,
+    onChange: v => set("crop_type", v),
+    options: Object.keys(cropProfiles).map(k => ({
+      value: k,
+      label: needsFix(k) ? latin1ToUtf8(k) : k
+    }))
+  }), /*#__PURE__*/React.createElement(Select, {
+    label: "منبع آب",
+    value: s.water_source,
+    onChange: v => set("water_source", v),
+    options: Object.entries(waterSources).map(([k, v]) => ({
+      value: k,
+      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+    }))
+  }), /*#__PURE__*/React.createElement(Select, {
+    label: "گرد و غبار",
+    value: s.dust_level,
+    onChange: v => set("dust_level", v),
+    options: Object.entries(dustLevels).map(([k, v]) => ({
+      value: k,
+      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+    }))
+  }), /*#__PURE__*/React.createElement(Select, {
+    label: "نوع خاک",
+    value: s.soil_type,
+    onChange: v => set("soil_type", v),
+    options: Object.entries(soils).map(([k, v]) => ({
+      value: k,
+      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+    }))
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "شوری آب/خاک (EC dS/m)",
+    value: s.salinity_EC,
+    onChange: v => set("salinity_EC", v),
+    step: 0.5,
+    min: 0,
+    max: 30,
+    required: true,
+    inputId: "salinity_EC",
+    error: errors.salinity_EC
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-slate-600 mt-2"
+  }, "* اگر منطقه دقیق شما در لیست نیست، نزدیک‌ترین منطقه را انتخاب کنید و اعداد را کمی تنظیم کنید."), /*#__PURE__*/React.createElement(Section, {
+    title: "۱) اطلاعات زمین و محصول"
+  }, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "مساحت زمین (هکتار)",
+    value: s.project_area_ha,
+    onChange: v => set("project_area_ha", v),
+    step: 0.1,
+    min: 0,
+    max: 1000,
+    required: true,
+    inputId: "project_area_ha",
+    error: errors.project_area_ha
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "عملکرد فعلی (تن/هکتار)",
+    value: s.baseline_yield_t_per_ha,
+    onChange: v => set("baseline_yield_t_per_ha", v),
+    step: 0.1,
+    min: 0,
+    max: 30,
+    required: true,
+    inputId: "baseline_yield_t_per_ha",
+    error: errors.baseline_yield_t_per_ha
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "تغییر عملکرد زیر پنل (%)",
+    value: s.expected_yield_change_pct_under_AGV,
+    onChange: v => set("expected_yield_change_pct_under_AGV", v),
+    step: 0.5,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "expected_yield_change_pct_under_AGV",
+    error: errors.expected_yield_change_pct_under_AGV
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت فروش محصول (ریال/تن)",
+    value: s.crop_price_per_t,
+    onChange: v => set("crop_price_per_t", v),
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "crop_price_per_t",
+    error: errors.crop_price_per_t
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "هزینه سالانه کشاورزی (ریال/هکتار)",
+    value: s.ag_opex_baseline_per_ha,
+    onChange: v => set("ag_opex_baseline_per_ha", v),
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "ag_opex_baseline_per_ha",
+    error: errors.ag_opex_baseline_per_ha
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "تغییر هزینه کشاورزی (%)",
+    value: s.ag_opex_change_under_AGV_pct,
+    onChange: v => set("ag_opex_change_under_AGV_pct", v),
+    step: 0.5,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "ag_opex_change_under_AGV_pct",
+    error: errors.ag_opex_change_under_AGV_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "مصرف آب فعلی (m³/هکتار)",
+    value: s.water_use_baseline_m3_per_ha,
+    onChange: v => set("water_use_baseline_m3_per_ha", v),
+    step: 10,
+    min: 0,
+    max: 50000,
+    required: true,
+    inputId: "water_use_baseline_m3_per_ha",
+    error: errors.water_use_baseline_m3_per_ha
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "تغییر مصرف آب (%)",
+    value: s.water_use_change_under_AGV_pct,
+    onChange: v => set("water_use_change_under_AGV_pct", v),
+    step: 1,
+    min: -100,
+    max: 200,
+    required: true,
+    inputId: "water_use_change_under_AGV_pct",
+    error: errors.water_use_change_under_AGV_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "شیرینی/تلخی قیمت (کیفی) (%)",
+    value: s.crop_quality_premium_or_discount_pct,
+    onChange: v => set("crop_quality_premium_or_discount_pct", v),
+    step: 0.5,
+    min: -100,
+    max: 100,
+    inputId: "crop_quality_premium_or_discount_pct",
+    error: errors.crop_quality_premium_or_discount_pct
+  })), /*#__PURE__*/React.createElement(Section, {
+    title: "۲) آبیاری و برق مزرعه"
+  }, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "برق پمپاژ آب (kWh برای هر m³)",
+    value: s.energy_for_irrigation_kWh_per_m3,
+    onChange: v => set("energy_for_irrigation_kWh_per_m3", v),
+    step: 0.01,
+    min: 0,
+    max: 20,
+    required: true,
+    inputId: "energy_for_irrigation_kWh_per_m3",
+    error: errors.energy_for_irrigation_kWh_per_m3
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت برق برای پمپاژ (ریال/kWh)",
+    value: s.irrigation_energy_tariff,
+    onChange: v => set("irrigation_energy_tariff", v),
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "irrigation_energy_tariff",
+    error: errors.irrigation_energy_tariff
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت آب خریداری‌شده (ریال/m³)",
+    value: s.water_unit_cost,
+    onChange: v => set("water_unit_cost", v),
+    step: 100,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "water_unit_cost",
+    error: errors.water_unit_cost
+  }), /*#__PURE__*/React.createElement(Select, {
+    label: "طرح مصرف/فروش برق",
+    value: s.grid_scheme,
+    onChange: v => set("grid_scheme", v),
+    options: [{
+      value: "PPA/FIT",
+      label: "فروش تضمینی"
+    }, {
+      value: "NetMetering",
+      label: "تراز با شبکه"
+    }, {
+      value: "SelfConsumption",
+      label: "مصرف در مزرعه"
+    }]
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت تضمینی/فروش (ریال/kWh)",
+    value: s.ppa_or_fit_tariff,
+    onChange: v => set("ppa_or_fit_tariff", v),
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: true,
+    inputId: "ppa_or_fit_tariff",
+    error: errors.ppa_or_fit_tariff
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "سهم مصرف در مزرعه (%)",
+    value: s.self_consumption_share_pct,
+    onChange: v => set("self_consumption_share_pct", v),
+    step: 1,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "self_consumption_share_pct",
+    error: errors.self_consumption_share_pct
+  }), s.grid_scheme === "NetMetering" || s.grid_scheme === "SelfConsumption" ? /*#__PURE__*/React.createElement(NumberInput, {
+    label: "خرید برق مازاد از شبکه (ریال/kWh)",
+    value: s.net_metering_buy_price,
+    onChange: v => set("net_metering_buy_price", v),
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: !simple,
+    inputId: "net_metering_buy_price",
+    error: errors.net_metering_buy_price
+  }) : null, s.grid_scheme === "NetMetering" ? /*#__PURE__*/React.createElement(NumberInput, {
+    label: "فروش برق مازاد به شبکه (ریال/kWh)",
+    value: s.net_metering_sell_price,
+    onChange: v => set("net_metering_sell_price", v),
+    step: 50,
+    min: 0,
+    max: 500000,
+    required: !simple,
+    inputId: "net_metering_sell_price",
+    error: errors.net_metering_sell_price
+  }) : null, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "کاهش اجباری/دورریز (%)",
+    value: s.curtailment_pct,
+    onChange: v => set("curtailment_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "curtailment_pct",
+    error: errors.curtailment_pct
+  })), /*#__PURE__*/React.createElement(Section, {
+    title: "۳) سامانه خورشیدی و مالی"
+  }, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "ظرفیت کل پنل (kWp)",
+    value: s.pv_capacity_kWp_total,
+    onChange: v => set("pv_capacity_kWp_total", v),
+    step: 1,
+    min: 0,
+    max: 1000000,
+    required: true,
+    inputId: "pv_capacity_kWp_total",
+    error: errors.pv_capacity_kWp_total
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "ظرفیت ویژه سالانه (kWh/kWp)",
+    value: s.specific_yield_kWh_per_kWp_year,
+    onChange: v => set("specific_yield_kWh_per_kWp_year", v),
+    step: 1,
+    min: 0,
+    max: 4000,
+    required: true,
+    inputId: "specific_yield_kWh_per_kWp_year",
+    error: errors.specific_yield_kWh_per_kWp_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت ماژول (ریال/kWp)",
+    value: s.module_price_per_kWp,
+    onChange: v => set("module_price_per_kWp", v),
+    step: 1000000,
+    min: 0,
+    max: 10000000000,
+    required: true,
+    inputId: "module_price_per_kWp",
+    error: errors.module_price_per_kWp
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "سازه ماونتینگ (ریال/kWp)",
+    value: s.mounting_structure_cost_per_kWp,
+    onChange: v => set("mounting_structure_cost_per_kWp", v),
+    step: 1000000,
+    min: 0,
+    max: 5000000000,
+    required: true,
+    inputId: "mounting_structure_cost_per_kWp",
+    error: errors.mounting_structure_cost_per_kWp
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "اینورتر و BOS (ریال/kWp)",
+    value: s.inverter_BOS_cost_per_kWp,
+    onChange: v => set("inverter_BOS_cost_per_kWp", v),
+    step: 1000000,
+    min: 0,
+    max: 5000000000,
+    required: true,
+    inputId: "inverter_BOS_cost_per_kWp",
+    error: errors.inverter_BOS_cost_per_kWp
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "هزینه اتصال به شبکه (ریال)",
+    value: s.grid_interconnection_lump_sum,
+    onChange: v => set("grid_interconnection_lump_sum", v),
+    step: 1000000,
+    min: 0,
+    max: 100000000000,
+    required: true,
+    inputId: "grid_interconnection_lump_sum",
+    error: errors.grid_interconnection_lump_sum
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "نرخ تنزیل (%)",
+    value: s.discount_rate_pct,
+    onChange: v => set("discount_rate_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "discount_rate_pct",
+    error: errors.discount_rate_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "دوره تحلیل (سال)",
+    value: s.time_horizon_years,
+    onChange: v => set("time_horizon_years", v),
+    step: 1,
+    min: 1,
+    max: 50,
+    required: true,
+    inputId: "time_horizon_years",
+    error: errors.time_horizon_years
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "تورم تعرفه برق سالانه (%)",
+    value: s.tariff_escalation_pct_per_year,
+    onChange: v => set("tariff_escalation_pct_per_year", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "tariff_escalation_pct_per_year",
+    error: errors.tariff_escalation_pct_per_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "تخفیف/یارانه سرمایه (%)",
+    value: s.subsidy_capex_pct,
+    onChange: v => set("subsidy_capex_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "subsidy_capex_pct",
+    error: errors.subsidy_capex_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "قیمت کربن (ریال/تن CO₂)",
+    value: s.carbon_credit_price_per_tCO2,
+    onChange: v => set("carbon_credit_price_per_tCO2", v),
+    step: 100000,
+    min: 0,
+    max: 500000000,
+    required: true,
+    inputId: "carbon_credit_price_per_tCO2",
+    error: errors.carbon_credit_price_per_tCO2
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "CO₂ اجتناب‌شده (تن/MWh)",
+    value: s.avoided_co2_t_per_MWh,
+    onChange: v => set("avoided_co2_t_per_MWh", v),
+    step: 0.01,
+    min: 0,
+    max: 5,
+    required: true,
+    inputId: "avoided_co2_t_per_MWh",
+    error: errors.avoided_co2_t_per_MWh
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "بیمه سالانه (% ارزش دارایی)",
+    value: s.insurance_cost_pct_of_asset_value_per_year,
+    onChange: v => set("insurance_cost_pct_of_asset_value_per_year", v),
+    step: 0.1,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "insurance_cost_pct_of_asset_value_per_year",
+    error: errors.insurance_cost_pct_of_asset_value_per_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "اجاره زمین (ریال/هکتار/سال)",
+    value: s.land_lease_cost_per_ha_year,
+    onChange: v => set("land_lease_cost_per_ha_year", v),
+    step: 100000,
+    min: 0,
+    max: 100000000,
+    required: true,
+    inputId: "land_lease_cost_per_ha_year",
+    error: errors.land_lease_cost_per_ha_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "مالیات (% سود)",
+    value: s.tax_rate_pct,
+    onChange: v => set("tax_rate_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "tax_rate_pct",
+    error: errors.tax_rate_pct
+  }), !simple ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "هزینه نرم (درصدی)",
+    value: s.EPC_soft_cost_pct_of_capex,
+    onChange: v => set("EPC_soft_cost_pct_of_capex", v),
+    step: 0.5,
+    min: 0,
+    max: 50,
+    required: !simple,
+    inputId: "EPC_soft_cost_pct_of_capex",
+    error: errors.EPC_soft_cost_pct_of_capex
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "کاهش راندمان پنل (% سالانه)",
+    value: s.annual_pv_degradation_pct,
+    onChange: v => set("annual_pv_degradation_pct", v),
+    step: 0.1,
+    min: 0,
+    max: 10,
+    required: !simple,
+    inputId: "annual_pv_degradation_pct",
+    error: errors.annual_pv_degradation_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "کثیفی پنل (٪)",
+    value: s.soiling_loss_pct,
+    onChange: v => set("soiling_loss_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 30,
+    required: !simple,
+    inputId: "soiling_loss_pct",
+    error: errors.soiling_loss_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "دسترسی‌پذیری سامانه (٪)",
+    value: s.availability_pct,
+    onChange: v => set("availability_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: !simple,
+    inputId: "availability_pct",
+    error: errors.availability_pct
+  })) : null, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "نگهداری سالانه (ریال/kWp)",
+    value: s.pv_om_cost_per_kWp_year,
+    onChange: v => set("pv_om_cost_per_kWp_year", v),
+    step: 10000,
+    min: 0,
+    required: true,
+    inputId: "pv_om_cost_per_kWp_year",
+    error: errors.pv_om_cost_per_kWp_year
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "text-xs text-slate-600 pb-4"
+  }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم."));
+  const tableContent = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    className: "bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm overflow-hidden"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "space-y-1"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-4"
-  }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("table", {
+    className: "text-xl font-bold text-slate-900"
+  }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("p", {
+    className: "text-sm text-slate-600"
+  }, "برق تولیدی، درآمد و جریان نقدی افزایشی هر سال را در جدول زیر ببینید.")), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "text-sm text-slate-700"
+  }, "سال"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    inputMode: "numeric",
+    value: yearFilter,
+    onChange: e => setYearFilter(e.target.value),
+    placeholder: "همه",
+    className: "w-24 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200"
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "overflow-x-auto"
+  }, /*#__PURE__*/React.createElement("table", {
     className: "w-full text-sm"
   }, /*#__PURE__*/React.createElement("thead", {
-    className: "text-gray-300"
-  }, /*#__PURE__*/React.createElement("tr", {
-    className: "border-b border-neutral-800"
-  }, /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "bg-slate-50 text-slate-700"
+  }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "py-3 text-right px-3"
   }, "سال"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right px-3"
   }, "برق (kWh)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right px-3"
   }, "درآمد/صرفه‌جویی برق"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right px-3"
   }, "خالص کشاورزی (قبل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right px-3"
   }, "خالص کشاورزی (با پنل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
-  }, "افزایشی"))), /*#__PURE__*/React.createElement("tbody", null, tableRows))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 text-xs text-gray-400"
-  }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است.")), /*#__PURE__*/React.createElement("div", {
-    className: "text-xs text-gray-400 pb-8"
-  }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم.")), shareModal);
-}
+    className: "py-3 text-right px-3"
+  }, "افزایشی"))), /*#__PURE__*/React.createElement("tbody", {
+    className: "divide-y divide-slate-200"
+  }, tableRows))), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 text-xs text-slate-600"
+  }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است."));
+  const tabs = [{
+    id: "summary",
+    label: "خلاصه نتایج"
+  }, {
+    id: "inputs",
+    label: "پارامترهای ورودی"
+  }, {
+    id: "table",
+    label: "جدول داده‌ها"
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    dir: "rtl",
+    className: "min-h-screen w-full bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900"
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "border-b border-slate-200 bg-white/80 backdrop-blur"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col gap-4"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-2"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "text-3xl md:text-4xl font-black text-sky-900"
+  }, "ماشین‌حساب فتوکِشت – ویژه خراسان رضوی"), /*#__PURE__*/React.createElement("p", {
+    className: "text-sm md:text-base text-slate-700 max-w-4xl"
+  }, "با چند ورودی ساده ببینید کِشت زیر پنل خورشیدی در منطقه شما می‌صرفد یا نه."), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap gap-2 text-xs text-slate-600"
+  }, /*#__PURE__*/React.createElement("span", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید."), /*#__PURE__*/React.createElement("span", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("span", null, "۳) نتیجه را در کارت‌ها، نمودار و جدول ببینید."))), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap gap-2"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleRecompute,
+    disabled: isLoading,
+    className: `px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
+  }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
+    className: "px-3 py-2 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100",
+    onClick: () => setSimple(v => !v)
+  }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (disableActions) return;
+      downloadCSV();
+    },
+    disabled: disableActions,
+    className: `px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-sm hover:bg-slate-50 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+  }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (disableActions) return;
+      downloadPDF();
+    },
+    disabled: disableActions,
+    className: `px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-sm hover:bg-slate-50 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+  }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (disableActions) return;
+      saveScenario(s, setShareLink);
+    },
+    disabled: disableActions,
+    className: `px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-sm hover:bg-slate-50 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+  }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      if (disableActions) return;
+      handleAsyncSimulate();
+    },
+    disabled: disableActions,
+    className: `px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-sm hover:bg-slate-50 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+  }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      const id = prompt("کُد/لینک را وارد کنید:");
+      const onlyId = (id || "").split("id=").pop();
+      loadScenarioById(onlyId, setS);
+    },
+    className: "px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 shadow-sm hover:bg-slate-50"
+  }, "بازکردن از لینک"))), /*#__PURE__*/React.createElement("div", {
+    className: "max-w-7xl mx-auto px-4 pb-4 flex flex-wrap gap-2"
+  }, tabs.map(tab => /*#__PURE__*/React.createElement("button", {
+    key: tab.id,
+    onClick: () => setActiveTab(tab.id),
+    className: `px-4 py-2 rounded-full text-sm font-semibold border transition ${activeTab === tab.id ? 'bg-sky-600 text-white border-sky-600 shadow' : 'bg-white text-slate-700 border-slate-200 hover:border-sky-200 hover:text-sky-700'}`
+  }, tab.label)))), globalError && /*#__PURE__*/React.createElement("div", {
+    className: "max-w-7xl mx-auto px-4 text-sm text-rose-600 mb-4",
+    role: "alert"
+  }, globalError), /*#__PURE__*/React.createElement("main", {
+    className: "max-w-7xl mx-auto px-4 pb-12 space-y-6"
+  }, activeTab === "summary" ? summaryContent : null, activeTab === "inputs" ? inputsContent : null, activeTab === "table" ? tableContent : null), shareModal);
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
