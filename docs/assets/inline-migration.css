@@ -199,6 +199,34 @@
   height: var(--skeleton-height, 200px);
 }
 
+/* Solar risk calculator progress bar (CSP-safe, class-based widths in 5% steps) */
+.risk-score-bar {
+  width: 0%;
+  transition: width 0.35s ease;
+}
+
+#risk-score-bar[data-progress="0"] { width: 0%; }
+#risk-score-bar[data-progress="5"] { width: 5%; }
+#risk-score-bar[data-progress="10"] { width: 10%; }
+#risk-score-bar[data-progress="15"] { width: 15%; }
+#risk-score-bar[data-progress="20"] { width: 20%; }
+#risk-score-bar[data-progress="25"] { width: 25%; }
+#risk-score-bar[data-progress="30"] { width: 30%; }
+#risk-score-bar[data-progress="35"] { width: 35%; }
+#risk-score-bar[data-progress="40"] { width: 40%; }
+#risk-score-bar[data-progress="45"] { width: 45%; }
+#risk-score-bar[data-progress="50"] { width: 50%; }
+#risk-score-bar[data-progress="55"] { width: 55%; }
+#risk-score-bar[data-progress="60"] { width: 60%; }
+#risk-score-bar[data-progress="65"] { width: 65%; }
+#risk-score-bar[data-progress="70"] { width: 70%; }
+#risk-score-bar[data-progress="75"] { width: 75%; }
+#risk-score-bar[data-progress="80"] { width: 80%; }
+#risk-score-bar[data-progress="85"] { width: 85%; }
+#risk-score-bar[data-progress="90"] { width: 90%; }
+#risk-score-bar[data-progress="95"] { width: 95%; }
+#risk-score-bar[data-progress="100"] { width: 100%; }
+
 /* Landing page - font-family */
 .font-tahoma {
   font-family: Tahoma, Arial, sans-serif;

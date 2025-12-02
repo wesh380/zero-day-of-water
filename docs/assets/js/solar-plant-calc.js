@@ -277,8 +277,10 @@ function initRiskWizardUI(root = document) {
     const safeScore = clamp(Math.round(scoreResult.finalScore), 0, 100);
     const bandLabel = scoreResult.band?.bandLabel ?? "نامشخص";
 
+    const progressStep = clamp(Math.round(safeScore / 5) * 5, 0, 100);
+
     scoreText.textContent = `امتیاز ریسک شما: ${safeScore} از ۱۰۰ – سطح ریسک: ${bandLabel}`;
-    scoreBar.style.width = `${safeScore}%`;
+    scoreBar.setAttribute("data-progress", String(progressStep));
     interpretation.textContent = buildInterpretation(scoreResult.band?.bandId);
   };
 
