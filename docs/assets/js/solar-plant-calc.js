@@ -2,19 +2,13 @@
  * Solar Risk Calculator for Iran (Mehrsun pre-gate)
  *
  * This script:
- * - Loads risk model config from docs/config/solar-risk-calculator.json (with a local fallback).
+ * - Loads a built-in risk model config (no network fetch required).
  * - Renders a 3-step risk wizard on docs/solar/plant/index.html.
  * - Computes a 0–100 risk score and maps it to low/medium/high bands.
  * - Shows a final recommendation and a CTA to the official Mehrsun SATBA portal.
- *
- * To extend:
- * - Add new domains/questions in solar-risk-calculator.json.
- * - Update riskCalculator.getQuestionsByStep(...) if you change the step structure.
  */
 
-const RISK_CONFIG_URL = "/config/solar-risk-calculator.json";
-
-const EMBEDDED_RISK_CONFIG = Object.freeze({
+const RISK_CONFIG = Object.freeze({
   domains: [
     { id: "fx_capex", weight: 0.35, label: "ریسک ارزی و هزینه تجهیزات" },
     { id: "policy_tariff", weight: 0.35, label: "ریسک قانون، تعرفه و ساتبا" },
@@ -103,22 +97,14 @@ const RISK_PROGRESS_WIDTH_CLASSES = Array.from({ length: 21 }, (_, index) => `w-
 
 // Lightweight risk calculator (MVP) that is now wired to the UI.
 const riskCalculator = {
-  async initRiskCalculator(configUrl = RISK_CONFIG_URL) {
-    const remoteConfig = await loadRiskConfig(configUrl);
-    const effectiveConfig = remoteConfig ?? cloneConfig(EMBEDDED_RISK_CONFIG);
-
-    if (!effectiveConfig) {
-      console.error("risk-calculator: config not available");
-      return null;
-    }
-
-    riskState.config = effectiveConfig;
-    console.log("risk-calculator: loaded", { fromRemote: Boolean(remoteConfig) });
-    return effectiveConfig;
+  initRiskCalculator() {
+    riskState.config = cloneConfig(RISK_CONFIG);
+    console.log("risk-calculator: initialized with embedded config");
+    return riskState.config;
   },
 
   computeRiskScore(answers = {}) {
-    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    const config = riskState.config ?? cloneConfig(RISK_CONFIG);
     if (!config) {
       throw new Error("risk-calculator: config is missing; call initRiskCalculator first");
     }
@@ -156,14 +142,14 @@ const riskCalculator = {
   },
 
   mapScoreToBand(score) {
-    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    const config = riskState.config ?? cloneConfig(RISK_CONFIG);
     const bands = config?.bands ?? [];
     const matched = bands.find((band) => Number(score) >= Number(band.min) && Number(score) <= Number(band.max));
     return matched ? { bandId: matched.id, bandLabel: matched.label } : { bandId: "unknown", bandLabel: "نامشخص" };
   },
 
   getQuestionsByStep() {
-    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    const config = riskState.config ?? cloneConfig(RISK_CONFIG);
     if (!config) {
       return {};
     }
@@ -179,24 +165,14 @@ const riskCalculator = {
 };
 
 // Public entry point used by docs/solar/plant/index.html.
-export async function initSolarRiskCalculatorPage(root = document) {
+export function initSolarRiskCalculatorPage(root = document) {
   const stepContent = root.getElementById("risk-step-content");
   if (stepContent) {
-    stepContent.innerHTML =
-      '<div class="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-sm text-slate-600 text-right">در حال بارگذاری مدل ریسک...</div>';
+    stepContent.innerHTML = "";
   }
 
-  try {
-    const config = await riskCalculator.initRiskCalculator();
-    if (!config) {
-      riskState.config = cloneConfig(EMBEDDED_RISK_CONFIG);
-    }
-    initRiskWizardUI(root);
-  } catch (error) {
-    console.error("solar-risk: failed to initialize", error);
-    riskState.config = cloneConfig(EMBEDDED_RISK_CONFIG);
-    initRiskWizardUI(root);
-  }
+  riskCalculator.initRiskCalculator();
+  initRiskWizardUI(root);
 }
 
 function initRiskWizardUI(root = document) {
@@ -413,19 +389,6 @@ function buildInterpretation(bandId) {
   }
 }
 
-async function loadRiskConfig(url = RISK_CONFIG_URL) {
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Failed to load risk config: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("risk-calculator: loadRiskConfig error", error);
-    return null;
-  }
-}
-
 function cloneConfig(config) {
   return JSON.parse(JSON.stringify(config));
 }
@@ -452,6 +415,6 @@ function getProgressWidthClass(percent) {
   return `w-[${clamped}%]`;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await initSolarRiskCalculatorPage();
+document.addEventListener("DOMContentLoaded", () => {
+  initSolarRiskCalculatorPage();
 });
