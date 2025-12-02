@@ -19,31 +19,33 @@
 <link rel="stylesheet" href="/assets/fonts.css">
   <link rel="stylesheet" href="/assets/css/solar-calc.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <script>
-    tailwind.config = {
-      corePlugins: { preflight: false },
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            primary: "#3b82f6",
-            "background-light": "#f8fafc",
-            "background-dark": "#0f172a",
-            "surface-light": "#ffffff",
-            "surface-dark": "#1e293b",
-            "muted-light": "#64748b",
-            "muted-dark": "#94a3b8",
-            "border-light": "#e2e8f0",
-            "border-dark": "#334155"
-          },
-          borderRadius: {
-            DEFAULT: "0.75rem"
+    if (window.tailwind) {
+      tailwind.config = {
+        corePlugins: { preflight: false },
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1e293b",
+              "muted-light": "#64748b",
+              "muted-dark": "#94a3b8",
+              "border-light": "#e2e8f0",
+              "border-dark": "#334155"
+            },
+            borderRadius: {
+              DEFAULT: "0.75rem"
+            }
           }
         }
-      }
-    };
+      };
+    }
   </script>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
   <link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/logo/icons/icon-180.png">
@@ -83,69 +85,69 @@
       </div>
     </header>
 <main id="main" role="main" class="bg-background-light">
-    <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
-      <header class="mb-8 text-center space-y-3">
-        <h1 class="text-3xl font-bold text-slate-900">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
+    <div class="max-w-4xl mx-auto px-4 py-12 space-y-10">
+      <header class="space-y-3 text-right">
+        <h1 class="text-3xl font-extrabold text-slate-900">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
         <p class="badge experimental-badge inline-block">نسخه آزمایشی – سنجش سریع قبل از ورود به سامانه مهرسان.</p>
-        <p class="text-muted-light text-sm sm:text-base">
+        <p class="text-sm text-slate-600 leading-relaxed max-w-2xl ml-auto">
           سه حوزه اصلی ریسک (ارزی/تجهیزات، تعرفه و ساتبا، نقدینگی/تأمین مالی) را در سه گام پاسخ دهید تا امتیاز ریسک ۰ تا ۱۰۰ و تفسیر پیشنهادی دریافت کنید.
         </p>
       </header>
 
-      <section id="solar-risk-calculator" class="space-y-8">
-        <header>
-          <h1 class="text-2xl font-bold">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
-          <p class="text-sm text-slate-600">
+      <section id="solar-risk-calculator" class="space-y-6 rounded-2xl border border-border-light bg-white p-6 shadow-sm">
+        <header class="space-y-1 text-right">
+          <h2 class="text-2xl font-bold text-slate-900">سنجش ریسک پیش از مهرسان</h2>
+          <p class="text-sm text-slate-600 leading-relaxed max-w-2xl ml-auto">
             قبل از ثبت طرح در سامانه مهرسان، سطح ریسک پروژه خود را در شرایط اقتصادی ایران بسنجید.
           </p>
         </header>
 
-        <div id="risk-wizard" class="space-y-6">
-          <div id="risk-steps-indicator" class="flex gap-2 text-sm"></div>
+        <div id="risk-wizard" class="space-y-6 text-right">
+          <div id="risk-steps-indicator" class="flex flex-wrap justify-end gap-2 text-right"></div>
 
           <div id="risk-step-content" class="space-y-4"></div>
 
-          <p id="risk-validation-message" class="text-sm text-red-600 hidden"></p>
+          <p id="risk-validation-message" class="text-sm text-rose-600 hidden"></p>
 
-          <div id="risk-nav-buttons" class="flex justify-between">
-            <button type="button" id="risk-prev-btn" class="btn-secondary">مرحله قبل</button>
-            <button type="button" id="risk-next-btn" class="btn-primary">مرحله بعد</button>
+          <div id="risk-nav-buttons" class="flex items-center justify-between gap-3 pt-2">
+            <button type="button" id="risk-prev-btn" class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">مرحله قبل</button>
+            <button type="button" id="risk-next-btn" class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed">مرحله بعد</button>
           </div>
         </div>
 
-        <section id="risk-result" class="hidden space-y-4">
-          <h2 class="text-xl font-semibold">نتیجه سنجش ریسک</h2>
-          <p id="risk-score-text" class="font-medium"></p>
+        <section id="risk-result" class="hidden space-y-4 text-right">
+          <h2 class="text-xl font-semibold mb-2">نتیجه سنجش ریسک</h2>
+          <p id="risk-score-text" class="text-base font-medium"></p>
 
           <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-            <div id="risk-score-bar" class="h-3 bg-amber-500 risk-score-bar" data-progress="0"></div>
+            <div id="risk-score-bar" class="h-3 rounded-full transition-all duration-500 risk-score-bar" data-progress="0"></div>
           </div>
 
-          <div id="risk-interpretation" class="text-sm text-slate-700"></div>
+          <div id="risk-interpretation" class="text-sm text-slate-700 leading-relaxed"></div>
 
-          <div id="mehrsun-cta" class="border rounded-lg p-4 space-y-2 bg-slate-50">
+          <div id="mehrsun-cta" class="border rounded-lg p-4 space-y-2 bg-slate-50 text-right">
             <h3 class="font-semibold">گام بعدی: ثبت طرح در سامانه مهرسان</h3>
-            <p class="text-sm">
+            <p class="text-sm text-slate-700">
               اگر سطح ریسک برای شما قابل قبول است، می‌توانید ادامه مسیر را در سامانه مهرسان ساتبا دنبال کنید.
             </p>
-            <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="btn-primary inline-flex">
+            <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700">
               رفتن به سامانه مهرسان
             </a>
           </div>
         </section>
       </section>
 
-      <section class="grid grid-cols-1 gap-6 lg:grid-cols-2 mt-10">
-        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm">
+      <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm text-right">
           <h3 class="text-lg font-semibold text-slate-900 mb-3">این ابزار چگونه کمک می‌کند؟</h3>
-          <ul class="list-disc pe-5 space-y-2 text-sm text-muted-light">
+          <ul class="list-disc pe-5 space-y-2 text-sm text-muted-light leading-relaxed">
             <li>برآورد سریع ریسک‌ها قبل از وارد کردن اطلاعات در مهرسان ساتبا.</li>
             <li>سه دامنه اصلی ریسک پوشش داده می‌شود: هزینه و ارز، سیاست و تعرفه، تأمین مالی و نقدینگی.</li>
             <li>امتیاز ۰ تا ۱۰۰ با وزن‌دهی دامنه‌ای و برچسب کیفی (کم، متوسط، زیاد) ارائه می‌شود.</li>
             <li>تفسیر کوتاه برای اقدام بعدی و لینک مستقیم به سامانه مهرسان.</li>
           </ul>
         </article>
-        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4">
+        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4 text-right">
           <div>
             <h4 class="text-base font-semibold text-slate-900">راهنمای پاسخ‌دهی</h4>
             <p class="text-sm text-muted-light leading-relaxed">گزینه‌ها از ریسک کم (امتیاز ۱) تا ریسک بالا (امتیاز ۵) مرتب شده‌اند. اگر بین دو گزینه مردد هستید، حالت محتاطانه‌تر را انتخاب کنید.</p>

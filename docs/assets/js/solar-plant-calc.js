@@ -178,11 +178,22 @@ const riskCalculator = {
 
 // Public entry point used by docs/solar/plant/index.html.
 export async function initSolarRiskCalculatorPage(root = document) {
+  const stepContent = root.getElementById("risk-step-content");
+  if (stepContent) {
+    stepContent.innerHTML =
+      '<div class="rounded-xl border border-dashed border-slate-200 bg-white p-6 text-sm text-slate-600 text-right">در حال بارگذاری مدل ریسک...</div>';
+  }
+
   try {
-    await riskCalculator.initRiskCalculator();
+    const config = await riskCalculator.initRiskCalculator();
+    if (!config) {
+      riskState.config = cloneConfig(EMBEDDED_RISK_CONFIG);
+    }
     initRiskWizardUI(root);
   } catch (error) {
     console.error("solar-risk: failed to initialize", error);
+    riskState.config = cloneConfig(EMBEDDED_RISK_CONFIG);
+    initRiskWizardUI(root);
   }
 }
 
@@ -218,8 +229,10 @@ function initRiskWizardUI(root = document) {
     const fragments = [];
     for (let step = 1; step <= wizardState.totalSteps; step += 1) {
       const isActive = step === wizardState.currentStep;
-      const baseClasses = "px-3 py-2 rounded-lg border text-sm";
-      const activeClasses = isActive ? "bg-primary text-white border-primary" : "bg-slate-100 text-slate-700 border-slate-200";
+      const baseClasses = "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs border transition";
+      const activeClasses = isActive
+        ? "bg-sky-600 text-white border-sky-600 shadow-sm"
+        : "bg-white text-slate-600 border-slate-300";
       fragments.push(`<span class="${baseClasses} ${activeClasses}">گام ${step} از ${wizardState.totalSteps}</span>`);
     }
     container.innerHTML = fragments.join("");
@@ -231,10 +244,10 @@ function initRiskWizardUI(root = document) {
 
     questions.forEach((question) => {
       const fieldset = document.createElement("fieldset");
-      fieldset.className = "space-y-2 rounded-xl border border-slate-200 bg-white p-4";
+      fieldset.className = "space-y-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm";
 
       const legend = document.createElement("legend");
-      legend.className = "text-base font-semibold text-slate-900";
+      legend.className = "font-medium text-sm text-slate-800";
       legend.textContent = question.label;
       fieldset.appendChild(legend);
 
@@ -243,7 +256,8 @@ function initRiskWizardUI(root = document) {
 
       (question.options || []).forEach((option) => {
         const label = document.createElement("label");
-        label.className = "flex items-center gap-2 text-sm text-slate-800";
+        label.className =
+          "flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 cursor-pointer hover:border-sky-500 hover:bg-sky-50 transition";
 
         const input = document.createElement("input");
         input.type = "radio";
@@ -256,13 +270,25 @@ function initRiskWizardUI(root = document) {
 
         const text = document.createElement("span");
         text.textContent = option.label;
+        text.className = "text-sm text-slate-800";
         label.appendChild(text);
+
+        const selectOption = () => {
+          wizardState.answers[question.id] = option.value;
+          updateActiveOptionStyles(optionsWrapper, question.id);
+          updateNavButtons();
+          hideValidation();
+        };
+
+        label.addEventListener("click", selectOption);
+        input.addEventListener("change", selectOption);
 
         optionsWrapper.appendChild(label);
       });
 
       fieldset.appendChild(optionsWrapper);
       container.appendChild(fieldset);
+      updateActiveOptionStyles(optionsWrapper, question.id);
     });
   };
 
@@ -285,11 +311,17 @@ function initRiskWizardUI(root = document) {
 
     const safeScore = clamp(Math.round(scoreResult.finalScore), 0, 100);
     const bandLabel = scoreResult.band?.bandLabel ?? "نامشخص";
+    const bandId = scoreResult.band?.bandId;
 
     const progressStep = clamp(Math.round(safeScore / 5) * 5, 0, 100);
 
     scoreText.textContent = `امتیاز ریسک شما: ${safeScore} از ۱۰۰ – سطح ریسک: ${bandLabel}`;
     scoreBar.setAttribute("data-progress", String(progressStep));
+    scoreBar.style.width = `${progressStep}%`;
+    scoreBar.classList.remove("bg-emerald-500", "bg-amber-500", "bg-rose-500");
+    const bandClass =
+      bandId === "low" ? "bg-emerald-500" : bandId === "medium" ? "bg-amber-500" : bandId === "high" ? "bg-rose-500" : "bg-amber-500";
+    scoreBar.classList.add(bandClass);
     interpretation.textContent = buildInterpretation(scoreResult.band?.bandId);
   };
 
@@ -305,9 +337,15 @@ function initRiskWizardUI(root = document) {
     validationMessage.classList.add("hidden");
   };
 
+  const isStepComplete = () => {
+    const questions = wizardState.questionsByStep[wizardState.currentStep] || [];
+    return questions.every((question) => wizardState.answers[question.id]);
+  };
+
   const updateNavButtons = () => {
     prevBtn.disabled = wizardState.currentStep === 1;
     nextBtn.textContent = wizardState.currentStep === wizardState.totalSteps ? "محاسبه ریسک" : "مرحله بعد";
+    nextBtn.disabled = !isStepComplete();
   };
 
   prevBtn.addEventListener("click", () => {
@@ -337,6 +375,24 @@ function initRiskWizardUI(root = document) {
   });
 
   renderStep();
+}
+
+function updateActiveOptionStyles(wrapper, questionId) {
+  const selectedValue = wizardState.answers[questionId];
+  const optionLabels = Array.from(wrapper.querySelectorAll("label"));
+
+  optionLabels.forEach((label) => {
+    const input = label.querySelector("input[type='radio']");
+    const isActive = input?.value === selectedValue;
+    const baseClasses =
+      "flex items-center gap-2 rounded-lg border px-3 py-2 cursor-pointer hover:border-sky-500 hover:bg-sky-50 transition";
+    const activeClasses = "border-sky-600 bg-sky-50 ring-1 ring-sky-100";
+    const inactiveClasses = "border-slate-200 bg-white";
+    label.className = `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
+    if (input) {
+      input.checked = isActive;
+    }
+  });
 }
 
 function buildInterpretation(bandId) {
@@ -386,6 +442,6 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initSolarRiskCalculatorPage();
+document.addEventListener("DOMContentLoaded", async () => {
+  await initSolarRiskCalculatorPage();
 });
