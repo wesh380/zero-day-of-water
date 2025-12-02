@@ -99,6 +99,8 @@ const wizardState = {
   questionsByStep: {}
 };
 
+const RISK_PROGRESS_WIDTH_CLASSES = Array.from({ length: 21 }, (_, index) => `w-[${index * 5}%]`);
+
 // Lightweight risk calculator (MVP) that is now wired to the UI.
 const riskCalculator = {
   async initRiskCalculator(configUrl = RISK_CONFIG_URL) {
@@ -315,9 +317,12 @@ function initRiskWizardUI(root = document) {
 
     const progressStep = clamp(Math.round(safeScore / 5) * 5, 0, 100);
 
+    const nextWidthClass = getProgressWidthClass(progressStep);
+    scoreBar.classList.remove(...RISK_PROGRESS_WIDTH_CLASSES);
+    scoreBar.classList.add(nextWidthClass);
+
     scoreText.textContent = `امتیاز ریسک شما: ${safeScore} از ۱۰۰ – سطح ریسک: ${bandLabel}`;
     scoreBar.setAttribute("data-progress", String(progressStep));
-    scoreBar.style.width = `${progressStep}%`;
     scoreBar.classList.remove("bg-emerald-500", "bg-amber-500", "bg-rose-500");
     const bandClass =
       bandId === "low" ? "bg-emerald-500" : bandId === "medium" ? "bg-amber-500" : bandId === "high" ? "bg-rose-500" : "bg-amber-500";
@@ -440,6 +445,11 @@ function normalizeScoreTo100(score) {
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
+}
+
+function getProgressWidthClass(percent) {
+  const clamped = clamp(Math.round(percent / 5) * 5, 0, 100);
+  return `w-[${clamped}%]`;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
