@@ -1,7 +1,15 @@
 /**
- * Solar Risk Calculator for Iran (SATBA/Mehrsun pre-check)
- * This file now implements the risk-focused questionnaire and wizard UI.
- * The previous financial/economic calculator has been retired from docs/solar/plant/index.html.
+ * Solar Risk Calculator for Iran (Mehrsun pre-gate)
+ *
+ * This script:
+ * - Loads risk model config from docs/config/solar-risk-calculator.json (with a local fallback).
+ * - Renders a 3-step risk wizard on docs/solar/plant/index.html.
+ * - Computes a 0–100 risk score and maps it to low/medium/high bands.
+ * - Shows a final recommendation and a CTA to the official Mehrsun SATBA portal.
+ *
+ * To extend:
+ * - Add new domains/questions in solar-risk-calculator.json.
+ * - Update riskCalculator.getQuestionsByStep(...) if you change the step structure.
  */
 
 const RISK_CONFIG_URL = "/config/solar-risk-calculator.json";
@@ -92,7 +100,7 @@ const wizardState = {
 };
 
 // Lightweight risk calculator (MVP) that is now wired to the UI.
-export const riskCalculator = {
+const riskCalculator = {
   async initRiskCalculator(configUrl = RISK_CONFIG_URL) {
     const remoteConfig = await loadRiskConfig(configUrl);
     const effectiveConfig = remoteConfig ?? cloneConfig(EMBEDDED_RISK_CONFIG);
@@ -168,6 +176,7 @@ export const riskCalculator = {
   }
 };
 
+// Public entry point used by docs/solar/plant/index.html.
 export async function initSolarRiskCalculatorPage(root = document) {
   try {
     await riskCalculator.initRiskCalculator();
