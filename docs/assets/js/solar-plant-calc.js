@@ -1,994 +1,382 @@
-const CONFIG_URL = "/config/solar-calculator.json";
+/**
+ * Solar Risk Calculator for Iran (SATBA/Mehrsun pre-check)
+ * This file now implements the risk-focused questionnaire and wizard UI.
+ * The previous financial/economic calculator has been retired from docs/solar/plant/index.html.
+ */
 
-const EMBEDDED_FALLBACK_CONFIG = Object.freeze({
-  legal: {
-    isObliged: true,
-    startYear: 1403,
-    rampPerYearPct: 5,
-    capSharePct: 20
-  },
-  pricing: {
-    greenBoard: 56000,
-    greenBoardGrowthPct: 20,
-    gridPrice: null
-  },
-  finance: {
-    capexPerKW: 320000000,
-    specificYield: 1600,
-    prLossPct: 15,
-    omPctOfRevenue: 3,
-    discountPct: 25,
-    horizonYears: 20
-  },
-  defaults: {
-    year: 1403,
-    annualConsumption: 1200000,
-    capacityKW: 500,
-    projectType: "rooftop"
-  }
+const RISK_CONFIG_URL = "/config/solar-risk-calculator.json";
+
+const EMBEDDED_RISK_CONFIG = Object.freeze({
+  domains: [
+    { id: "fx_capex", weight: 0.35, label: "ریسک ارزی و هزینه تجهیزات" },
+    { id: "policy_tariff", weight: 0.35, label: "ریسک قانون، تعرفه و ساتبا" },
+    { id: "finance_liquidity", weight: 0.3, label: "ریسک مالی و نقدینگی" }
+  ],
+  questions: [
+    {
+      id: "fx_import_share",
+      domain_id: "fx_capex",
+      label: "چه درصدی از تجهیزات پروژه وارداتی است؟",
+      options: [
+        { value: "lt25", label: "زیر ۲۵٪ وارداتی", score: 1 },
+        { value: "25_50", label: "بین ۲۵٪ تا ۵۰٪ وارداتی", score: 2 },
+        { value: "50_75", label: "بین ۵۰٪ تا ۷۵٪ وارداتی", score: 4 },
+        { value: "gt75", label: "بیش از ۷۵٪ وارداتی", score: 5 }
+      ]
+    },
+    {
+      id: "fx_supply_source",
+      domain_id: "fx_capex",
+      label: "منبع اصلی تأمین تجهیزات شما چیست؟",
+      options: [
+        { value: "local_contract", label: "تأمین داخلی با قرارداد بلندمدت", score: 1 },
+        { value: "mixed", label: "ترکیبی از داخلی و واردات", score: 3 },
+        { value: "spot_import", label: "خرید اسپات ارزی و واردات", score: 5 }
+      ]
+    },
+    {
+      id: "policy_contract_type",
+      domain_id: "policy_tariff",
+      label: "نوع قرارداد مدنظر شما با ساتبا چیست؟",
+      options: [
+        { value: "guaranteed_feed_in", label: "خرید تضمینی با تعرفه ثابت/تصاعدی", score: 1 },
+        { value: "indexed_feed_in", label: "قرارداد شاخص‌محور (تورم/ارز)", score: 2 },
+        { value: "merchant", label: "فروش آزاد/بازار رقابتی", score: 4 }
+      ]
+    },
+    {
+      id: "policy_tariff_visibility",
+      domain_id: "policy_tariff",
+      label: "دید شما نسبت به پایداری تعرفه‌ها و سیاست ساتبا چیست؟",
+      options: [
+        { value: "stable", label: "تصویب شده و پایدار (ریسک کم)", score: 1 },
+        { value: "uncertain", label: "محتمل ولی نامطمئن", score: 3 },
+        { value: "volatile", label: "تغییرات زیاد و غیرقابل پیش‌بینی", score: 5 }
+      ]
+    },
+    {
+      id: "finance_bank_dependency",
+      domain_id: "finance_liquidity",
+      label: "وابستگی پروژه به تسهیلات بانکی چقدر است؟",
+      options: [
+        { value: "lt25", label: "زیر ۲۵٪ سرمایه از تسهیلات", score: 1 },
+        { value: "25_50", label: "۲۵٪ تا ۵۰٪ سرمایه از تسهیلات", score: 3 },
+        { value: "gt50", label: "بیش از ۵۰٪ سرمایه از تسهیلات", score: 5 }
+      ]
+    },
+    {
+      id: "finance_liquidity_buffer",
+      domain_id: "finance_liquidity",
+      label: "نقدینگی پوشش‌دهنده تأخیرها و نوسان‌ها چقدر است؟",
+      options: [
+        { value: "gt12m", label: "بیش از ۱۲ ماه هزینه پوشش داده می‌شود", score: 1 },
+        { value: "6_12m", label: "بین ۶ تا ۱۲ ماه پوشش", score: 3 },
+        { value: "lt6m", label: "کمتر از ۶ ماه پوشش", score: 5 }
+      ]
+    }
+  ],
+  bands: [
+    { id: "low", min: 0, max: 30, label: "کم" },
+    { id: "medium", min: 30, max: 60, label: "متوسط" },
+    { id: "high", min: 60, max: 100, label: "زیاد" }
+  ]
 });
 
-const FIELD_IDS = {
-  year: "input-year",
-  annualConsumption: "input-annual-consumption",
-  isObliged: "input-is-obliged",
-  rampPerYearPct: "input-ramp-pct",
-  capSharePct: "input-cap-share-pct",
-  greenBoard: "input-green-board",
-  greenBoardGrowthPct: "input-green-board-growth",
-  gridPrice: "input-grid-price",
-  capexPerKW: "input-capex-per-kw",
-  capexTotal: "input-capex-total",
-  omPctOfRevenue: "input-om-pct",
-  discountPct: "input-discount-pct",
-  horizonYears: "input-horizon-years",
-  projectType: "input-project-type",
-  capacityKW: "input-capacity-kw",
-  specificYield: "input-specific-yield",
-  prLossPct: "input-pr-loss-pct"
+const riskState = { config: null };
+
+const wizardState = {
+  currentStep: 1,
+  totalSteps: 3,
+  answers: {},
+  questionsByStep: {}
 };
 
-const RESULT_IDS = {
-  totalCapex: "result-total-capex",
-  firstYearRevenue: "result-first-year-revenue",
-  firstYearOm: "result-first-year-om",
-  simplePayback: "result-payback-simple",
-  discountedPayback: "result-payback-discounted",
-  npv: "result-npv",
-  irr: "result-irr",
-  totalPenalty: "result-total-penalty",
-  producedEnergy: "result-produced-energy",
-  requiredEnergy: "result-required-energy"
-};
+// Lightweight risk calculator (MVP) that is now wired to the UI.
+export const riskCalculator = {
+  async initRiskCalculator(configUrl = RISK_CONFIG_URL) {
+    const remoteConfig = await loadRiskConfig(configUrl);
+    const effectiveConfig = remoteConfig ?? cloneConfig(EMBEDDED_RISK_CONFIG);
 
-const RESULT_BINDINGS = {
-  totalCapex: {
-    getter: (result) => result?.metrics?.totalCapex,
-    formatter: formatCurrency
-  },
-  firstYearRevenue: {
-    getter: (result) => result?.metrics?.firstYearRevenue,
-    formatter: formatCurrency
-  },
-  firstYearOm: {
-    getter: (result) => result?.metrics?.firstYearOM,
-    formatter: formatCurrency
-  },
-  simplePayback: {
-    getter: (result) => result?.metrics?.simplePaybackYears,
-    formatter: formatPaybackYears
-  },
-  discountedPayback: {
-    getter: (result) => result?.metrics?.discountedPaybackYears,
-    formatter: formatPaybackYears
-  },
-  npv: {
-    getter: (result) => result?.metrics?.npv,
-    formatter: formatCurrency
-  },
-  irr: {
-    getter: (result) => result?.metrics?.irr,
-    formatter: formatIrr
-  },
-  totalPenalty: {
-    getter: (result) => result?.metrics?.totalPenalty,
-    formatter: formatCurrency
-  },
-  producedEnergy: {
-    getter: (result) => result?.producedEnergy,
-    formatter: formatEnergy
-  },
-  requiredEnergy: {
-    getter: (result) => result?.penaltySeries?.[0]?.requiredEnergy ?? 0,
-    formatter: formatEnergy
-  }
-};
-
-const COMPARISON_IDS = {
-  investmentValue: "comparison-investment-value",
-  penaltyValue: "comparison-penalty-value",
-  investmentProgress: "bar-investment",
-  investmentProgressLabel: "bar-investment-label",
-  penaltyProgress: "bar-penalty",
-  penaltyProgressLabel: "bar-penalty-label",
-  ratioValue: "comparison-ratio"
-};
-
-const FALLBACK_DEFAULTS = {
-  year: new Date().getFullYear(),
-  annualConsumption: 1200000,
-  capacityKW: 500,
-  projectType: "rooftop",
-  horizonYears: 20
-};
-
-const numberFormatter = new Intl.NumberFormat("fa-IR", { maximumFractionDigits: 0 });
-const decimalFormatter = new Intl.NumberFormat("fa-IR", { maximumFractionDigits: 1 });
-const percentFormatter = new Intl.NumberFormat("fa-IR", { minimumFractionDigits: 0, maximumFractionDigits: 1 });
-
-const state = {
-  root: null,
-  config: null,
-  defaults: {},
-  form: null,
-  fields: {},
-  results: {},
-  comparison: {},
-  calcButton: null,
-  resetButton: null,
-  errorNode: null
-};
-
-export async function initSolarPlantCalculator(root = document) {
-  const config = await loadConfig(CONFIG_URL);
-  const effectiveConfig = config ?? cloneConfig(EMBEDDED_FALLBACK_CONFIG);
-
-  if (!effectiveConfig) {
-    console.error("solar-plant-calc: config not available");
-    return;
-  }
-
-  if (!config) {
-    console.warn("solar-plant-calc: remote config missing, using embedded defaults");
-  }
-
-  state.root = root;
-  state.config = effectiveConfig;
-  state.defaults = computeDefaults(effectiveConfig);
-
-  cacheDomReferences(root);
-  prefillForm();
-  attachListeners();
-
-  try {
-    const inputs = collectInputs();
-    const result = inputs ? calculateMetrics(effectiveConfig, inputs) : null;
-    if (result && validateResultPayload(result, inputs)) {
-      renderResults(result);
-    } else {
-      renderResults(null);
+    if (!effectiveConfig) {
+      console.error("risk-calculator: config not available");
+      return null;
     }
+
+    riskState.config = effectiveConfig;
+    console.log("risk-calculator: loaded", { fromRemote: Boolean(remoteConfig) });
+    return effectiveConfig;
+  },
+
+  computeRiskScore(answers = {}) {
+    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    if (!config) {
+      throw new Error("risk-calculator: config is missing; call initRiskCalculator first");
+    }
+
+    const domainScores = {};
+    let finalScore = 0;
+
+    for (const domain of config.domains ?? []) {
+      const domainQuestions = (config.questions ?? []).filter((question) => question.domain_id === domain.id);
+      const selectedScores = domainQuestions
+        .map((question) => {
+          const selectedValue = answers?.[question.id];
+          const option = (question.options ?? []).find((item) => item.value === selectedValue);
+          return Number(option?.score);
+        })
+        .filter((score) => Number.isFinite(score));
+
+      const averageScore = selectedScores.length ? sumArray(selectedScores) / selectedScores.length : null;
+      const normalizedScore = Number.isFinite(averageScore) ? normalizeScoreTo100(averageScore) : 0;
+      const weight = Number(domain?.weight) || 0;
+
+      domainScores[domain.id] = {
+        averageRaw: averageScore,
+        normalized: normalizedScore,
+        weight
+      };
+
+      finalScore += normalizedScore * weight;
+    }
+
+    const band = this.mapScoreToBand(finalScore);
+    const result = { finalScore, band, domainScores };
+    console.log("risk-calculator: computeRiskScore", result);
+    return result;
+  },
+
+  mapScoreToBand(score) {
+    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    const bands = config?.bands ?? [];
+    const matched = bands.find((band) => Number(score) >= Number(band.min) && Number(score) <= Number(band.max));
+    return matched ? { bandId: matched.id, bandLabel: matched.label } : { bandId: "unknown", bandLabel: "نامشخص" };
+  },
+
+  getQuestionsByStep() {
+    const config = riskState.config ?? cloneConfig(EMBEDDED_RISK_CONFIG);
+    if (!config) {
+      return {};
+    }
+
+    const byDomain = (domainId) => (config.questions ?? []).filter((question) => question.domain_id === domainId);
+
+    return {
+      1: byDomain("fx_capex"),
+      2: byDomain("policy_tariff"),
+      3: byDomain("finance_liquidity")
+    };
+  }
+};
+
+export async function initSolarRiskCalculatorPage(root = document) {
+  try {
+    await riskCalculator.initRiskCalculator();
+    initRiskWizardUI(root);
   } catch (error) {
-    console.error("solar-plant-calc: initial render failed", error);
-    showError("محاسبات اولیه با مشکل مواجه شد.");
+    console.error("solar-risk: failed to initialize", error);
   }
 }
 
-export async function loadConfig(url = CONFIG_URL) {
+function initRiskWizardUI(root = document) {
+  const wizard = root.getElementById("risk-wizard");
+  const stepsIndicator = root.getElementById("risk-steps-indicator");
+  const stepContent = root.getElementById("risk-step-content");
+  const prevBtn = root.getElementById("risk-prev-btn");
+  const nextBtn = root.getElementById("risk-next-btn");
+  const resultSection = root.getElementById("risk-result");
+  const scoreText = root.getElementById("risk-score-text");
+  const scoreBar = root.getElementById("risk-score-bar");
+  const interpretation = root.getElementById("risk-interpretation");
+  const validationMessage = root.getElementById("risk-validation-message");
+
+  if (!wizard || !stepsIndicator || !stepContent || !prevBtn || !nextBtn || !resultSection || !scoreText || !scoreBar || !interpretation) {
+    console.warn("solar-risk: required DOM nodes not found; wizard will not render");
+    return;
+  }
+
+  wizardState.questionsByStep = riskCalculator.getQuestionsByStep();
+  wizardState.totalSteps = Object.keys(wizardState.questionsByStep).length || 3;
+  wizardState.currentStep = 1;
+
+  const renderStep = () => {
+    renderStepIndicator(stepsIndicator);
+    renderQuestions(stepContent);
+    updateNavButtons();
+    hideValidation();
+  };
+
+  const renderStepIndicator = (container) => {
+    const fragments = [];
+    for (let step = 1; step <= wizardState.totalSteps; step += 1) {
+      const isActive = step === wizardState.currentStep;
+      const baseClasses = "px-3 py-2 rounded-lg border text-sm";
+      const activeClasses = isActive ? "bg-primary text-white border-primary" : "bg-slate-100 text-slate-700 border-slate-200";
+      fragments.push(`<span class="${baseClasses} ${activeClasses}">گام ${step} از ${wizardState.totalSteps}</span>`);
+    }
+    container.innerHTML = fragments.join("");
+  };
+
+  const renderQuestions = (container) => {
+    const questions = wizardState.questionsByStep[wizardState.currentStep] || [];
+    container.innerHTML = "";
+
+    questions.forEach((question) => {
+      const fieldset = document.createElement("fieldset");
+      fieldset.className = "space-y-2 rounded-xl border border-slate-200 bg-white p-4";
+
+      const legend = document.createElement("legend");
+      legend.className = "text-base font-semibold text-slate-900";
+      legend.textContent = question.label;
+      fieldset.appendChild(legend);
+
+      const optionsWrapper = document.createElement("div");
+      optionsWrapper.className = "space-y-2";
+
+      (question.options || []).forEach((option) => {
+        const label = document.createElement("label");
+        label.className = "flex items-center gap-2 text-sm text-slate-800";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = question.id;
+        input.value = option.value;
+        input.className = "h-4 w-4 border-slate-300 text-primary focus:ring-primary";
+        input.checked = wizardState.answers[question.id] === option.value;
+
+        label.appendChild(input);
+
+        const text = document.createElement("span");
+        text.textContent = option.label;
+        label.appendChild(text);
+
+        optionsWrapper.appendChild(label);
+      });
+
+      fieldset.appendChild(optionsWrapper);
+      container.appendChild(fieldset);
+    });
+  };
+
+  const collectStepAnswers = () => {
+    const questions = wizardState.questionsByStep[wizardState.currentStep] || [];
+    const stepAnswers = {};
+    for (const question of questions) {
+      const selected = root.querySelector(`input[name="${question.id}"]:checked`);
+      if (!selected) {
+        return null;
+      }
+      stepAnswers[question.id] = selected.value;
+    }
+    return stepAnswers;
+  };
+
+  const hideWizardShowResult = (scoreResult) => {
+    wizard.classList.add("hidden");
+    resultSection.classList.remove("hidden");
+
+    const safeScore = clamp(Math.round(scoreResult.finalScore), 0, 100);
+    const bandLabel = scoreResult.band?.bandLabel ?? "نامشخص";
+
+    const progressStep = clamp(Math.round(safeScore / 5) * 5, 0, 100);
+
+    scoreText.textContent = `امتیاز ریسک شما: ${safeScore} از ۱۰۰ – سطح ریسک: ${bandLabel}`;
+    scoreBar.setAttribute("data-progress", String(progressStep));
+    interpretation.textContent = buildInterpretation(scoreResult.band?.bandId);
+  };
+
+  const showValidation = (message) => {
+    if (!validationMessage) return;
+    validationMessage.textContent = message;
+    validationMessage.classList.remove("hidden");
+  };
+
+  const hideValidation = () => {
+    if (!validationMessage) return;
+    validationMessage.textContent = "";
+    validationMessage.classList.add("hidden");
+  };
+
+  const updateNavButtons = () => {
+    prevBtn.disabled = wizardState.currentStep === 1;
+    nextBtn.textContent = wizardState.currentStep === wizardState.totalSteps ? "محاسبه ریسک" : "مرحله بعد";
+  };
+
+  prevBtn.addEventListener("click", () => {
+    if (wizardState.currentStep <= 1) return;
+    wizardState.currentStep -= 1;
+    renderStep();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    hideValidation();
+    const stepAnswers = collectStepAnswers();
+    if (!stepAnswers) {
+      showValidation("لطفاً به همه پرسش‌های این مرحله پاسخ دهید.");
+      return;
+    }
+
+    wizardState.answers = { ...wizardState.answers, ...stepAnswers };
+
+    if (wizardState.currentStep < wizardState.totalSteps) {
+      wizardState.currentStep += 1;
+      renderStep();
+      return;
+    }
+
+    const scoreResult = riskCalculator.computeRiskScore(wizardState.answers);
+    hideWizardShowResult(scoreResult);
+  });
+
+  renderStep();
+}
+
+function buildInterpretation(bandId) {
+  switch (bandId) {
+    case "low":
+      return "ریسک پروژه در محدوده قابل‌قبول برای سرمایه‌گذاران محافظه‌کار است؛ می‌توانید روی تکمیل مدارک ساتبا تمرکز کنید.";
+    case "medium":
+      return "برخی حوزه‌ها نیاز به پوشش یا مذاکره دارند؛ پیش از ثبت نهایی در مهرسان، سناریوهای کاهش ریسک را بررسی کنید.";
+    case "high":
+      return "سطح ریسک بالا است و بدون برنامه پوشش ارزی، تعهدات ساتبا یا نقدینگی کافی ممکن است پروژه پایدار نباشد.";
+    default:
+      return "نتیجه مشخص نیست؛ تنظیمات را دوباره بررسی کنید.";
+  }
+}
+
+async function loadRiskConfig(url = RISK_CONFIG_URL) {
   try {
     const response = await fetch(url, { cache: "no-store" });
     if (!response.ok) {
-      throw new Error(`Failed to load config: ${response.status}`);
+      throw new Error(`Failed to load risk config: ${response.status}`);
     }
     return await response.json();
   } catch (error) {
-    console.error("solar-plant-calc: loadConfig error", error);
+    console.error("risk-calculator: loadRiskConfig error", error);
     return null;
   }
 }
 
-export function calculateMetrics(config, inputs = {}) {
-  if (!config) {
-    throw new Error("calculateMetrics requires a config object");
-  }
-
-  const defaults = computeDefaults(config);
-
-  const legal = {
-    ...config.legal,
-    isObliged: inputs.isObliged ?? defaults.isObliged ?? true,
-    rampPerYearPct: fallbackNumber(inputs.rampPerYearPct, config.legal?.rampPerYearPct),
-    capSharePct: fallbackNumber(inputs.capSharePct, config.legal?.capSharePct)
-  };
-
-  const pricing = {
-    ...config.pricing,
-    greenBoard: fallbackNumber(inputs.greenBoard, config.pricing?.greenBoard),
-    greenBoardGrowthPct: fallbackNumber(inputs.greenBoardGrowthPct, config.pricing?.greenBoardGrowthPct),
-    gridPrice: toNullableNumber(inputs.gridPrice, config.pricing?.gridPrice)
-  };
-
-  const finance = {
-    ...config.finance,
-    capexPerKW: fallbackNumber(inputs.capexPerKW, config.finance?.capexPerKW),
-    specificYield: fallbackNumber(inputs.specificYield, config.finance?.specificYield),
-    prLossPct: fallbackNumber(inputs.prLossPct, config.finance?.prLossPct),
-    omPctOfRevenue: fallbackNumber(inputs.omPctOfRevenue, config.finance?.omPctOfRevenue),
-    discountPct: fallbackNumber(inputs.discountPct, config.finance?.discountPct),
-    horizonYears: Math.max(1, Math.round(fallbackNumber(inputs.horizonYears, config.finance?.horizonYears ?? FALLBACK_DEFAULTS.horizonYears)))
-  };
-
-  const scenario = {
-    year: Math.round(fallbackNumber(inputs.year, defaults.year)),
-    annualConsumption: fallbackNumber(inputs.annualConsumption, defaults.annualConsumption),
-    projectType: inputs.projectType || defaults.projectType,
-    capacityKW: fallbackNumber(inputs.capacityKW, defaults.capacityKW)
-  };
-
-  const manualCapexTotal = parseNumber(inputs.capexTotal);
-  const impliedCapex = finance.capexPerKW * scenario.capacityKW;
-  const totalCapex = Number.isFinite(manualCapexTotal) ? manualCapexTotal : impliedCapex;
-  scenario.totalCapex = totalCapex;
-
-  const producedEnergy = computeProducedEnergy(scenario.capacityKW, finance.specificYield, finance.prLossPct);
-  if (scenario.capacityKW > 0 && finance.specificYield > 0 && producedEnergy <= 0) {
-    console.warn("solar-plant-calc: انرژی تولیدی صفر/منفی با ظرفیت و بازده مثبت", {
-      capacityKW: scenario.capacityKW,
-      specificYield: finance.specificYield,
-      prLossPct: finance.prLossPct,
-      producedEnergy
-    });
-  }
-
-  const penaltySeries = computePenaltySeries({
-    year: scenario.year,
-    horizonYears: finance.horizonYears,
-    annualConsumption: scenario.annualConsumption,
-    legal,
-    pricing,
-    producedEnergy
-  });
-
-  const revenueSeries = computeRevenueSeries({
-    producedEnergy,
-    pricing,
-    horizonYears: finance.horizonYears
-  });
-
-  const omSeries = revenueSeries.map((value) => value * (finance.omPctOfRevenue / 100));
-
-  const cashflows = buildCashflows({
-    capexTotal: totalCapex,
-    revenueSeries,
-    omSeries
-  });
-
-  const discountedCashflows = discountCashflows(cashflows, finance.discountPct);
-  const npv = sumArray(discountedCashflows);
-  const simplePaybackYears = computePayback(cashflows);
-  const discountedPaybackYears = computePayback(discountedCashflows);
-  const irr = computeIrr(cashflows);
-
-  const totalPenalty = penaltySeries.reduce((acc, item) => acc + item.penalty, 0);
-
-  return {
-    scenario,
-    legal,
-    pricing,
-    finance,
-    producedEnergy,
-    penaltySeries,
-    revenueSeries,
-    omSeries,
-    cashflows,
-    discountedCashflows,
-    metrics: {
-      totalCapex,
-      firstYearRevenue: revenueSeries[0] ?? 0,
-      firstYearOM: omSeries[0] ?? 0,
-      simplePaybackYears,
-      discountedPaybackYears,
-      npv,
-      irr,
-      totalPenalty,
-      firstYearPenalty: penaltySeries[0]?.penalty ?? 0
-    }
-  };
-}
-
-export function annualRequiredShare(year, legal) {
-  if (!legal || !legal.isObliged) {
-    return 0;
-  }
-
-  const startYear = Number(legal.startYear) || 0;
-  if (year < startYear) {
-    return 0;
-  }
-
-  const ramp = Number(legal.rampPerYearPct) || 0;
-  const baseShare = Number(legal.capSharePct) || 0;
-  const capShareMax = isFiniteNumber(legal.capSharePctMax) ? Number(legal.capSharePctMax) : baseShare;
-
-  const yearsSinceStart = year - startYear;
-  const requiredShare = baseShare + yearsSinceStart * ramp;
-
-  return Math.max(0, Math.min(capShareMax, requiredShare));
-}
-
-export function computeProducedEnergy(capacityKW, specificYield, prLossPct) {
-  const capacity = Number(capacityKW) || 0;
-  const yieldValue = Number(specificYield) || 0;
-  const loss = Number(prLossPct) || 0;
-  const gross = capacity * yieldValue;
-  return gross * (1 - loss / 100);
-}
-
-export function computePenaltySeries({ year, horizonYears, annualConsumption, legal, pricing, producedEnergy }) {
-  const rows = [];
-  const growthFactor = 1 + ((Number(pricing.greenBoardGrowthPct) || 0) / 100);
-  const basePenaltyPrice = Number(pricing.greenBoard) || 0;
-  const consumption = Number(annualConsumption) || 0;
-
-  for (let index = 0; index < horizonYears; index += 1) {
-    const calendarYear = year + index;
-    const requiredSharePct = annualRequiredShare(calendarYear, legal);
-    const requiredEnergy = (requiredSharePct / 100) * consumption;
-    const penaltyPrice = basePenaltyPrice * Math.pow(growthFactor, index);
-    const shortageEnergy = Math.max(requiredEnergy - producedEnergy, 0);
-    const penalty = shortageEnergy * penaltyPrice;
-
-    rows.push({
-      index,
-      calendarYear,
-      requiredSharePct,
-      requiredEnergy,
-      producedEnergy,
-      shortageEnergy,
-      penalty,
-      penaltyPrice
-    });
-  }
-
-  return rows;
-}
-
-export function computeRevenueSeries({ producedEnergy, pricing, horizonYears }) {
-  const rows = [];
-  const basePrice = isFiniteNumber(pricing.gridPrice) ? Number(pricing.gridPrice) : Number(pricing.greenBoard) || 0;
-  const useGridPrice = isFiniteNumber(pricing.gridPrice);
-  const growthFactor = 1 + ((Number(pricing.greenBoardGrowthPct) || 0) / 100);
-  const energy = Number(producedEnergy) || 0;
-
-  for (let index = 0; index < horizonYears; index += 1) {
-    const price = useGridPrice ? basePrice : basePrice * Math.pow(growthFactor, index);
-    rows.push(energy * price);
-  }
-
-  return rows;
-}
-
-export function buildCashflows({ capexTotal, revenueSeries, omSeries }) {
-  const flows = [];
-  const investment = Number(capexTotal) || 0;
-  flows.push(-investment);
-
-  for (let index = 0; index < revenueSeries.length; index += 1) {
-    const revenue = Number(revenueSeries[index]) || 0;
-    const omCost = Number(omSeries[index]) || 0;
-    flows.push(revenue - omCost);
-  }
-
-  return flows;
-}
-
-export function discountCashflows(flows, discountPct) {
-  const rate = (Number(discountPct) || 0) / 100;
-  return flows.map((value, index) => value / Math.pow(1 + rate, index));
-}
-
-export function computeNpv(flows, discountPct) {
-  return sumArray(discountCashflows(flows, discountPct));
-}
-
-export function computePayback(flows) {
-  let cumulative = 0;
-  let previousCumulative = 0;
-
-  for (let index = 0; index < flows.length; index += 1) {
-    previousCumulative = cumulative;
-    cumulative += flows[index];
-
-    if (cumulative >= 0) {
-      if (index === 0) {
-        return 0;
-      }
-      const yearlyFlow = flows[index];
-      if (!yearlyFlow) {
-        return index - 1;
-      }
-      const fraction = (0 - previousCumulative) / yearlyFlow;
-      return Math.max(0, index - 1 + fraction);
-    }
-  }
-
-  return null;
-}
-
-export function computeIrr(flows, options = {}) {
-  const hasPositive = flows.some((value) => value > 0);
-  const hasNegative = flows.some((value) => value < 0);
-  if (!hasPositive || !hasNegative) {
-    return null;
-  }
-
-  const tolerance = options.tolerance ?? 1e-7;
-  const maxIterations = options.maxIterations ?? 100;
-  let lower = options.minRate ?? -0.99;
-  let upper = options.maxRate ?? 1.0;
-  let npvLower = npvWithRate(flows, lower);
-  let npvUpper = npvWithRate(flows, upper);
-
-  if (npvLower * npvUpper > 0) {
-    return null;
-  }
-
-  let rate = lower;
-
-  for (let iteration = 0; iteration < maxIterations; iteration += 1) {
-    rate = (lower + upper) / 2;
-    const npvMid = npvWithRate(flows, rate);
-
-    if (Math.abs(npvMid) <= tolerance) {
-      return rate;
-    }
-
-    if (npvMid * npvLower < 0) {
-      upper = rate;
-      npvUpper = npvMid;
-    } else {
-      lower = rate;
-      npvLower = npvMid;
-    }
-  }
-
-  return rate;
-}
-
-function npvWithRate(flows, rate) {
-  return flows.reduce((acc, value, index) => acc + value / Math.pow(1 + rate, index), 0);
-}
-
-function computeDefaults(config) {
-  const base = config?.defaults ?? {};
-
-  const defaults = {
-    year: fallbackNumber(base.year, config.legal?.startYear ?? FALLBACK_DEFAULTS.year),
-    annualConsumption: fallbackNumber(base.annualConsumption, FALLBACK_DEFAULTS.annualConsumption),
-    isObliged: typeof base.isObliged === "boolean" ? base.isObliged : config.legal?.isObliged ?? true,
-    rampPerYearPct: fallbackNumber(base.rampPerYearPct, config.legal?.rampPerYearPct),
-    capSharePct: fallbackNumber(base.capSharePct, config.legal?.capSharePct),
-    greenBoard: fallbackNumber(base.greenBoard, config.pricing?.greenBoard),
-    greenBoardGrowthPct: fallbackNumber(base.greenBoardGrowthPct, config.pricing?.greenBoardGrowthPct),
-    gridPrice: toNullableNumber(base.gridPrice, config.pricing?.gridPrice),
-    capexPerKW: fallbackNumber(base.capexPerKW, config.finance?.capexPerKW),
-    capexTotal: toNullableNumber(base.capexTotal),
-    omPctOfRevenue: fallbackNumber(base.omPctOfRevenue, config.finance?.omPctOfRevenue),
-    discountPct: fallbackNumber(base.discountPct, config.finance?.discountPct),
-    horizonYears: fallbackNumber(base.horizonYears, config.finance?.horizonYears ?? FALLBACK_DEFAULTS.horizonYears),
-    projectType: base.projectType || FALLBACK_DEFAULTS.projectType,
-    capacityKW: fallbackNumber(base.capacityKW, FALLBACK_DEFAULTS.capacityKW),
-    specificYield: fallbackNumber(base.specificYield, config.finance?.specificYield),
-    prLossPct: fallbackNumber(base.prLossPct, config.finance?.prLossPct)
-  };
-
-  return defaults;
-}
-
-function cacheDomReferences(root) {
-  state.form = root.querySelector("[data-solar-form]");
-  state.calcButton = root.querySelector('[data-action="calculate"]');
-  state.resetButton = root.querySelector('[data-action="reset"]');
-  state.errorNode = root.querySelector('[data-solar-error]');
-
-  for (const [key, id] of Object.entries(FIELD_IDS)) {
-    state.fields[key] = root.getElementById(id) || null;
-  }
-
-  for (const [key, id] of Object.entries(RESULT_IDS)) {
-    state.results[key] = root.querySelector(`[data-result="${key}"]`) || (id ? root.getElementById(id) : null);
-  }
-
-  const getComparisonNode = (key) =>
-    root.querySelector(`[data-comparison="${key}"]`) || (COMPARISON_IDS[key] ? root.getElementById(COMPARISON_IDS[key]) : null);
-
-  state.comparison = {
-    investmentValue: getComparisonNode("investmentValue"),
-    penaltyValue: getComparisonNode("penaltyValue"),
-    investmentProgress: getComparisonNode("investmentProgress"),
-    investmentProgressLabel: getComparisonNode("investmentProgressLabel"),
-    penaltyProgress: getComparisonNode("penaltyProgress"),
-    penaltyProgressLabel: getComparisonNode("penaltyProgressLabel"),
-    ratioValue: getComparisonNode("ratioValue")
-  };
-}
-
-function prefillForm() {
-  const defaults = state.defaults;
-
-  Object.entries(FIELD_IDS).forEach(([key, id]) => {
-    const field = state.fields[key];
-    if (!field) {
-      return;
-    }
-
-    if (key === "isObliged") {
-      field.checked = Boolean(defaults.isObliged);
-      return;
-    }
-
-    const value = defaults[key];
-    if (value === null || value === undefined || Number.isNaN(value)) {
-      field.value = "";
-      return;
-    }
-
-    if (typeof value === "number") {
-      field.value = value;
-    } else {
-      field.value = value;
-    }
-  });
-}
-
-function attachListeners() {
-  if (state.calcButton && state.form) {
-    state.calcButton.addEventListener("click", () => {
-      state.form?.requestSubmit();
-    });
-  }
-
-  if (state.form) {
-    state.form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      handleCalculate();
-    });
-  }
-
-  if (state.resetButton) {
-    state.resetButton.addEventListener("click", () => {
-      handleReset();
-    });
-  }
-}
-
-function handleCalculate() {
-  clearError();
-  try {
-    const inputs = collectInputs();
-    if (!inputs) {
-      renderResults(null);
-      return;
-    }
-    const result = calculateMetrics(state.config, inputs);
-    if (!validateResultPayload(result, inputs)) {
-      showError("نتایج محاسبه نشد؛ لطفاً ورودی‌ها را بررسی کنید.");
-      renderResults(null);
-      return;
-    }
-    renderResults(result);
-  } catch (error) {
-    console.error("solar-plant-calc: calculation failed", error);
-    showError("بررسی ورودی‌ها یا فرمول‌ها لازم است.");
-  }
-}
-
-function handleReset() {
-  state.form?.reset();
-  prefillForm();
-  renderFieldErrors({});
-  clearError();
-  try {
-    const inputs = collectInputs();
-    if (!inputs) {
-      renderResults(null);
-      return;
-    }
-    const result = calculateMetrics(state.config, inputs);
-    if (!validateResultPayload(result, inputs)) {
-      renderResults(null);
-      return;
-    }
-    renderResults(result);
-  } catch (error) {
-    console.error("solar-plant-calc: reset calculation failed", error);
-  }
-}
-
-function collectInputs() {
-  const values = {};
-
-  values.year = parseNumber(state.fields.year?.value);
-  values.annualConsumption = parseNumber(state.fields.annualConsumption?.value);
-  values.isObliged = Boolean(state.fields.isObliged?.checked);
-  values.rampPerYearPct = parseNumber(state.fields.rampPerYearPct?.value);
-  values.capSharePct = parseNumber(state.fields.capSharePct?.value);
-  values.greenBoard = parseNumber(state.fields.greenBoard?.value);
-  values.greenBoardGrowthPct = parseNumber(state.fields.greenBoardGrowthPct?.value);
-  values.gridPrice = parseNumber(state.fields.gridPrice?.value);
-  values.capexPerKW = parseNumber(state.fields.capexPerKW?.value);
-  values.capexTotal = parseNumber(state.fields.capexTotal?.value);
-  values.omPctOfRevenue = parseNumber(state.fields.omPctOfRevenue?.value);
-  values.discountPct = parseNumber(state.fields.discountPct?.value);
-  values.horizonYears = parseNumber(state.fields.horizonYears?.value);
-  values.projectType = state.fields.projectType?.value || "";
-  values.capacityKW = parseNumber(state.fields.capacityKW?.value);
-  values.specificYield = parseNumber(state.fields.specificYield?.value);
-  values.prLossPct = parseNumber(state.fields.prLossPct?.value);
-
-  const validation = validateSolarInputs(values);
-  renderFieldErrors(validation.errors);
-  if (!validation.valid) {
-    showError("لطفاً خطاهای مشخص‌شده را برطرف کنید.");
-    return null;
-  }
-  clearError();
-
-  return values;
-}
-
-function validateSolarInputs(values) {
-  const errors = {};
-
-  const rules = [
-    { key: "year", min: 1300, max: 1500, required: true },
-    { key: "annualConsumption", min: 0, max: 100000000, required: true, positive: true },
-    { key: "rampPerYearPct", min: 0, max: 100, required: true },
-    { key: "capSharePct", min: 0, max: 100, required: true },
-    { key: "greenBoard", min: 0, max: 500000, required: true },
-    { key: "greenBoardGrowthPct", min: 0, max: 100, required: true },
-    { key: "gridPrice", min: 0, max: 500000, required: false },
-    { key: "capexPerKW", min: 0, max: 10000000000, required: true, positive: true },
-    { key: "capexTotal", min: 0, max: 1000000000000, required: false, positive: true },
-    { key: "omPctOfRevenue", min: 0, max: 100, required: true },
-    { key: "discountPct", min: 0, max: 100, required: true },
-    { key: "horizonYears", min: 1, max: 40, required: true, positive: true },
-    { key: "capacityKW", min: 0, max: 100000, required: true, positive: true },
-    { key: "specificYield", min: 0, max: 3000, required: true, positive: true },
-    { key: "prLossPct", min: 0, max: 100, required: true }
-  ];
-
-  for (const rule of rules) {
-    const value = values[rule.key];
-    const empty = value === null || value === undefined || value === "";
-    if (rule.required && (empty || !Number.isFinite(value))) {
-      errors[rule.key] = "این فیلد الزامی است";
-      continue;
-    }
-    if (!rule.required && empty) {
-      continue;
-    }
-    if (rule.positive && Number(value) <= 0) {
-      errors[rule.key] = "مقدار باید بزرگ‌تر از صفر باشد";
-      continue;
-    }
-    if ((rule.min !== undefined && Number(value) < rule.min) || (rule.max !== undefined && Number(value) > rule.max)) {
-      const min = rule.min ?? "";
-      const max = rule.max ?? "";
-      errors[rule.key] = `باید بین ${min} و ${max} باشد`;
-      continue;
-    }
-  }
-
-  return { valid: Object.keys(errors).length === 0, errors };
-}
-
-function validateResultPayload(result, inputs) {
-  if (!result || !result.metrics) {
-    console.error("solar-plant-calc: نتیجه محاسبه وجود ندارد", { result, inputs });
-    return false;
-  }
-
-  const metrics = result.metrics;
-  const numericFields = [
-    metrics.totalCapex,
-    metrics.firstYearRevenue,
-    metrics.firstYearOM,
-    metrics.simplePaybackYears,
-    metrics.discountedPaybackYears,
-    metrics.npv,
-    metrics.irr,
-    metrics.totalPenalty,
-    result.producedEnergy,
-    result.penaltySeries?.[0]?.requiredEnergy ?? 0
-  ];
-
-  const allFinite = numericFields.every((value) => Number.isFinite(Number(value)) || value === null);
-  if (!allFinite) {
-    console.error("solar-plant-calc: مقادیر خروجی نامعتبر", { metrics, inputs });
-    return false;
-  }
-
-  if (Number(inputs.capacityKW) > 0 && Number(metrics.firstYearRevenue) <= 0) {
-    console.warn("solar-plant-calc: درآمد سال اول صفر/منفی در حالی‌که ظرفیت مثبت است", {
-      capacityKW: inputs.capacityKW,
-      specificYield: inputs.specificYield,
-      firstYearRevenue: metrics.firstYearRevenue
-    });
-  }
-
-  return true;
-}
-
-function renderFieldErrors(errors = {}) {
-  Object.keys(FIELD_IDS).forEach((key) => {
-    setFieldError(key, errors[key]);
-  });
-}
-
-function setFieldError(key, message) {
-  const id = FIELD_IDS[key];
-  const input = state.fields[key];
-  const errorEl = state.form?.querySelector(`[data-error-for="${id}"]`);
-  if (!input || !errorEl) {
-    return;
-  }
-
-  if (message) {
-    input.classList.add("input-error");
-    input.setAttribute("aria-invalid", "true");
-    if (!errorEl.id) {
-      errorEl.id = `error-${id}`;
-    }
-    const existing = input.getAttribute("aria-describedby") || "";
-    const tokens = new Set(existing.split(/\s+/).filter(Boolean));
-    tokens.add(errorEl.id);
-    input.setAttribute("aria-describedby", Array.from(tokens).join(" "));
-    errorEl.textContent = message;
-  } else {
-    input.classList.remove("input-error");
-    input.removeAttribute("aria-invalid");
-    errorEl.textContent = "";
-  }
-}
-
-function renderResults(result) {
-  if (!result) {
-    Object.keys(RESULT_BINDINGS).forEach((key) => setResultText(key, "—"));
-    renderComparison(null);
-    return;
-  }
-
-  for (const [key, binding] of Object.entries(RESULT_BINDINGS)) {
-    const formattedValue = binding.formatter(binding.getter(result));
-    setResultText(key, formattedValue);
-  }
-
-  renderComparison(result.metrics);
-}
-
-function renderComparison(metrics) {
-  if (!metrics) {
-    setComparisonText("investmentValue", "—");
-    setComparisonText("penaltyValue", "—");
-    setComparisonProgress("investmentProgress", 0, "investmentProgressLabel");
-    setComparisonProgress("penaltyProgress", 0, "penaltyProgressLabel");
-    setComparisonText("ratioValue", "—");
-    return;
-  }
-
-  const investment = Number(metrics.totalCapex) || 0;
-  const penalty = Number(metrics.totalPenalty) || 0;
-
-  setComparisonText("investmentValue", formatCurrency(investment));
-  setComparisonText("penaltyValue", formatCurrency(penalty));
-
-  const investmentPercent = investment > 0 ? 100 : 0;
-  const penaltyPercent = investment > 0
-    ? (penalty > 0 ? (penalty / investment) * 100 : 0)
-    : penalty > 0 ? 100 : 0;
-
-  setComparisonProgress("investmentProgress", investmentPercent, "investmentProgressLabel");
-  setComparisonProgress("penaltyProgress", penaltyPercent, "penaltyProgressLabel");
-
-  const ratioText = investment > 0 ? formatPercent(penalty / investment) : "—";
-  setComparisonText("ratioValue", ratioText);
-}
-
-function setResultText(key, value) {
-  const node = state.results[key];
-  if (!node) {
-    return;
-  }
-  if (node.textContent !== value) {
-    node.textContent = value;
-    node.setAttribute("data-flash", "");
-    window.setTimeout(() => {
-      node.removeAttribute("data-flash");
-    }, 600);
-  }
-}
-
-function setComparisonText(key, value) {
-  const node = state.comparison[key];
-  if (!node) {
-    return;
-  }
-  node.textContent = value;
-}
-
-function setComparisonProgress(progressKey, percent, labelKey) {
-  const progress = state.comparison[progressKey];
-  const label = labelKey ? state.comparison[labelKey] : null;
-  const clamped = clampPercent(percent);
-
-  if (progress) {
-    if (progress.max !== 100) {
-      progress.max = 100;
-    }
-    progress.value = clamped;
-  }
-
-  if (label) {
-    label.textContent = formatPercentLabel(clamped);
-  }
-}
-
-function clampPercent(value) {
-  const numeric = Number(value);
-  if (!Number.isFinite(numeric)) {
-    return 0;
-  }
-  return Math.max(0, Math.min(100, Math.round(numeric)));
-}
-
-function formatPercentLabel(percentValue) {
-  return `${percentFormatter.format(percentValue)}٪`;
-}
-
-function formatCurrency(value) {
-  if (!Number.isFinite(Number(value))) {
-    return "—";
-  }
-  return `${numberFormatter.format(Math.round(Number(value)))} ریال`;
-}
-
-function formatEnergy(value) {
-  if (!Number.isFinite(Number(value))) {
-    return "—";
-  }
-  return `${numberFormatter.format(Math.round(Number(value)))} کیلووات‌ساعت`;
-}
-
-function formatYears(value) {
-  if (value === null || value === undefined || !Number.isFinite(value)) {
-    return "—";
-  }
-  return `${decimalFormatter.format(value)} سال`;
-}
-
-function formatPercent(value) {
-  if (value === null || value === undefined) {
-    return "—";
-  }
-  const numericValue = Number(value);
-  if (!Number.isFinite(numericValue)) {
-    return "—";
-  }
-  const display = numericValue * 100;
-  return `${percentFormatter.format(display)}٪`;
-}
-
-function formatPaybackYears(value) {
-  if (value === null || value === undefined || !Number.isFinite(value)) {
-    return "بازگشت سرمایه در افق تحلیل رخ نمی‌دهد";
-  }
-  return formatYears(value);
-}
-
-function formatIrr(value) {
-  if (value === null || value === undefined || !Number.isFinite(value)) {
-    return "بازده داخلی قابل محاسبه نیست (جریان نقدی منفی در افق تحلیل)";
-  }
-  return formatPercent(value);
-}
-
-function fallbackNumber(value, fallback) {
-  const numeric = parseNumber(value);
-  if (Number.isFinite(numeric)) {
-    return numeric;
-  }
-  if (Number.isFinite(Number(fallback))) {
-    return Number(fallback);
-  }
-  return 0;
-}
-
-function toNullableNumber(value, fallback) {
-  const numeric = parseNumber(value);
-  if (Number.isFinite(numeric)) {
-    return numeric;
-  }
-  if (Number.isFinite(Number(fallback))) {
-    return Number(fallback);
-  }
-  return null;
-}
-
-function parseNumber(input) {
-  if (input === null || input === undefined) {
-    return null;
-  }
-  const normalized = normalizeDigits(String(input).trim()).replace(/,/g, "");
-  if (!normalized) {
-    return null;
-  }
-  const value = Number(normalized);
-  return Number.isFinite(value) ? value : null;
-}
-
-function normalizeDigits(value) {
-  const persian = {
-    "۰": "0",
-    "۱": "1",
-    "۲": "2",
-    "۳": "3",
-    "۴": "4",
-    "۵": "5",
-    "۶": "6",
-    "۷": "7",
-    "۸": "8",
-    "۹": "9",
-    "٠": "0",
-    "١": "1",
-    "٢": "2",
-    "٣": "3",
-    "٤": "4",
-    "٥": "5",
-    "٦": "6",
-    "٧": "7",
-    "٨": "8",
-    "٩": "9"
-  };
-  return value.replace(/[۰-۹٠-٩]/g, (char) => persian[char] ?? char);
+function cloneConfig(config) {
+  return JSON.parse(JSON.stringify(config));
 }
 
 function sumArray(values) {
   return values.reduce((acc, value) => acc + (Number(value) || 0), 0);
 }
 
-function clearError() {
-  if (state.errorNode) {
-    state.errorNode.textContent = "";
-    state.errorNode.classList.remove("visible");
+function normalizeScoreTo100(score) {
+  // Scores are on a 1–5 scale; normalize to 0–100 where 1 => 0 and 5 => 100.
+  const normalized = ((Number(score) - 1) / 4) * 100;
+  if (!Number.isFinite(normalized)) {
+    return 0;
   }
+  return Math.min(Math.max(normalized, 0), 100);
 }
 
-function showError(message) {
-  if (state.errorNode) {
-    state.errorNode.textContent = message;
-    state.errorNode.classList.add("visible");
-  }
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
-function isFiniteNumber(value) {
-  return Number.isFinite(Number(value));
-}
-
-function cloneConfig(config) {
-  if (!config) {
-    return null;
-  }
-  try {
-    return JSON.parse(JSON.stringify(config));
-  } catch (error) {
-    console.warn("solar-plant-calc: failed to clone fallback config", error);
-    return null;
-  }
-}
-
-if (typeof window !== "undefined") {
-  window.addEventListener("DOMContentLoaded", () => {
-    initSolarPlantCalculator();
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  initSolarRiskCalculatorPage();
+});

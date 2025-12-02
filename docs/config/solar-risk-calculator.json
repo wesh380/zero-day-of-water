@@ -1,0 +1,75 @@
+{
+  "domains": [
+    { "id": "fx_capex", "weight": 0.35, "label": "ریسک ارزی و هزینه تجهیزات" },
+    { "id": "policy_tariff", "weight": 0.35, "label": "ریسک قانون، تعرفه و ساتبا" },
+    { "id": "finance_liquidity", "weight": 0.30, "label": "ریسک مالی و نقدینگی" }
+  ],
+  "questions": [
+    {
+      "id": "fx_import_share",
+      "domain_id": "fx_capex",
+      "label": "چه درصدی از تجهیزات پروژه وارداتی است؟",
+      "options": [
+        { "value": "lt25", "label": "زیر ۲۵٪ وارداتی", "score": 1 },
+        { "value": "25_50", "label": "بین ۲۵٪ تا ۵۰٪ وارداتی", "score": 2 },
+        { "value": "50_75", "label": "بین ۵۰٪ تا ۷۵٪ وارداتی", "score": 4 },
+        { "value": "gt75", "label": "بیش از ۷۵٪ وارداتی", "score": 5 }
+      ]
+    },
+    {
+      "id": "fx_supply_source",
+      "domain_id": "fx_capex",
+      "label": "منبع اصلی تأمین تجهیزات شما چیست؟",
+      "options": [
+        { "value": "local_contract", "label": "تأمین داخلی با قرارداد بلندمدت", "score": 1 },
+        { "value": "mixed", "label": "ترکیبی از داخلی و واردات", "score": 3 },
+        { "value": "spot_import", "label": "خرید اسپات ارزی و واردات", "score": 5 }
+      ]
+    },
+    {
+      "id": "policy_contract_type",
+      "domain_id": "policy_tariff",
+      "label": "نوع قرارداد مدنظر شما با ساتبا چیست؟",
+      "options": [
+        { "value": "guaranteed_feed_in", "label": "خرید تضمینی با تعرفه ثابت/تصاعدی", "score": 1 },
+        { "value": "indexed_feed_in", "label": "قرارداد شاخص‌محور (تورم/ارز)", "score": 2 },
+        { "value": "merchant", "label": "فروش آزاد/بازار رقابتی", "score": 4 }
+      ]
+    },
+    {
+      "id": "policy_tariff_visibility",
+      "domain_id": "policy_tariff",
+      "label": "دید شما نسبت به پایداری تعرفه‌ها و سیاست ساتبا چیست؟",
+      "options": [
+        { "value": "stable", "label": "تصویب شده و پایدار (ریسک کم)", "score": 1 },
+        { "value": "uncertain", "label": "محتمل ولی نامطمئن", "score": 3 },
+        { "value": "volatile", "label": "تغییرات زیاد و غیرقابل پیش‌بینی", "score": 5 }
+      ]
+    },
+    {
+      "id": "finance_bank_dependency",
+      "domain_id": "finance_liquidity",
+      "label": "وابستگی پروژه به تسهیلات بانکی چقدر است؟",
+      "options": [
+        { "value": "lt25", "label": "زیر ۲۵٪ سرمایه از تسهیلات", "score": 1 },
+        { "value": "25_50", "label": "۲۵٪ تا ۵۰٪ سرمایه از تسهیلات", "score": 3 },
+        { "value": "gt50", "label": "بیش از ۵۰٪ سرمایه از تسهیلات", "score": 5 }
+      ]
+    },
+    {
+      "id": "finance_liquidity_buffer",
+      "domain_id": "finance_liquidity",
+      "label": "نقدینگی پوشش‌دهنده تأخیرها و نوسان‌ها چقدر است؟",
+      "options": [
+        { "value": "gt12m", "label": "بیش از ۱۲ ماه هزینه پوشش داده می‌شود", "score": 1 },
+        { "value": "6_12m", "label": "بین ۶ تا ۱۲ ماه پوشش", "score": 3 },
+        { "value": "lt6m", "label": "کمتر از ۶ ماه پوشش", "score": 5 }
+      ]
+    }
+  ],
+  "bands": [
+    { "id": "low", "min": 0, "max": 30, "label": "کم" },
+    { "id": "medium", "min": 30, "max": 60, "label": "متوسط" },
+    { "id": "high", "min": 60, "max": 100, "label": "زیاد" }
+  ]
+}
