@@ -85,278 +85,81 @@
 <main id="main" role="main" class="bg-background-light">
     <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
       <header class="mb-8 text-center space-y-3">
-        <h1 class="text-3xl font-bold text-slate-900">محاسبه‌گر نیروگاه خورشیدی</h1>
-        <p class="badge experimental-badge inline-block">نسخه آزمایشی – داده‌ها و فرمول‌ها در حال اعتبارسنجی هستند.</p>
+        <h1 class="text-3xl font-bold text-slate-900">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
+        <p class="badge experimental-badge inline-block">نسخه آزمایشی – سنجش سریع قبل از ورود به سامانه مهرسان.</p>
         <p class="text-muted-light text-sm sm:text-base">
-          تنظیمات پیش‌فرض از فایل پیکربندی خوانده می‌شود و با ورودی‌های شما ترکیب خواهد شد. پس از به‌روزرسانی اعداد، روی دکمه «محاسبه» کلیک کنید تا سناریوهای سرمایه‌گذاری و جریمه را ببینید.
+          سه حوزه اصلی ریسک (ارزی/تجهیزات، تعرفه و ساتبا، نقدینگی/تأمین مالی) را در سه گام پاسخ دهید تا امتیاز ریسک ۰ تا ۱۰۰ و تفسیر پیشنهادی دریافت کنید.
         </p>
       </header>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        <div class="lg:col-span-2 space-y-8">
-          <section class="bg-surface-light rounded-2xl border border-border-light shadow-sm p-6" aria-labelledby="inputs-title">
-            <div class="flex flex-col gap-2 mb-4">
-              <h2 id="inputs-title" class="text-2xl font-semibold text-slate-900">ورودی‌ها</h2>
-              <p class="text-muted-light text-sm">در حال حاضر، اعداد بر اساس یک سناریوی نمونه برای یک مصرف‌کننده صنعتی با مصرف سالانه حدود ۱٫۲ میلیون کیلووات‌ساعت و نیروگاه ۵۰۰ کیلوواتی تنظیم شده است. شما می‌توانید این اعداد را متناسب با وضعیت خودتان تغییر دهید.</p>
-            </div>
+      <section id="solar-risk-calculator" class="space-y-8">
+        <header>
+          <h1 class="text-2xl font-bold">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
+          <p class="text-sm text-slate-600">
+            قبل از ثبت طرح در سامانه مهرسان، سطح ریسک پروژه خود را در شرایط اقتصادی ایران بسنجید.
+          </p>
+        </header>
 
-            <form class="space-y-8" data-solar-form novalidate>
-              <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <fieldset class="md:col-span-1 xl:col-span-1 space-y-4" aria-label="ورودی‌های قانونی و مصرف">
-                  <div class="flex items-center gap-3 mb-2">
-                    <span class="material-icons-outlined text-indigo-500" aria-hidden>gavel</span>
-                    <h3 class="text-lg font-semibold text-indigo-700">قانون / مصرف</h3>
-                  </div>
-                  <div class="space-y-4">
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-year">سال ارزیابی</label>
-                      <input type="number" id="input-year" min="1300" max="1500" data-testid="input-year" placeholder="مثلاً ۱۴۰۳" aria-describedby="error-input-year" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="1403">
-                      <div class="text-xs text-red-600" data-error-for="input-year" id="error-input-year" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-annual-consumption">مصرف سالانه (کیلووات‌ساعت)</label>
-                      <input type="number" id="input-annual-consumption" min="0" max="100000000" step="1000" data-testid="input-annual-consumption" placeholder="مثلاً ۱٬۲۰۰٬۰۰۰" aria-describedby="error-input-annual-consumption" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="1200000">
-                      <div class="text-xs text-red-600" data-error-for="input-annual-consumption" id="error-input-annual-consumption" aria-live="polite"></div>
-                    </div>
-                    <div class="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 border border-border-light">
-                      <input type="checkbox" id="input-is-obliged" data-testid="input-is-obliged" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" checked>
-                      <label class="text-sm font-medium text-slate-700" for="input-is-obliged">ملزم به سهمیه سبز هستم</label>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-ramp-pct">افزایش سالانه سهم (%)</label>
-                      <input type="number" id="input-ramp-pct" min="0" max="100" step="0.1" data-testid="input-ramp-pct" placeholder="مثلاً ۵" aria-describedby="error-input-ramp-pct" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="5">
-                      <div class="text-xs text-red-600" data-error-for="input-ramp-pct" id="error-input-ramp-pct" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-cap-share-pct">سقف سهم سبز (%)</label>
-                      <input type="number" id="input-cap-share-pct" min="0" max="100" step="0.1" data-testid="input-cap-share-pct" placeholder="مثلاً ۲۰" aria-describedby="error-input-cap-share-pct" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="20">
-                      <div class="text-xs text-red-600" data-error-for="input-cap-share-pct" id="error-input-cap-share-pct" aria-live="polite"></div>
-                    </div>
-                  </div>
-                </fieldset>
+        <div id="risk-wizard" class="space-y-6">
+          <div id="risk-steps-indicator" class="flex gap-2 text-sm"></div>
 
-                <fieldset class="md:col-span-1 xl:col-span-1 space-y-4" aria-label="ورودی‌های مالی">
-                  <div class="flex items-center gap-3 mb-2">
-                    <span class="material-icons-outlined text-primary" aria-hidden>payments</span>
-                    <h3 class="text-lg font-semibold text-primary">مالی</h3>
-                  </div>
-                  <div class="space-y-4">
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-green-board-growth">رشد سالانه قیمت سبز (%)</label>
-                      <input type="number" id="input-green-board-growth" min="0" max="100" step="0.1" data-testid="input-green-board-growth" placeholder="مثلاً ۲۰" aria-describedby="error-input-green-board-growth" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="20">
-                      <div class="text-xs text-red-600" data-error-for="input-green-board-growth" id="error-input-green-board-growth" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-green-board">قیمت مصوب سبز (ریال/کیلووات‌ساعت)</label>
-                      <input type="number" id="input-green-board" min="0" max="500000" step="100" data-testid="input-green-board" placeholder="مثلاً ۵۶٬۰۰۰" aria-describedby="error-input-green-board" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="56000">
-                      <div class="text-xs text-red-600" data-error-for="input-green-board" id="error-input-green-board" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-grid-price">قیمت فروش به شبکه (در صورت وجود)</label>
-                      <input type="number" id="input-grid-price" min="0" max="500000" step="100" data-testid="input-grid-price" placeholder="مثلاً ۴۵٬۰۰۰" aria-describedby="error-input-grid-price" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary">
-                      <div class="text-xs text-red-600" data-error-for="input-grid-price" id="error-input-grid-price" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-capex-per-kw">سرمایه‌گذاری هر کیلووات (ریال)</label>
-                      <input type="number" id="input-capex-per-kw" min="0" max="10000000000" step="1000000" data-testid="input-capex-per-kw" placeholder="مثلاً ۳۲۰٬۰۰۰٬۰۰۰" aria-describedby="error-input-capex-per-kw" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="320000000">
-                      <div class="text-xs text-red-600" data-error-for="input-capex-per-kw" id="error-input-capex-per-kw" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-capex-total">سرمایه‌گذاری کل (در صورت محاسبه دستی)</label>
-                      <input type="number" id="input-capex-total" min="0" max="1000000000000" step="1000000" data-testid="input-capex-total" placeholder="مثلاً ۱۶۰٬۰۰۰٬۰۰۰٬۰۰۰" aria-describedby="error-input-capex-total" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary">
-                      <div class="text-xs text-red-600" data-error-for="input-capex-total" id="error-input-capex-total" aria-live="polite"></div>
-                      <small class="block text-xs text-muted-light">در صورت وارد کردن سرمایه‌گذاری کل، عدد فوق جایگزین حاصل‌ضرب ظرفیت × سرمایه‌گذاری هر کیلووات می‌شود.</small>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-om-pct">هزینه O&amp;M از درآمد (%)</label>
-                      <input type="number" id="input-om-pct" min="0" max="100" step="0.1" data-testid="input-om-pct" placeholder="مثلاً ۳" aria-describedby="error-input-om-pct" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="3">
-                      <div class="text-xs text-red-600" data-error-for="input-om-pct" id="error-input-om-pct" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-discount-pct">نرخ تنزیل (%)</label>
-                      <input type="number" id="input-discount-pct" min="0" max="100" step="0.1" data-testid="input-discount-pct" placeholder="مثلاً ۲۵" aria-describedby="error-input-discount-pct" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="25">
-                      <div class="text-xs text-red-600" data-error-for="input-discount-pct" id="error-input-discount-pct" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-horizon-years">دوره تحلیل (سال)</label>
-                      <input type="number" id="input-horizon-years" min="1" max="40" data-testid="input-horizon-years" placeholder="مثلاً ۲۰" aria-describedby="error-input-horizon-years" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="20">
-                      <div class="text-xs text-red-600" data-error-for="input-horizon-years" id="error-input-horizon-years" aria-live="polite"></div>
-                    </div>
-                  </div>
-                </fieldset>
+          <div id="risk-step-content" class="space-y-4"></div>
 
-                <fieldset class="md:col-span-1 xl:col-span-1 space-y-4" aria-label="ورودی‌های فنی">
-                  <div class="flex items-center gap-3 mb-2">
-                    <span class="material-icons-outlined text-teal-600" aria-hidden>settings</span>
-                    <h3 class="text-lg font-semibold text-teal-700">فنی</h3>
-                  </div>
-                  <div class="space-y-4">
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-project-type">نوع پروژه</label>
-                      <select id="input-project-type" data-testid="input-project-type" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary">
-                        <option value="rooftop">بام صنعتی</option>
-                        <option value="ground">نیروگاه زمینی</option>
-                        <option value="hybrid">هیبریدی / تجمیعی</option>
-                      </select>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-capacity-kw">ظرفیت پیشنهادی (کیلووات)</label>
-                      <input type="number" id="input-capacity-kw" min="0" max="100000" step="1" data-testid="input-capacity-kw" placeholder="مثلاً ۵۰۰" aria-describedby="error-input-capacity-kw" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="500">
-                      <div class="text-xs text-red-600" data-error-for="input-capacity-kw" id="error-input-capacity-kw" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-specific-yield">بازده ویژه (کیلووات‌ساعت/کیلووات)</label>
-                      <input type="number" id="input-specific-yield" min="0" max="3000" step="1" data-testid="input-specific-yield" placeholder="مثلاً ۱۶۰۰" aria-describedby="error-input-specific-yield" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="1600">
-                      <div class="text-xs text-red-600" data-error-for="input-specific-yield" id="error-input-specific-yield" aria-live="polite"></div>
-                    </div>
-                    <div class="space-y-1">
-                      <label class="text-sm font-medium text-slate-700" for="input-pr-loss-pct">اتلاف عملکردی PR (%)</label>
-                      <input type="number" id="input-pr-loss-pct" min="0" max="100" step="0.1" data-testid="input-pr-loss-pct" placeholder="مثلاً ۱۵" aria-describedby="error-input-pr-loss-pct" required class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" value="15">
-                      <div class="text-xs text-red-600" data-error-for="input-pr-loss-pct" id="error-input-pr-loss-pct" aria-live="polite"></div>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
+          <p id="risk-validation-message" class="text-sm text-red-600 hidden"></p>
 
-              <div class="flex flex-col gap-3 sm:flex-row sm:justify-end sm:items-center">
-                <div class="flex items-center gap-2 text-sm text-muted-light" aria-live="polite">
-                  <span id="solar-calc-loading" class="solar-calc-loading"></span>
-                  <span>مقادیر جدید را محاسبه یا بازنشانی کنید.</span>
-                </div>
-                <div class="flex flex-wrap gap-3 justify-end">
-                  <button type="button" class="rounded-lg border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100 transition" data-action="reset" data-testid="btn-reset">بازنشانی</button>
-                  <button type="submit" class="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-600" data-action="calculate" data-testid="btn-calculate">محاسبه</button>
-                </div>
-              </div>
-              <p class="text-sm text-red-600" data-solar-error role="alert">لطفاً مقادیر ورودی را تکمیل یا اصلاح کنید. در صورت تداوم خطا با تیم WESH360 تماس بگیرید.</p>
-            </form>
-          </section>
-
-          <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm">
-              <h3 class="text-lg font-semibold text-slate-900 mb-3">فرضیات و محدودیت‌های این ماشین‌حساب</h3>
-              <ul class="list-disc pe-5 space-y-2 text-sm text-muted-light">
-                <li>قیمت‌ها و نرخ‌ها بر اساس آخرین داده‌های تقریبی موجود در زمان توسعه ابزار تنظیم شده‌اند و ممکن است با مصوبات جدید تفاوت داشته باشند.</li>
-                <li>این نتایج یک برآورد اولیه هستند و جایگزین مشاوره تخصصی مالی، حقوقی یا مهندسی نمی‌شوند.</li>
-                <li>شرایط واقعی قرارداد، نرخ‌های بانکی، تعرفه‌ها و جریمه‌ها می‌تواند نتایج را به‌طور قابل توجهی تغییر دهد.</li>
-                <li>این صفحه بخشی از ماشین‌حساب‌های آزمایشی WESH360 است و در حال به‌روزرسانی و اعتبارسنجی مداوم است.</li>
-              </ul>
-            </article>
-            <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4">
-              <div>
-                <h4 class="text-base font-semibold text-slate-900">نحوه محاسبه الزام انرژی تجدیدپذیر</h4>
-                <p class="text-sm text-muted-light leading-relaxed">در صورت فعال بودن الزام، ماشین‌حساب از سال شروع انتخابی شما سهم پایه سبز را در نظر می‌گیرد، هر سال به همان میزان رشد ثابت اضافه می‌کند و سهم را در سقف تعیین‌شده نگه می‌دارد؛ اگر هنوز به سال شروع نرسیده باشیم یا الزام را غیرفعال کرده باشید، سهم صفر می‌شود. انرژی الزامی سالانه نیز حاصل‌ضرب همین سهم در مصرف سالانه شما است و مبنای مقایسه با تولید نیروگاه قرار می‌گیرد.</p>
-              </div>
-              <div>
-                <h4 class="text-base font-semibold text-slate-900">رشد سالانه سهم سبز</h4>
-                <p class="text-sm text-muted-light leading-relaxed">رشد سهم سبز خطی و با افزایشی ثابت است؛ یعنی درصدی که در «افزایش سالانه سهم» وارد می‌کنید، به‌صورت مقدار ثابت به سهم سال قبل افزوده می‌شود و رشد مرکب ندارد. به‌محض رسیدن سهم به سقف تعیین‌شده، مقدار ثابت می‌ماند تا زمانی که ورودی‌های شما تغییر کند.</p>
-              </div>
-              <div>
-                <h4 class="text-base font-semibold text-slate-900">نحوه محاسبه جریمه</h4>
-                <p class="text-sm text-muted-light leading-relaxed">در هر سال تحلیل، انرژی تولیدی نیروگاه (بر مبنای ظرفیت، بازده ویژه و تلفات PR) با انرژی الزامی همان سال مقایسه می‌شود و تنها کمبود مثبت در نظر گرفته می‌شود. این کمبود در قیمت مصوب سبز ضرب می‌شود؛ خود قیمت نیز بر اساس «رشد سالانه قیمت سبز» با یک درصد ثابت به‌روز می‌شود. بنابراین جریمه کل برابر با جمع سادهٔ کمبود هر سال در قیمت رشد‌یافته همان سال است.</p>
-              </div>
-              <div>
-                <h4 class="text-base font-semibold text-slate-900">نحوه محاسبه NPV، IRR و دوره بازگشت</h4>
-                <p class="text-sm text-muted-light leading-relaxed">جریان نقدی پروژه با یک خروجی اولیه برابر «سرمایه‌گذاری کل» (چه از ورودی دستی و چه از حاصل‌ضرب ظرفیت × CAPEX هر کیلووات) آغاز می‌شود و در سال‌های بعدی درآمد فروش برق منهای هزینه O&amp;M درصدی همان درآمد ثبت می‌گردد. ارزش فعلی خالص با تنزیل همین جریان بر اساس نرخ تنزیل ورودی محاسبه می‌شود، دوره بازگشت (ساده و تنزیلی) اولین سالی است که مجموع جریان‌ها مثبت می‌شود و IRR نیز از همین جریان نقدی استخراج می‌شود؛ اگر بازگشت سرمایه یا نرخ داخلی در افق تحلیل رخ ندهد، پیام توضیحی در کارت‌ها نشان داده خواهد شد.</p>
-              </div>
-            </article>
-          </section>
+          <div id="risk-nav-buttons" class="flex justify-between">
+            <button type="button" id="risk-prev-btn" class="btn-secondary">مرحله قبل</button>
+            <button type="button" id="risk-next-btn" class="btn-primary">مرحله بعد</button>
+          </div>
         </div>
 
-        <aside class="space-y-6">
-          <section aria-labelledby="results-title" class="rounded-2xl border border-border-light bg-white p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <h2 id="results-title" class="text-2xl font-semibold text-slate-900">نتایج</h2>
-              <span class="text-sm text-muted-light">اعداد پس از محاسبه به‌روزرسانی می‌شوند</span>
-            </div>
-            <div class="space-y-4" aria-live="polite">
-              <article class="rounded-xl border border-border-light bg-background-light p-4">
-                <p class="text-sm text-muted-light mb-1">سرمایه‌گذاری کل</p>
-                <p class="text-xl font-bold text-slate-900" id="result-total-capex" data-testid="result-total-capex" data-result="totalCapex">—</p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4">
-                <p class="text-sm text-muted-light mb-1">درآمد سال اول</p>
-                <p class="text-xl font-bold text-slate-900" id="result-first-year-revenue" data-testid="result-first-year-revenue" data-result="firstYearRevenue">—</p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4">
-                <p class="text-sm text-muted-light mb-1">هزینه O&amp;M سال اول</p>
-                <p class="text-xl font-bold text-slate-900" id="result-first-year-om" data-testid="result-first-year-om" data-result="firstYearOm">—</p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4 space-y-1">
-                <p class="text-sm text-muted-light">بازگشت سرمایه</p>
-                <p class="text-xl font-bold text-slate-900" id="result-payback-simple" data-testid="result-payback-simple" data-result="simplePayback">—</p>
-                <p class="text-xs text-muted-light">تنزیلی: <span id="result-payback-discounted" data-testid="result-payback-discounted" data-result="discountedPayback">—</span></p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4 space-y-1">
-                <p class="text-sm text-muted-light">ارزش فعلی خالص</p>
-                <p class="text-xl font-bold text-slate-900" id="result-npv" data-testid="result-npv" data-result="npv">—</p>
-                <p class="text-xs text-muted-light">نرخ بازده داخلی: <span id="result-irr" data-testid="result-irr" data-result="irr">—</span></p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4 space-y-1">
-                <p class="text-sm text-muted-light">انرژی تولیدی</p>
-                <p class="text-xl font-bold text-slate-900" id="result-produced-energy" data-testid="result-produced-energy" data-result="producedEnergy">—</p>
-                <p class="text-xs text-muted-light">مصرف الزامی سال اول: <span id="result-required-energy" data-testid="result-required-energy" data-result="requiredEnergy">—</span></p>
-              </article>
-              <article class="rounded-xl border border-border-light bg-background-light p-4">
-                <p class="text-sm text-muted-light mb-1">جریمه کل پیش‌بینی‌شده</p>
-                <p class="text-xl font-bold text-slate-900" id="result-total-penalty" data-testid="result-total-penalty" data-result="totalPenalty">—</p>
-              </article>
-            </div>
-          </section>
+        <section id="risk-result" class="hidden space-y-4">
+          <h2 class="text-xl font-semibold">نتیجه سنجش ریسک</h2>
+          <p id="risk-score-text" class="font-medium"></p>
 
-          <section class="rounded-2xl border border-border-light bg-white p-6 shadow-sm" aria-live="polite">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <span class="material-icons-outlined text-primary" aria-hidden>insights</span>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-slate-900">سرمایه‌گذاری در برابر جریمه</h3>
-                <p class="text-xs text-muted-light">مقایسه برآورد سرمایه‌گذاری نیروگاه با مجموع جریمه عدم احداث</p>
-              </div>
-            </div>
-            <div class="space-y-4" data-testid="comparison-card">
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-sm">
-                  <span class="text-slate-700">برآورد سرمایه‌گذاری نیروگاه پیشنهادی</span>
-                  <span class="font-semibold text-slate-900" id="comparison-investment-value" data-testid="comparison-investment-value" data-comparison="investmentValue">—</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <progress id="bar-investment" class="h-3 flex-1" max="100" value="0" data-testid="comparison-investment-progress" data-comparison="investmentProgress"></progress>
-                  <span class="text-xs text-muted-light" id="bar-investment-label" data-testid="comparison-investment-label" data-comparison="investmentProgressLabel">۰٪</span>
-                </div>
-              </div>
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-sm">
-                  <span class="text-slate-700">برآورد مجموع جریمه در صورت عدم احداث نیروگاه</span>
-                  <span class="font-semibold text-slate-900" id="comparison-penalty-value" data-testid="comparison-penalty-value" data-comparison="penaltyValue">—</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <progress id="bar-penalty" class="h-3 flex-1" max="100" value="0" data-testid="comparison-penalty-progress" data-comparison="penaltyProgress"></progress>
-                  <span class="text-xs text-muted-light" id="bar-penalty-label" data-testid="comparison-penalty-label" data-comparison="penaltyProgressLabel">۰٪</span>
-                </div>
-              </div>
-              <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 border border-border-light">
-                <span class="text-sm text-slate-700">نسبت جریمه به سرمایه‌گذاری</span>
-                <span class="text-base font-semibold text-slate-900" id="comparison-ratio" data-testid="comparison-ratio" data-comparison="ratioValue">—</span>
-              </div>
-              <p class="text-xs text-muted-light leading-relaxed">اگر نیروگاه احداث نشود، برآورد مجموع جریمه طی دوره تحلیل می‌تواند هم‌تراز یا حتی بیش از هزینه سرمایه‌گذاری یک نیروگاه خورشیدی در همین بازه باشد.</p>
-            </div>
-          </section>
+          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
+            <div id="risk-score-bar" class="h-3 bg-amber-500" style="width: 0%;"></div>
+          </div>
 
-          <section class="rounded-2xl border border-border-light bg-white p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-slate-900 mb-3">نیاز به همراهی کارشناسی دارید؟</h3>
-            <p class="text-sm text-muted-light mb-4">برای تحلیل عمیق‌تر یا دریافت طرح تجاری سارشی، فرم زیر را پر کنید. تیم WESH360 با شما تماس خواهد گرفت.</p>
-            <form name="solar-advice" method="POST" data-netlify="true" netlify data-netlify-honeypot="bot-field" action="/contact/thanks.html" class="space-y-3">
-              <input type="hidden" name="form-name" value="solar-advice">
-              <p class="hidden"><label>ربات: <input name="bot-field"></label></p>
-              <input name="name" required placeholder="نام" data-testid="cta-name" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary">
-              <input name="email" type="email" required placeholder="ایمیل" data-testid="cta-email" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary">
-              <textarea name="note" placeholder="توضیحات" data-testid="cta-note" class="w-full rounded-lg border border-border-light bg-background-light px-3 py-2 text-sm focus:border-primary focus:ring-primary" rows="3"></textarea>
-              <button type="submit" data-testid="cta-submit" class="w-full rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700">درخواست مشاوره</button>
-            </form>
-          </section>
-        </aside>
-      </div>
+          <div id="risk-interpretation" class="text-sm text-slate-700"></div>
+
+          <div id="mehrsun-cta" class="border rounded-lg p-4 space-y-2 bg-slate-50">
+            <h3 class="font-semibold">گام بعدی: ثبت طرح در سامانه مهرسان</h3>
+            <p class="text-sm">
+              اگر سطح ریسک برای شما قابل قبول است، می‌توانید ادامه مسیر را در سامانه مهرسان ساتبا دنبال کنید.
+            </p>
+            <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="btn-primary inline-flex">
+              رفتن به سامانه مهرسان
+            </a>
+          </div>
+        </section>
+      </section>
+
+      <section class="grid grid-cols-1 gap-6 lg:grid-cols-2 mt-10">
+        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-slate-900 mb-3">این ابزار چگونه کمک می‌کند؟</h3>
+          <ul class="list-disc pe-5 space-y-2 text-sm text-muted-light">
+            <li>برآورد سریع ریسک‌ها قبل از وارد کردن اطلاعات در مهرسان ساتبا.</li>
+            <li>سه دامنه اصلی ریسک پوشش داده می‌شود: هزینه و ارز، سیاست و تعرفه، تأمین مالی و نقدینگی.</li>
+            <li>امتیاز ۰ تا ۱۰۰ با وزن‌دهی دامنه‌ای و برچسب کیفی (کم، متوسط، زیاد) ارائه می‌شود.</li>
+            <li>تفسیر کوتاه برای اقدام بعدی و لینک مستقیم به سامانه مهرسان.</li>
+          </ul>
+        </article>
+        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4">
+          <div>
+            <h4 class="text-base font-semibold text-slate-900">راهنمای پاسخ‌دهی</h4>
+            <p class="text-sm text-muted-light leading-relaxed">گزینه‌ها از ریسک کم (امتیاز ۱) تا ریسک بالا (امتیاز ۵) مرتب شده‌اند. اگر بین دو گزینه مردد هستید، حالت محتاطانه‌تر را انتخاب کنید.</p>
+          </div>
+          <div>
+            <h4 class="text-base font-semibold text-slate-900">وزن‌دهی دامنه‌ها</h4>
+            <p class="text-sm text-muted-light leading-relaxed">ریسک ارزی/تجهیزات و ریسک سیاست/تعرفه هر کدام ۳۵٪ وزن دارند و ریسک نقدینگی/تأمین مالی ۳۰٪ وزن دارد؛ مجموع آن‌ها امتیاز نهایی را تشکیل می‌دهد.</p>
+          </div>
+          <div>
+            <h4 class="text-base font-semibold text-slate-900">سلب مسئولیت</h4>
+            <p class="text-sm text-muted-light leading-relaxed">این ابزار صرفاً یک غربال اولیه است و جایگزین ارزیابی دقیق فنی، حقوقی یا مالی نمی‌شود. پیش از تصمیم‌گیری نهایی، با مشاوران تخصصی صحبت کنید.</p>
+          </div>
+        </article>
+      </section>
     </div>
   </main>
 
