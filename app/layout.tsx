@@ -5,6 +5,8 @@ import { Suspense } from "react"
 import Script from "next/script"
 import "./globals.css"
 
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION
+
 export const metadata: Metadata = {
   title: "WESH360 | مدیریت هوشمند آب، برق و گاز خراسان رضوی - داشبورد تحلیلی و پایش مصرف",
   description:
@@ -76,7 +78,7 @@ export const metadata: Metadata = {
     images: ["https://wesh360.ir/assets/img/hero/social-share-1200x630.jpg"],
   },
   verification: {
-    google: "google-site-verification-code", // به‌روزرسانی شود
+    google: googleSiteVerification,
   },
 }
 
