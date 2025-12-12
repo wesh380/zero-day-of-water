@@ -413,12 +413,13 @@ export default function ValueDrivenHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
           className="max-w-6xl mx-auto mb-12"
+          id="why-data-governance"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="text-blue-700">حکمرانی داده</span>؟
+            <h2 className="text-3xl font-black text-slate-900 mb-3">
+              چرا <span className="text-blue-800">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-slate-800 font-semibold">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -435,26 +436,25 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
-                  {/* Gradient overlay on hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
+                      backgroundColor: `${pillar.lightColor || pillar.color}26`
                     }}
                   />
 
                   <div className="relative z-10">
-                    <Icon
-                      className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
-                      style={{ color: pillar.lightColor || pillar.color }}
-                      aria-label={`آیکون ${pillar.title}`}
-                    />
-                    <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
-                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
-                      ↳ {pillar.value}
-                    </p>
-                  </div>
+                  <Icon
+                    className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                    style={{ color: pillar.lightColor || pillar.color }}
+                    aria-label={`آیکون ${pillar.title}`}
+                  />
+                  <h3 className="text-slate-900 font-black mb-2">{pillar.title}</h3>
+                  <p className="text-sm text-slate-800 mb-2">{pillar.description}</p>
+                  <p className="text-xs font-black text-slate-900">
+                    ↳ {pillar.value}
+                  </p>
+                </div>
                 </motion.div>
               );
             })}
