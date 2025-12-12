@@ -302,7 +302,8 @@ export default function ValueDrivenHero() {
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
                   style={{
                     borderColor: isActive || isHovered ? resource.color : '#e5e7eb',
-                    borderWidth: isActive || isHovered ? '3px' : '2px'
+                    borderWidth: isActive || isHovered ? '3px' : '2px',
+                    backgroundColor: isActive || isHovered ? `${resource.color}14` : '#ffffff'
                   }}
                   animate={{
                     boxShadow: isActive
@@ -312,14 +313,6 @@ export default function ValueDrivenHero() {
                       : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
-                  {/* Gradient Background */}
-                  <div
-                    className="absolute inset-0 rounded-2xl transition-opacity"
-                    style={{
-                      background: `radial-gradient(circle at top right, ${resource.color}30, transparent)`,
-                      opacity: isActive || isHovered ? 1 : 0.3
-                    }}
-                  />
 
                   <div className="relative z-10">
                     {/* Icon */}
@@ -433,8 +426,8 @@ export default function ValueDrivenHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 + idx * 0.1 }}
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="relative bg-white backdrop-blur-xl border rounded-xl p-5 hover:shadow-lg transition-all group overflow-hidden"
-                style={{ borderColor: `${pillar.color}33`, backgroundColor: `${pillar.color}0d` }}
+                className="relative bg-white backdrop-blur-xl border-2 rounded-xl p-5 hover:shadow-lg transition-all group"
+                style={{ borderColor: `${pillar.color}55`, backgroundColor: `${pillar.color}1a` }}
               >
                 <div className="relative z-10">
                   <Icon
