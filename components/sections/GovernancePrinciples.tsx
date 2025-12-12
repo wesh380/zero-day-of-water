@@ -30,28 +30,28 @@ const principles = [
   {
     icon: Users,
     title: 'مالکیت و مسئولیت',
-    description: 'تعریف واضح نقش‌ها و Data Stewardship',
+    description: 'تعریف دقیق نقش‌ها و راهبری داده (Data Stewardship)',
     metrics: ['تعیین مالک داده', 'زنجیره ثبت تغییرات', 'چارچوب پاسخ‌گویی'],
     color: '#8B5CF6'
   },
   {
     icon: GitBranch,
     title: 'یکپارچگی و استاندارد',
-    description: 'یکسان‌سازی فرمت‌ها و metadata management',
+    description: 'یکسان‌سازی فرمت‌ها و مدیریت فراداده',
     metrics: ['کاتالوگ داده و استانداردسازی فراداده', 'طرح‌واره‌ی یکپارچه', 'الزامات واحد داده'],
     color: '#F97316'
   },
   {
     icon: Eye,
     title: 'شفافیت و ردیابی',
-    description: 'Data lineage و تاریخچه کامل تغییرات',
+    description: 'ردیابی منشأ داده و تاریخچه کامل تغییرات',
     metrics: ['ردیابی منشأ داده', 'ثبت جامع تغییرات', 'شفافیت در جریان داده'],
     color: '#F59E0B'
   },
   {
     icon: Lock,
     title: 'انطباق با قوانین',
-    description: 'Compliance خودکار با استانداردهای ملی و بین‌المللی',
+    description: 'انطباق خودکار با استانداردهای ملی و بین‌المللی',
     metrics: ['انطباق با استانداردها', 'آمادگی برای ممیزی', 'رعایت اصول حفاظت داده'],
     color: '#EF4444'
   },
@@ -65,7 +65,7 @@ const principles = [
   {
     icon: Workflow,
     title: 'خودکارسازی فرآیند',
-    description: 'Data pipeline و governance workflow خودکار',
+    description: 'مسیر انتقال داده و گردش‌کار حکمرانیِ خودکار',
     metrics: ['جریان‌های کاری خودکار', 'سامانه هشدار هوشمند', 'نظارت پیوسته'],
     color: '#14B8A6'
   }
