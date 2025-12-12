@@ -4,8 +4,8 @@
 
 /* Landing page styles */
 @layer utilities {
-  .font-tahoma {
-    font-family: Tahoma, Arial, sans-serif;
+  .font-vazirmatn {
+    font-family: var(--font-vazirmatn), "Vazirmatn", system-ui, -apple-system, sans-serif;
   }
 
   .hero-pattern-bg {

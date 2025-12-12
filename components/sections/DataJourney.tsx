@@ -7,43 +7,43 @@ const journeySteps = [
   {
     icon: Database,
     title: 'جمع‌آوری',
-    description: 'دریافت داده از 1000+ نقطه سنجش',
-    details: ['IoT sensors', 'Smart meters', 'SCADA systems'],
+    description: 'دریافت داده از بیش از ۱۰۰۰ نقطه سنجش',
+    details: ['سنسورهای اینترنت اشیا', 'کنتورهای هوشمند', 'سامانه‌های اسکادا'],
     color: '#3B82F6'
   },
   {
     icon: Filter,
     title: 'پاکسازی',
     description: 'حذف نویز و اعتبارسنجی خودکار',
-    details: ['Auto-validation', 'Anomaly detection', 'Quality check'],
+    details: ['اعتبارسنجی خودکار', 'تشخیص ناهنجاری', 'کنترل کیفیت'],
     color: '#8B5CF6'
   },
   {
     icon: Sparkles,
     title: 'استانداردسازی',
-    description: 'یکسان‌سازی فرمت و metadata',
-    details: ['Unified schema', 'Metadata tagging', 'Format conversion'],
+    description: 'یکسان‌سازی فرمت و فراداده',
+    details: ['استاندارد یکپارچه', 'برچسب‌گذاری فراداده', 'تبدیل فرمت'],
     color: '#EC4899'
   },
   {
     icon: Brain,
     title: 'تحلیل هوشمند',
-    description: 'ML/AI برای پیش‌بینی و الگویابی',
-    details: ['Predictive models', 'Pattern recognition', 'AI insights'],
+    description: 'یادگیری ماشین و هوش مصنوعی برای پیش‌بینی و الگویابی',
+    details: ['مدل‌های پیش‌بینی', 'شناسایی الگو', 'بینش هوش مصنوعی'],
     color: '#F59E0B'
   },
   {
     icon: BarChart3,
     title: 'گزارش‌گیری',
-    description: 'داشبوردهای تعاملی و real-time',
-    details: ['Live dashboards', 'Custom reports', 'Interactive viz'],
+    description: 'داشبوردهای تعاملی و لحظه‌ای',
+    details: ['داشبوردهای لحظه‌ای', 'گزارش‌های اختصاصی', 'نمایش تعاملی'],
     color: '#10B981'
   },
   {
     icon: CheckCircle,
     title: 'تصمیم‌گیری',
-    description: 'تبدیل داده به اکشن استراتژیک',
-    details: ['Action items', 'Recommendations', 'Policy making'],
+    description: 'تبدیل داده به اقدام اجرایی',
+    details: ['کارهای بعدی', 'پیشنهادها', 'سیاست‌گذاری'],
     color: '#06B6D4'
   }
 ];
