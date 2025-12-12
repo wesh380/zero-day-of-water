@@ -428,34 +428,27 @@ export default function ValueDrivenHero() {
               const Icon = pillar.icon;
               return (
                 <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + idx * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
-                >
-                  {/* Gradient overlay on hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
-                    style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
-                    }}
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + idx * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="relative bg-white backdrop-blur-xl border rounded-xl p-5 hover:shadow-lg transition-all group overflow-hidden"
+                style={{ borderColor: `${pillar.color}33`, backgroundColor: `${pillar.color}0d` }}
+              >
+                <div className="relative z-10">
+                  <Icon
+                    className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                    style={{ color: pillar.lightColor || pillar.color }}
+                    aria-label={`آیکون ${pillar.title}`}
                   />
-
-                  <div className="relative z-10">
-                    <Icon
-                      className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
-                      style={{ color: pillar.lightColor || pillar.color }}
-                      aria-label={`آیکون ${pillar.title}`}
-                    />
-                    <h3 className="text-strong text-lg mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-muted mb-2">{pillar.description}</p>
-                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
-                      ↳ {pillar.value}
-                    </p>
-                  </div>
-                </motion.div>
+                  <h3 className="text-strong text-lg mb-2">{pillar.title}</h3>
+                  <p className="text-sm text-body mb-2">{pillar.description}</p>
+                  <p className="text-xs font-bold" style={{ color: pillar.color }}>
+                    ↳ {pillar.value}
+                  </p>
+                </div>
+              </motion.div>
               );
             })}
           </div>
