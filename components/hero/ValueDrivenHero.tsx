@@ -21,9 +21,9 @@ const resources = [
     impact: 'کاهش اتلاف',
     link: '/water/hub',
     features: [
-      { icon: Eye, text: 'مصورسازی لحظه‌ای موجودی سدهای دوستی، طرق و کارده' },
+      { icon: Eye, text: 'نمایش لحظه‌ای موجودی سدهای دوستی، طرق و کارده' },
       { icon: AlertTriangle, text: 'پیش‌بینی روز صفر آب مشهد بر اساس ذخیره سدها' },
-      { icon: BarChart3, text: 'ماشین‌حساب ردپای آب غذا و پیشنهادهای هوش مصنوعی' }
+      { icon: BarChart3, text: 'محاسبه مصرف آب غذای شما و پیشنهادهای هوشمند' }
     ]
   },
   {
@@ -39,7 +39,7 @@ const resources = [
     impact: 'کاهش قطعی',
     link: '/electricity/',
     features: [
-      { icon: Target, text: 'پایش شاخص‌های خاموشی و کیفیت توزیع تقریباً برخط' },
+      { icon: Target, text: 'پایش تقریباً آنی شاخص‌های خاموشی و کیفیت توزیع' },
       { icon: TrendingUp, text: 'نمودار پیک روزانه و ساعتی مصرف برق' },
       { icon: Clock, text: 'راهنمای مصرف بسته به ساعت‌های شبانه‌روز' }
     ]
