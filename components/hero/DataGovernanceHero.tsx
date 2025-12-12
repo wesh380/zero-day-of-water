@@ -52,8 +52,8 @@ export default function DataGovernanceHero() {
 
   return (
     <section className="relative min-h-screen bg-slate-900 overflow-hidden">
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.05)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+      {/* Solid Background for readability */}
+      <div className="absolute inset-0 bg-slate-900" />
 
       {/* Floating Particles */}
       <div className="absolute inset-0">
@@ -90,15 +90,15 @@ export default function DataGovernanceHero() {
         >
           <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3">
             <Database className="w-5 h-5 text-blue-400" />
-            <span className="text-white/90 font-medium">127 کاربر آنلاین</span>
+            <span className="text-white font-semibold">127 کاربر آنلاین</span>
           </div>
           <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3">
             <ShieldCheck className="w-5 h-5 text-green-400" />
-            <span className="text-white/90 font-medium">حکمرانی داده فعال</span>
+            <span className="text-white font-semibold">حکمرانی داده فعال</span>
           </div>
           <div className="flex items-center gap-2 bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3">
             <TrendingUp className="w-5 h-5 text-yellow-400" />
-            <span className="text-white/90 font-medium">+24% بهره‌وری</span>
+            <span className="text-white font-semibold">+24% بهره‌وری</span>
           </div>
         </motion.div>
 
@@ -238,7 +238,7 @@ export default function DataGovernanceHero() {
 
                     {/* Quality Indicator */}
                     <motion.div
-                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs text-white/70 bg-black/50 px-2 py-1 rounded-full whitespace-nowrap"
+                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs text-white bg-black/60 px-2 py-1 rounded-full whitespace-nowrap"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
                     >
@@ -301,7 +301,7 @@ export default function DataGovernanceHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex items-center justify-center gap-8 mt-12 text-sm text-gray-400"
+          className="flex items-center justify-center gap-8 mt-12 text-sm text-slate-100"
         >
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-green-400" />

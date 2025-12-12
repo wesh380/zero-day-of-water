@@ -53,7 +53,7 @@ export default function DataJourney() {
     <section className="py-16 bg-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[linear-gradient(30deg,transparent_12%,rgba(59,130,246,.2)_12.5%,rgba(59,130,246,.2)_13%,transparent_13.5%)] bg-[length:40px_40px]" />
+        <div className="absolute inset-0 bg-blue-50" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

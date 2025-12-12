@@ -9,8 +9,7 @@
   }
 
   .hero-pattern-bg {
-    background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
-    background-size: 40px 40px;
+    background-color: #f8fafc;
   }
 
   .animate-delay-100 {
@@ -27,6 +26,19 @@
 
   .animate-delay-400 {
     animation-delay: 0.4s;
+  }
+
+  /* Typography utilities for consistent readable text */
+  .text-strong {
+    @apply text-slate-900 font-bold;
+  }
+
+  .text-body {
+    @apply text-slate-700 font-normal;
+  }
+
+  .text-muted-readable {
+    @apply text-slate-600 font-normal;
   }
 }
 

@@ -13,8 +13,6 @@ const resources = [
     icon: Droplet,
     name: 'آب',
     color: '#3B82F6',
-    gradient: 'from-blue-600 to-cyan-600',
-    gradientColors: { from: '#2563eb', to: '#0891b2' },
     glow: 'rgba(59, 130, 246, 0.4)',
     problem: 'بحران آب خراسان رضوی',
     solution: 'مدیریت هوشمند مصرف',
@@ -31,8 +29,6 @@ const resources = [
     icon: Zap,
     name: 'برق',
     color: '#F59E0B',
-    gradient: 'from-orange-600 to-red-700',
-    gradientColors: { from: '#ea580c', to: '#b91c1c' },
     glow: 'rgba(245, 158, 11, 0.4)',
     problem: 'پیک‌بار و خاموشی',
     solution: 'پیش‌بینی و توزیع بهینه',
@@ -49,8 +45,6 @@ const resources = [
     icon: Flame,
     name: 'گاز',
     color: '#EF4444',
-    gradient: 'from-red-600 to-pink-600',
-    gradientColors: { from: '#dc2626', to: '#db2777' },
     glow: 'rgba(239, 68, 68, 0.4)',
     problem: 'کمبود در فصل سرما',
     solution: 'مدیریت تقاضا و عرضه',
@@ -67,8 +61,6 @@ const resources = [
     icon: Droplets,
     name: 'فرآورده‌های نفتی',
     color: '#10B981',
-    gradient: 'from-green-600 to-emerald-600',
-    gradientColors: { from: '#16a34a', to: '#059669' },
     glow: 'rgba(16, 185, 129, 0.4)',
     problem: 'پایش کیفیت و توزیع',
     solution: 'شفافیت در زنجیره تأمین',
@@ -143,14 +135,14 @@ export default function ValueDrivenHero() {
   const currentResource = resources[activeResource];
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gray-50">
+    <section className="relative min-h-screen overflow-hidden bg-slate-50">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.1)_1px,transparent_1px)] bg-[size:64px_64px]" />
+        <div className="absolute inset-0 bg-white" />
         <motion.div
           className="absolute inset-0"
-          style={{ background: `radial-gradient(circle at 50% 50%, ${currentResource.glow}, transparent 70%)` }}
-          animate={{ opacity: [0.1, 0.2, 0.1] }}
+          style={{ backgroundColor: currentResource.glow, opacity: 0.12 }}
+          animate={{ opacity: [0.08, 0.16, 0.08] }}
           transition={{ duration: 4, repeat: Infinity }}
         />
       </div>
@@ -261,13 +253,13 @@ export default function ValueDrivenHero() {
                 transition={{ duration: 0.5 }}
                 className="text-xl md:text-2xl max-w-4xl mx-auto"
               >
-                <p className="mb-3 text-gray-700">
+                <p className="mb-3 text-body">
                   <span className="text-red-600 font-bold">مشکل:</span> {currentResource.problem}
                 </p>
-                <p className="mb-3 text-gray-700">
+                <p className="mb-3 text-body">
                   <span className="text-green-600 font-bold">راه‌حل:</span> {currentResource.solution}
                 </p>
-                <p className="text-gray-700">
+                <p className="text-body">
                   <span className="text-cyan-600 font-bold">تأثیر:</span> {currentResource.impact}
                 </p>
               </motion.div>
@@ -312,12 +304,12 @@ export default function ValueDrivenHero() {
                       : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
-                  {/* Gradient Background */}
+                  {/* Soft background tint for contrast without gradients */}
                   <div
-                    className="absolute inset-0 rounded-2xl transition-opacity"
+                    className="absolute inset-0 rounded-2xl transition-opacity pointer-events-none"
                     style={{
-                      background: `radial-gradient(circle at top right, ${resource.color}30, transparent)`,
-                      opacity: isActive || isHovered ? 1 : 0.3
+                      backgroundColor: resource.color,
+                      opacity: isActive || isHovered ? 0.12 : 0.06
                     }}
                   />
 
@@ -336,7 +328,7 @@ export default function ValueDrivenHero() {
                     </motion.div>
 
                     {/* Title */}
-                    <h2 className="text-2xl font-black text-gray-900 mb-3">
+                    <h2 className="text-2xl text-strong mb-3">
                       {resource.name}
                     </h2>
 
@@ -350,7 +342,7 @@ export default function ValueDrivenHero() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: isActive ? idx * 0.1 : 0 }}
-                            className="flex items-center gap-2 text-sm text-gray-700"
+                            className="flex items-center gap-2 text-sm text-body"
                           >
                             <FeatureIcon
                               className="w-4 h-4 flex-shrink-0"
@@ -415,10 +407,10 @@ export default function ValueDrivenHero() {
           className="max-w-6xl mx-auto mb-12"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="text-blue-700">حکمرانی داده</span>؟
+            <h2 className="text-3xl text-strong mb-3">
+              چرا <span className="text-sky-700 font-semibold">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-muted-readable">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -439,7 +431,7 @@ export default function ValueDrivenHero() {
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
+                      backgroundColor: pillar.lightColor || pillar.color
                     }}
                   />
 
@@ -449,8 +441,8 @@ export default function ValueDrivenHero() {
                       style={{ color: pillar.lightColor || pillar.color }}
                       aria-label={`آیکون ${pillar.title}`}
                     />
-                    <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
+                    <h3 className="text-slate-900 font-semibold mb-2">{pillar.title}</h3>
+                    <p className="text-sm text-slate-700 mb-2">{pillar.description}</p>
                     <p className="text-xs font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
