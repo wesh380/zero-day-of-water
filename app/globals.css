@@ -65,3 +65,15 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
+
+#why-data-governance h2,
+#why-data-governance h3,
+#why-data-governance p,
+#why-data-governance span {
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: unset !important;
+  color: inherit;
+}
