@@ -9,15 +9,14 @@
   <meta http-equiv="Content-Language" content="fa-IR">
       <meta property="og:type" content="website">
   <meta property="og:url" content="https://wesh360.ir/solar/plant/">
-  <meta property="og:title" content="ماشین‌حساب ریسک نیروگاه خورشیدی - Solar Plant Risk Calculator | WESH360">
-  <meta property="og:description" content="سنجش آزمایشی ریسک پروژه خورشیدی شما پیش از ثبت در سامانه مهرسان؛ پوشش ریسک ارزی، سیاستی و تأمین مالی.">
+  <meta property="og:title" content="راهنمای انتخاب ظرفیت نیروگاه خورشیدی">
+  <meta property="og:description" content="بررسی خلاصه ظرفیت‌های مختلف نیروگاه خورشیدی و ادامه مسیر از طریق سامانه مهرسان ساتبا.">
   <meta property="og:image" content="https://wesh360.ir/page/landing/logo2.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <title>ماشین‌حساب ریسک نیروگاه خورشیدی - Solar Plant Risk Calculator | WESH360</title>
-  <meta name="description" content="ماشین‌حساب ریسک نیروگاه خورشیدی - ارزیابی سریع ریسک ارزی، سیاستی و نقدینگی پروژه قبل از ورود به سامانه مهرسان.">
+  <title>راهنمای انتخاب ظرفیت نیروگاه خورشیدی | WESH360</title>
+  <meta name="description" content="آشنایی با ظرفیت‌های رایج نیروگاه خورشیدی و مسیر رسمی ثبت درخواست در سامانه ساتبا.">
   <link rel="canonical" href="https://wesh360.ir/solar/plant/">
 <link rel="stylesheet" href="/assets/fonts.css">
-  <link rel="stylesheet" href="/assets/css/solar-calc.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <script>
@@ -85,87 +84,350 @@
       </div>
     </header>
 <main id="main" role="main" class="bg-background-light">
-    <div class="max-w-4xl mx-auto px-4 py-12 space-y-10">
+    <div class="max-w-6xl mx-auto px-4 py-12 space-y-12">
       <header class="space-y-3 text-right">
-        <h1 class="text-3xl font-extrabold text-slate-900">ماشین‌حساب ریسک نیروگاه خورشیدی</h1>
-        <p class="badge experimental-badge inline-block">نسخه آزمایشی – سنجش سریع قبل از ورود به سامانه مهرسان.</p>
-        <p class="text-sm text-slate-600 leading-relaxed max-w-2xl ml-auto">
-          این ابزار آزمایشی به شما کمک می‌کند قبل از ورود به سامانه مهرسان، سطح ریسک پروژه خورشیدی خود را در شرایط اقتصادی ایران به‌صورت عددی ارزیابی کنید.
+        <h1 class="text-3xl font-extrabold text-slate-900">اول ببین چه ظرفیتی به کارت می‌خوره</h1>
+        <p class="text-base text-slate-700 leading-relaxed max-w-3xl ml-auto">
+          خلاصه شرایط رایج برای ظرفیت‌های مختلف نیروگاه خورشیدی را ببین و بر اساس فضای در دسترس، سرمایه و زمان‌بندی، تصمیم بگیر کدام مسیر به نیازت نزدیک‌تر است.
         </p>
       </header>
 
-      <section id="solar-risk-calculator" class="space-y-6 rounded-2xl border border-border-light bg-white p-6 shadow-sm">
-        <header class="space-y-1 text-right">
-          <h2 class="text-2xl font-bold text-slate-900">سنجش ریسک پیش از ثبت در مهرسان</h2>
-          <p class="text-sm text-slate-600 leading-relaxed max-w-2xl ml-auto">
-            پیش از ثبت طرح در سامانه مهرسان، سه دامنه اصلی ریسک را در چند پرسش کوتاه بسنجید و امتیاز ۰ تا ۱۰۰ دریافت کنید.
-          </p>
-        </header>
-
-        <div id="risk-wizard" class="space-y-6 text-right">
-          <div id="risk-steps-indicator" class="flex flex-wrap justify-end gap-2 text-right"></div>
-
-          <div id="risk-step-content" class="space-y-4"></div>
-
-          <p id="risk-validation-message" class="text-sm text-rose-600 hidden"></p>
-
-          <div id="risk-nav-buttons" class="flex items-center justify-between gap-3 pt-2">
-            <button type="button" id="risk-prev-btn" class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">مرحله قبل</button>
-            <button type="button" id="risk-next-btn" class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed">مرحله بعد</button>
-          </div>
+      <section class="space-y-8">
+        <div class="space-y-3 text-right">
+          <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های کوچک</h2>
+          <p class="text-sm text-muted-light leading-relaxed">مناسب فضاهای محدود شهری، پشت‌بام و سوله‌های کوچک.</p>
         </div>
+        <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label="ظرفیت‌های نیروگاه‌های کوچک">
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۵ کیلووات</h3>
+              <p class="text-sm text-muted-light">گزینه جمع‌وجور برای پشت‌بام منازل و مغازه‌ها.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۱۸۰ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>حدود ۴۲ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>۴۰ تا ۵۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود دو هفته</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود سه روز</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب پشت‌بام منازل، مغازه‌ها و فضاهای خیلی محدود.</p>
+              </div>
+            </details>
+          </article>
 
-        <section id="risk-result" class="hidden space-y-4 text-right">
-          <h2 class="text-xl font-semibold mb-2">نتیجه سنجش ریسک</h2>
-          <p id="risk-score-text" class="text-base font-medium"></p>
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۲۰ کیلووات</h3>
+              <p class="text-sm text-muted-light">مناسب کارگاه‌ها، سوله‌های کوچک و زمین‌های شهری.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۶۵۰ تا ۷۵۰ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>حدود ۱۷۰ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۲۰۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود دو هفته</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک هفته</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب کارگاه‌ها، سوله‌های کوچک و زمین‌های شهری.</p>
+              </div>
+            </details>
+          </article>
 
-          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-            <div id="risk-score-bar" class="h-3 rounded-full transition-all duration-500 risk-score-bar w-[0%]" data-progress="0"></div>
-          </div>
-
-          <div id="risk-interpretation" class="text-sm text-slate-700 leading-relaxed"></div>
-
-          <div id="mehrsun-cta" class="border rounded-lg p-4 space-y-2 bg-slate-50 text-right">
-            <h3 class="font-semibold">گام بعدی: ثبت طرح در سامانه مهرسان</h3>
-            <p class="text-sm text-slate-700">
-              اگر سطح ریسک برای شما قابل قبول است، می‌توانید ادامه مسیر را در سامانه مهرسان ساتبا دنبال کنید.
-            </p>
-            <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700">
-              رفتن به سامانه مهرسان
-            </a>
-          </div>
-        </section>
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۵۰ کیلووات</h3>
+              <p class="text-sm text-muted-light">برای واحدهای تجاری و زمین‌های کوچک شخصی.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۱٫۵ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>حدود ۳۵۰ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۵۰۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود دو هفته</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب واحدهای تجاری و زمین‌های کوچک شخصی.</p>
+              </div>
+            </details>
+          </article>
+        </div>
       </section>
 
-      <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm text-right">
-          <h3 class="text-lg font-semibold text-slate-900 mb-3">این ابزار چگونه کمک می‌کند؟</h3>
-          <ul class="list-disc pe-5 space-y-2 text-sm text-muted-light leading-relaxed">
-            <li>برآورد سریع ریسک‌ها پیش از وارد کردن اطلاعات در سامانه مهرسان.</li>
-            <li>پوشش سه حوزه اصلی ریسک: ارزی/هزینه تجهیزات، سیاست و تعرفه، تأمین مالی و نقدینگی.</li>
-            <li>ارائه امتیاز ۰ تا ۱۰۰ و دسته‌بندی ریسک (کم، متوسط، زیاد) همراه با تفسیر کوتاه.</li>
-            <li>پیشنهاد گام بعدی و لینک مستقیم به سامانه مهرسان.</li>
-          </ul>
-        </article>
-        <article class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4 text-right">
-          <div>
-            <h4 class="text-base font-semibold text-slate-900">راهنمای پاسخ‌دهی</h4>
-            <p class="text-sm text-muted-light leading-relaxed">گزینه‌ها از ریسک کم (امتیاز ۱) تا ریسک بالا (امتیاز ۵) مرتب شده‌اند؛ اگر بین دو گزینه مردد هستید، حالت محتاطانه‌تر را انتخاب کنید.</p>
-          </div>
-          <div>
-            <h4 class="text-base font-semibold text-slate-900">وزن‌دهی دامنه‌ها</h4>
-            <p class="text-sm text-muted-light leading-relaxed">ریسک ارزی/تجهیزات و سیاست/تعرفه هر کدام ۳۵٪ وزن دارند و ریسک نقدینگی/تأمین مالی ۳۰٪؛ مجموع این وزن‌ها امتیاز نهایی را می‌سازد.</p>
-          </div>
-          <div>
-            <h4 class="text-base font-semibold text-slate-900">سلب مسئولیت</h4>
-            <p class="text-sm text-muted-light leading-relaxed">این ابزار یک غربال اولیه است و جایگزین ارزیابی فنی، حقوقی یا مالی نمی‌شود؛ پیش از تصمیم نهایی با مشاوران تخصصی گفتگو کنید.</p>
-          </div>
-        </article>
+      <section class="space-y-8">
+        <div class="space-y-3 text-right">
+          <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های متوسط</h2>
+          <p class="text-sm text-muted-light leading-relaxed">گزینه‌های میانه برای فضاهای صنعتی کوچک یا زمین‌های نیمه‌صنعتی.</p>
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label="ظرفیت‌های نیروگاه‌های متوسط">
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۱۰۰ کیلووات</h3>
+              <p class="text-sm text-muted-light">پیشنهاد برای واحدهای صنعتی کوچک.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۳ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۷۰۰ تا ۸۰۰ میلیون تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۱۲۰۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب واحدهای صنعتی کوچک و زمین‌های نیمه‌صنعتی.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۲۰۰ کیلووات</h3>
+              <p class="text-sm text-muted-light">گزینه متعادل برای واحدهای صنعتی و کشاورزی.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۶ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۱٫۴ تا ۱٫۶ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۲۵۰۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب واحدهای صنعتی، کشاورزی و شهرک‌ها.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۵۰۰ کیلووات</h3>
+              <p class="text-sm text-muted-light">برای زمین‌های بزرگ‌تر و پروژه‌های نیمه‌سرمایه‌گذاری.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۲۱۰ هزار دلار</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۳٫۵ تا ۴ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۷۰۰۰ مترمربع</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود سه ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب زمین‌های بزرگ‌تر و پروژه‌های نیمه‌سرمایه‌گذاری.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section class="space-y-8">
+        <div class="space-y-3 text-right">
+          <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های بزرگ</h2>
+          <p class="text-sm text-muted-light leading-relaxed">گزینه‌های جدی سرمایه‌گذاری برای زمین‌های وسیع و پیگیری ساختاریافته.</p>
+        </div>
+        <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory" aria-label="ظرفیت‌های نیروگاه‌های بزرگ">
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۱ مگاوات</h3>
+              <p class="text-sm text-muted-light">شروع پروژه‌های جدی سرمایه‌گذاری خورشیدی.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۴۱۰ هزار دلار</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۷ تا ۸٫۵ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۱٫۵ هکتار</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود چهار ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> شروع پروژه‌های جدی سرمایه‌گذاری خورشیدی.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۵ مگاوات</h3>
+              <p class="text-sm text-muted-light">نیازمند زمین بیشتر و پیگیری اداری منسجم.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۲ میلیون دلار</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۳۰ تا ۴۲ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۷٫۵ هکتار</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود شش ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> پروژه سرمایه‌گذاری با نیاز به زمین و پیگیری ساختاریافته.</p>
+              </div>
+            </details>
+          </article>
+
+          <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
+            <div class="space-y-1 text-right">
+              <h3 class="text-xl font-bold text-slate-900">۱۰ مگاوات</h3>
+              <p class="text-sm text-muted-light">مناسب سرمایه‌گذاران حرفه‌ای و پروژه‌های بزرگ مقیاس.</p>
+            </div>
+            <dl class="space-y-2 text-sm text-slate-800">
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">سرمایه حدودی</dt>
+                <dd>۴ میلیون دلار</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">درآمد سالانه معمول</dt>
+                <dd>۶۰ تا ۸۵ میلیارد تومان</dd>
+              </div>
+              <div class="flex items-center justify-between">
+                <dt class="font-semibold text-slate-900">فضای مورد نیاز</dt>
+                <dd>حدود ۱۵ هکتار</dd>
+              </div>
+            </dl>
+            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
+              <summary class="flex items-center justify-between text-sm font-semibold text-slate-900 cursor-pointer">
+                جزئیات بیشتر
+                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="text-sm text-slate-800 space-y-2 pt-2">
+                <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
+                <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود شش ماه</p>
+                <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> پروژه بزرگ مقیاس و مناسب سرمایه‌گذاران حرفه‌ای.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4 text-right">
+        <h2 class="text-2xl font-bold text-slate-900">ادامه مسیر از اینجاست</h2>
+        <p class="text-base text-slate-700 leading-relaxed">
+          اگر یکی از این ظرفیت‌ها به شرایطت می‌خوره، ثبت درخواست و ادامه مراحل به‌صورت رسمی از طریق سامانه ساتبا انجام می‌شود.
+        </p>
+        <div class="space-y-2">
+          <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
+            رفتن به سامانه مهرسان (ساتبا)
+          </a>
+          <p class="text-xs text-muted-light">وارد سامانه رسمی ساتبا می‌شوید</p>
+        </div>
       </section>
     </div>
   </main>
 
-  <script type="module" src="/assets/js/solar-plant-calc.js"></script>
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
@@ -179,7 +441,3 @@
   <script src="/assets/js/porsline-widget.js" defer></script>
 </body>
 </html>
-
-
-
-
