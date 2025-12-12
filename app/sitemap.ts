@@ -55,6 +55,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
+  const solarUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/solar/`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+  ]
+
   const waterUrls: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/water/hub/`,
@@ -207,6 +216,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...waterUrls,
     ...electricityUrls,
     ...gasUrls,
+    ...solarUrls,
     ...calculatorUrls,
     {
       url: `${baseUrl}/research/`,
