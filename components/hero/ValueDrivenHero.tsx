@@ -416,9 +416,9 @@ export default function ValueDrivenHero() {
         >
           <div className="text-center mb-8">
             <h2 className="text-3xl font-black text-gray-900 mb-3">
-              چرا <span className="text-blue-700">حکمرانی داده</span>؟
+              چرا <span className="text-blue-800">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-700 font-medium">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -450,7 +450,7 @@ export default function ValueDrivenHero() {
                       aria-label={`آیکون ${pillar.title}`}
                     />
                     <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
+                    <p className="text-sm text-gray-700 font-medium mb-2">{pillar.description}</p>
                     <p className="text-xs font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
