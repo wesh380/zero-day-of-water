@@ -131,7 +131,6 @@ export default function ValueDrivenHero() {
   const { scrollYProgress } = useScroll();
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -180,7 +179,7 @@ export default function ValueDrivenHero() {
       </div>
 
       <motion.div
-        style={{ y, opacity }}
+        style={{ y }}
         className="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center py-12"
       >
         {/* Top Status Bar */}
@@ -418,7 +417,7 @@ export default function ValueDrivenHero() {
             <h2 className="text-3xl font-black text-gray-900 mb-3">
               چرا <span className="text-blue-700">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-slate-700 font-semibold">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -435,11 +434,11 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
-                  {/* Gradient overlay on hover */}
+                  {/* Solid overlay on hover */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
+                    className="absolute inset-0 opacity-10 group-hover:opacity-10 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
+                      backgroundColor: pillar.lightColor || pillar.color
                     }}
                   />
 
@@ -449,9 +448,9 @@ export default function ValueDrivenHero() {
                       style={{ color: pillar.lightColor || pillar.color }}
                       aria-label={`آیکون ${pillar.title}`}
                     />
-                    <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
-                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
+                    <h3 className="text-slate-900 font-bold mb-2">{pillar.title}</h3>
+                    <p className="text-sm text-slate-700 font-medium mb-2">{pillar.description}</p>
+                    <p className="text-sm font-bold" style={{ color: pillar.color }}>
                       ↳ {pillar.value}
                     </p>
                   </div>
