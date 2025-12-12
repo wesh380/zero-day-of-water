@@ -42,7 +42,7 @@ export default function GasPage() {
             <Link href="/" className="transition-colors hover:text-emerald-600">
               خانه
             </Link>
-            <span aria-hidden className="text-slate-400">/</span>
+            <span aria-hidden className="text-slate-600">/</span>
             <span className="font-semibold text-slate-900">گاز</span>
           </div>
 

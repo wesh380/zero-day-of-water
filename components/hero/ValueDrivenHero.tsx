@@ -302,7 +302,8 @@ export default function ValueDrivenHero() {
                   className="relative h-full bg-white backdrop-blur-xl rounded-2xl p-6 border-3 transition-all duration-300"
                   style={{
                     borderColor: isActive || isHovered ? resource.color : '#e5e7eb',
-                    borderWidth: isActive || isHovered ? '3px' : '2px'
+                    borderWidth: isActive || isHovered ? '3px' : '2px',
+                    backgroundColor: isActive || isHovered ? `${resource.color}14` : '#ffffff'
                   }}
                   animate={{
                     boxShadow: isActive
@@ -312,14 +313,6 @@ export default function ValueDrivenHero() {
                       : '0 4px 6px rgba(0,0,0,0.05)'
                   }}
                 >
-                  {/* Gradient Background */}
-                  <div
-                    className="absolute inset-0 rounded-2xl transition-opacity"
-                    style={{
-                      background: `radial-gradient(circle at top right, ${resource.color}30, transparent)`,
-                      opacity: isActive || isHovered ? 1 : 0.3
-                    }}
-                  />
 
                   <div className="relative z-10">
                     {/* Icon */}
@@ -415,10 +408,10 @@ export default function ValueDrivenHero() {
           className="max-w-6xl mx-auto mb-12"
         >
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-gray-900 mb-3">
+            <h2 className="text-3xl text-strong mb-3">
               چرا <span className="text-blue-700">حکمرانی داده</span>؟
             </h2>
-            <p className="text-gray-600">
+            <p className="text-muted text-lg">
               چهار ستون بنیادی برای تصمیم‌گیری مبتنی بر داده
             </p>
           </div>
@@ -428,34 +421,27 @@ export default function ValueDrivenHero() {
               const Icon = pillar.icon;
               return (
                 <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + idx * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
-                >
-                  {/* Gradient overlay on hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
-                    style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
-                    }}
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 + idx * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="relative bg-white backdrop-blur-xl border-2 rounded-xl p-5 hover:shadow-lg transition-all group"
+                style={{ borderColor: `${pillar.color}55`, backgroundColor: `${pillar.color}1a` }}
+              >
+                <div className="relative z-10">
+                  <Icon
+                    className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
+                    style={{ color: pillar.lightColor || pillar.color }}
+                    aria-label={`آیکون ${pillar.title}`}
                   />
-
-                  <div className="relative z-10">
-                    <Icon
-                      className="w-8 h-8 mb-3 group-hover:scale-110 transition-transform"
-                      style={{ color: pillar.lightColor || pillar.color }}
-                      aria-label={`آیکون ${pillar.title}`}
-                    />
-                    <h3 className="text-gray-900 font-bold mb-2">{pillar.title}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{pillar.description}</p>
-                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
-                      ↳ {pillar.value}
-                    </p>
-                  </div>
-                </motion.div>
+                  <h3 className="text-strong text-lg mb-2">{pillar.title}</h3>
+                  <p className="text-sm text-body mb-2">{pillar.description}</p>
+                  <p className="text-xs font-bold" style={{ color: pillar.color }}>
+                    ↳ {pillar.value}
+                  </p>
+                </div>
+              </motion.div>
               );
             })}
           </div>

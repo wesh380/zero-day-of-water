@@ -148,7 +148,7 @@ export default function GovernancePrinciples() {
                   <motion.div
                     initial={{ opacity: 0, x: -10 }}
                     whileHover={{ opacity: 1, x: 0 }}
-                    className="absolute bottom-6 right-6 text-gray-400 font-bold text-lg"
+                    className="absolute bottom-6 right-6 text-gray-600 font-bold text-lg"
                   >
                     →
                   </motion.div>

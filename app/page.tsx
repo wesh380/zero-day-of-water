@@ -27,7 +27,7 @@ const Breadcrumbs = () => {
             <meta itemProp="position" content="1" />
           </li>
           <li aria-current="page" className="flex items-center gap-2">
-            <span className="text-gray-400">›</span>
+            <span className="text-gray-600">›</span>
             <span className="text-gray-900 font-medium">پلتفرم داده</span>
           </li>
         </ol>
@@ -102,7 +102,7 @@ const OptimizedNavigation = () => {
                     WESH360
                     <span className="text-blue-600">🏠</span>
                   </div>
-                  <div className="text-[10px] text-gray-500 -mt-1 font-medium">
+                  <div className="text-[10px] text-gray-700 -mt-1 font-medium">
                     صرفه‌جویی هوشمند آب و انرژی
                   </div>
                 </div>
