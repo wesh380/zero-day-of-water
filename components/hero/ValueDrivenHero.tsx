@@ -435,11 +435,10 @@ export default function ValueDrivenHero() {
                   whileHover={{ scale: 1.05, y: -5 }}
                   className="relative bg-white backdrop-blur-xl border border-gray-200 rounded-xl p-5 hover:shadow-lg hover:border-gray-300 transition-all group overflow-hidden"
                 >
-                  {/* Gradient overlay on hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity"
                     style={{
-                      background: `linear-gradient(135deg, ${pillar.lightColor || pillar.color}, transparent)`
+                      backgroundColor: `${pillar.lightColor || pillar.color}26`
                     }}
                   />
 
@@ -449,9 +448,9 @@ export default function ValueDrivenHero() {
                       style={{ color: pillar.lightColor || pillar.color }}
                       aria-label={`آیکون ${pillar.title}`}
                     />
-                    <h3 className="text-slate-900 font-bold mb-2">{pillar.title}</h3>
+                    <h3 className="text-slate-900 font-black mb-2">{pillar.title}</h3>
                     <p className="text-sm text-slate-700 mb-2">{pillar.description}</p>
-                    <p className="text-xs font-bold" style={{ color: pillar.color }}>
+                    <p className="text-xs font-black text-slate-800">
                       ↳ {pillar.value}
                     </p>
                   </div>
