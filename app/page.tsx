@@ -27,7 +27,7 @@ const Breadcrumbs = () => {
             <meta itemProp="position" content="1" />
           </li>
           <li aria-current="page" className="flex items-center gap-2">
-            <span className="text-gray-400">›</span>
+            <span className="text-slate-600">›</span>
             <span className="text-gray-900 font-medium">پلتفرم داده</span>
           </li>
         </ol>
@@ -52,7 +52,7 @@ const OptimizedNavigation = () => {
   return (
     <>
       {/* Top Bar - اطلاعات رسمی */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 text-sm">
+      <div className="bg-blue-700 text-white py-2 px-4 text-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
             {/* عنوان رسمی */}
@@ -102,7 +102,7 @@ const OptimizedNavigation = () => {
                     WESH360
                     <span className="text-blue-600">🏠</span>
                   </div>
-                  <div className="text-[10px] text-gray-500 -mt-1 font-medium">
+                  <div className="text-[10px] text-slate-700 -mt-1 font-medium">
                     صرفه‌جویی هوشمند آب و انرژی
                   </div>
                 </div>
@@ -149,7 +149,7 @@ const OptimizedNavigation = () => {
               <div className="relative group">
                 <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl hover:bg-gray-100/80 backdrop-blur-sm transition-all hover:shadow-md">
                   <span className="font-medium text-gray-700">ارتباط با ما</span>
-                  <ChevronDown className="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform" />
+                  <ChevronDown className="w-4 h-4 text-slate-700 group-hover:rotate-180 transition-transform" />
                 </button>
 
                 {/* Dropdown */}
@@ -158,21 +158,21 @@ const OptimizedNavigation = () => {
                     <Phone className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="font-medium text-gray-900">تماس تلفنی</div>
-                      <div className="text-xs text-gray-500">051-38434143</div>
+                      <div className="text-xs text-slate-700">051-38434143</div>
                     </div>
                   </a>
                   <a href="https://t.me/wesh360" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100">
                     <div className="w-5 h-5 text-blue-500">📱</div>
                     <div>
                       <div className="font-medium text-gray-900">تلگرام</div>
-                      <div className="text-xs text-gray-500">پشتیبانی آنلاین</div>
+                      <div className="text-xs text-slate-700">پشتیبانی آنلاین</div>
                     </div>
                   </a>
                   <a href="/contact/" className="flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors rounded-b-2xl">
                     <div className="w-5 h-5 text-gray-600">✉️</div>
                     <div>
                       <div className="font-medium text-gray-900">فرم تماس</div>
-                      <div className="text-xs text-gray-500">پاسخ در ۲۴ ساعت</div>
+                      <div className="text-xs text-slate-700">پاسخ در ۲۴ ساعت</div>
                     </div>
                   </a>
                 </div>
@@ -474,8 +474,8 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Background Gradient Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              {/* Background solid tint for clarity */}
+              <div className="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
               <div className="relative z-10">
                 <Users className="w-8 h-8 text-green-600 mb-3 mx-auto" />
@@ -492,7 +492,7 @@ export default function HomePage() {
                 <p className="text-lg md:text-xl lg:text-2xl font-bold text-green-900 mt-2 leading-tight">
                   جمعیت تحت پوشش
                 </p>
-                <p className="text-sm md:text-base text-green-700/80 mt-1 font-medium leading-relaxed">
+                <p className="text-sm md:text-base text-green-700 mt-1 font-medium leading-relaxed">
                   جمعیت بهره‌مند
                 </p>
               </div>

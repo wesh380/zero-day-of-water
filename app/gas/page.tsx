@@ -35,14 +35,14 @@ const gasDashboards = [
 
 export default function GasPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-emerald-50 via-white to-emerald-100 text-slate-900">
+    <main className="min-h-screen bg-white text-slate-900">
       <section className="border-b border-emerald-200 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 text-sm text-slate-600" aria-label="مسیر صفحه">
             <Link href="/" className="transition-colors hover:text-emerald-600">
               خانه
             </Link>
-            <span aria-hidden className="text-slate-400">/</span>
+            <span aria-hidden className="text-slate-600">/</span>
             <span className="font-semibold text-slate-900">گاز</span>
           </div>
 
