@@ -50,7 +50,7 @@ export default function ElectricityPage() {
             <Link href="/" className="transition-colors hover:text-amber-600">
               خانه
             </Link>
-            <span aria-hidden className="text-slate-400">
+            <span aria-hidden className="text-slate-600">
               /
             </span>
             <span className="font-semibold text-slate-900">برق</span>

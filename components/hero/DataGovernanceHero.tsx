@@ -301,18 +301,18 @@ export default function DataGovernanceHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex items-center justify-center gap-8 mt-12 text-sm text-gray-400"
+          className="flex items-center justify-center gap-8 mt-12 text-sm text-gray-600"
         >
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-green-400" />
+            <ShieldCheck className="w-4 h-4 text-green-600" />
             <span>ISO 27001 Compliant</span>
           </div>
           <div className="flex items-center gap-2">
-            <Database className="w-4 h-4 text-blue-400" />
+            <Database className="w-4 h-4 text-blue-600" />
             <span>GDPR Compatible</span>
           </div>
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-yellow-400" />
+            <TrendingUp className="w-4 h-4 text-yellow-500" />
             <span>Real-time Analytics</span>
           </div>
         </motion.div>
