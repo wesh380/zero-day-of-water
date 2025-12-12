@@ -3,7 +3,15 @@ import type { Metadata } from "next"
 
 import { Suspense } from "react"
 import Script from "next/script"
+import { Vazirmatn } from "next/font/google"
 import "./globals.css"
+
+const vazirmatn = Vazirmatn({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "700", "800", "900"],
+  display: "swap",
+  variable: "--font-vazirmatn",
+})
 
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION
 
@@ -231,7 +239,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans">
+      <body className={`${vazirmatn.variable} ${vazirmatn.className} font-sans`}>
         <Suspense fallback={null}>{children}</Suspense>
 
         {/* Google Analytics 4 - Replace with your actual GA4 ID */}
