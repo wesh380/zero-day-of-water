@@ -154,7 +154,7 @@ const KPI = ({
 }, /*#__PURE__*/React.createElement("div", {
   className: "text-gray-300 text-sm whitespace-nowrap overflow-hidden text-ellipsis"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight overflow-hidden text-ellipsis whitespace-nowrap tabular-nums"
+  className: "text-lg sm:text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words tabular-nums"
 }, /*#__PURE__*/React.createElement("span", {
   className: "inline-block max-w-full"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {

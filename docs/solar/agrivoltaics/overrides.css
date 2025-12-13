@@ -1,7 +1,13 @@
 /* Calculator Isolation Shell - Fixes Layout Clipping on Mobile */
+/* Ensure global viewport constraint */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 .agri-calculator-shell {
-  /* Override global overflow restrictions to allow popups/content to flow */
-  overflow: visible !important;
+  /* Override global overflow restrictions to allow popups/content to flow vertically if needed, but constrain width */
+  overflow: visible !important; /* Keep visible to avoid clipping vertical popups */
 
   /* Reset width constraints */
   width: 100% !important;
