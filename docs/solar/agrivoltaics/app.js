@@ -83,15 +83,19 @@ const NumberInput = ({
   max,
   required,
   inputId,
-  error
+  error,
+  unit,
+  helperText
 }) => {
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
   return /*#__PURE__*/React.createElement("label", {
     className: "flex flex-col gap-1 text-sm"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200"
-  }, label), /*#__PURE__*/React.createElement("input", {
+    className: "text-gray-200 flex items-center justify-between gap-2"
+  }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700"
+  }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
     type: "number",
@@ -108,7 +112,9 @@ const NumberInput = ({
     "aria-describedby": errorId,
     className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
     style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
-  }), /*#__PURE__*/React.createElement("div", {
+  }), helperText && /*#__PURE__*/React.createElement("div", {
+    className: "text-[11px] text-gray-400 leading-snug"
+  }, helperText), /*#__PURE__*/React.createElement("div", {
     id: errorId,
     className: "text-red-400 text-xs min-h-[1rem]"
   }, error || ""));
@@ -189,7 +195,17 @@ function validateState(state, simpleMode) {
     { key: "annual_pv_degradation_pct", min: 0, max: 10, required: !simpleMode },
     { key: "soiling_loss_pct", min: 0, max: 30, required: !simpleMode },
     { key: "availability_pct", min: 0, max: 100, required: !simpleMode },
-    { key: "pv_om_cost_per_kWp_year", min: 0, required: true }
+    { key: "pv_om_cost_per_kWp_year", min: 0, required: true },
+    { key: "time_horizon_years", min: 1, max: 50, required: true, positive: true },
+    { key: "discount_rate_pct", min: 0, max: 100, required: true },
+    { key: "tariff_escalation_pct_per_year", min: -50, max: 100, required: true },
+    { key: "subsidy_capex_pct", min: 0, max: 100, required: false },
+    { key: "land_lease_cost_per_ha_year", min: 0, max: 10000000000, required: false },
+    { key: "insurance_cost_pct_of_asset_value_per_year", min: 0, max: 100, required: false },
+    { key: "tax_rate_pct", min: 0, max: 100, required: false },
+    { key: "curtailment_pct", min: 0, max: 100, required: false },
+    { key: "carbon_credit_price_per_tCO2", min: 0, max: 10000000000, required: false },
+    { key: "avoided_co2_t_per_MWh", min: 0, max: 5, required: false }
   ];
 
   const errors = {};
@@ -1026,7 +1042,7 @@ function AgrivoltaicsKhorasan() {
   }, "\u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F \u0648 \u0628\u0627\u0632\u06AF\u0634\u062A \u0633\u0631\u0645\u0627\u06CC\u0647 \u062F\u0631 \u0686\u0646\u062F \u0633\u0627\u0644 \u0627\u0648\u0644 \u0631\u062E \u062F\u0647\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u0627\u0642\u062A\u0635\u0627\u062F\u06CC \u0627\u0633\u062A.")), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F1) \u0627\u0637\u0644\u0627\u0639\u0627\u062A \u0632\u0645\u06CC\u0646 \u0648 \u0645\u062D\u0635\u0648\u0644"
   }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0645\u0633\u0627\u062D\u062A \u0632\u0645\u06CC\u0646 (\u0647\u06A9\u062A\u0627\u0631)",
+    label: "\u0645\u0633\u0627\u062D\u062A \u0632\u0645\u06CC\u0646",
     value: s.project_area_ha,
     onChange: v => set("project_area_ha", v),
     step: 0.1,
@@ -1034,9 +1050,11 @@ function AgrivoltaicsKhorasan() {
     max: 1000,
     required: true,
     inputId: "project_area_ha",
+    unit: "\u0647\u06A9\u062A\u0627\u0631",
+    helperText: "\u0645\u062B\u0627\u0644: 2 \u0647\u06A9\u062A\u0627\u0631",
     error: errors.project_area_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0639\u0645\u0644\u06A9\u0631\u062F \u0641\u0639\u0644\u06CC (\u062A\u0646/\u0647\u06A9\u062A\u0627\u0631)",
+    label: "\u0639\u0645\u0644\u06A9\u0631\u062F \u0641\u0639\u0644\u06CC",
     value: s.baseline_yield_t_per_ha,
     onChange: v => set("baseline_yield_t_per_ha", v),
     step: 0.1,
@@ -1044,9 +1062,11 @@ function AgrivoltaicsKhorasan() {
     max: 30,
     required: true,
     inputId: "baseline_yield_t_per_ha",
+    unit: "\u062A\u0646/\u0647\u06A9\u062A\u0627\u0631",
+    helperText: "\u0645\u062B\u0627\u0644: 4 \u062A\u0646 \u062F\u0631 \u0647\u0631 \u0647\u06A9\u062A\u0627\u0631",
     error: errors.baseline_yield_t_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0639\u0645\u0644\u06A9\u0631\u062F \u0632\u06CC\u0631 \u067E\u0646\u0644 (%)",
+    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0639\u0645\u0644\u06A9\u0631\u062F \u0632\u06CC\u0631 \u067E\u0646\u0644",
     value: s.expected_yield_change_pct_under_AGV,
     onChange: v => set("expected_yield_change_pct_under_AGV", v),
     step: 0.5,
@@ -1054,9 +1074,11 @@ function AgrivoltaicsKhorasan() {
     max: 200,
     required: true,
     inputId: "expected_yield_change_pct_under_AGV",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 5- \u06A9\u0627\u0647\u0634 \u0633\u0627\u062F\u0647",
     error: errors.expected_yield_change_pct_under_AGV
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0645\u062D\u0635\u0648\u0644 (\u0631\u06CC\u0627\u0644/\u062A\u0646)",
+    label: "\u0642\u06CC\u0645\u062A \u0645\u062D\u0635\u0648\u0644",
     value: s.crop_price_per_t,
     onChange: v => set("crop_price_per_t", v),
     step: 1000000,
@@ -1064,9 +1086,11 @@ function AgrivoltaicsKhorasan() {
     max: 10000000000,
     required: true,
     inputId: "crop_price_per_t",
+    unit: "\u0631\u06CC\u0627\u0644/\u062A\u0646",
+    helperText: "\u0645\u062B\u0627\u0644: 2000000000",
     error: errors.crop_price_per_t
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (\u0631\u06CC\u0627\u0644/\u0647\u06A9\u062A\u0627\u0631)",
+    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u0645\u0632\u0631\u0639\u0647",
     value: s.ag_opex_baseline_per_ha,
     onChange: v => set("ag_opex_baseline_per_ha", v),
     step: 1000000,
@@ -1074,9 +1098,11 @@ function AgrivoltaicsKhorasan() {
     max: 10000000000,
     required: true,
     inputId: "ag_opex_baseline_per_ha",
+    unit: "\u0631\u06CC\u0627\u0644/\u0647\u06A9\u062A\u0627\u0631",
+    helperText: "\u0645\u062B\u0627\u0644: 600000000",
     error: errors.ag_opex_baseline_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0647\u0632\u06CC\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC (%)",
+    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0647\u0632\u06CC\u0646\u0647 \u06A9\u0634\u0627\u0648\u0631\u0632\u06CC",
     value: s.ag_opex_change_under_AGV_pct,
     onChange: v => set("ag_opex_change_under_AGV_pct", v),
     step: 0.5,
@@ -1084,9 +1110,11 @@ function AgrivoltaicsKhorasan() {
     max: 200,
     required: true,
     inputId: "ag_opex_change_under_AGV_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 5-",
     error: errors.ag_opex_change_under_AGV_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0645\u0635\u0631\u0641 \u0622\u0628 \u0641\u0639\u0644\u06CC (m\xB3/\u0647\u06A9\u062A\u0627\u0631)",
+    label: "\u0645\u0635\u0631\u0641 \u0622\u0628 \u0641\u0639\u0644\u06CC",
     value: s.water_use_baseline_m3_per_ha,
     onChange: v => set("water_use_baseline_m3_per_ha", v),
     step: 10,
@@ -1094,9 +1122,11 @@ function AgrivoltaicsKhorasan() {
     max: 50000,
     required: true,
     inputId: "water_use_baseline_m3_per_ha",
+    unit: "m\xB3/\u0647\u06A9\u062A\u0627\u0631",
+    helperText: "\u0645\u062B\u0627\u0644: 6000",
     error: errors.water_use_baseline_m3_per_ha
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0645\u0635\u0631\u0641 \u0622\u0628 (%)",
+    label: "\u062A\u063A\u06CC\u06CC\u0631 \u0645\u0635\u0631\u0641 \u0622\u0628",
     value: s.water_use_change_under_AGV_pct,
     onChange: v => set("water_use_change_under_AGV_pct", v),
     step: 1,
@@ -1104,20 +1134,24 @@ function AgrivoltaicsKhorasan() {
     max: 200,
     required: true,
     inputId: "water_use_change_under_AGV_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 20-",
     error: errors.water_use_change_under_AGV_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0634\u06CC\u0631\u06CC\u0646\u06CC/\u062A\u0644\u062E\u06CC \u0642\u06CC\u0645\u062A (\u06A9\u06CC\u0641\u06CC\u062A) (%)",
+    label: "\u0634\u06CC\u0631\u06CC\u0646\u06CC/\u062A\u0644\u062E\u06CC \u0642\u06CC\u0645\u062A \u0645\u062D\u0635\u0648\u0644",
     value: s.crop_quality_premium_or_discount_pct,
     onChange: v => set("crop_quality_premium_or_discount_pct", v),
     step: 0.5,
     min: -100,
     max: 100,
     inputId: "crop_quality_premium_or_discount_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 3+ \u0628\u0631\u0627\u06CC \u06A9\u06CC\u0641\u06CC\u062A \u0628\u0627\u0644\u0627",
     error: errors.crop_quality_premium_or_discount_pct
   })), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F2) \u0622\u0628\u06CC\u0627\u0631\u06CC \u0648 \u0628\u0631\u0642 \u0645\u0632\u0631\u0639\u0647"
   }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0628\u0631\u0642 \u067E\u0645\u067E\u0627\u0698 \u0622\u0628 (kWh \u0628\u0631\u0627\u06CC \u0647\u0631 m\xB3)",
+    label: "\u0628\u0631\u0642 \u067E\u0645\u067E\u0627\u0698 \u0622\u0628",
     value: s.energy_for_irrigation_kWh_per_m3,
     onChange: v => set("energy_for_irrigation_kWh_per_m3", v),
     step: 0.01,
@@ -1125,9 +1159,11 @@ function AgrivoltaicsKhorasan() {
     max: 20,
     required: true,
     inputId: "energy_for_irrigation_kWh_per_m3",
+    unit: "kWh/m\xB3",
+    helperText: "\u0645\u062B\u0627\u0644: 0.5 \u0628\u0631\u0627\u06CC \u0639\u0645\u0642 \u0645\u0639\u0645\u0648\u0644",
     error: errors.energy_for_irrigation_kWh_per_m3
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0628\u0631\u0642 \u0628\u0631\u0627\u06CC \u067E\u0645\u067E\u0627\u0698 (\u0631\u06CC\u0627\u0644/kWh)",
+    label: "\u0642\u06CC\u0645\u062A \u0628\u0631\u0642 \u067E\u0645\u067E\u0627\u0698",
     value: s.irrigation_energy_tariff,
     onChange: v => set("irrigation_energy_tariff", v),
     step: 50,
@@ -1135,9 +1171,11 @@ function AgrivoltaicsKhorasan() {
     max: 500000,
     required: true,
     inputId: "irrigation_energy_tariff",
+    unit: "\u0631\u06CC\u0627\u0644/kWh",
+    helperText: "\u0645\u062B\u0627\u0644: 3000",
     error: errors.irrigation_energy_tariff
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0622\u0628 \u062E\u0631\u06CC\u062F\u0627\u0631\u06CC\u200C\u0634\u062F\u0647 (\u0631\u06CC\u0627\u0644/m\xB3)",
+    label: "\u0642\u06CC\u0645\u062A \u0622\u0628 \u062E\u0631\u06CC\u062F\u0627\u0631\u06CC\u200C\u0634\u062F\u0647",
     value: s.water_unit_cost,
     onChange: v => set("water_unit_cost", v),
     step: 100,
@@ -1145,6 +1183,8 @@ function AgrivoltaicsKhorasan() {
     max: 500000,
     required: true,
     inputId: "water_unit_cost",
+    unit: "\u0631\u06CC\u0627\u0644/m\xB3",
+    helperText: "\u0645\u062B\u0627\u0644: 20000",
     error: errors.water_unit_cost
   }), /*#__PURE__*/React.createElement(Select, {
     label: "\u0637\u0631\u062D \u0645\u0635\u0631\u0641/\u0641\u0631\u0648\u0634 \u0628\u0631\u0642",
@@ -1161,7 +1201,7 @@ function AgrivoltaicsKhorasan() {
       label: "مصرف در مزرعه"
     }]
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u062A\u0636\u0645\u06CC\u0646\u06CC/\u0641\u0631\u0648\u0634 (\u0631\u06CC\u0627\u0644/kWh)",
+    label: "\u062A\u0639\u0631\u0641\u0647 \u062A\u0636\u0645\u06CC\u0646\u06CC/\u0641\u0631\u0648\u0634",
     value: s.ppa_or_fit_tariff,
     onChange: v => set("ppa_or_fit_tariff", v),
     step: 50,
@@ -1169,9 +1209,11 @@ function AgrivoltaicsKhorasan() {
     max: 500000,
     required: true,
     inputId: "ppa_or_fit_tariff",
+    unit: "\u0631\u06CC\u0627\u0644/kWh",
+    helperText: "\u0645\u062B\u0627\u0644: 2500",
     error: errors.ppa_or_fit_tariff
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0633\u0647\u0645 \u0645\u0635\u0631\u0641 \u062F\u0631 \u0645\u0632\u0631\u0639\u0647 (%)",
+    label: "\u0633\u0647\u0645 \u0645\u0635\u0631\u0641 \u062F\u0631 \u0645\u0632\u0631\u0639\u0647",
     value: s.self_consumption_share_pct,
     onChange: v => set("self_consumption_share_pct", v),
     step: 1,
@@ -1179,38 +1221,46 @@ function AgrivoltaicsKhorasan() {
     max: 100,
     required: true,
     inputId: "self_consumption_share_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 40 \u0628\u0631\u0627\u06CC \u0645\u0635\u0631\u0641 \u062F\u0627\u062E\u0644\u06CC",
     error: errors.self_consumption_share_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u062E\u0631\u06CC\u062F \u0627\u0632 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
+    label: "\u0642\u06CC\u0645\u062A \u062E\u0631\u06CC\u062F \u0627\u0632 \u0634\u0628\u06A9\u0647",
     value: s.net_metering_buy_price,
     onChange: v => set("net_metering_buy_price", v),
     step: 50,
     min: 0,
     max: 500000,
     inputId: "net_metering_buy_price",
+    unit: "\u0631\u06CC\u0627\u0644/kWh",
+    helperText: "\u0645\u062B\u0627\u0644: 3000",
     error: errors.net_metering_buy_price
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u0631\u06CC\u0627\u0644/kWh)",
+    label: "\u0642\u06CC\u0645\u062A \u0641\u0631\u0648\u0634 \u0628\u0647 \u0634\u0628\u06A9\u0647",
     value: s.net_metering_sell_price,
     onChange: v => set("net_metering_sell_price", v),
     step: 50,
     min: 0,
     max: 500000,
     inputId: "net_metering_sell_price",
+    unit: "\u0631\u06CC\u0627\u0644/kWh",
+    helperText: "\u0645\u062B\u0627\u0644: 2200",
     error: errors.net_metering_sell_price
   })), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F3) \u0628\u0631\u0642 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC (\u0627\u0646\u062F\u0627\u0632\u0647 \u0648 \u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u062E\u062A)"
   }, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0638\u0631\u0641\u06CC\u062A \u06A9\u0644 \u0633\u0627\u0645\u0627\u0646\u0647 (kWp)",
+    label: "\u0638\u0631\u0641\u06CC\u062A \u06A9\u0644 \u0633\u0627\u0645\u0627\u0646\u0647",
     value: s.pv_capacity_kWp_total,
     onChange: v => set("pv_capacity_kWp_total", v),
     min: 0,
     max: 1000000,
     required: true,
     inputId: "pv_capacity_kWp_total",
+    unit: "kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 150 kWp \u0628\u0631\u0627\u06CC \u06CC\u06A9 \u0647\u06A9\u062A\u0627\u0631",
     error: errors.pv_capacity_kWp_total
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062A\u0648\u0644\u06CC\u062F \u0648\u06CC\u0698\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 (kWh/kWp)",
+    label: "\u062A\u0648\u0644\u06CC\u062F \u0648\u06CC\u0698\u0647 \u0633\u0627\u0644\u0627\u0646\u0647",
     value: s.specific_yield_kWh_per_kWp_year,
     onChange: v => set("specific_yield_kWh_per_kWp_year", v),
     step: 10,
@@ -1218,9 +1268,11 @@ function AgrivoltaicsKhorasan() {
     max: 4000,
     required: true,
     inputId: "specific_yield_kWh_per_kWp_year",
+    unit: "kWh/kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 1700 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0645\u0646\u0637\u0642\u0647",
     error: errors.specific_yield_kWh_per_kWp_year
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0642\u06CC\u0645\u062A \u067E\u0646\u0644 (\u0631\u06CC\u0627\u0644/kWp)",
+    label: "\u0642\u06CC\u0645\u062A \u067E\u0646\u0644",
     value: s.module_price_per_kWp,
     onChange: v => set("module_price_per_kWp", v),
     step: 1000000,
@@ -1228,9 +1280,11 @@ function AgrivoltaicsKhorasan() {
     max: 10000000000,
     required: true,
     inputId: "module_price_per_kWp",
+    unit: "\u0631\u06CC\u0627\u0644/kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 220000000",
     error: errors.module_price_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0632\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
+    label: "\u0647\u0632\u06CC\u0646\u0647 \u0633\u0627\u0632\u0647",
     value: s.mounting_structure_cost_per_kWp,
     onChange: v => set("mounting_structure_cost_per_kWp", v),
     step: 1000000,
@@ -1238,9 +1292,11 @@ function AgrivoltaicsKhorasan() {
     max: 5000000000,
     required: true,
     inputId: "mounting_structure_cost_per_kWp",
+    unit: "\u0631\u06CC\u0627\u0644/kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 70000000",
     error: errors.mounting_structure_cost_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0627\u06CC\u0646\u0648\u0631\u062A\u0631 \u0648 \u06A9\u0627\u0628\u0644\u200C\u06A9\u0634\u06CC (\u0631\u06CC\u0627\u0644/kWp)",
+    label: "\u0627\u06CC\u0646\u0648\u0631\u062A\u0631 \u0648 \u06A9\u0627\u0628\u0644\u200C\u06A9\u0634\u06CC",
     value: s.inverter_BOS_cost_per_kWp,
     onChange: v => set("inverter_BOS_cost_per_kWp", v),
     step: 1000000,
@@ -1248,9 +1304,11 @@ function AgrivoltaicsKhorasan() {
     max: 5000000000,
     required: true,
     inputId: "inverter_BOS_cost_per_kWp",
+    unit: "\u0631\u06CC\u0627\u0644/kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 60000000",
     error: errors.inverter_BOS_cost_per_kWp
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0647\u0632\u06CC\u0646\u0647 \u0627\u062A\u0635\u0627\u0644 \u0628\u0647 \u0634\u0628\u06A9\u0647 (\u06CC\u06A9\u062C\u0627)",
+    label: "\u0647\u0632\u06CC\u0646\u0647 \u0627\u062A\u0635\u0627\u0644 \u0628\u0647 \u0634\u0628\u06A9\u0647",
     value: s.grid_interconnection_lump_sum,
     onChange: v => set("grid_interconnection_lump_sum", v),
     step: 1000000,
@@ -1258,9 +1316,106 @@ function AgrivoltaicsKhorasan() {
     max: 100000000000,
     required: true,
     inputId: "grid_interconnection_lump_sum",
+    unit: "\u0631\u06CC\u0627\u0644",
+    helperText: "\u0645\u062B\u0627\u0644: 5000000000",
     error: errors.grid_interconnection_lump_sum
-  }), !simple && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062E\u062F\u0645\u0627\u062A/\u0645\u062C\u0648\u0632/\u0637\u0631\u0627\u062D\u06CC (%)",
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0646\u06AF\u0647\u062F\u0627\u0631\u06CC \u0633\u0627\u0644\u0627\u0646\u0647",
+    value: s.pv_om_cost_per_kWp_year,
+    onChange: v => set("pv_om_cost_per_kWp_year", v),
+    step: 10000,
+    min: 0,
+    required: true,
+    inputId: "pv_om_cost_per_kWp_year",
+    unit: "\u0631\u06CC\u0627\u0644/kWp",
+    helperText: "\u0645\u062B\u0627\u0644: 2500000 \u0628\u0647 \u0627\u0632\u0627\u06CC \u0647\u0631 kWp",
+    error: errors.pv_om_cost_per_kWp_year
+  })), /*#__PURE__*/React.createElement(Section, {
+    title: "\u06F4) \u067E\u0627\u0631\u0627\u0645\u062A\u0631\u0647\u0627\u06CC \u0645\u0627\u0644\u06CC"
+  }, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0627\u0641\u0642 \u062A\u062D\u0644\u06CC\u0644",
+    value: s.time_horizon_years,
+    onChange: v => set("time_horizon_years", v),
+    step: 1,
+    min: 1,
+    max: 50,
+    required: true,
+    inputId: "time_horizon_years",
+    unit: "\u0633\u0627\u0644",
+    helperText: "\u0645\u062B\u0627\u0644: 25",
+    error: errors.time_horizon_years
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0646\u0631\u062E \u062A\u0646\u0632\u0644",
+    value: s.discount_rate_pct,
+    onChange: v => set("discount_rate_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    required: true,
+    inputId: "discount_rate_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 12",
+    error: errors.discount_rate_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0627\u0641\u0632\u0627\u06CC\u0634 \u0633\u0627\u0644\u0627\u0646\u0647 \u062A\u0639\u0631\u0641\u0647 \u0628\u0631\u0642",
+    value: s.tariff_escalation_pct_per_year,
+    onChange: v => set("tariff_escalation_pct_per_year", v),
+    step: 0.5,
+    min: -50,
+    max: 100,
+    required: true,
+    inputId: "tariff_escalation_pct_per_year",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 5",
+    error: errors.tariff_escalation_pct_per_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u06CC\u0627\u0631\u0627\u0646\u0647 \u0633\u0631\u0645\u0627\u06CC\u0647\u200C\u06AF\u0630\u0627\u0631\u06CC",
+    value: s.subsidy_capex_pct,
+    onChange: v => set("subsidy_capex_pct", v),
+    step: 1,
+    min: 0,
+    max: 100,
+    inputId: "subsidy_capex_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 0 \u062A\u0627 20",
+    error: errors.subsidy_capex_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0627\u062C\u0627\u0631\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u0632\u0645\u06CC\u0646",
+    value: s.land_lease_cost_per_ha_year,
+    onChange: v => set("land_lease_cost_per_ha_year", v),
+    step: 100000,
+    min: 0,
+    max: 10000000000,
+    inputId: "land_lease_cost_per_ha_year",
+    unit: "\u0631\u06CC\u0627\u0644/\u0647\u06A9\u062A\u0627\u0631",
+    helperText: "\u0627\u06AF\u0631 \u0645\u0627\u0644\u06A9 \u0627\u06CC\u062F \u0635\u0641\u0631 \u0628\u06AF\u0630\u0627\u0631\u06CC\u062F",
+    error: errors.land_lease_cost_per_ha_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0628\u06CC\u0645\u0647 \u0633\u0627\u0644\u0627\u0646\u0647 \u062F\u0627\u0631\u0627\u06CC\u06CC",
+    value: s.insurance_cost_pct_of_asset_value_per_year,
+    onChange: v => set("insurance_cost_pct_of_asset_value_per_year", v),
+    step: 0.1,
+    min: 0,
+    max: 100,
+    inputId: "insurance_cost_pct_of_asset_value_per_year",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 1.2",
+    error: errors.insurance_cost_pct_of_asset_value_per_year
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0645\u0627\u0644\u06CC\u0627\u062A \u0628\u0631 \u0633\u0648\u062F",
+    value: s.tax_rate_pct,
+    onChange: v => set("tax_rate_pct", v),
+    step: 0.5,
+    min: 0,
+    max: 100,
+    inputId: "tax_rate_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 0 \u06CC\u0627 10",
+    error: errors.tax_rate_pct
+  })), !simple && /*#__PURE__*/React.createElement(Section, {
+    title: "\u06F5) \u062A\u0646\u0638\u06CC\u0645\u0627\u062A \u067E\u06CC\u0634\u0631\u0641\u062A\u0647 \u0633\u0627\u0645\u0627\u0646\u0647"
+  }, /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u062E\u062F\u0645\u0627\u062A/\u0645\u062C\u0648\u0632/\u0637\u0631\u0627\u062D\u06CC",
     value: s.EPC_soft_cost_pct_of_capex,
     onChange: v => set("EPC_soft_cost_pct_of_capex", v),
     step: 0.5,
@@ -1268,9 +1423,11 @@ function AgrivoltaicsKhorasan() {
     max: 50,
     required: !simple,
     inputId: "EPC_soft_cost_pct_of_capex",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 8",
     error: errors.EPC_soft_cost_pct_of_capex
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u06A9\u0627\u0647\u0634 \u0631\u0627\u0646\u062F\u0645\u0627\u0646 \u067E\u0646\u0644 (% \u0633\u0627\u0644\u0627\u0646\u0647)",
+    label: "\u06A9\u0627\u0647\u0634 \u0631\u0627\u0646\u062F\u0645\u0627\u0646 \u067E\u0646\u0644",
     value: s.annual_pv_degradation_pct,
     onChange: v => set("annual_pv_degradation_pct", v),
     step: 0.1,
@@ -1278,9 +1435,11 @@ function AgrivoltaicsKhorasan() {
     max: 10,
     required: !simple,
     inputId: "annual_pv_degradation_pct",
+    unit: "%/\u0633\u0627\u0644",
+    helperText: "\u0645\u062B\u0627\u0644: 0.6",
     error: errors.annual_pv_degradation_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u06A9\u062B\u06CC\u0641\u06CC \u067E\u0646\u0644 (\u066A)",
+    label: "\u06A9\u062B\u06CC\u0641\u06CC \u067E\u0646\u0644",
     value: s.soiling_loss_pct,
     onChange: v => set("soiling_loss_pct", v),
     step: 0.5,
@@ -1288,9 +1447,11 @@ function AgrivoltaicsKhorasan() {
     max: 30,
     required: !simple,
     inputId: "soiling_loss_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 5 \u0628\u0631 \u0627\u0633\u0627\u0633 \u06AF\u0631\u062F \u0648 \u063A\u0628\u0627\u0631",
     error: errors.soiling_loss_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u062F\u0633\u062A\u0631\u0633\u200C\u067E\u0630\u06CC\u0631\u06CC \u0633\u0627\u0645\u0627\u0646\u0647 (\u066A)",
+    label: "\u062F\u0633\u062A\u0631\u0633\u200C\u067E\u0630\u06CC\u0631\u06CC \u0633\u0627\u0645\u0627\u0646\u0647",
     value: s.availability_pct,
     onChange: v => set("availability_pct", v),
     step: 0.5,
@@ -1298,17 +1459,43 @@ function AgrivoltaicsKhorasan() {
     max: 100,
     required: !simple,
     inputId: "availability_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 98",
     error: errors.availability_pct
   }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0646\u06AF\u0647\u062F\u0627\u0631\u06CC \u0633\u0627\u0644\u0627\u0646\u0647 (\u0631\u06CC\u0627\u0644/kWp)",
-    value: s.pv_om_cost_per_kWp_year,
-    onChange: v => set("pv_om_cost_per_kWp_year", v),
-    step: 10000,
+    label: "\u0645\u062D\u062F\u0648\u062F\u06CC\u062A \u06A9\u0627\u0647\u0634 \u062A\u0648\u0644\u06CC\u062F",
+    value: s.curtailment_pct,
+    onChange: v => set("curtailment_pct", v),
+    step: 0.5,
     min: 0,
-    required: true,
-    inputId: "pv_om_cost_per_kWp_year",
-    error: errors.pv_om_cost_per_kWp_year
-}))), /*#__PURE__*/React.createElement("section", {
+    max: 100,
+    inputId: "curtailment_pct",
+    unit: "%",
+    helperText: "\u0645\u062B\u0627\u0644: 0 \u062A\u0627 5",
+    error: errors.curtailment_pct
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0642\u06CC\u0645\u062A \u06A9\u0631\u0628\u0646 \u062A\u0646\u06CC",
+    value: s.carbon_credit_price_per_tCO2,
+    onChange: v => set("carbon_credit_price_per_tCO2", v),
+    step: 100000,
+    min: 0,
+    max: 10000000000,
+    inputId: "carbon_credit_price_per_tCO2",
+    unit: "\u0631\u06CC\u0627\u0644/\u062A\u0646 CO2",
+    helperText: "\u0645\u062B\u0627\u0644: 2000000",
+    error: errors.carbon_credit_price_per_tCO2
+  }), /*#__PURE__*/React.createElement(NumberInput, {
+    label: "\u0627\u062C\u062A\u0646\u0627\u0628 CO2 \u0628\u0631 \u0645\u06AF\u0627\u0648\u0627\u062A\u0633\u0627\u0639\u062A",
+    value: s.avoided_co2_t_per_MWh,
+    onChange: v => set("avoided_co2_t_per_MWh", v),
+    step: 0.01,
+    min: 0,
+    max: 5,
+    inputId: "avoided_co2_t_per_MWh",
+    unit: "\u062A\u0646 CO2/MWh",
+    helperText: "\u0645\u062B\u0627\u0644: 0.55",
+    error: errors.avoided_co2_t_per_MWh
+  })), /*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
