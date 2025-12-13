@@ -23,7 +23,51 @@
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
   <header id="site-header" class="site-header" role="banner"></header>
   <main id="main" role="main">
+    <section class="container mx-auto px-4 py-8 text-right text-slate-100">
+      <h1 class="text-3xl font-extrabold mb-3">فتوکشت به زبان ساده</h1>
+      <p class="text-lg leading-relaxed mb-4">با فتوکشت (Agrovoltaics) می‌توانید هم‌زمان از یک زمین، محصول کشاورزی و برق خورشیدی بگیرید؛ هم درآمد دوگانه دارید و هم ریسک کم‌آبی و نوسان قیمت زمین را پوشش می‌دهید.</p>
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <div class="text-emerald-400 font-semibold mb-1">۱) انتخاب شرایط</div>
+          <p class="text-sm">منطقه، محصول و وضعیت آب‌وخاک را انتخاب کنید تا مقادیر پیش‌فرض متناسب پر شود.</p>
+        </div>
+        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <div class="text-emerald-400 font-semibold mb-1">۲) وارد کردن مساحت و سرمایه</div>
+          <p class="text-sm">مساحت زمین، ظرفیت پیشنهادی پنل و هزینه‌های تقریبی را وارد یا اصلاح کنید.</p>
+        </div>
+        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <div class="text-emerald-400 font-semibold mb-1">۳) دیدن نتیجه و مقایسه</div>
+          <p class="text-sm">بازگشت سرمایه، درآمد سال اول و اثر روی مصرف آب را ببینید و سناریوها را ذخیره کنید.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-4">
+        <a class="px-4 py-2 rounded-xl bg-emerald-600 text-white" href="#root">شروع محاسبه</a>
+        <a class="px-4 py-2 rounded-xl bg-neutral-800 text-white border border-neutral-700" href="/contact/">درخواست مشاوره</a>
+      </div>
+      <p class="text-sm text-amber-200">این خروجی تخمینی است؛ برای تصمیم نهایی باید امکان‌سنجی محلی انجام شود.</p>
+    </section>
     <div id="root"></div>
+    <section class="container mx-auto px-4 py-10 text-right text-slate-100">
+      <h2 class="text-2xl font-bold mb-4">سوالات پرتکرار فتوکشت</h2>
+      <div class="space-y-4">
+        <article class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <h3 class="font-semibold text-emerald-400 mb-1">فتوکشت چیست؟</h3>
+          <p class="text-sm">چیدمان پنل‌های خورشیدی به‌گونه‌ای که زمین زیر آن برای کشاورزی یا دامداری قابل‌استفاده بماند و تولید برق و محصول هم‌زمان انجام شود.</p>
+        </article>
+        <article class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <h3 class="font-semibold text-emerald-400 mb-1">برای چه زمین‌هایی مناسب است؟</h3>
+          <p class="text-sm">زمین‌های دارای تابش مناسب و دسترسی به شبکه یا مصرف داخلی؛ خاک و آب باید اجازه کشت محصول منتخب را بدهند.</p>
+        </article>
+        <article class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <h3 class="font-semibold text-emerald-400 mb-1">اثر سایه روی محصول چقدر است؟</h3>
+          <p class="text-sm">بسته به محصول و اقلیم بین کاهش اندک تا بهبود عملکرد ممکن است؛ در ماشین‌حساب می‌توانید درصد کاهش یا افزایش را تنظیم کنید.</p>
+        </article>
+        <article class="bg-neutral-900 border border-neutral-800 rounded-2xl p-4">
+          <h3 class="font-semibold text-emerald-400 mb-1">چه مجوزهایی لازم است؟</h3>
+          <p class="text-sm">مجوز اتصال به شبکه یا قرارداد خرید تضمینی برق، و در برخی مناطق مجوز تغییر کاربری یا اجاره رسمی زمین؛ پیش از سرمایه‌گذاری حتماً با کارشناسان محلی هماهنگ کنید.</p>
+        </article>
+      </div>
+    </section>
   </main>
   <!-- وندورها و اپ موجود -->
   <script defer src="/solar/agrivoltaics/vendor/react.production.min.js" charset="utf-8"></script>
@@ -37,52 +81,8 @@
   <script defer src="/assets/js/utf8-fix.js" charset="utf-8"></script>
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script defer src="/assets/js/header.js"></script>
-  <!-- Statsfa Website Analytics Start -->
-  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
-  <!-- Statsfa Website Analytics End -->
-  <!-- دکمه ثبت بازخورد Porsline -->
-  <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
-    بازخورد دهید
-  </a>
-  <script>
-    // Load Porsline script immediately with async for better performance
-    (function() {
-      try {
-        var js,q,d=document,
-          gi=d.getElementById,
-          ce=d.createElement,
-          gt=d.getElementsByTagName,
-          id="porsline-share",
-          b="https://cdn.porsline.ir/static/panel/v2/statics/";
-        if(!gi.call(d,id)) {
-          js=ce.call(d,"script");
-          js.id = id;
-          js.setAttribute("data-position","right");
-          js.src=b+"side-tab.js";
-          js.async = true;
-          js.onerror = function() {
-            console.warn('Porsline script failed to load');
-          };
-          q=gt.call(d,"script")[0];
-          q.parentNode.insertBefore(js,q);
-        }
-      } catch(e) {
-        console.warn('Porsline initialization error:', e.message);
-      }
-    })();
-
-    var clzdTiLuIp = function (ifid) {
-      try {
-        const el = document.getElementById(ifid);
-        if (el) {
-          el.fetchPriority = 'high';
-          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0";
-        }
-      } catch(e) {
-        console.warn('Porsline iframe error:', e.message);
-      }
-    };
-  </script>
+  <script src="/assets/js/cloudflare-beacon-loader.js" defer></script>
+  <a class="porsline-button-wrapper" href="https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0" target="_blank" rel="noopener">بازخورد دهید</a>
+  <script src="/assets/js/porsline-widget.js" defer></script>
 </body>
 </html>

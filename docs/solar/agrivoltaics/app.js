@@ -74,6 +74,47 @@ const Section = ({
   className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
 }, children));
 const normalizeNumberValue = value => value === null || value === undefined ? "" : value;
+const unitsByInputId = {
+  salinity_EC: "dS/m",
+  project_area_ha: "هکتار",
+  baseline_yield_t_per_ha: "تن/هکتار",
+  expected_yield_change_pct_under_AGV: "%",
+  crop_price_per_t: "ریال/تن",
+  ag_opex_baseline_per_ha: "ریال/هکتار/سال",
+  ag_opex_change_under_AGV_pct: "%",
+  water_use_baseline_m3_per_ha: "متر مکعب/هکتار",
+  water_use_change_under_AGV_pct: "%",
+  crop_quality_premium_or_discount_pct: "%",
+  energy_for_irrigation_kWh_per_m3: "kWh/m³",
+  irrigation_energy_tariff: "ریال/kWh",
+  water_unit_cost: "ریال/m³",
+  pv_capacity_kWp_total: "kWp",
+  module_price_per_kWp: "ریال/kWp",
+  mounting_structure_cost_per_kWp: "ریال/kWp",
+  inverter_BOS_cost_per_kWp: "ریال/kWp",
+  grid_interconnection_lump_sum: "ریال",
+  EPC_soft_cost_pct_of_capex: "%",
+  annual_pv_degradation_pct: "% در سال",
+  specific_yield_kWh_per_kWp_year: "kWh/kWp/سال",
+  soiling_loss_pct: "%",
+  availability_pct: "%",
+  pv_om_cost_per_kWp_year: "ریال/kWp/سال",
+  ppa_or_fit_tariff: "ریال/kWh",
+  net_metering_buy_price: "ریال/kWh",
+  net_metering_sell_price: "ریال/kWh",
+  self_consumption_share_pct: "%",
+  curtailment_pct: "%",
+  tariff_escalation_pct_per_year: "%/سال",
+  subsidy_capex_pct: "%",
+  carbon_credit_price_per_tCO2: "ریال/تن CO₂",
+  avoided_co2_t_per_MWh: "تن/MWh",
+  insurance_cost_pct_of_asset_value_per_year: "%/سال",
+  land_lease_cost_per_ha_year: "ریال/هکتار/سال",
+  tax_rate_pct: "%",
+  time_horizon_years: "سال",
+  discount_rate_pct: "%"
+};
+
 const NumberInput = ({
   label,
   value,
@@ -83,15 +124,22 @@ const NumberInput = ({
   max,
   required,
   inputId,
-  error
+  error,
+  unit,
+  helper
 }) => {
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
+  const displayUnit = unit || unitsByInputId[inputId];
   return /*#__PURE__*/React.createElement("label", {
     className: "flex flex-col gap-1 text-sm"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-gray-200"
-  }, label), /*#__PURE__*/React.createElement("input", {
+  }, label), helper && /*#__PURE__*/React.createElement("span", {
+    className: "text-xs text-gray-400 leading-snug"
+  }, helper), /*#__PURE__*/React.createElement("div", {
+    className: "flex items-center gap-2"
+  }, /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
     type: "number",
@@ -99,6 +147,7 @@ const NumberInput = ({
     min: min,
     max: max,
     required: required,
+    inputMode: "decimal",
     value: normalizeNumberValue(value),
     onChange: e => {
       const raw = e.target.value;
@@ -107,8 +156,14 @@ const NumberInput = ({
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
     className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
-    style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
-  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: '#ffffff',
+      WebkitTextFillColor: '#ffffff',
+      colorScheme: 'dark'
+    }
+  }), displayUnit ? /*#__PURE__*/React.createElement("span", {
+    className: "text-xs text-gray-300 px-2 py-1 rounded-lg bg-neutral-800 border border-neutral-700 whitespace-nowrap"
+  }, displayUnit) : null), /*#__PURE__*/React.createElement("div", {
     id: errorId,
     className: "text-red-400 text-xs min-h-[1rem]"
   }, error || ""));
@@ -126,12 +181,20 @@ const Select = ({
   value: value,
   onChange: e => onChange(e.target.value),
   className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
-  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+  style: {
+    color: '#ffffff',
+    WebkitTextFillColor: '#ffffff',
+    backgroundColor: '#111111',
+    colorScheme: 'dark'
+  }
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
   value: o.value,
   className: "bg-neutral-900 text-white",
-  style: {color: '#ffffff', backgroundColor: '#171717'}
+  style: {
+    color: '#ffffff',
+    backgroundColor: '#171717'
+  }
 }, o.label))));
 const KPI = ({
   title,
@@ -413,7 +476,7 @@ function AgrivoltaicsKhorasan() {
   fixTitles(soils);
 
   // ÙˆØ¶Ø¹ÛŒØª ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§
-  const [s, setS] = useState({
+  const defaultState = {
     region: "torbat",
     crop_type: "زعفران",
     water_source: "well_electric_subsidized",
@@ -459,7 +522,21 @@ function AgrivoltaicsKhorasan() {
     insurance_cost_pct_of_asset_value_per_year: 1.2,
     land_lease_cost_per_ha_year: 0,
     tax_rate_pct: 0
-  });
+  };
+  const sampleState = {
+    ...defaultState,
+    project_area_ha: 2,
+    pv_capacity_kWp_total: 250,
+    grid_scheme: "NetMetering",
+    crop_type: "انگور",
+    water_source: "canal",
+    dust_level: "high",
+    salinity_EC: 4.5,
+    discount_rate_pct: 15,
+    self_consumption_share_pct: 50,
+    tariff_escalation_pct_per_year: 7
+  };
+  const [s, setS] = useState(defaultState);
   useEffect(() => {
     const id = new URLSearchParams(location.search).get("id");
     loadScenarioById(id, setS);
@@ -886,7 +963,7 @@ function AgrivoltaicsKhorasan() {
   }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
     className: "mt-2 text-xs text-gray-400 space-y-1"
   }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
-}, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 flex-wrap"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: handleRecompute,
@@ -930,11 +1007,25 @@ function AgrivoltaicsKhorasan() {
       loadScenarioById(onlyId, setS);
     },
     className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
-  }, "بازکردن از لینک"))),
+  }, "بازکردن از لینک"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setS(defaultState),
+    className: "px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-gray-100"
+  }, "بازنشانی به پیش‌فرض"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setS(sampleState),
+    className: "px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-gray-100"
+  }, "نمونه پیشنهادی"))),
   globalError && /*#__PURE__*/React.createElement("div", {
     className: "text-red-400 text-sm mt-2",
     role: "alert"
-  }, globalError), /*#__PURE__*/React.createElement("main", {
+  }, globalError), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4"
+  }, /*#__PURE__*/React.createElement("details", {
+    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 text-sm text-gray-300"
+  }, /*#__PURE__*/React.createElement("summary", {
+    className: "cursor-pointer text-emerald-400 font-bold"
+  }, "فرضیات و نکات مدل"), /*#__PURE__*/React.createElement("ul", {
+    className: "list-disc pr-4 space-y-1 mt-2"
+  }, /*#__PURE__*/React.createElement("li", null, "نرخ تنزیل پیش‌فرض بر اساس سرمایه‌گذار محتاط تنظیم شده است؛ می‌توانید در بخش مالی آن را تغییر دهید."), /*#__PURE__*/React.createElement("li", null, "تولید سالانه برق با فرض در دسترس بودن شبکه و بدون محدودیت تزریق محاسبه شده است."), /*#__PURE__*/React.createElement("li", null, "تأثیر سایه و گردوغبار روی تولید خورشیدی در بخش \"مشخصات خورشیدی\" قابل تغییر است."), /*#__PURE__*/React.createElement("li", null, "تغییر عملکرد محصول زیر پنل به صورت درصدی از وضعیت فعلی گرفته می‌شود؛ برای محصولات حساس عدد محافظه‌کارانه بزنید."), /*#__PURE__*/React.createElement("li", null, "اگر ورودی‌ها صفر یا منفی باشند، محاسبه متوقف می‌شود و پیام خطا می‌گیرید."))), /*#__PURE__*/React.createElement("main", {
   }, /*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
