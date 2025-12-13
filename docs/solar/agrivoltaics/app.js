@@ -106,7 +106,12 @@ const NumberInput = ({
     value: normalizeNumberValue(value),
     onChange: e => {
       const raw = e.target.value;
-      onChange(raw === "" ? null : Number(raw));
+      if (raw === "") {
+        onChange(null);
+        return;
+      }
+      const parsed = Number(raw);
+      onChange(Number.isFinite(parsed) ? parsed : NaN);
     },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
@@ -213,11 +218,16 @@ function validateState(state, simpleMode) {
   for (const rule of rules) {
     const value = state?.[rule.key];
     const empty = value === null || value === undefined || Number.isNaN(value);
+    const numeric = Number(value);
     if (rule.required && (empty || !Number.isFinite(value))) {
       errors[rule.key] = "این فیلد الزامی است";
       continue;
     }
     if (!rule.required && empty) {
+      continue;
+    }
+    if (!Number.isFinite(numeric)) {
+      errors[rule.key] = "عدد نامعتبر است";
       continue;
     }
     if (rule.positive && Number(value) <= 0) {
@@ -496,8 +506,39 @@ function AgrivoltaicsKhorasan() {
     ...prev,
     [k]: v
   }));
-  const pct = x => (Number(x) || 0) / 100;
-  const nz = x => Number(x) || 0;
+  const assumptionItems = useMemo(() => [{
+    label: "نرخ تنزیل پایه",
+    value: `${s.discount_rate_pct}%`
+  }, {
+    label: "کاهش راندمان سالانه پنل",
+    value: `${s.annual_pv_degradation_pct}%`
+  }, {
+    label: "دسترس‌پذیری نیروگاه",
+    value: `${s.availability_pct}%`
+  }, {
+    label: "اتلاف گرد و غبار",
+    value: `${s.soiling_loss_pct}%`
+  }, {
+    label: "تغییر عملکرد محصول زیر پنل",
+    value: `${s.expected_yield_change_pct_under_AGV}%`
+  }, {
+    label: "صرفه‌جویی آب زیر پنل",
+    value: `${s.water_use_change_under_AGV_pct}%`
+  }, {
+    label: "افزایش سالانه تعرفه برق",
+    value: `${s.tariff_escalation_pct_per_year}%`
+  }, {
+    label: "محدودیت/کاهش اجباری تولید",
+    value: `${s.curtailment_pct}%`
+  }], [s]);
+  const pct = x => {
+    const n = Number(x);
+    return Number.isFinite(n) ? n / 100 : 0;
+  };
+  const nz = x => {
+    const n = Number(x);
+    return Number.isFinite(n) ? n : 0;
+  };
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
   const fmt = n => new Intl.NumberFormat("fa-IR").format(Math.round(n || 0));
   const fmtMoney = n => `${fmt(n)} ${s.currency}`;
@@ -1039,7 +1080,24 @@ function AgrivoltaicsKhorasan() {
     className: "text-lg font-bold mt-1"
   }, decisionText()), /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-gray-300 mt-1"
-  }, "\u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F \u0648 \u0628\u0627\u0632\u06AF\u0634\u062A \u0633\u0631\u0645\u0627\u06CC\u0647 \u062F\u0631 \u0686\u0646\u062F \u0633\u0627\u0644 \u0627\u0648\u0644 \u0631\u062E \u062F\u0647\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u0627\u0642\u062A\u0635\u0627\u062F\u06CC \u0627\u0633\u062A.")), /*#__PURE__*/React.createElement(Section, {
+  }, "اگر «ارزش امروز» مثبت باشد و بازگشت سرمایه در چند سال اول رخ دهد، معمولاً طرح اقتصادی است.")), /*#__PURE__*/React.createElement("details", {
+    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl mb-4"
+  }, /*#__PURE__*/React.createElement("summary", {
+    className: "cursor-pointer text-emerald-300 font-bold text-base md:text-lg flex items-center justify-between"
+  }, "فرضیات محاسبه", /*#__PURE__*/React.createElement("span", {
+    className: "text-xs text-gray-400"
+  }, "برای تغییر، مقدار فیلد مربوط را ویرایش کنید")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-3 grid md:grid-cols-2 lg:grid-cols-4 gap-2 text-sm text-gray-200"
+  }, assumptionItems.map(item => /*#__PURE__*/React.createElement("div", {
+    key: item.label,
+    className: "rounded-xl bg-neutral-900/50 border border-neutral-800 p-3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "text-gray-400 text-xs"
+  }, item.label), /*#__PURE__*/React.createElement("div", {
+    className: "font-semibold mt-1"
+  }, item.value))), /*#__PURE__*/React.createElement("p", {
+    className: "text-xs text-gray-400 md:col-span-2 lg:col-span-4"
+  }, "اگر هرکدام از این پیش‌فرض‌ها را تغییر دهید، محاسبه بر اساس مقدار جدید انجام می‌شود."))), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F1) \u0627\u0637\u0644\u0627\u0639\u0627\u062A \u0632\u0645\u06CC\u0646 \u0648 \u0645\u062D\u0635\u0648\u0644"
   }, /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u0645\u0633\u0627\u062D\u062A \u0632\u0645\u06CC\u0646",
