@@ -20,6 +20,7 @@ html[data-page="agrivoltaics-dev"] body {
     font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:#0a0a0a;
     color:#eee;
+    color-scheme: dark;
 }
 html[data-page="agrovoltaics"] a,
 html[data-page="agrivoltaics-dev"] a {
@@ -39,6 +40,7 @@ html[data-page="agrovoltaics-dev"] select {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
     background-color: #171717 !important;
+    color-scheme: dark;
 }
 
 html[data-page="agrovoltaics"] select option,
