@@ -67,11 +67,11 @@ const Section = ({
   title,
   children
 }) => /*#__PURE__*/React.createElement("section", {
-  className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
+  className: "bg-neutral-950/70 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
 }, /*#__PURE__*/React.createElement("h2", {
-  className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
+  className: "text-emerald-400 text-base md:text-lg font-bold mb-4 md:mb-5"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
+  className: "grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3"
 }, children));
 const normalizeNumberValue = value => value === null || value === undefined ? "" : value;
 const NumberInput = ({
@@ -90,11 +90,11 @@ const NumberInput = ({
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
   return /*#__PURE__*/React.createElement("label", {
-    className: "flex flex-col gap-1 text-sm"
+    className: "flex flex-col gap-2 text-sm text-gray-100"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200 flex items-center justify-between gap-2"
+    className: "text-gray-100 flex items-center justify-between gap-2"
   }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700"
+    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-100 border border-neutral-700"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -115,10 +115,10 @@ const NumberInput = ({
     },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
-    className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
+    className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-200 focus:outline-none focus:ring-2 transition-shadow ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500 focus:ring-offset-1 focus:ring-offset-neutral-950'}`,
     style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
   }), helperText && /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] text-gray-400 leading-snug"
+    className: "text-[11px] text-gray-300 leading-snug"
   }, helperText), /*#__PURE__*/React.createElement("div", {
     id: errorId,
     className: "text-red-400 text-xs min-h-[1rem]"
@@ -130,13 +130,13 @@ const Select = ({
   onChange,
   options
 }) => /*#__PURE__*/React.createElement("label", {
-  className: "flex flex-col gap-1 text-sm"
+  className: "flex flex-col gap-2 text-sm text-gray-100"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "text-gray-200"
+  className: "text-gray-100"
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
+  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 focus:ring-offset-neutral-950",
   style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
@@ -147,18 +147,48 @@ const Select = ({
 const KPI = ({
   title,
   value,
-  sub
+  unit,
+  sub,
+  isNegative
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl"
+  className: "rounded-2xl bg-neutral-950/80 border border-neutral-800 p-4 shadow-xl flex flex-col gap-2"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-300 text-sm"
+  className: "text-gray-100 text-sm font-semibold"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
-}, /*#__PURE__*/React.createElement("span", {
-  className: "inline-block max-w-full"
-}, value)), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-xs text-gray-400 mt-1 text-center leading-snug"
+  className: "flex flex-col items-center gap-1"
+}, /*#__PURE__*/React.createElement("div", {
+  className: `text-2xl sm:text-3xl font-black leading-tight tracking-tight ${isNegative ? 'text-red-300' : 'text-emerald-300'} whitespace-nowrap max-w-full overflow-hidden text-ellipsis text-center`,
+  style: {
+    fontVariantNumeric: 'tabular-nums'
+  }
+}, value), unit && /*#__PURE__*/React.createElement("div", {
+  className: "text-xs text-gray-200"
+}, unit)), sub && /*#__PURE__*/React.createElement("div", {
+  className: "text-xs text-gray-300 mt-1 text-center leading-snug"
 }, sub));
+const formatNumberFa = (value, options = {}) => {
+  if (!Number.isFinite(value)) return null;
+  const {
+    maximumFractionDigits = 0,
+    minimumFractionDigits = 0
+  } = options;
+  return new Intl.NumberFormat("fa-IR", {
+    useGrouping: true,
+    maximumFractionDigits,
+    minimumFractionDigits
+  }).format(value);
+};
+const formatCurrencyIRR = (value, {
+  currency = "ریال",
+  ...options
+} = {}) => {
+  const formatted = formatNumberFa(value, options);
+  return formatted ? `${formatted} ${currency}` : null;
+};
+const formatKwh = (value, unit = "kWh", options = {}) => {
+  const formatted = formatNumberFa(value, options);
+  return formatted ? `${formatted} ${unit}` : null;
+};
 const KV = ({
   k,
   v
@@ -295,6 +325,15 @@ function AgrivoltaicsKhorasan() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [globalError, setGlobalError] = useState("");
+  const [showFullTable, setShowFullTable] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(() => typeof window !== "undefined" ? window.innerWidth >= 1024 : false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.innerWidth >= 1024) {
+      setAdvancedOpen(true);
+    }
+  }, []);
 
   // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
@@ -540,8 +579,15 @@ function AgrivoltaicsKhorasan() {
     return Number.isFinite(n) ? n : 0;
   };
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  const fmt = n => new Intl.NumberFormat("fa-IR").format(Math.round(n || 0));
-  const fmtMoney = n => `${fmt(n)} ${s.currency}`;
+  const fmt = (n, options = {}) => formatNumberFa(n, {
+    maximumFractionDigits: 0,
+    ...options
+  }) ?? "—";
+  const fmtMoney = (n, options = {}) => formatCurrencyIRR(n, {
+    currency: s.currency,
+    maximumFractionDigits: 0,
+    ...options
+  }) ?? "—";
   useEffect(() => {
     const reg = regions[s.region];
     const crop = cropProfiles[s.crop_type] || cropProfiles["زعفران"];
@@ -785,20 +831,67 @@ function AgrivoltaicsKhorasan() {
   const displayRevenueYear0 = readyForOutput ? safeNumber("elecRevenueYear0", elecRevenueYear(0)) : null;
   const displayNPV = readyForOutput ? safeNumber("npv_incremental", npv(s.discount_rate_pct, cashflowsIncremental)) : null;
   const displayIRR = readyForOutput && Number.isFinite(IRR_incremental) ? IRR_incremental : null;
+  const capexKpi = moneyOrDash("capex_total", displayCapex);
+  const pvYear1Kpi = energyOrDash("totalPVkWhYear1", displayPVYear1, "kWh");
+  const revenueYear1Kpi = moneyOrDash("elecRevenueYear0", displayRevenueYear0);
+  const npvKpi = moneyOrDash("npv_incremental", displayNPV);
+  const irrKpi = percentOrDash("irr", displayIRR);
 
-  const moneyOrDash = (label, value) => {
+  const moneyOrDash = (label, value, options = {}) => {
     const numeric = safeNumber(label, value);
-    return numeric !== null ? fmtMoney(numeric) : "—";
+    if (numeric === null) return {
+      formatted: "—",
+      unit: s.currency,
+      numeric: null,
+      isNegative: false
+    };
+    const formatted = formatCurrencyIRR(numeric, {
+      currency: s.currency,
+      maximumFractionDigits: 0,
+      ...options
+    });
+    return {
+      formatted: formatted ?? "—",
+      unit: s.currency,
+      numeric,
+      isNegative: numeric < 0
+    };
   };
 
   const energyOrDash = (label, value, unit = "kWh") => {
     const numeric = safeNumber(label, value);
-    return numeric !== null ? `${fmt(numeric)} ${unit}` : "—";
+    if (numeric === null) return {
+      formatted: "—",
+      unit,
+      numeric: null,
+      isNegative: false
+    };
+    return {
+      formatted: formatKwh(numeric, unit) ?? "—",
+      unit,
+      numeric,
+      isNegative: numeric < 0
+    };
   };
 
   const percentOrDash = (label, value) => {
     const numeric = safeNumber(label, value);
-    return numeric !== null ? `${(numeric * 100).toFixed(1)} %` : "نامشخص";
+    if (numeric === null) return {
+      formatted: "نامشخص",
+      unit: "%",
+      numeric: null,
+      isNegative: false
+    };
+    const formatted = formatNumberFa(numeric * 100, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    });
+    return {
+      formatted: formatted ? `${formatted} %` : "نامشخص",
+      unit: "%",
+      numeric,
+      isNegative: numeric < 0
+    };
   };
 
   const displayCashflows = readyForOutput ? cashflowsIncremental : [];
@@ -807,22 +900,30 @@ function AgrivoltaicsKhorasan() {
   const displayCashflowsAGV = readyForOutput ? cashflowsAGV : [];
   const displayElecRevenueYear = readyForOutput ? elecRevenueYear : () => 0;
   const displayCarbonRevenueYear = readyForOutput ? carbonRevenueYear : () => 0;
-  const tableRows = displayCashflowsAGV.map((_, i) => /*#__PURE__*/React.createElement("tr", {
-    key: i,
-    className: "border-b border-neutral-900 hover:bg-neutral-900/40"
-  }, /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, i + 1), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, energyOrDash("annualPV", displayAnnualPV(i), "kWh")), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i))), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsAGV", displayCashflowsAGV[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
-  }, moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null))));
+  const visibleYears = showFullTable ? displayCashflowsAGV.length : Math.min(5, displayCashflowsAGV.length);
+  const tableRows = displayCashflowsAGV.slice(0, visibleYears).map((_, i) => {
+    const annualPVCell = energyOrDash("annualPV", displayAnnualPV(i), "kWh");
+    const elecAndCarbonCell = moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i));
+    const cashflowBaselineCell = moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i]);
+    const cashflowAgvCell = moneyOrDash("cashflowsAGV", displayCashflowsAGV[i]);
+    const incrementalCell = moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null);
+    return /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      className: "border-b border-neutral-900 hover:bg-neutral-900/40"
+    }, /*#__PURE__*/React.createElement("td", {
+      className: "py-2"
+    }, i + 1), /*#__PURE__*/React.createElement("td", {
+      className: "py-2 whitespace-nowrap"
+    }, annualPVCell.formatted), /*#__PURE__*/React.createElement("td", {
+      className: "py-2 whitespace-nowrap"
+    }, elecAndCarbonCell.formatted), /*#__PURE__*/React.createElement("td", {
+      className: "py-2 whitespace-nowrap"
+    }, cashflowBaselineCell.formatted), /*#__PURE__*/React.createElement("td", {
+      className: "py-2 whitespace-nowrap"
+    }, cashflowAgvCell.formatted), /*#__PURE__*/React.createElement("td", {
+      className: "py-2 whitespace-nowrap"
+    }, incrementalCell.formatted));
+  });
   const disableActions = !readyForOutput || isLoading;
   const Chart = ({
     data,
@@ -939,9 +1040,9 @@ function AgrivoltaicsKhorasan() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
     className: "text-2xl md:text-3xl font-extrabold tracking-tight"
   }, "\u0645\u0627\u0634\u06CC\u0646\u200C\u062D\u0633\u0627\u0628 \u0641\u0648\u062A\u0648\u06A9\u0650\u0634\u062A \u2013 \u0648\u06CC\u0698\u0647 \u062E\u0631\u0627\u0633\u0627\u0646 \u0631\u0636\u0648\u06CC"), /*#__PURE__*/React.createElement("p", {
-    className: "text-sm md:text-base text-gray-300 mt-2"
+    className: "text-sm md:text-base text-gray-100 mt-2"
   }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 text-xs text-gray-400 space-y-1"
+    className: "mt-2 text-xs text-gray-300 space-y-1"
   }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
 }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 flex-wrap"
@@ -1049,29 +1150,39 @@ function AgrivoltaicsKhorasan() {
     inputId: "salinity_EC",
     error: errors.salinity_EC
   })), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs text-gray-400 mt-3"
+    className: "text-xs text-gray-300 mt-3"
   }, "* \u0627\u06AF\u0631 \u0645\u0646\u0637\u0642\u0647 \u062F\u0642\u06CC\u0642 \u0634\u0645\u0627 \u062F\u0631 \u0644\u06CC\u0633\u062A \u0646\u06CC\u0633\u062A\u060C \u0646\u0632\u062F\u06CC\u06A9\u200C\u062A\u0631\u06CC\u0646 \u0645\u0646\u0637\u0642\u0647 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F \u0648 \u0627\u0639\u062F\u0627\u062F \u0631\u0627 \u06A9\u0645\u06CC \u062A\u0646\u0638\u06CC\u0645 \u06A9\u0646\u06CC\u062F.")), /*#__PURE__*/React.createElement("div", {
-    className: "grid md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4"
+    className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 md:gap-4"
   }, /*#__PURE__*/React.createElement(KPI, {
     title: "هزینه اولیه ساخت",
-    value: moneyOrDash("capex_total", displayCapex),
-    sub: "پنل، سازه، اینورتر، اتصال"
+    value: capexKpi.formatted,
+    unit: capexKpi.numeric !== null ? capexKpi.unit : "",
+    sub: "پنل، سازه، اینورتر، اتصال",
+    isNegative: capexKpi.isNegative
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "برق سال اول",
-    value: energyOrDash("totalPVkWhYear1", displayPVYear1, "kWh"),
-    sub: "پس از کثیفی/خرابی"
+    value: pvYear1Kpi.formatted,
+    unit: pvYear1Kpi.numeric !== null ? pvYear1Kpi.unit : "",
+    sub: "پس از کثیفی/خرابی",
+    isNegative: pvYear1Kpi.isNegative
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "درآمد/صرفه‌جویی برق سال اول",
-    value: moneyOrDash("elecRevenueYear0", displayRevenueYear0),
-    sub: "طبق طرح انتخابی"
+    value: revenueYear1Kpi.formatted,
+    unit: revenueYear1Kpi.numeric !== null ? revenueYear1Kpi.unit : "",
+    sub: "طبق طرح انتخابی",
+    isNegative: revenueYear1Kpi.isNegative
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "ارزش امروز سود",
-    value: moneyOrDash("npv_incremental", displayNPV),
-    sub: `با نرخ ${s.discount_rate_pct}%`
+    value: npvKpi.formatted,
+    unit: npvKpi.numeric !== null ? npvKpi.unit : "",
+    sub: `با نرخ ${s.discount_rate_pct}%`,
+    isNegative: npvKpi.isNegative
   }), /*#__PURE__*/React.createElement(KPI, {
     title: "سود سالانه تقریبی",
-    value: displayIRR == null ? 'نامشخص' : `${(displayIRR * 100).toFixed(1)} %`,
-    sub: "هرچه بیشتر، بهتر"
+    value: irrKpi.formatted,
+    unit: irrKpi.numeric !== null ? irrKpi.unit : "",
+    sub: "هرچه بیشتر، بهتر",
+    isNegative: irrKpi.isNegative
   })), /*#__PURE__*/React.createElement("div", {
     className: `rounded-2xl p-4 border shadow-xl ${decisionText() === 'به‌صرفه' ? 'bg-emerald-900/30 border-emerald-700' : decisionText() === 'تقریباً سر به سر' ? 'bg-yellow-900/30 border-yellow-700' : 'bg-rose-900/30 border-rose-700'}`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1470,8 +1581,16 @@ function AgrivoltaicsKhorasan() {
     unit: "%",
     helperText: "\u0645\u062B\u0627\u0644: 0 \u06CC\u0627 10",
     error: errors.tax_rate_pct
-  })), !simple && /*#__PURE__*/React.createElement(Section, {
-    title: "\u06F5) \u062A\u0646\u0638\u06CC\u0645\u0627\u062A \u067E\u06CC\u0634\u0631\u0641\u062A\u0647 \u0633\u0627\u0645\u0627\u0646\u0647"
+  })), !simple && /*#__PURE__*/React.createElement("details", {
+    className: "bg-neutral-950/70 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl",
+    open: advancedOpen,
+    onToggle: e => setAdvancedOpen(e.target.open)
+  }, /*#__PURE__*/React.createElement("summary", {
+    className: "cursor-pointer text-emerald-300 font-bold text-base md:text-lg flex items-center justify-between"
+  }, "\u06F5) تنظیمات پیشرفته سامانه", /*#__PURE__*/React.createElement("span", {
+    className: "text-xs text-gray-300"
+  }, advancedOpen ? "برای بستن کلیک کنید" : "برای مشاهده باز کنید")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
   }, /*#__PURE__*/React.createElement(NumberInput, {
     label: "\u062E\u062F\u0645\u0627\u062A/\u0645\u062C\u0648\u0632/\u0637\u0631\u0627\u062D\u06CC",
     value: s.EPC_soft_cost_pct_of_capex,
@@ -1553,7 +1672,7 @@ function AgrivoltaicsKhorasan() {
     unit: "\u062A\u0646 CO2/MWh",
     helperText: "\u0645\u062B\u0627\u0644: 0.55",
     error: errors.avoided_co2_t_per_MWh
-  })), /*#__PURE__*/React.createElement("section", {
+  }))), /*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
@@ -1561,28 +1680,28 @@ function AgrivoltaicsKhorasan() {
     className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
   }, /*#__PURE__*/React.createElement(KV, {
     k: "درآمد کشاورزی (قبل از پنل)",
-    v: moneyOrDash("ag_rev_baseline", readyForOutput ? ag_rev_baseline : null)
+    v: moneyOrDash("ag_rev_baseline", readyForOutput ? ag_rev_baseline : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "درآمد کشاورزی (با پنل)",
-    v: moneyOrDash("ag_rev_agv", readyForOutput ? ag_rev_agv : null)
+    v: moneyOrDash("ag_rev_agv", readyForOutput ? ag_rev_agv : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "هزینه آب (قبل)",
-    v: moneyOrDash("water_cost_base", readyForOutput ? water_cost_base : null)
+    v: moneyOrDash("water_cost_base", readyForOutput ? water_cost_base : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "هزینه آب (با پنل)",
-    v: moneyOrDash("water_cost_agv", readyForOutput ? water_cost_agv : null)
+    v: moneyOrDash("water_cost_agv", readyForOutput ? water_cost_agv : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "هزینه انرژی پمپاژ (قبل)",
-    v: moneyOrDash("irrigation_energy_cost_base", readyForOutput ? irrigation_energy_cost_base : null)
+    v: moneyOrDash("irrigation_energy_cost_base", readyForOutput ? irrigation_energy_cost_base : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "هزینه انرژی پمپاژ (با پنل)",
-    v: moneyOrDash("irrigation_energy_cost_agv", readyForOutput ? irrigation_energy_cost_agv : null)
+    v: moneyOrDash("irrigation_energy_cost_agv", readyForOutput ? irrigation_energy_cost_agv : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "نگهداری سالانه سامانه خورشیدی",
-    v: moneyOrDash("pv_om_annual", readyForOutput ? pv_om_annual : null)
+    v: moneyOrDash("pv_om_annual", readyForOutput ? pv_om_annual : null).formatted
   }), /*#__PURE__*/React.createElement(KV, {
     k: "بیمه سالانه",
-    v: moneyOrDash("insurance_annual", readyForOutput ? insurance_annual : null)
+    v: moneyOrDash("insurance_annual", readyForOutput ? insurance_annual : null).formatted
   }))), /*#__PURE__*/React.createElement("div", {
     className: "grid lg:grid-cols-2 gap-4"
   }, /*#__PURE__*/React.createElement(Chart, {
@@ -1600,31 +1719,38 @@ function AgrivoltaicsKhorasan() {
       data: cum
     });
   })()), /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl overflow-x-auto"
+    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-col gap-3 md:flex-row md:items-center md:justify-between"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-4"
-  }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("table", {
-    className: "w-full text-sm"
+    className: "text-emerald-400 text-base md:text-lg font-bold"
+  }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowFullTable(v => !v),
+    className: "px-3 py-2 rounded-xl bg-neutral-800 border border-neutral-700 text-gray-100 text-xs hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 focus:ring-offset-neutral-950"
+  }, showFullTable ? "نمایش خلاصه (۵ سال اول)" : "نمایش کامل")), /*#__PURE__*/React.createElement("div", {
+    className: "overflow-x-auto border border-neutral-800 rounded-xl"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "w-full text-sm min-w-[720px]"
   }, /*#__PURE__*/React.createElement("thead", {
-    className: "text-gray-300"
-  }, /*#__PURE__*/React.createElement("tr", {
-    className: "border-b border-neutral-800"
-  }, /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "text-gray-100 bg-neutral-950 sticky top-0 z-10 border-b border-neutral-800"
+  }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "py-2 text-right px-2"
   }, "سال"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-2 text-right px-2"
   }, "برق (kWh)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-2 text-right px-2"
   }, "درآمد/صرفه‌جویی برق"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-2 text-right px-2"
   }, "خالص کشاورزی (قبل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-2 text-right px-2"
   }, "خالص کشاورزی (با پنل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-2 text-right px-2"
   }, "افزایشی"))), /*#__PURE__*/React.createElement("tbody", null, tableRows))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 text-xs text-gray-400"
+    className: "mt-4 text-xs text-gray-300"
+  }, showFullTable ? "نمایش همه سال‌ها فعال است." : "۵ سال اول نمایش داده شده؛ برای مشاهده کامل روی دکمه بالا بزنید."), /*#__PURE__*/React.createElement("div", {
+    className: "mt-1 text-xs text-gray-400"
   }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است.")), /*#__PURE__*/React.createElement("div", {
-    className: "text-xs text-gray-400 pb-8"
+    className: "text-xs text-gray-300 pb-8"
   }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم.")), shareModal);
 }
 ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
