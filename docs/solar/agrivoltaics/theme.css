@@ -1,0 +1,64 @@
+/* Scoped overrides for agrovoltaics page to fix contrast of selections and dropdowns */
+:root:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) {
+  --surface: #f8fafc;
+  --surface-strong: #0f172a;
+  --surface-muted: #e2e8f0;
+  --accent: #10b981;
+  --accent-strong: #2563eb;
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) ::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) input,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) textarea,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select {
+  color: var(--surface-strong);
+  background-color: var(--surface);
+  caret-color: #2563eb;
+  outline-color: var(--accent-strong);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) input::placeholder,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) textarea::placeholder,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select::placeholder {
+  color: rgba(15, 23, 42, 0.5);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) input:focus,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) textarea:focus,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.6);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select option {
+  color: var(--surface-strong);
+  background-color: var(--surface);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select option:checked,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select option:focus,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select option:hover {
+  background-color: #e0f2fe;
+  color: var(--surface-strong);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) [role='option'][aria-selected='true'] {
+  background: rgba(59, 130, 246, 0.25);
+  color: #0b1224;
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) [role='option']:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) input:disabled,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) select:disabled,
+:is([data-page="agrovoltaics"],[data-page*="agrivoltaics"]) textarea:disabled {
+  background-color: #f1f5f9;
+  color: rgba(15, 23, 42, 0.5);
+}
