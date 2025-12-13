@@ -11,14 +11,21 @@
   max-width: 100%;
   overflow: visible; /* Allow sticky headers/popovers to work */
   padding-inline: 0; /* Reset, handled by inner app */
+  padding-bottom: 24px; /* Space for tooltips/shadows */
+  container-type: inline-size;
 }
 
 /* Neutralize global clipping on sections inside the shell */
 .agri-calculator-shell section,
-.agri-calculator-shell main {
+.agri-calculator-shell main,
+.agri-calculator-shell article,
+.agri-calculator-shell div {
   overflow: visible !important;
-  max-width: none !important; /* Allow breaking out of narrow global limits if needed */
-  width: auto !important;
+}
+
+/* Re-apply overflow hidden ONLY for elements that specifically need it (like card border radius masking) */
+.agri-calculator-shell .overflow-hidden {
+  overflow: hidden !important;
 }
 
 /* Ensure React root is full width */
@@ -26,7 +33,12 @@
   width: 100%;
 }
 
-/* Mobile specific overrides if needed */
+/* Fix for specific clipping parents if they exist in global CSS */
+[data-page="agrovoltaics"] main {
+    overflow: visible !important;
+}
+
+/* Mobile specific overrides */
 @media (max-width: 640px) {
   .agri-calculator-shell {
     padding-bottom: 80px; /* Space for mobile floating buttons if any */

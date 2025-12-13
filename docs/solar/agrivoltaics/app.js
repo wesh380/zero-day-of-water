@@ -78,7 +78,7 @@ const Section = ({
   children,
   className = ""
 }) => /*#__PURE__*/React.createElement("section", {
-  className: `bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm ${className} overflow-hidden`
+  className: `bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm ${className}` // Removed overflow-hidden to prevent clipping tooltips
 }, /*#__PURE__*/React.createElement("h2", {
   className: "text-emerald-600 text-lg md:text-xl font-bold mb-4 border-b border-gray-100 pb-2"
 }, title), /*#__PURE__*/React.createElement("div", {
@@ -88,7 +88,7 @@ const Section = ({
 // Controlled Accordion
 const AccordionSection = ({ title, children, isOpen, onToggle }) => {
   return /*#__PURE__*/React.createElement("section", {
-    className: "bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden"
+    className: "bg-white border border-gray-200 rounded-2xl shadow-sm" // Removed overflow-hidden
   }, /*#__PURE__*/React.createElement("button", {
     onClick: onToggle,
     className: "w-full flex items-center justify-between p-4 md:p-6 bg-gray-50 hover:bg-gray-100 transition-colors text-right"
@@ -133,7 +133,7 @@ const NumberInput = ({
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: inputId,
     className: "text-sm font-medium text-gray-900 flex items-center justify-between gap-2"
-  }, /*#__PURE__*/React.createElement("span", { className: "truncate" }, label), unit && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", { className: "truncate max-w-full" }, label), unit && /*#__PURE__*/React.createElement("span", {
     className: "text-[11px] font-normal px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200 whitespace-nowrap"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
@@ -157,7 +157,7 @@ const NumberInput = ({
     "aria-describedby": errorId,
     className: `w-full rounded-xl bg-white border px-3 py-2.5 text-right text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 transition-shadow shadow-sm ${hasError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-emerald-200 focus:border-emerald-500'}`,
   }), helperText && /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] text-gray-500 leading-snug"
+    className: "text-[11px] text-gray-500 leading-snug break-words" // break-words for long helper texts
   }, helperText), /*#__PURE__*/React.createElement("div", {
     id: errorId,
     className: "text-red-600 text-xs min-h-[1.25rem]"
@@ -201,16 +201,25 @@ const KPI = ({
     displayValue = value;
   }
 
+  // Improved font scaling for KPI values
+  const getValueSizeClass = (val) => {
+      const len = String(val).length;
+      if (len > 12) return "text-lg md:text-xl";
+      if (len > 8) return "text-xl md:text-2xl";
+      return "text-2xl md:text-3xl";
+  };
+
   return /*#__PURE__*/React.createElement("div", {
-    className: "rounded-2xl bg-white border border-gray-200 p-4 shadow-sm flex flex-col items-center justify-center text-center h-full hover:shadow-md transition-shadow min-w-0"
+    className: "rounded-2xl bg-white border border-gray-200 p-4 shadow-sm flex flex-col items-center justify-center text-center h-full hover:shadow-md transition-shadow min-w-0 overflow-hidden" // Added overflow-hidden to card
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-500 text-xs md:text-sm font-medium mb-2 w-full truncate"
+    className: "text-gray-500 text-xs md:text-sm font-medium mb-2 w-full truncate px-1"
   }, title), /*#__PURE__*/React.createElement("div", {
-    className: `text-xl md:text-2xl font-bold tabular-nums whitespace-nowrap tracking-tight ${isNegative ? 'text-red-600' : 'text-emerald-600'} w-full overflow-hidden text-ellipsis`
+    className: `${getValueSizeClass(displayValue)} font-bold tabular-nums whitespace-nowrap tracking-tight ${isNegative ? 'text-red-600' : 'text-emerald-600'} w-full overflow-hidden text-ellipsis px-1`,
+    title: displayValue // Add tooltip for truncated values
   }, isNegative && "↓ ", displayValue), (unit || isCurrency) && /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-gray-400 mt-1 font-medium"
   }, unit), sub && /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] text-gray-400 mt-2 leading-snug px-2 w-full"
+    className: "text-[11px] text-gray-400 mt-2 leading-snug px-2 w-full truncate"
   }, sub));
 };
 
