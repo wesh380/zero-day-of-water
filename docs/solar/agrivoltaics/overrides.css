@@ -1,0 +1,34 @@
+/* Calculator Isolation Shell - Fixes Layout Clipping on Mobile */
+.agri-calculator-shell {
+  /* Override global overflow restrictions to allow popups/content to flow */
+  overflow: visible !important;
+
+  /* Reset width constraints */
+  width: 100% !important;
+  max-width: 100% !important;
+
+  /* Ensure stacking context for dropdowns/modals */
+  position: relative;
+  z-index: 0;
+
+  /* Mobile padding fix to prevent content from touching edges or being cut off */
+  padding-bottom: 32px;
+}
+
+/* Ensure consistent box-sizing for all calculator children */
+.agri-calculator-shell * {
+  box-sizing: border-box;
+}
+
+/* Fix for mobile dropdowns/accordions being clipped by parent overflow */
+.agri-calculator-shell .dropdown,
+.agri-calculator-shell details {
+  position: relative;
+  z-index: 50;
+}
+
+/* Ensure inputs and selects are readable on mobile */
+.agri-calculator-shell input,
+.agri-calculator-shell select {
+  max-width: 100%;
+}

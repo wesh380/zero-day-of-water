@@ -1627,4 +1627,39 @@ function AgrivoltaicsKhorasan() {
     className: "text-xs text-gray-400 pb-8"
   }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم.")), shareModal);
 }
-ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
+
+try {
+  const rootElement = document.getElementById('root');
+  if (!rootElement) {
+    throw new Error("Root element not found");
+  }
+
+  if (typeof AgrivoltaicsKhorasan !== 'function') {
+    throw new Error("AgrivoltaicsKhorasan component is not a function");
+  }
+
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(React.createElement(AgrivoltaicsKhorasan));
+} catch (err) {
+  console.error("Critical Render Error:", err);
+  const rootElement = document.getElementById('root');
+  if (rootElement) {
+    rootElement.innerHTML = `
+      <div style="
+        padding: 24px;
+        margin: 24px;
+        background-color: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        text-align: center;
+        direction: rtl;
+        font-family: system-ui, -apple-system, sans-serif;
+      ">
+        <h3 style="margin: 0 0 12px 0; font-size: 18px; font-weight: bold;">خطایی در بارگذاری ماشین‌حساب رخ داد</h3>
+        <p style="margin: 0; font-size: 14px;">لطفاً صفحه را رفرش کنید یا دقایقی دیگر تلاش نمایید.</p>
+        <div style="margin-top: 12px; font-size: 12px; opacity: 0.8; direction: ltr;">${err.message || 'Unknown Error'}</div>
+      </div>
+    `;
+  }
+}
