@@ -17,6 +17,9 @@
   <link rel="canonical" href="https://wesh360.ir/agrovoltaics/">
 <!-- CSS اشتراکی سایت -->
   <link rel="stylesheet" href="/assets/site-overrides.css">
+  <!-- Calculator Layout Overrides -->
+  <link rel="stylesheet" href="/solar/agrivoltaics/calculator.css">
+  <link rel="stylesheet" href="/solar/agrivoltaics/overrides.css">
   <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
   <style>
     [data-page="agrovoltaics"] .av-hero,
@@ -162,6 +165,17 @@
         width: 100%;
       }
     }
+
+    /* Layout Reset Shell for Calculator */
+    .agri-calculator-shell {
+      width: 100%;
+      max-width: 100vw;
+      padding: 0;
+      margin: 0;
+      display: block;
+      /* Ensure it breaks out of parent constraints if necessary */
+      container-type: inline-size;
+    }
   </style>
 </head>
 <body>
@@ -199,7 +213,9 @@
     </section>
 
     <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
-    <div id="root"></div>
+    <div class="agri-calculator-shell">
+      <div id="root"></div>
+    </div>
     <!-- End calculator mount point -->
   </main>
   <script>
