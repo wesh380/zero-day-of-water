@@ -91,7 +91,7 @@ const NumberInput = ({
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
   return /*#__PURE__*/React.createElement("label", {
-    className: "flex flex-col gap-1 text-sm w-full"
+    className: "flex flex-col gap-1 text-sm w-full min-w-0 max-w-full"
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-gray-200 flex items-center justify-between gap-2"
   }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
@@ -116,7 +116,7 @@ const NumberInput = ({
     },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
-    className: `w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
+    className: `w-full max-w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
     style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
   }), helperText && /*#__PURE__*/React.createElement("div", {
     className: "text-[11px] text-gray-400 leading-snug"
@@ -131,13 +131,13 @@ const Select = ({
   onChange,
   options
 }) => /*#__PURE__*/React.createElement("label", {
-  className: "flex flex-col gap-1 text-sm w-full"
+  className: "flex flex-col gap-1 text-sm w-full min-w-0 max-w-full"
 }, /*#__PURE__*/React.createElement("span", {
   className: "text-gray-200"
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
+  className: "w-full max-w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
   style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
@@ -976,6 +976,7 @@ function AgrivoltaicsKhorasan() {
   }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
     className: "mt-2 text-xs text-gray-400 space-y-1"
   }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0631 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
+    className: "max-w-7xl mx-auto w-full mb-4"
 }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 flex-wrap"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1019,9 +1020,10 @@ function AgrivoltaicsKhorasan() {
     className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
   }, "بازکردن از لینک"))),
   globalError && /*#__PURE__*/React.createElement("div", {
-    className: "text-red-400 text-sm mt-2",
+    className: "text-red-400 text-sm mt-2 max-w-7xl mx-auto w-full",
     role: "alert"
   }, globalError), /*#__PURE__*/React.createElement("main", {
+    className: "max-w-7xl mx-auto w-full space-y-6"
   }, /*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {

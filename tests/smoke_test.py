@@ -17,11 +17,12 @@ def smoke_test():
                 {"width": 320, "height": 568},
                 {"width": 360, "height": 640},
                 {"width": 375, "height": 667},
-                {"width": 390, "height": 844},
-                {"width": 414, "height": 896},
+                {"width": 425, "height": 800},
                 {"width": 768, "height": 1024},
                 {"width": 1024, "height": 768},
             ]
+
+            failed = False
 
             for vp in viewports:
                 context = browser.new_context(viewport=vp)
@@ -39,35 +40,56 @@ def smoke_test():
                     page.wait_for_selector("text=هزینه اولیه ساخت", timeout=5000)
                 except:
                     print(f"FAIL: Calculator text not found at {vp['width']}x{vp['height']}")
-                    print(page.content())
-                    exit(1)
+                    failed = True
+                    context.close()
+                    continue
 
                 # Check for horizontal scroll
-                scroll_width = page.evaluate("document.documentElement.scrollWidth")
-                client_width = page.evaluate("document.documentElement.clientWidth")
+                # Allow a small tolerance
+                overflow_info = page.evaluate("""() => {
+                    let scrollW = document.documentElement.scrollWidth;
+                    let clientW = document.documentElement.clientWidth;
+                    let overflow = scrollW > clientW + 1;
 
-                if scroll_width > client_width + 1:
-                    print(f"FAIL: Horizontal scroll detected at {vp['width']}x{vp['height']}. Scroll: {scroll_width}, Client: {client_width}")
-
-                    # Try to find element causing overflow
-                    overflow_el = page.evaluate("""() => {
-                        let width = document.documentElement.clientWidth;
-                        let els = document.querySelectorAll('*');
-                        for (let el of els) {
+                    let culprits = [];
+                    if (overflow) {
+                        let all = document.querySelectorAll('*');
+                        for (let el of all) {
                             let rect = el.getBoundingClientRect();
-                            if (rect.right > width) {
-                                return el.className || el.tagName;
+                            if (rect.right > clientW + 1 || rect.left < -1) {
+                                // Ignore elements that are usually culprits but legitimate like html/body if configured wrong
+                                if (el.tagName === 'HTML' || el.tagName === 'BODY') continue;
+
+                                culprits.push({
+                                    tag: el.tagName,
+                                    class: el.className,
+                                    id: el.id,
+                                    rect: {
+                                        right: rect.right,
+                                        width: rect.width,
+                                        left: rect.left
+                                    },
+                                    text: el.innerText ? el.innerText.substring(0, 20) : ''
+                                });
                             }
                         }
-                        return null;
-                    }""")
-                    print(f"Culprit: {overflow_el}")
-                    exit(1)
+                    }
+                    return { overflow, scrollW, clientW, culprits };
+                }""")
+
+                if overflow_info['overflow']:
+                    print(f"FAIL: Overflow at {vp['width']}x{vp['height']}. Scroll: {overflow_info['scrollW']}, Client: {overflow_info['clientW']}")
+                    print("Culprits:")
+                    for c in overflow_info['culprits']:
+                        print(f" - {c['tag']}.{c['class']} (id={c['id']}) rect={c['rect']} text='{c['text']}'")
+                    failed = True
                 else:
                     print(f"PASS: No horizontal scroll at {vp['width']}x{vp['height']}")
 
                 context.close()
 
+            if failed:
+                exit(1)
             print("All viewports passed.")
 
     finally:
