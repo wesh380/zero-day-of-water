@@ -18,71 +18,233 @@
 <!-- CSS اشتراکی سایت -->
   <link rel="stylesheet" href="/assets/site-overrides.css">
   <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
+  <style>
+    [data-page="agrovoltaics"] .av-hero,
+    [data-page="agrovoltaics"] .av-steps {
+      padding: clamp(24px, 3vw, 48px) clamp(16px, 4vw, 48px);
+    }
+
+    [data-page="agrovoltaics"] .av-hero {
+      background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.06), transparent 35%),
+        #f7f7f8;
+      border-radius: 20px;
+      margin: clamp(16px, 2vw, 32px) auto;
+      max-width: 1100px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+    }
+
+    [data-page="agrovoltaics"] .av-hero__content {
+      display: grid;
+      gap: 16px;
+      text-align: center;
+    }
+
+    [data-page="agrovoltaics"] .av-hero__title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    [data-page="agrovoltaics"] .av-hero__subtitle {
+      margin: 0;
+      font-size: 18px;
+      color: #1f2937;
+      line-height: 1.7;
+    }
+
+    [data-page="agrovoltaics"] .av-hero__actions {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    [data-page="agrovoltaics"] .av-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: all 150ms ease;
+      min-width: 140px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    [data-page="agrovoltaics"] .av-button--primary {
+      background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+      color: #f8fafc;
+    }
+
+    [data-page="agrovoltaics"] .av-button--secondary {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    [data-page="agrovoltaics"] .av-button:focus-visible {
+      outline: 3px solid rgba(14, 165, 233, 0.35);
+      outline-offset: 3px;
+    }
+
+    [data-page="agrovoltaics"] .av-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+    }
+
+    [data-page="agrovoltaics"] .av-steps {
+      max-width: 1100px;
+      margin: 0 auto clamp(24px, 3vw, 40px);
+      display: grid;
+      gap: 18px;
+    }
+
+    [data-page="agrovoltaics"] .av-steps__heading {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    [data-page="agrovoltaics"] .av-steps__grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    [data-page="agrovoltaics"] .av-step-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(15, 23, 42, 0.04);
+      display: grid;
+      gap: 6px;
+    }
+
+    [data-page="agrovoltaics"] .av-step-card__title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    [data-page="agrovoltaics"] .av-step-card__text {
+      margin: 0;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    [data-page="agrovoltaics"] .av-trust-note {
+      margin: 0;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.6;
+      padding: 12px 14px;
+      background: #eef2ff;
+      border-radius: 12px;
+      border: 1px solid rgba(79, 70, 229, 0.12);
+    }
+
+    @media (max-width: 640px) {
+      [data-page="agrovoltaics"] .av-hero {
+        border-radius: 14px;
+      }
+
+      [data-page="agrovoltaics"] .av-button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
   <header id="site-header" class="site-header" role="banner"></header>
   <main id="main" role="main">
+    <section class="av-hero" aria-labelledby="agrovoltaics-hero-title">
+      <div class="av-hero__content">
+        <h1 id="agrovoltaics-hero-title" class="av-hero__title">فتوکشت؛ هم محصول، هم برق</h1>
+        <p class="av-hero__subtitle">با چند ورودی ساده ببینید نصب پنل خورشیدی روی مزرعه‌تان چقدر سود و صرفه‌جویی ایجاد می‌کند.</p>
+        <div class="av-hero__actions">
+          <a class="av-button av-button--primary" href="#root">شروع محاسبه</a>
+          <a class="av-button av-button--secondary" href="/contact/">درخواست مشاوره</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="av-steps" aria-label="راهنمای سه‌مرحله‌ای ماشین‌حساب فوتوکشت">
+      <h2 class="av-steps__heading">سه گام ساده برای بررسی فوتوکشت</h2>
+      <div class="av-steps__grid">
+        <article class="av-step-card">
+          <h3 class="av-step-card__title">۱. مشخصات مزرعه</h3>
+          <p class="av-step-card__text">ابعاد زمین، فاصله ردیف‌ها و ظرفیت پنل‌های مدنظر را وارد کنید تا سناریوی محاسبه دقیق‌تر شود.</p>
+        </article>
+        <article class="av-step-card">
+          <h3 class="av-step-card__title">۲. ورودی‌های هزینه و درآمد</h3>
+          <p class="av-step-card__text">هزینه نصب، تعرفه فروش برق و داده‌های محصول را اضافه کنید تا برآورد مالی کامل شود.</p>
+        </article>
+        <article class="av-step-card">
+          <h3 class="av-step-card__title">۳. خروجی و دانلود</h3>
+          <p class="av-step-card__text">نتایج سود، صرفه‌جویی آب و نمودارها را ببینید و گزارش PDF را برای ارجاع ذخیره کنید.</p>
+        </article>
+      </div>
+      <p class="av-trust-note">این خروجی تخمینی است؛ برای تصمیم نهایی باید امکان‌سنجی محلی انجام شود.</p>
+    </section>
+
+    <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
     <div id="root"></div>
+    <!-- End calculator mount point -->
   </main>
+  <script>
+    (function() {
+      var mount = document.getElementById('root');
+      if (!mount) {
+        var warning = document.createElement('div');
+        warning.textContent = 'هشدار: نقطه اتصال ماشین‌حساب پیدا نشد.';
+        warning.setAttribute('role', 'alert');
+        warning.style.backgroundColor = '#fef2f2';
+        warning.style.color = '#b91c1c';
+        warning.style.padding = '16px';
+        warning.style.margin = '16px';
+        warning.style.border = '1px solid #fecaca';
+        warning.style.borderRadius = '8px';
+        warning.style.textAlign = 'center';
+
+        var footerScript = document.querySelector('script[src="/assets/global-footer.js"]');
+        if (footerScript && footerScript.parentNode) {
+          footerScript.parentNode.insertBefore(warning, footerScript);
+        } else {
+          document.body.appendChild(warning);
+        }
+      }
+    })();
+  </script>
   <!-- وندورها و اپ موجود -->
+  <!-- Calculator scripts (DO NOT REMOVE/DO NOT MOVE) -->
   <script defer src="/solar/agrivoltaics/vendor/react.production.min.js" charset="utf-8"></script>
   <script defer src="/solar/agrivoltaics/vendor/react-dom.production.min.js" charset="utf-8"></script>
   <script defer src="/solar/agrivoltaics/vendor/qrcode.js" charset="utf-8"></script>
   <script defer src="/solar/agrivoltaics/vendor/jspdf.umd.min.js" charset="utf-8"></script>
   <script type="module" defer src="/solar/agrivoltaics/app.js" charset="utf-8"></script>
+  <!-- End calculator scripts -->
   <!-- اسکریپت‌های اشتراکی -->
   <script defer src="/assets/unified-badge.js" charset="utf-8"></script>
   <script defer src="/assets/global-footer.js" charset="utf-8"></script>
   <script defer src="/assets/js/utf8-fix.js" charset="utf-8"></script>
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script defer src="/assets/js/header.js"></script>
-  <!-- Statsfa Website Analytics Start -->
-  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
-  <!-- Statsfa Website Analytics End -->
+  <script defer src="/assets/js/cloudflare-beacon-loader.js"></script>
   <!-- دکمه ثبت بازخورد Porsline -->
-  <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
+  <a class="porsline-button-wrapper" href="https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0">
     بازخورد دهید
   </a>
-  <script>
-    // Load Porsline script immediately with async for better performance
-    (function() {
-      try {
-        var js,q,d=document,
-          gi=d.getElementById,
-          ce=d.createElement,
-          gt=d.getElementsByTagName,
-          id="porsline-share",
-          b="https://cdn.porsline.ir/static/panel/v2/statics/";
-        if(!gi.call(d,id)) {
-          js=ce.call(d,"script");
-          js.id = id;
-          js.setAttribute("data-position","right");
-          js.src=b+"side-tab.js";
-          js.async = true;
-          js.onerror = function() {
-            console.warn('Porsline script failed to load');
-          };
-          q=gt.call(d,"script")[0];
-          q.parentNode.insertBefore(js,q);
-        }
-      } catch(e) {
-        console.warn('Porsline initialization error:', e.message);
-      }
-    })();
-
-    var clzdTiLuIp = function (ifid) {
-      try {
-        const el = document.getElementById(ifid);
-        if (el) {
-          el.fetchPriority = 'high';
-          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0";
-        }
-      } catch(e) {
-        console.warn('Porsline iframe error:', e.message);
-      }
-    };
-  </script>
+  <script defer src="/assets/js/porsline-widget.js"></script>
 </body>
 </html>

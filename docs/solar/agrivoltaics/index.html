@@ -59,15 +59,44 @@
       </div>
     </header>
 <main id="main" role="main">
+    <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
     <div id="root"></div>
+    <!-- End calculator mount point -->
   </main>
 
+  <script>
+    (function() {
+      var mount = document.getElementById('root');
+      if (!mount) {
+        var warning = document.createElement('div');
+        warning.textContent = 'هشدار: نقطه اتصال ماشین‌حساب پیدا نشد.';
+        warning.setAttribute('role', 'alert');
+        warning.style.backgroundColor = '#fef2f2';
+        warning.style.color = '#b91c1c';
+        warning.style.padding = '16px';
+        warning.style.margin = '16px';
+        warning.style.border = '1px solid #fecaca';
+        warning.style.borderRadius = '8px';
+        warning.style.textAlign = 'center';
+
+        var footerScript = document.querySelector('script[src="/assets/global-footer.js"]');
+        if (footerScript && footerScript.parentNode) {
+          footerScript.parentNode.insertBefore(warning, footerScript);
+        } else {
+          document.body.appendChild(warning);
+        }
+      }
+    })();
+  </script>
+
   <!-- vendor+app (local) -->
+  <!-- Calculator scripts (DO NOT REMOVE/DO NOT MOVE) -->
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/react.production.min.js"></script>
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/react-dom.production.min.js"></script>
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/qrcode.js"></script>
   <script charset="utf-8" defer src="/solar/agrivoltaics/vendor/jspdf.umd.min.js"></script>
   <script type="module" charset="utf-8" defer src="/solar/agrivoltaics/app.js"></script>
+  <!-- End calculator scripts -->
 
   <!-- shared site scripts -->
   <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
@@ -78,53 +107,12 @@
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
   <script src="/assets/js/header.js" defer></script>
   <script src="/assets/js/nav-prune.js" defer></script>
-  <!-- Statsfa Website Analytics Start -->
-  <script data-host="https://statsfa.com" data-dnt="true" src="https://statsfa.com/js/script.js" id="ZwSg9rf6GA" async defer></script>
-  <!-- Statsfa Website Analytics End -->
+  <script defer src="/assets/js/cloudflare-beacon-loader.js"></script>
   <!-- دکمه ثبت بازخورد Porsline -->
-  <a class="porsline-button-wrapper" href="#porsline-side-tab"
-    onclick="clzdTiLuIp('porsline-side-tab-iframe');showSideTab()">
+  <a class="porsline-button-wrapper" href="https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0">
     بازخورد دهید
   </a>
-  <script>
-    // Load Porsline script immediately with async for better performance
-    (function() {
-      try {
-        var js,q,d=document,
-          gi=d.getElementById,
-          ce=d.createElement,
-          gt=d.getElementsByTagName,
-          id="porsline-share",
-          b="https://cdn.porsline.ir/static/panel/v2/statics/";
-        if(!gi.call(d,id)) {
-          js=ce.call(d,"script");
-          js.id = id;
-          js.setAttribute("data-position","right");
-          js.src=b+"side-tab.js";
-          js.async = true;
-          js.onerror = function() {
-            console.warn('Porsline script failed to load');
-          };
-          q=gt.call(d,"script")[0];
-          q.parentNode.insertBefore(js,q);
-        }
-      } catch(e) {
-        console.warn('Porsline initialization error:', e.message);
-      }
-    })();
-
-    var clzdTiLuIp = function (ifid) {
-      try {
-        const el = document.getElementById(ifid);
-        if (el) {
-          el.fetchPriority = 'high';
-          el.src = "https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0";
-        }
-      } catch(e) {
-        console.warn('Porsline iframe error:', e.message);
-      }
-    };
-  </script>
+  <script defer src="/assets/js/porsline-widget.js"></script>
 </body>
 </html>
 

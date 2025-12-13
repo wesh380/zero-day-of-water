@@ -1,42 +1,36 @@
 /**
  * Statsfa Website Analytics Loader
- * با error handling برای جلوگیری از خطاهای کنسول در صورت بلاک شدن توسط ad-blocker
+ * بارگذاری فقط روی دامنه‌های تولید و با مدیریت بی‌صدا در صورت خطا
  */
 (function() {
   'use strict';
 
-  // تنظیمات Statsfa Analytics
-  const STATSFA_CONFIG = {
-    host: 'https://statsfa.com',
-    id: 'ZwSg9rf6GA',
-    dnt: true
-  };
-
+  const PROD_DOMAIN = 'wesh360.ir';
   const STATSFA_SCRIPT_URL = 'https://statsfa.com/js/script.js';
+
+  function isProductionHost(hostname) {
+    if (!hostname) return false;
+    return hostname === PROD_DOMAIN || hostname.endsWith('.' + PROD_DOMAIN);
+  }
 
   /**
    * بارگذاری امن اسکریپت Statsfa Analytics
    */
   function loadStatsfaSafely() {
+    if (!isProductionHost(window.location.hostname)) {
+      return;
+    }
+
     const script = document.createElement('script');
     script.async = true;
     script.defer = true;
     script.src = STATSFA_SCRIPT_URL;
-    script.id = STATSFA_CONFIG.id;
-    script.setAttribute('data-host', STATSFA_CONFIG.host);
-    script.setAttribute('data-dnt', STATSFA_CONFIG.dnt);
+    script.id = 'ZwSg9rf6GA';
+    script.setAttribute('data-host', 'https://statsfa.com');
+    script.setAttribute('data-dnt', true);
 
-    // مدیریت خطاها
-    script.onerror = function() {
-      // خطا را silent می‌کنیم - احتمالاً ad-blocker فعال است
-      // هیچ پیامی در کنسول نمایش نمی‌دهیم چون این مشکل client-side است
-      console.debug('Statsfa Analytics: Unable to load (blocked by ad-blocker or network)');
-    };
-
-    // بررسی موفقیت‌آمیز بودن بارگذاری
-    script.onload = function() {
-      console.debug('Statsfa Analytics: Loaded successfully');
-    };
+    // مدیریت خطاها بدون ایجاد نویز کنسول
+    script.onerror = function() {};
 
     // اضافه کردن اسکریپت به DOM
     document.body.appendChild(script);
