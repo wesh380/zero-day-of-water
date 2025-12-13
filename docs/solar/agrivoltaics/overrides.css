@@ -1,0 +1,34 @@
+/* Scoped Overrides for Agrivoltaics Calculator */
+
+/* Ensure the shell allows content to determine width/overflow */
+.agri-calculator-shell,
+.agri-calculator-shell * {
+  box-sizing: border-box;
+}
+
+.agri-calculator-shell {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible; /* Allow sticky headers/popovers to work */
+  padding-inline: 0; /* Reset, handled by inner app */
+}
+
+/* Neutralize global clipping on sections inside the shell */
+.agri-calculator-shell section,
+.agri-calculator-shell main {
+  overflow: visible !important;
+  max-width: none !important; /* Allow breaking out of narrow global limits if needed */
+  width: auto !important;
+}
+
+/* Ensure React root is full width */
+#root {
+  width: 100%;
+}
+
+/* Mobile specific overrides if needed */
+@media (max-width: 640px) {
+  .agri-calculator-shell {
+    padding-bottom: 80px; /* Space for mobile floating buttons if any */
+  }
+}

@@ -78,7 +78,7 @@ const Section = ({
   children,
   className = ""
 }) => /*#__PURE__*/React.createElement("section", {
-  className: `bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm ${className}`
+  className: `bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm ${className} overflow-hidden`
 }, /*#__PURE__*/React.createElement("h2", {
   className: "text-emerald-600 text-lg md:text-xl font-bold mb-4 border-b border-gray-100 pb-2"
 }, title), /*#__PURE__*/React.createElement("div", {
@@ -129,12 +129,12 @@ const NumberInput = ({
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
   return /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col gap-1.5 w-full"
+    className: "flex flex-col gap-1.5 w-full min-w-0"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: inputId,
     className: "text-sm font-medium text-gray-900 flex items-center justify-between gap-2"
-  }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] font-normal px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200"
+  }, /*#__PURE__*/React.createElement("span", { className: "truncate" }, label), unit && /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] font-normal px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200 whitespace-nowrap"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -170,9 +170,9 @@ const Select = ({
   onChange,
   options
 }) => /*#__PURE__*/React.createElement("label", {
-  className: "flex flex-col gap-1.5 w-full text-sm"
+  className: "flex flex-col gap-1.5 w-full text-sm min-w-0"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "font-medium text-gray-900"
+  className: "font-medium text-gray-900 truncate"
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
@@ -202,15 +202,15 @@ const KPI = ({
   }
 
   return /*#__PURE__*/React.createElement("div", {
-    className: "rounded-2xl bg-white border border-gray-200 p-4 shadow-sm flex flex-col items-center justify-center text-center h-full hover:shadow-md transition-shadow"
+    className: "rounded-2xl bg-white border border-gray-200 p-4 shadow-sm flex flex-col items-center justify-center text-center h-full hover:shadow-md transition-shadow min-w-0"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-500 text-xs md:text-sm font-medium mb-2"
+    className: "text-gray-500 text-xs md:text-sm font-medium mb-2 w-full truncate"
   }, title), /*#__PURE__*/React.createElement("div", {
-    className: `text-xl md:text-2xl font-bold tabular-nums whitespace-nowrap tracking-tight ${isNegative ? 'text-red-600' : 'text-emerald-600'}`
+    className: `text-xl md:text-2xl font-bold tabular-nums whitespace-nowrap tracking-tight ${isNegative ? 'text-red-600' : 'text-emerald-600'} w-full overflow-hidden text-ellipsis`
   }, isNegative && "↓ ", displayValue), (unit || isCurrency) && /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-gray-400 mt-1 font-medium"
   }, unit), sub && /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] text-gray-400 mt-2 leading-snug px-2"
+    className: "text-[11px] text-gray-400 mt-2 leading-snug px-2 w-full"
   }, sub));
 };
 
@@ -218,9 +218,9 @@ const KV = ({
   k,
   v
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "flex flex-col p-3 rounded-xl bg-gray-50 border border-gray-100"
+  className: "flex flex-col p-3 rounded-xl bg-gray-50 border border-gray-100 min-w-0"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-500 text-xs mb-1"
+  className: "text-gray-500 text-xs mb-1 truncate"
 }, k), /*#__PURE__*/React.createElement("div", {
   className: "text-sm md:text-base font-semibold text-gray-900 break-words"
 }, v));
@@ -1674,4 +1674,16 @@ function AgrivoltaicsKhorasan() {
     className: "text-xs text-gray-400 pb-8 text-center md:text-right"
   }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید.")), shareModal);
 }
-ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
+
+// Error Boundary Wrapper
+try {
+  ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
+} catch (err) {
+  console.error("Calculator failed to mount:", err);
+  document.getElementById('root').innerHTML = `
+    <div style="color: #991b1b; background-color: #fef2f2; border: 1px solid #fecaca; padding: 1rem; border-radius: 0.5rem; text-align: center; margin: 1rem;">
+      <strong>خطا در بارگذاری ماشین‌حساب</strong>
+      <p style="font-size: 0.875rem; margin-top: 0.5rem;">لطفاً صفحه را بازنشانی کنید. اگر مشکل ادامه داشت، به پشتیبانی اطلاع دهید.</p>
+    </div>
+  `;
+}
