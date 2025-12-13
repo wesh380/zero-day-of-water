@@ -18,7 +18,9 @@
       script.setAttribute('data-position', 'right');
       script.onload = () => resolve();
       script.onerror = (error) => {
-        console.warn('Porsline script failed to load', error);
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
         reject(error);
       };
 
@@ -52,13 +54,20 @@
   }
 
   function handleClick(event) {
+    const target = event.currentTarget;
+    const fallbackHref = target && target.getAttribute('href');
+
     event.preventDefault();
-    primeIframe();
 
     loadWidgetScript()
-      .then(() => showSideTabSafe())
+      .then(() => {
+        primeIframe();
+        showSideTabSafe();
+      })
       .catch(() => {
-        /* already logged */
+        if (fallbackHref) {
+          window.location.href = fallbackHref;
+        }
       });
   }
 

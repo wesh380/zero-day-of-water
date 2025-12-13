@@ -15,75 +15,77 @@
 
 /* From agrivoltaics/index.dev.html */
 /* استایل پشتیبان در صورت در دسترس نبودن Tailwind */
-html[data-page="agrovoltaics"] body,
-html[data-page="agrivoltaics-dev"] body {
+html[data-page="agrovoltaics"] body {
     font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-    background:#0a0a0a;
-    color:#eee;
+    background:#f7f7f8;
+    color:#0f172a;
 }
-html[data-page="agrovoltaics"] a,
-html[data-page="agrivoltaics-dev"] a {
-    color:#6ee7b7;
+html[data-page="agrovoltaics"] a {
+    color:#0f172a;
+}
+
+html[data-page="agrovoltaics"] ::selection {
+    background:#c7d2fe;
+    color:#0f172a;
+}
+
+/* کارت‌ها و بخش‌های محتوایی */
+html[data-page="agrovoltaics"] .card,
+html[data-page="agrovoltaics"] .panel,
+html[data-page="agrovoltaics"] .box,
+html[data-page="agrovoltaics"] .section,
+html[data-page="agrovoltaics"] main,
+html[data-page="agrovoltaics"] .container,
+html[data-page="agrovoltaics"] .wrapper,
+html[data-page="agrovoltaics"] #root > div {
+    background-color: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
 
 /* استایل‌های input و select برای agrovoltaics */
-html[data-page="agrovoltaics"] input::placeholder,
-html[data-page="agrovoltaics-dev"] input::placeholder {
-    color: #d1d5db !important;
+html[data-page="agrovoltaics"] input::placeholder {
+    color: #475569 !important;
     opacity: 1 !important;
-    -webkit-text-fill-color: #d1d5db !important;
+    -webkit-text-fill-color: #475569 !important;
 }
 
 html[data-page="agrovoltaics"] select,
-html[data-page="agrovoltaics-dev"] select {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    background-color: #171717 !important;
-}
-
-html[data-page="agrovoltaics"] select option,
-html[data-page="agrovoltaics-dev"] select option {
-    background-color: #171717 !important;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-}
-
-html[data-page="agrovoltaics"] input[type="number"],
-html[data-page="agrovoltaics-dev"] input[type="number"] {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    background-color: #171717 !important;
-}
-
-html[data-page="agrovoltaics"] input[type="text"],
-html[data-page="agrovoltaics-dev"] input[type="text"] {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    background-color: #171717 !important;
-}
-
-/* تقویت رنگ متن برای همه input‌ها */
 html[data-page="agrovoltaics"] input,
-html[data-page="agrovoltaics-dev"] input {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-    background-color: #171717 !important;
+html[data-page="agrovoltaics"] textarea {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
 }
 
-/* جلوگیری از تغییر رنگ در autofill */
+html[data-page="agrovoltaics"] select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
+
 html[data-page="agrovoltaics"] input:-webkit-autofill,
 html[data-page="agrovoltaics"] input:-webkit-autofill:hover,
 html[data-page="agrovoltaics"] input:-webkit-autofill:focus,
-html[data-page="agrovoltaics"] input:-webkit-autofill:active,
-html[data-page="agrovoltaics-dev"] input:-webkit-autofill,
-html[data-page="agrovoltaics-dev"] input:-webkit-autofill:hover,
-html[data-page="agrovoltaics-dev"] input:-webkit-autofill:focus,
-html[data-page="agrovoltaics-dev"] input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px #171717 inset !important;
-    -webkit-text-fill-color: #ffffff !important;
-    box-shadow: 0 0 0 1000px #171717 inset !important;
-    background-color: #171717 !important;
-    color: #ffffff !important;
-    border-color: #404040 !important;
+html[data-page="agrovoltaics"] input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #0f172a !important;
+    box-shadow: 0 0 0 1000px #ffffff inset !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #94a3b8 !important;
     transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Focus state for better دسترس‌پذیری */
+html[data-page="agrovoltaics"] input:focus-visible,
+html[data-page="agrovoltaics"] select:focus-visible,
+html[data-page="agrovoltaics"] textarea:focus-visible,
+html[data-page="agrovoltaics"] button:focus-visible,
+html[data-page="agrovoltaics"] a:focus-visible {
+    outline: 2px solid #0ea5e9;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.25);
+    border-radius: 6px;
 }
