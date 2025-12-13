@@ -162,6 +162,17 @@
         width: 100%;
       }
     }
+
+    /* Layout Reset Shell for Calculator */
+    .agri-calculator-shell {
+      width: 100%;
+      max-width: 100vw;
+      padding: 0;
+      margin: 0;
+      display: block;
+      /* Ensure it breaks out of parent constraints if necessary */
+      container-type: inline-size;
+    }
   </style>
 </head>
 <body>
@@ -199,7 +210,9 @@
     </section>
 
     <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
-    <div id="root"></div>
+    <div class="agri-calculator-shell">
+      <div id="root"></div>
+    </div>
     <!-- End calculator mount point -->
   </main>
   <script>
