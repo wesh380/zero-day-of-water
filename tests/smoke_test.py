@@ -14,12 +14,16 @@ def smoke_test():
             browser = p.chromium.launch(headless=True)
 
             viewports = [
+                # Mobile
                 {"width": 320, "height": 568},
-                {"width": 360, "height": 640},
                 {"width": 375, "height": 667},
-                {"width": 425, "height": 800},
+                # Tablet / Desktop range where clipping occurs
+                {"width": 426, "height": 800},
+                {"width": 480, "height": 800},
+                {"width": 640, "height": 800},
                 {"width": 768, "height": 1024},
                 {"width": 1024, "height": 768},
+                {"width": 1280, "height": 800},
             ]
 
             failed = False
@@ -35,7 +39,7 @@ def smoke_test():
                 print(f"Testing viewport {vp['width']}x{vp['height']}...")
                 page.goto("http://localhost:8081/agrovoltaics/", wait_until="domcontentloaded")
 
-                # Check for React mount
+                # Wait for React mount
                 try:
                     page.wait_for_selector("text=هزینه اولیه ساخت", timeout=5000)
                 except:
@@ -44,51 +48,53 @@ def smoke_test():
                     context.close()
                     continue
 
-                # Check for horizontal scroll
-                # Allow a small tolerance
-                overflow_info = page.evaluate("""() => {
-                    let scrollW = document.documentElement.scrollWidth;
-                    let clientW = document.documentElement.clientWidth;
-                    let overflow = scrollW > clientW + 1;
-
-                    let culprits = [];
-                    if (overflow) {
-                        let all = document.querySelectorAll('*');
-                        for (let el of all) {
-                            let rect = el.getBoundingClientRect();
-                            if (rect.right > clientW + 1 || rect.left < -1) {
-                                // Ignore elements that are usually culprits but legitimate like html/body if configured wrong
-                                if (el.tagName === 'HTML' || el.tagName === 'BODY') continue;
-
-                                culprits.push({
-                                    tag: el.tagName,
-                                    class: el.className,
-                                    id: el.id,
-                                    rect: {
-                                        right: rect.right,
-                                        width: rect.width,
-                                        left: rect.left
-                                    },
-                                    text: el.innerText ? el.innerText.substring(0, 20) : ''
-                                });
-                            }
-                        }
-                    }
-                    return { overflow, scrollW, clientW, culprits };
+                # Force overflow visible to detect real layout issues
+                page.evaluate("""() => {
+                    document.documentElement.style.overflowX = 'visible';
+                    document.body.style.overflowX = 'visible';
                 }""")
 
-                if overflow_info['overflow']:
-                    print(f"FAIL: Overflow at {vp['width']}x{vp['height']}. Scroll: {overflow_info['scrollW']}, Client: {overflow_info['clientW']}")
-                    print("Culprits:")
-                    for c in overflow_info['culprits']:
-                        print(f" - {c['tag']}.{c['class']} (id={c['id']}) rect={c['rect']} text='{c['text']}'")
+                # Scan for offenders
+                offenders = page.evaluate("""() => {
+                    let vw = document.documentElement.clientWidth;
+                    let offenders = [];
+                    let all = document.querySelectorAll('*');
+
+                    for (let el of all) {
+                        let r = el.getBoundingClientRect();
+                        // Check if element is inside a table scroll wrapper
+                        let inTable = el.closest('.overflow-x-auto');
+
+                        if (!inTable && (r.right > vw + 1 || r.left < -1)) {
+                            // Filter out html/body usually equal to viewport but might report slightly off if scrollbar
+                            if (el.tagName === 'HTML' || el.tagName === 'BODY') continue;
+                            // Filter out elements that are just wrappers equal to body width
+                            // Actually we want strict check.
+
+                            offenders.push({
+                                tag: el.tagName,
+                                class: el.className,
+                                id: el.id,
+                                rect: { right: r.right, left: r.left, width: r.width },
+                                text: el.innerText ? el.innerText.substring(0, 30) : ''
+                            });
+                        }
+                    }
+                    return offenders;
+                }""")
+
+                if offenders:
+                    print(f"FAIL: Overflow offenders at {vp['width']}x{vp['height']}:")
+                    for o in offenders:
+                        print(f" - {o['tag']}.{o['class']} (id={o['id']}) rect={o['rect']} text='{o['text']}'")
                     failed = True
                 else:
-                    print(f"PASS: No horizontal scroll at {vp['width']}x{vp['height']}")
+                    print(f"PASS: No offenders at {vp['width']}x{vp['height']}")
 
                 context.close()
 
             if failed:
+                print("Test Suite FAILED")
                 exit(1)
             print("All viewports passed.")
 

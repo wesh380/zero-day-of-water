@@ -93,9 +93,11 @@ const NumberInput = ({
   return /*#__PURE__*/React.createElement("label", {
     className: "flex flex-col gap-1 text-sm w-full min-w-0 max-w-full"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200 flex items-center justify-between gap-2"
-  }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700"
+    className: "text-gray-200 flex items-center justify-between gap-2 overflow-hidden"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "truncate"
+  }, label), unit && /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700 shrink-0"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -154,10 +156,8 @@ const KPI = ({
 }, /*#__PURE__*/React.createElement("div", {
   className: "text-gray-300 text-sm whitespace-nowrap overflow-hidden text-ellipsis"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-lg sm:text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words tabular-nums"
-}, /*#__PURE__*/React.createElement("span", {
-  className: "inline-block max-w-full"
-}, value)), sub && /*#__PURE__*/React.createElement("div", {
+  className: "text-lg sm:text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words tabular-nums overflow-hidden w-full"
+}, value), sub && /*#__PURE__*/React.createElement("div", {
   className: "text-xs text-gray-400 mt-1 text-center leading-snug"
 }, sub));
 const KV = ({
