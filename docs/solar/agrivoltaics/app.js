@@ -357,6 +357,11 @@ function AgrivoltaicsKhorasan() {
   const [globalError, setGlobalError] = useState("");
   const [showFullTable, setShowFullTable] = useState(false);
 
+  // Backward compatibility helpers
+  const fmt = (n) => formatNumberFa(n);
+  const fmtMoney = (n) => formatCurrencyIRR(n, s.currency);
+  const moneyOrDash = (label, value) => formatCurrencyIRR(value, s.currency);
+
   // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
   const regions = {
     mashhad: {
@@ -601,8 +606,7 @@ function AgrivoltaicsKhorasan() {
     return Number.isFinite(n) ? n : 0;
   };
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  const fmt = n => new Intl.NumberFormat("fa-IR").format(Math.round(n || 0));
-  const fmtMoney = n => `${fmt(n)} ${s.currency}`;
+  // fmt/fmtMoney redefined above as helpers
   useEffect(() => {
     const reg = regions[s.region];
     const crop = cropProfiles[s.crop_type] || cropProfiles["زعفران"];

@@ -13,6 +13,12 @@ def run():
             # Wait a bit for React to hydrate
             time.sleep(5)
 
+            # Ensure calculator loaded (look for button "شروع محاسبه")
+            if page.locator("text=شروع محاسبه").count() > 0:
+                print("Page loaded successfully")
+            else:
+                print("Page failed to load correctly")
+
             page.screenshot(path="verification/mobile_kpi.png", full_page=True)
             print("Screenshot taken successfully")
 
