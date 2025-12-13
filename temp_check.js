@@ -1,13 +1,13 @@
-import { apiFetch, getBaseUrl } from "/assets/js/api.js";
-import { fixTitles, needsFix, latin1ToUtf8 } from "/assets/js/encoding.js";
-void getBaseUrl();
+
+
+
 
 const POLL_INTERVAL_MS = 1000;
 const MAX_ATTEMPTS = 30;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function runJob(payload) {
+async function runJob(payload) {
   const submitResponse = await apiFetch("/api/submit", {
     method: "POST",
     headers: { "content-type": "application/json" },
