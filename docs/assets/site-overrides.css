@@ -14,7 +14,7 @@
 .chart-container > canvas { width: 100%; height: 100%; }
 
 /* From agrivoltaics/index.dev.html */
-/* استایل پشتیبان در صورت در دسترس نبودن Tailwind */
+/* استایل پشتیبان در صورت در دسترس نبودن Tailwind - scoped فقط برای صفحه مارکتینگ */
 html[data-page="agrovoltaics"] body {
     font-family:'Vazirmatn',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:#f7f7f8;
@@ -36,8 +36,7 @@ html[data-page="agrovoltaics"] .box,
 html[data-page="agrovoltaics"] .section,
 html[data-page="agrovoltaics"] main,
 html[data-page="agrovoltaics"] .container,
-html[data-page="agrovoltaics"] .wrapper,
-html[data-page="agrovoltaics"] #root > div {
+html[data-page="agrovoltaics"] .wrapper {
     background-color: #ffffff;
     color: #0f172a;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
