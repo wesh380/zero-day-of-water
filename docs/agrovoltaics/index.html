@@ -28,75 +28,81 @@
       background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.08), transparent 40%),
         radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.06), transparent 35%),
         #f7f7f8;
-      border-radius: 20px;
+      border-radius: 24px;
       margin: clamp(16px, 2vw, 32px) auto;
       max-width: 1100px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
       color: #0f172a;
     }
 
     [data-page="agrovoltaics"] .av-hero__content {
       display: grid;
-      gap: 16px;
+      gap: 20px;
       text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
     }
 
     [data-page="agrovoltaics"] .av-hero__title {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 900;
       margin: 0;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
     }
 
     [data-page="agrovoltaics"] .av-hero__subtitle {
-      margin: 0;
+      margin: 0 auto;
       font-size: 18px;
       color: #1f2937;
-      line-height: 1.7;
+      line-height: 1.8;
+      max-width: 720px;
     }
 
     [data-page="agrovoltaics"] .av-hero__actions {
-      display: inline-flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
+      margin-top: 12px;
     }
 
     [data-page="agrovoltaics"] .av-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 700;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-weight: 800;
       text-decoration: none;
       border: 2px solid transparent;
-      transition: all 150ms ease;
-      min-width: 140px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      transition: all 180ms ease;
+      min-width: 180px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      letter-spacing: -0.01em;
     }
 
     [data-page="agrovoltaics"] .av-button--primary {
-      background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+      background: linear-gradient(135deg, #0ea5e9, #0ea5e9 45%, #22d3ee 100%);
       color: #f8fafc;
+      border-color: #0284c7;
     }
 
     [data-page="agrovoltaics"] .av-button--secondary {
       background: #ffffff;
       color: #0f172a;
-      border-color: rgba(15, 23, 42, 0.08);
+      border-color: rgba(15, 23, 42, 0.18);
     }
 
     [data-page="agrovoltaics"] .av-button:focus-visible {
-      outline: 3px solid rgba(14, 165, 233, 0.35);
+      outline: 3px solid rgba(14, 165, 233, 0.4);
       outline-offset: 3px;
     }
 
     [data-page="agrovoltaics"] .av-button:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
     }
 
     [data-page="agrovoltaics"] .av-steps {
@@ -111,6 +117,7 @@
       font-size: 22px;
       font-weight: 800;
       color: #0f172a;
+      letter-spacing: -0.01em;
     }
 
     [data-page="agrovoltaics"] .av-steps__grid {
@@ -121,10 +128,10 @@
 
     [data-page="agrovoltaics"] .av-step-card {
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 16px;
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-      border: 1px solid rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(15, 23, 42, 0.06);
       display: grid;
       gap: 6px;
     }
@@ -144,7 +151,7 @@
 
     [data-page="agrovoltaics"] .av-trust-note {
       margin: 0;
-      color: #475569;
+      color: #334155;
       font-size: 15px;
       line-height: 1.6;
       padding: 12px 14px;
@@ -153,9 +160,35 @@
       border: 1px solid rgba(79, 70, 229, 0.12);
     }
 
+    [data-page="agrovoltaics"] .av-guide {
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      padding: 12px 16px;
+    }
+
+    [data-page="agrovoltaics"] .av-guide__summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    [data-page="agrovoltaics"] .av-guide__body {
+      margin-top: 10px;
+      color: #1f2937;
+      line-height: 1.7;
+      display: grid;
+      gap: 6px;
+    }
+
     @media (max-width: 640px) {
       [data-page="agrovoltaics"] .av-hero {
-        border-radius: 14px;
+        border-radius: 16px;
       }
 
       [data-page="agrovoltaics"] .av-button {
@@ -179,6 +212,16 @@
       </div>
     </section>
 
+    <section class="av-steps" aria-label="راهنمای تفسیر نتیجه" id="interpretation-guide">
+      <details class="av-guide" open>
+        <summary class="av-guide__summary">راهنمای تفسیر نتیجه</summary>
+        <div class="av-guide__body">
+          <p>اگر «ارزش امروز» مثبت باشد و بازگشت سرمایه در چند سال نخست رخ دهد، طرح معمولاً توجیه دارد. اعداد این صفحه تقریبی‌اند و بهتر است قبل از تصمیم نهایی، امکان‌سنجی محلی انجام شود.</p>
+          <p>به‌محض شروع محاسبه، کارت‌های نتیجه و جدول سال‌به‌سال با داده‌های شما به‌روزرسانی می‌شوند.</p>
+        </div>
+      </details>
+    </section>
+
     <section class="av-steps" aria-label="راهنمای سه‌مرحله‌ای ماشین‌حساب فوتوکشت">
       <h2 class="av-steps__heading">سه گام ساده برای بررسی فوتوکشت</h2>
       <div class="av-steps__grid">
@@ -198,8 +241,8 @@
       <p class="av-trust-note">این خروجی تخمینی است؛ برای تصمیم نهایی باید امکان‌سنجی محلی انجام شود.</p>
     </section>
 
-    <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
-    <div id="root"></div>
+  <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
+  <div id="root"></div>
     <!-- End calculator mount point -->
   </main>
   <script>
@@ -224,6 +267,53 @@
           document.body.appendChild(warning);
         }
       }
+
+      var primaryCta = document.querySelector('[data-page="agrovoltaics"] .av-button--primary');
+      if (primaryCta) {
+        primaryCta.addEventListener('click', function(e) {
+          e.preventDefault();
+          var target = document.getElementById('root');
+          if (target && target.scrollIntoView) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          var attempts = 0;
+          var focusInterval = setInterval(function() {
+            var firstInput = document.querySelector('#root input, #root select, #root textarea');
+            attempts += 1;
+            if (firstInput) {
+              firstInput.focus({ preventScroll: true });
+              clearInterval(focusInterval);
+            }
+            if (attempts > 15) {
+              clearInterval(focusInterval);
+            }
+          }, 200);
+        });
+      }
+
+      var observer = new MutationObserver(function() {
+        var kpiGrid = document.querySelector('.agri-main .grid.md\\:grid-cols-2.lg\\:grid-cols-5');
+        if (kpiGrid && !kpiGrid.querySelector('.agri-beta-badge')) {
+          kpiGrid.style.position = 'relative';
+          var badge = document.createElement('a');
+          badge.href = '#interpretation-guide';
+          badge.className = 'agri-beta-badge';
+          badge.textContent = 'نسخه آزمایشی / تقریبی';
+          kpiGrid.parentNode.insertBefore(badge, kpiGrid);
+        }
+
+        var tableSection = Array.from(document.querySelectorAll('.agri-main section')).find(function(sec) {
+          return sec.textContent && sec.textContent.indexOf('جدول سال‌به‌سال') !== -1;
+        });
+        if (tableSection && !tableSection.querySelector('.agri-scroll-hint')) {
+          var hint = document.createElement('div');
+          hint.className = 'agri-scroll-hint';
+          hint.textContent = 'برای دیدن ستون‌ها اسکرول کنید';
+          tableSection.insertBefore(hint, tableSection.querySelector('table'));
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
     })();
   </script>
   <!-- وندورها و اپ موجود -->

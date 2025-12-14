@@ -147,7 +147,7 @@ def assert_layout(layout, viewport):
 
 def run_viewports(url: str):
     if not PLAYWRIGHT_AVAILABLE:
-        print("Playwright not installed; skipping layout diagnostics.")
+        print("SKIP: playwright not installed")
         return
 
     with sync_playwright() as p:
@@ -170,8 +170,8 @@ def run_viewports(url: str):
 
 def main():
     if not PLAYWRIGHT_AVAILABLE:
-        print("SKIP: Playwright is not available; diagnostics not run.")
-        return
+        print("SKIP: playwright not installed")
+        sys.exit(0)
 
     repo_root = Path(__file__).resolve().parents[1]
     docs_root = repo_root / "docs"
