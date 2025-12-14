@@ -5,6 +5,18 @@ void getBaseUrl();
 const POLL_INTERVAL_MS = 1000;
 const MAX_ATTEMPTS = 30;
 
+const ensureOverridesLoaded = () => {
+  if (typeof document === "undefined") return;
+  if (document.querySelector("link[data-agri-overrides]")) return;
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "/solar/agrivoltaics/overrides.css";
+  link.setAttribute("data-agri-overrides", "true");
+  document.head.appendChild(link);
+};
+
+ensureOverridesLoaded();
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function runJob(payload) {
@@ -915,7 +927,52 @@ function AgrivoltaicsKhorasan() {
     }
     doc.save("agrivoltaics-report.pdf");
   };
-  const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
+    const actionButtons = /*#__PURE__*/React.createElement("div", {
+      className: "flex items-center gap-2 flex-wrap"
+    }, /*#__PURE__*/React.createElement("button", {
+      onClick: handleRecompute,
+      disabled: isLoading,
+      className: `px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
+    }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
+      className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
+      onClick: () => setSimple(v => !v)
+    }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        if (disableActions) return;
+        downloadCSV();
+      },
+      disabled: disableActions,
+      className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+    }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        if (disableActions) return;
+        downloadPDF();
+      },
+      disabled: disableActions,
+      className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+    }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        if (disableActions) return;
+        saveScenario(s, setShareLink);
+      },
+      disabled: disableActions,
+      className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+    }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        if (disableActions) return;
+        handleAsyncSimulate();
+      },
+      disabled: disableActions,
+      className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+    }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => {
+        const id = prompt("کُد/لینک را وارد کنید:");
+        const onlyId = (id || "").split("id=").pop();
+        loadScenarioById(onlyId, setS);
+      },
+      className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+    }, "بازکردن از لینک"));
+    const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
     className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bg-white text-black p-4 rounded-xl flex flex-col items-center"
@@ -931,68 +988,25 @@ function AgrivoltaicsKhorasan() {
     className: "px-3 py-2 rounded bg-gray-300",
     onClick: () => setShareLink("")
   }, "\u0628\u0633\u062A\u0646")))) : null;
-  return /*#__PURE__*/React.createElement("div", {
-    dir: "rtl",
-    className: "min-h-screen w-full bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-4 py-6 md:py-10 md:px-8"
-  }, /*#__PURE__*/React.createElement("header", {
-    className: "max-w-7xl mx-auto mb-6 md:mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    className: "text-2xl md:text-3xl font-extrabold tracking-tight"
-  }, "\u0645\u0627\u0634\u06CC\u0646\u200C\u062D\u0633\u0627\u0628 \u0641\u0648\u062A\u0648\u06A9\u0650\u0634\u062A \u2013 \u0648\u06CC\u0698\u0647 \u062E\u0631\u0627\u0633\u0627\u0646 \u0631\u0636\u0648\u06CC"), /*#__PURE__*/React.createElement("p", {
-    className: "text-sm md:text-base text-gray-300 mt-2"
-  }, "\u0628\u0627 \u0686\u0646\u062F \u0648\u0631\u0648\u062F\u06CC \u0633\u0627\u062F\u0647 \u0628\u0628\u06CC\u0646\u06CC\u062F \u06A9\u0650\u0634\u062A \u0632\u06CC\u0631 \u067E\u0646\u0644 \u062E\u0648\u0631\u0634\u06CC\u062F\u06CC \u062F\u0631 \u0645\u0646\u0637\u0642\u0647 \u0634\u0645\u0627 \u0645\u06CC\u200C\u0635\u0631\u0641\u062F \u06CC\u0627 \u0646\u0647."), /*#__PURE__*/React.createElement("div", {
-    className: "mt-2 text-xs text-gray-400 space-y-1"
-  }, /*#__PURE__*/React.createElement("div", null, "\u06F1) \u0645\u0646\u0637\u0642\u0647\u060C \u0645\u062D\u0635\u0648\u0644\u060C \u0622\u0628 \u0648 \u062E\u0627\u06A9 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F. \u0627\u0639\u062F\u0627\u062F \u067E\u06CC\u0634\u200C\u0641\u0631\u0636 \u0628\u0631 \u0627\u0633\u0627\u0633 \u0634\u0631\u0627\u06CC\u0637 \u0631\u0627\u06CC\u062C \u0627\u0633\u062A\u0627\u0646 \u067E\u0631 \u0645\u06CC\u200C\u0634\u0648\u0646\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F2) \u0627\u06AF\u0631 \u0644\u0627\u0632\u0645 \u0628\u0648\u062F\u060C \u0642\u06CC\u0645\u062A\u200C\u0647\u0627 \u0648 \u0645\u0642\u0627\u062F\u06CC\u0631 \u0631\u0627 \u0628\u0627 \u0648\u0636\u0639\u06CC\u062A \u062E\u0648\u062F\u062A\u0627\u0646 \u0639\u0648\u0636 \u06A9\u0646\u06CC\u062F."), /*#__PURE__*/React.createElement("div", null, "\u06F3) \u0646\u062A\u06CC\u062C\u0647 \u0631\u0627 \u062F\u0631 \u06A9\u0627\u0631\u062A\u200C\u0647\u0627 \u0648 \u0646\u0645\u0648\u062F\u0627\u0631 \u0628\u0628\u06CC\u0646\u06CC\u062F. \u0627\u06AF\u0631 \xAB\u0627\u0631\u0632\u0634 \u0627\u0645\u0631\u0648\u0632\xBB \u0645\u062B\u0628\u062A \u0628\u0627\u0634\u062F\u060C \u0645\u0639\u0645\u0648\u0644\u0627\u064B \u0637\u0631\u062D \u062E\u0648\u0628 \u0627\u0633\u062A."))), /*#__PURE__*/React.createElement("div", {
-}, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 flex-wrap"
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: handleRecompute,
-    disabled: isLoading,
-    className: `px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
-  }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
-    className: "px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
-    onClick: () => setSimple(v => !v)
-  }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      downloadCSV();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      downloadPDF();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      saveScenario(s, setShareLink);
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      if (disableActions) return;
-      handleAsyncSimulate();
-    },
-    disabled: disableActions,
-    className: `px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-  }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      const id = prompt("کُد/لینک را وارد کنید:");
-      const onlyId = (id || "").split("id=").pop();
-      loadScenarioById(onlyId, setS);
-    },
-    className: "px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
-  }, "بازکردن از لینک"))),
-  globalError && /*#__PURE__*/React.createElement("div", {
-    className: "text-red-400 text-sm mt-2",
-    role: "alert"
-  }, globalError), /*#__PURE__*/React.createElement("main", {
-  }, /*#__PURE__*/React.createElement("section", {
+    return /*#__PURE__*/React.createElement("div", {
+      dir: "rtl",
+      className: "agri-wrapper min-h-screen w-full bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-4 py-6 md:py-10 md:px-8"
+    }, /*#__PURE__*/React.createElement("header", {
+      className: "agri-header max-w-7xl mx-auto mb-4 md:mb-6"
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
+      className: "text-2xl md:text-3xl font-extrabold tracking-tight"
+    }, "ماشین‌حساب فوتوکِشت – وژه خراسان رضوی"), /*#__PURE__*/React.createElement("p", {
+      className: "text-sm md:text-base text-gray-300 mt-2"
+    }, "با چند ورودی ساده ببینید کِشت زیر پنل خورشیدی در منطقه شما می‌صرفد یا نه."), /*#__PURE__*/React.createElement("div", {
+      className: "mt-2 text-xs text-gray-400 space-y-1"
+    }, /*#__PURE__*/React.createElement("div", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید. اعداد پیش‌فرض بر اساس شرایط رایج استان پر می‌شوند."), /*#__PURE__*/React.createElement("div", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("div", null, "۳) نتیجه را در کارت‌ها و نمودار ببینید. اگر «ارزش امروز» مثبت باشد، معمولاً طرح خوب است.")))), /*#__PURE__*/React.createElement("section", {
+      className: "agri-action-bar max-w-7xl mx-auto mb-4"
+    }, actionButtons), globalError && /*#__PURE__*/React.createElement("div", {
+      className: "text-red-400 text-sm mb-4",
+      role: "alert"
+    }, globalError), /*#__PURE__*/React.createElement("main", {
+    className: "max-w-7xl mx-auto space-y-4"
+  }, [/*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
@@ -1623,8 +1637,26 @@ function AgrivoltaicsKhorasan() {
     className: "py-2 text-right"
   }, "افزایشی"))), /*#__PURE__*/React.createElement("tbody", null, tableRows))), /*#__PURE__*/React.createElement("div", {
     className: "mt-4 text-xs text-gray-400"
-  }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است.")), /*#__PURE__*/React.createElement("div", {
+  }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است."), /*#__PURE__*/React.createElement("div", {
     className: "text-xs text-gray-400 pb-8"
-  }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم.")), shareModal);
-}
-ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(AgrivoltaicsKhorasan));
+  }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم." )]), shareModal);
+  }
+  try {
+    const rootElement = document.getElementById('root');
+    if (!rootElement) {
+      throw new Error("ریشه React پیدا نشد.");
+    }
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(React.createElement(AgrivoltaicsKhorasan));
+  } catch (err) {
+    console.error("Agrivoltaics render failed", err);
+    const fallbackTarget = document.getElementById('root') || document.body;
+    if (fallbackTarget) {
+      fallbackTarget.innerHTML = "";
+      const message = document.createElement("div");
+      message.className = "agri-error-fallback";
+      message.dir = "rtl";
+      message.textContent = "خطا در بارگذاری ماشین‌حساب. لطفاً صفحه را بازآوری کنید.";
+      fallbackTarget.appendChild(message);
+    }
+  }
