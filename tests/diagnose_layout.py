@@ -2,11 +2,21 @@ import contextlib
 import http.server
 import os
 import socketserver
+import sys
 import threading
 from functools import partial
 from pathlib import Path
 
-from playwright.sync_api import TimeoutError, sync_playwright
+try:
+    from playwright.sync_api import TimeoutError, sync_playwright
+
+    PLAYWRIGHT_AVAILABLE = True
+except ImportError:  # pragma: no cover - playwright may not be installed
+    PLAYWRIGHT_AVAILABLE = False
+    sync_playwright = None
+
+    class TimeoutError(Exception):
+        """Fallback TimeoutError placeholder when playwright is missing."""
 
 
 VIEWPORTS = [
@@ -136,6 +146,10 @@ def assert_layout(layout, viewport):
 
 
 def run_viewports(url: str):
+    if not PLAYWRIGHT_AVAILABLE:
+        print("Playwright not installed; skipping layout diagnostics.")
+        return
+
     with sync_playwright() as p:
         executable = os.environ.get("PLAYWRIGHT_CHROMIUM")
         launch_kwargs = {"headless": True}
@@ -155,6 +169,10 @@ def run_viewports(url: str):
 
 
 def main():
+    if not PLAYWRIGHT_AVAILABLE:
+        print("SKIP: Playwright is not available; diagnostics not run.")
+        return
+
     repo_root = Path(__file__).resolve().parents[1]
     docs_root = repo_root / "docs"
     with serve_docs(docs_root) as port:
