@@ -104,9 +104,11 @@ const NumberInput = ({
   return /*#__PURE__*/React.createElement("label", {
     className: "flex flex-col gap-1 text-sm w-full min-w-0"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200 flex items-center justify-between gap-2"
-  }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700"
+    className: "text-gray-200 flex items-center justify-between gap-2 w-full min-w-0"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "truncate"
+  }, label), unit && /*#__PURE__*/React.createElement("span", {
+    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700 shrink-0"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -144,7 +146,7 @@ const Select = ({
 }) => /*#__PURE__*/React.createElement("label", {
   className: "flex flex-col gap-1 text-sm w-full min-w-0"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "text-gray-200"
+  className: "text-gray-200 w-full min-w-0 truncate"
 }, label), /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
@@ -161,16 +163,16 @@ const KPI = ({
   value,
   sub
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "agri-kpi rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl min-w-0 max-w-full"
+  className: "agri-kpi rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl min-w-0 max-w-full overflow-hidden"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-300 text-sm"
+  className: "text-gray-300 text-sm truncate"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
-}, /*#__PURE__*/React.createElement("span", {
+  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words whitespace-normal"
+}, /*#__PURE__*/React.createElement("bdi", {
   className: "inline-block max-w-full whitespace-normal break-words",
   dir: "ltr"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-xs text-gray-400 mt-1 text-center leading-snug"
+  className: "text-xs text-gray-400 mt-1 text-center leading-snug break-words whitespace-normal"
 }, sub));
 const KV = ({
   k,
@@ -931,13 +933,13 @@ function AgrivoltaicsKhorasan() {
     doc.save("agrivoltaics-report.pdf");
   };
     const actionButtons = /*#__PURE__*/React.createElement("div", {
-      className: "agri-actions grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-2 w-full"
+      className: "agri-actions w-full max-w-none xl:max-w-7xl xl:mx-auto mb-4 flex flex-wrap gap-2"
     }, /*#__PURE__*/React.createElement("button", {
       onClick: handleRecompute,
       disabled: isLoading,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
+      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
     }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
-      className: "w-full min-w-0 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
+      className: "w-full sm:w-auto min-w-0 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
       onClick: () => setSimple(v => !v)
     }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
@@ -945,35 +947,35 @@ function AgrivoltaicsKhorasan() {
         downloadCSV();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
     }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         downloadPDF();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
     }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         saveScenario(s, setShareLink);
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
     }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         handleAsyncSimulate();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
     }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         const id = prompt("کُد/لینک را وارد کنید:");
         const onlyId = (id || "").split("id=").pop();
         loadScenarioById(onlyId, setS);
       },
-      className: "w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+      className: "w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
     }, "بازکردن از لینک"));
     const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
       className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
@@ -1007,13 +1009,12 @@ function AgrivoltaicsKhorasan() {
       className: "text-sm md:text-base text-gray-300 mt-2"
     }, "با چند ورودی ساده ببینید کِشت زیر پنل خورشیدی در منطقه شما می‌صرفد یا نه."), /*#__PURE__*/React.createElement("div", {
       className: "mt-2 text-xs text-gray-400 space-y-1"
-    }, /*#__PURE__*/React.createElement("div", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید. اعداد پیش‌فرض بر اساس شرایط رایج استان پر می‌شوند."), /*#__PURE__*/React.createElement("div", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("div", null, "۳) نتیجه را در کارت‌ها و نمودار ببینید. اگر «ارزش امروز» مثبت باشد، معمولاً طرح خوب است.")))), /*#__PURE__*/React.createElement("section", {
-      className: "agri-action-bar w-full max-w-none xl:max-w-7xl xl:mx-auto mb-4"
-    }, actionButtons), globalError && /*#__PURE__*/React.createElement("div", {
-      className: "text-red-400 text-sm mb-4",
+    }, /*#__PURE__*/React.createElement("div", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید. اعداد پیش‌فرض بر اساس شرایط رایج استان پر می‌شوند."), /*#__PURE__*/React.createElement("div", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("div", null, "۳) نتیجه را در کارت‌ها و نمودار ببینید. اگر «ارزش امروز» مثبت باشد، معمولاً طرح خوب است.")))), actionButtons, globalError && /*#__PURE__*/React.createElement("div", {
+      className: "text-red-400 text-sm mb-4 agi-error w-full max-w-none xl:max-w-7xl xl:mx-auto",
       role: "alert"
     }, globalError), /*#__PURE__*/React.createElement("main", {
-      className: "agri-main w-full max-w-none min-w-0 xl:max-w-7xl xl:mx-auto space-y-4"
+      className: "agri-main w-full max-w-none min-w-0 xl:max-w-7xl xl:mx-auto space-y-4",
+      role: "main"
     }, [/*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
