@@ -941,42 +941,7 @@ function AgrivoltaicsKhorasan() {
     }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
       className: "w-full sm:w-auto min-w-0 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
       onClick: () => setSimple(v => !v)
-    }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
-      onClick: () => {
-        if (disableActions) return;
-        downloadCSV();
-      },
-      disabled: disableActions,
-      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-    }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => {
-        if (disableActions) return;
-        downloadPDF();
-      },
-      disabled: disableActions,
-      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-    }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => {
-        if (disableActions) return;
-        saveScenario(s, setShareLink);
-      },
-      disabled: disableActions,
-      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-    }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => {
-        if (disableActions) return;
-        handleAsyncSimulate();
-      },
-      disabled: disableActions,
-      className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
-    }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
-      onClick: () => {
-        const id = prompt("کُد/لینک را وارد کنید:");
-        const onlyId = (id || "").split("id=").pop();
-        loadScenarioById(onlyId, setS);
-      },
-      className: "w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
-    }, "بازکردن از لینک"));
+    }, "حالت ", simple ? 'پیشرفته' : 'ساده'));
     const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
       className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
     }, /*#__PURE__*/React.createElement("div", {
