@@ -1,5 +1,6 @@
 import contextlib
 import http.server
+import os
 import socketserver
 import threading
 from functools import partial
@@ -45,7 +46,11 @@ def assert_page_ready(page):
 
 def run_viewports(url: str):
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        executable = os.environ.get("PLAYWRIGHT_CHROMIUM")
+        launch_kwargs = {"headless": True}
+        if executable:
+            launch_kwargs["executable_path"] = executable
+        browser = p.chromium.launch(**launch_kwargs)
         page = browser.new_page()
         for size in VIEWPORTS:
             page.set_viewport_size(size)
@@ -57,8 +62,9 @@ def run_viewports(url: str):
 
 def main():
     repo_root = Path(__file__).resolve().parents[1]
-    with serve_docs(repo_root) as port:
-        url = f"http://127.0.0.1:{port}/docs/solar/agrivoltaics/index.html"
+    docs_root = repo_root / "docs"
+    with serve_docs(docs_root) as port:
+        url = f"http://127.0.0.1:{port}/solar/agrivoltaics/index.html"
         run_viewports(url)
     print("Smoke test PASSED")
 

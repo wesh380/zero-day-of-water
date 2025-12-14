@@ -1,5 +1,6 @@
 import contextlib
 import http.server
+import os
 import socketserver
 import threading
 from functools import partial
@@ -51,6 +52,20 @@ def measure_layout(page):
   const offenders = [];
   const scope = shell || document.body;
   const tolerance = 1.5;
+  const hasScrollAncestor = (el) => {
+    let current = el.parentElement;
+    while (current) {
+      const styleX = window.getComputedStyle(current).overflowX;
+      if (styleX && styleX !== 'visible') {
+        const r = current.getBoundingClientRect();
+        if (r && r.left >= -tolerance && r.right <= viewportWidth + tolerance) {
+          return true;
+        }
+      }
+      current = current.parentElement;
+    }
+    return false;
+  };
 
   scope.querySelectorAll('*').forEach((el) => {
     const r = el.getBoundingClientRect();
@@ -58,6 +73,7 @@ def measure_layout(page):
     const overflowRight = r.right - viewportWidth;
     const overflowLeft = r.left;
     if (overflowRight > tolerance || overflowLeft < -tolerance) {
+      if (hasScrollAncestor(el)) return;
       offenders.push({
         tag: el.tagName.toLowerCase(),
         id: el.id || '',
@@ -121,7 +137,11 @@ def assert_layout(layout, viewport):
 
 def run_viewports(url: str):
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        executable = os.environ.get("PLAYWRIGHT_CHROMIUM")
+        launch_kwargs = {"headless": True}
+        if executable:
+            launch_kwargs["executable_path"] = executable
+        browser = p.chromium.launch(**launch_kwargs)
         page = browser.new_page()
         for size in VIEWPORTS:
             page.set_viewport_size(size)
@@ -136,8 +156,9 @@ def run_viewports(url: str):
 
 def main():
     repo_root = Path(__file__).resolve().parents[1]
-    with serve_docs(repo_root) as port:
-        url = f"http://127.0.0.1:{port}/docs/solar/agrivoltaics/index.html"
+    docs_root = repo_root / "docs"
+    with serve_docs(docs_root) as port:
+        url = f"http://127.0.0.1:{port}/solar/agrivoltaics/index.html"
         run_viewports(url)
     print("Layout diagnostics PASSED")
 

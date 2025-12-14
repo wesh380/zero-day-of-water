@@ -79,7 +79,7 @@ const Section = ({
   title,
   children
 }) => /*#__PURE__*/React.createElement("section", {
-  className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
+  className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl w-full min-w-0"
 }, /*#__PURE__*/React.createElement("h2", {
   className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
 }, title), /*#__PURE__*/React.createElement("div", {
@@ -161,14 +161,14 @@ const KPI = ({
   value,
   sub
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "agri-kpi rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl min-w-0"
+  className: "agri-kpi rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl min-w-0 max-w-full"
 }, /*#__PURE__*/React.createElement("div", {
   className: "text-gray-300 text-sm"
 }, title), /*#__PURE__*/React.createElement("div", {
   className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
 }, /*#__PURE__*/React.createElement("span", {
   className: "inline-block max-w-full whitespace-normal break-words",
-  dir: "auto"
+  dir: "ltr"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {
   className: "text-xs text-gray-400 mt-1 text-center leading-snug"
 }, sub));
@@ -842,13 +842,13 @@ function AgrivoltaicsKhorasan() {
     title,
     height = 160
   }) => {
-    const w = 720,
+    const viewW = 720,
       h = height,
       pad = 24;
     const n = data.length;
     const min = Math.min(...data, 0),
       max = Math.max(...data, 0);
-    const scaleX = i => pad + i * (w - 2 * pad) / Math.max(1, n - 1);
+    const scaleX = i => pad + i * (viewW - 2 * pad) / Math.max(1, n - 1);
     const scaleY = v => {
       if (max === min) return h / 2;
       return h - pad - (v - min) * (h - 2 * pad) / (max - min);
@@ -856,17 +856,19 @@ function AgrivoltaicsKhorasan() {
     const path = data.map((v, i) => `${i === 0 ? 'M' : 'L'}${scaleX(i)},${scaleY(v)}`).join(' ');
     const zeroY = scaleY(0);
     return /*#__PURE__*/React.createElement("div", {
-      className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4"
+      className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 min-w-0 overflow-hidden"
     }, /*#__PURE__*/React.createElement("div", {
       className: "text-gray-300 text-sm mb-2"
     }, title), /*#__PURE__*/React.createElement("svg", {
-      width: w,
+      viewBox: `0 0 ${viewW} ${h}`,
+      width: "100%",
       height: h,
-      className: "max-w-full"
+      preserveAspectRatio: "xMidYMid meet",
+      className: "w-full max-w-full"
     }, /*#__PURE__*/React.createElement("line", {
       x1: pad,
       y1: zeroY,
-      x2: w - pad,
+      x2: viewW - pad,
       y2: zeroY,
       stroke: "#444",
       strokeDasharray: "4 4"
@@ -929,7 +931,7 @@ function AgrivoltaicsKhorasan() {
     doc.save("agrivoltaics-report.pdf");
   };
     const actionButtons = /*#__PURE__*/React.createElement("div", {
-      className: "agri-actions grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 w-full"
+      className: "agri-actions grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-2 w-full"
     }, /*#__PURE__*/React.createElement("button", {
       onClick: handleRecompute,
       disabled: isLoading,
@@ -994,7 +996,7 @@ function AgrivoltaicsKhorasan() {
       className: "agri-calculator-shell"
     }, /*#__PURE__*/React.createElement("div", {
       dir: "rtl",
-      className: "agri-wrapper min-h-screen w-full bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-4 py-6 md:py-10 md:px-8"
+      className: "agri-wrapper min-h-screen w-full min-w-0 bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-1 py-6 md:py-10 md:px-1"
     }, /*#__PURE__*/React.createElement("header", {
       className: "agri-header max-w-7xl mx-auto mb-4 md:mb-6 w-full"
     }, /*#__PURE__*/React.createElement("div", {
@@ -1006,12 +1008,12 @@ function AgrivoltaicsKhorasan() {
     }, "با چند ورودی ساده ببینید کِشت زیر پنل خورشیدی در منطقه شما می‌صرفد یا نه."), /*#__PURE__*/React.createElement("div", {
       className: "mt-2 text-xs text-gray-400 space-y-1"
     }, /*#__PURE__*/React.createElement("div", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید. اعداد پیش‌فرض بر اساس شرایط رایج استان پر می‌شوند."), /*#__PURE__*/React.createElement("div", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("div", null, "۳) نتیجه را در کارت‌ها و نمودار ببینید. اگر «ارزش امروز» مثبت باشد، معمولاً طرح خوب است.")))), /*#__PURE__*/React.createElement("section", {
-      className: "agri-action-bar max-w-7xl mx-auto mb-4 w-full"
+      className: "agri-action-bar w-full max-w-none xl:max-w-7xl xl:mx-auto mb-4"
     }, actionButtons), globalError && /*#__PURE__*/React.createElement("div", {
       className: "text-red-400 text-sm mb-4",
       role: "alert"
     }, globalError), /*#__PURE__*/React.createElement("main", {
-      className: "agri-main w-full max-w-none xl:max-w-7xl xl:mx-auto space-y-4"
+      className: "agri-main w-full max-w-none min-w-0 xl:max-w-7xl xl:mx-auto space-y-4"
     }, [/*#__PURE__*/React.createElement("section", {
     className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
   }, /*#__PURE__*/React.createElement("h2", {
@@ -1624,7 +1626,7 @@ function AgrivoltaicsKhorasan() {
   }, /*#__PURE__*/React.createElement("h2", {
     className: "text-emerald-400 text-base md:text-lg font-bold mb-4"
   }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("table", {
-    className: "w-full text-sm"
+    className: "w-full min-w-[640px] text-sm"
   }, /*#__PURE__*/React.createElement("thead", {
     className: "text-gray-300"
   }, /*#__PURE__*/React.createElement("tr", {
