@@ -71,21 +71,23 @@ const {
   useEffect
 } = React;
 
-// Ù†Ø³Ø®Ù‡ Ù…Ø®ØµÙˆØµ Ø§Ø³ØªØ§Ù† Ø®Ø±Ø§Ø³Ø§Ù† Ø±Ø¶ÙˆÛŒ (Ø³Ø§Ø¯Ù‡ Ø¨Ø±Ø§ÛŒ Ú©Ø´Ø§ÙˆØ±Ø²Ø§Ù†)
-// Ù†Ú©ØªÙ‡: Ø§Ø¹Ø¯Ø§Ø¯ Ù¾ÛŒØ´â€ŒÙØ±Ø¶ ØªÙ‚Ø±ÛŒØ¨ÛŒ Ù‡Ø³ØªÙ†Ø¯. Ù„Ø·ÙØ§Ù‹ Ø¨Ø§ Ø´Ø±Ø§ÛŒØ· ÙˆØ§Ù‚Ø¹ÛŒ Ø²Ù…ÛŒÙ† Ø®ÙˆØ¯ØªØ§Ù† ØªÙ†Ø¸ÛŒÙ… Ú©Ù†ÛŒØ¯.
+// نسخه مخصوص استان خراسان رضوی (ساده برای کشاورزان)
+// نکته: اعداد پیش‌فرض تقریبی هستند. لطفاً با شرایط واقعی زمین خودتان تنظیم کنید.
 
-// Ø§Ø¬Ø²Ø§ÛŒ Ú©Ù…Ú©ÛŒ Ø³Ø§Ø¯Ù‡
+// اجزای کمکی ساده - Light Theme Update
 const Section = ({
   title,
   children
 }) => /*#__PURE__*/React.createElement("section", {
-  className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl w-full min-w-0"
+  className: "bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm w-full min-w-0"
 }, /*#__PURE__*/React.createElement("h2", {
-  className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
+  className: "text-emerald-700 text-base md:text-lg font-bold mb-4"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full min-w-0"
+  className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full min-w-0"
 }, children));
+
 const normalizeNumberValue = value => value === null || value === undefined ? "" : value;
+
 const NumberInput = ({
   label,
   value,
@@ -102,11 +104,11 @@ const NumberInput = ({
   const errorId = inputId ? `${inputId}-error` : undefined;
   const hasError = Boolean(error);
   return /*#__PURE__*/React.createElement("label", {
-    className: "flex flex-col gap-1 text-sm w-full min-w-0"
+    className: "flex flex-col gap-1.5 text-sm w-full min-w-0"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "text-gray-200 flex items-center justify-between gap-2"
+    className: "text-gray-700 flex items-center justify-between gap-2 font-medium"
   }, /*#__PURE__*/React.createElement("span", null, label), unit && /*#__PURE__*/React.createElement("span", {
-    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-neutral-800 text-gray-200 border border-neutral-700"
+    className: "text-[11px] leading-tight px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200 shrink-0"
   }, unit)), /*#__PURE__*/React.createElement("input", {
     id: inputId,
     dir: "ltr",
@@ -127,60 +129,69 @@ const NumberInput = ({
     },
     "aria-invalid": hasError ? "true" : undefined,
     "aria-describedby": errorId,
-    className: `w-full min-w-0 max-w-full rounded-xl bg-neutral-900 border px-3 py-2 text-right text-white placeholder:text-gray-300 focus:outline-none focus:ring-2 ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-neutral-700 focus:ring-emerald-500'}`,
-    style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+    className: `w-full min-w-0 max-w-full h-12 rounded-xl bg-white border px-3 text-right text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 transition-colors ${hasError ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-emerald-500 hover:border-gray-400'}`
   }), helperText && /*#__PURE__*/React.createElement("div", {
-    className: "text-[11px] text-gray-400 leading-snug"
+    className: "text-[11px] text-gray-500 leading-snug truncate"
   }, helperText), /*#__PURE__*/React.createElement("div", {
     id: errorId,
-    className: "text-red-400 text-xs min-h-[1rem]"
+    className: "text-red-600 text-xs min-h-[1rem]"
   }, error || ""));
 };
+
 const Select = ({
   label,
   value,
   onChange,
   options
 }) => /*#__PURE__*/React.createElement("label", {
-  className: "flex flex-col gap-1 text-sm w-full min-w-0"
+  className: "flex flex-col gap-1.5 text-sm w-full min-w-0"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "text-gray-200"
-}, label), /*#__PURE__*/React.createElement("select", {
+  className: "text-gray-700 font-medium"
+}, label), /*#__PURE__*/React.createElement("div", {
+  className: "relative"
+}, /*#__PURE__*/React.createElement("select", {
   value: value,
   onChange: e => onChange(e.target.value),
-  className: "w-full min-w-0 max-w-full rounded-xl bg-neutral-900 border border-neutral-700 px-3 py-2 text-right text-white focus:outline-none focus:ring-2 focus:ring-emerald-500",
-  style: {color: '#ffffff', WebkitTextFillColor: '#ffffff'}
+  className: "w-full min-w-0 max-w-full h-12 rounded-xl bg-white border border-gray-300 px-3 text-right text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:border-gray-400 appearance-none"
 }, options.map(o => /*#__PURE__*/React.createElement("option", {
   key: o.value,
   value: o.value,
-  className: "bg-neutral-900 text-white",
-  style: {color: '#ffffff', backgroundColor: '#171717'}
-}, o.label))));
+  className: "text-gray-900 bg-white"
+}, o.label))), /*#__PURE__*/React.createElement("div", {
+  className: "pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-500"
+}, /*#__PURE__*/React.createElement("svg", {
+  className: "h-4 w-4 fill-current",
+  viewBox: "0 0 20 20"
+}, /*#__PURE__*/React.createElement("path", {
+  d: "M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+})))));
+
 const KPI = ({
   title,
   value,
   sub
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "agri-kpi rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 shadow-xl min-w-0 max-w-full"
+  className: "agri-kpi rounded-2xl bg-white border border-gray-200 p-4 shadow-sm min-w-0 max-w-full flex flex-col justify-center"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-300 text-sm"
+  className: "text-gray-500 text-sm font-medium"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words"
+  className: "text-xl md:text-2xl font-extrabold mt-1 text-gray-900 text-center leading-tight break-words"
 }, /*#__PURE__*/React.createElement("span", {
   className: "inline-block max-w-full whitespace-normal break-words",
   dir: "ltr"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-xs text-gray-400 mt-1 text-center leading-snug"
+  className: "text-xs text-gray-500 mt-1 text-center leading-snug"
 }, sub));
+
 const KV = ({
   k,
   v
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "rounded-xl bg-neutral-900/50 border border-neutral-800 p-3"
+  className: "rounded-xl bg-gray-50 border border-gray-200 p-3"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-gray-400 text-xs"
+  className: "text-gray-500 text-xs font-medium"
 }, k), /*#__PURE__*/React.createElement("div", {
-  className: "text-sm md:text-base font-semibold text-gray-100 mt-0.5"
+  className: "text-sm md:text-base font-semibold text-gray-900 mt-0.5"
 }, v));
 
 function validateState(state, simpleMode) {
@@ -309,7 +320,7 @@ function AgrivoltaicsKhorasan() {
   const [isLoading, setIsLoading] = useState(false);
   const [globalError, setGlobalError] = useState("");
 
-  // Ù…Ù†Ø·Ù‚Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø§Ø³ØªØ§Ù† (ØªÙ‚Ø±ÛŒØ¨ÛŒ)
+  // منطقه
   const regions = {
     mashhad: {
       title: "دشت مشهد / چناران",
@@ -344,7 +355,7 @@ function AgrivoltaicsKhorasan() {
   };
   fixTitles(regions);
 
-  // Ù…Ø­ØµÙˆÙ„Ø§Øª Ø±Ø§ÛŒØ¬
+  // محصولات
   const cropProfiles = {
     "زعفران": {
       baseYieldChange: 6,
@@ -391,7 +402,7 @@ function AgrivoltaicsKhorasan() {
   };
   fixTitles(cropProfiles);
 
-  // Ø¢Ø¨ Ùˆ Ø®Ø§Ú©
+  // آب و خاک
   const waterSources = {
     well_electric_subsidized: {
       title: "چاه – برق یارانه‌ای",
@@ -451,7 +462,7 @@ function AgrivoltaicsKhorasan() {
   };
   fixTitles(soils);
 
-  // ÙˆØ¶Ø¹ÛŒØª ÙˆØ±ÙˆØ¯ÛŒâ€ŒÙ‡Ø§
+  // وضعیت ورودی‌ها
   const [s, setS] = useState({
     region: "torbat",
     crop_type: "زعفران",
@@ -513,7 +524,7 @@ function AgrivoltaicsKhorasan() {
     const qr = qrcode(typeNumber, errorCorrectLevel);
     qr.addData(shareLink);
     qr.make();
-    el.innerHTML = qr.createSvgTag(6); // Ù…Ù‚ÛŒØ§Ø³
+    el.innerHTML = qr.createSvgTag(6);
   }, [shareLink]);
   const set = (k, v) => setS(prev => ({
     ...prev,
@@ -822,19 +833,19 @@ function AgrivoltaicsKhorasan() {
   const displayCarbonRevenueYear = readyForOutput ? carbonRevenueYear : () => 0;
   const tableRows = displayCashflowsAGV.map((_, i) => /*#__PURE__*/React.createElement("tr", {
     key: i,
-    className: "border-b border-neutral-900 hover:bg-neutral-900/40"
+    className: "border-b border-gray-100 hover:bg-gray-50"
   }, /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-700"
   }, i + 1), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-700"
   }, energyOrDash("annualPV", displayAnnualPV(i), "kWh")), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-700"
   }, moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i))), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-700"
   }, moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-700"
   }, moneyOrDash("cashflowsAGV", displayCashflowsAGV[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-3 text-gray-900 font-semibold"
   }, moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null))));
   const disableActions = !readyForOutput || isLoading;
   const Chart = ({
@@ -856,9 +867,9 @@ function AgrivoltaicsKhorasan() {
     const path = data.map((v, i) => `${i === 0 ? 'M' : 'L'}${scaleX(i)},${scaleY(v)}`).join(' ');
     const zeroY = scaleY(0);
     return /*#__PURE__*/React.createElement("div", {
-      className: "rounded-2xl bg-neutral-950/60 border border-neutral-800 p-4 min-w-0 overflow-hidden"
+      className: "rounded-2xl bg-white border border-gray-200 p-4 min-w-0 overflow-hidden shadow-sm"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "text-gray-300 text-sm mb-2"
+      className: "text-gray-500 text-sm mb-2 font-medium"
     }, title), /*#__PURE__*/React.createElement("svg", {
       viewBox: `0 0 ${viewW} ${h}`,
       width: "100%",
@@ -870,13 +881,14 @@ function AgrivoltaicsKhorasan() {
       y1: zeroY,
       x2: viewW - pad,
       y2: zeroY,
-      stroke: "#444",
+      stroke: "#e5e7eb",
+      strokeWidth: "1.5",
       strokeDasharray: "4 4"
     }), /*#__PURE__*/React.createElement("path", {
       d: path,
       fill: "none",
-      stroke: "#10b981",
-      strokeWidth: "2"
+      stroke: "#059669",
+      strokeWidth: "2.5"
     })));
   };
   const downloadCSV = () => {
@@ -931,13 +943,13 @@ function AgrivoltaicsKhorasan() {
     doc.save("agrivoltaics-report.pdf");
   };
     const actionButtons = /*#__PURE__*/React.createElement("div", {
-      className: "agri-actions grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-2 w-full"
+      className: "agri-actions grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-wrap gap-3 w-full"
     }, /*#__PURE__*/React.createElement("button", {
       onClick: handleRecompute,
       disabled: isLoading,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
+      className: `w-full min-w-0 h-12 px-4 rounded-xl font-medium shadow-sm transition-all bg-emerald-600 hover:bg-emerald-700 text-white focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1 ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
     }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
-      className: "w-full min-w-0 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
+      className: "w-full min-w-0 h-12 px-3 rounded-xl font-medium border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 focus:ring-2 focus:ring-gray-200 transition-colors",
       onClick: () => setSimple(v => !v)
     }, "حالت ", simple ? 'پیشرفته' : 'ساده'), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
@@ -945,135 +957,129 @@ function AgrivoltaicsKhorasan() {
         downloadCSV();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full min-w-0 h-12 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-colors ${disableActions ? 'opacity-50 cursor-not-allowed text-gray-400' : ''}`
     }, "دانلود CSV"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         downloadPDF();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full min-w-0 h-12 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-colors ${disableActions ? 'opacity-50 cursor-not-allowed text-gray-400' : ''}`
     }, "دانلود PDF"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         saveScenario(s, setShareLink);
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full min-w-0 h-12 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-colors ${disableActions ? 'opacity-50 cursor-not-allowed text-gray-400' : ''}`
     }, "ذخیره سناریو"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         if (disableActions) return;
         handleAsyncSimulate();
       },
       disabled: disableActions,
-      className: `w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100 ${disableActions ? 'opacity-50 cursor-not-allowed' : ''}`
+      className: `w-full min-w-0 h-12 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-colors ${disableActions ? 'opacity-50 cursor-not-allowed text-gray-400' : ''}`
     }, isLoading ? "در حال ارسال..." : "ارسال برای شبیه‌سازی"), /*#__PURE__*/React.createElement("button", {
       onClick: () => {
         const id = prompt("کُد/لینک را وارد کنید:");
         const onlyId = (id || "").split("id=").pop();
         loadScenarioById(onlyId, setS);
       },
-      className: "w-full min-w-0 px-4 py-2 rounded-xl bg-neutral-800 border border-neutral-700 hover:bg-neutral-700 text-gray-100"
+      className: "w-full min-w-0 h-12 px-4 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 transition-colors"
     }, "بازکردن از لینک"));
     const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
-      className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      className: "fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "bg-white text-black p-4 rounded-xl flex flex-col items-center"
+      className: "bg-white text-gray-900 p-6 rounded-2xl flex flex-col items-center shadow-2xl max-w-sm w-full mx-4"
     }, /*#__PURE__*/React.createElement("div", {
       id: "qrBox",
-      className: "mb-4"
+      className: "mb-6"
     }), /*#__PURE__*/React.createElement("div", {
-      className: "flex gap-2"
+      className: "flex gap-3 w-full"
     }, /*#__PURE__*/React.createElement("button", {
-      className: "px-3 py-2 rounded bg-emerald-600 text-white",
+      className: "flex-1 h-12 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition-colors",
       onClick: () => navigator.clipboard.writeText(shareLink)
     }, "\u06A9\u067E\u06CC \u0644\u06CC\u0646\u06A9"), /*#__PURE__*/React.createElement("button", {
-      className: "px-3 py-2 rounded bg-gray-300",
+      className: "flex-1 h-12 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors",
       onClick: () => setShareLink("")
     }, "\u0628\u0633\u062A\u0646")))) : null;
 
     return /*#__PURE__*/React.createElement("div", {
-      className: "agri-calculator-shell"
+      className: "agri-calculator-shell font-sans"
     }, /*#__PURE__*/React.createElement("div", {
       dir: "rtl",
-      className: "agri-wrapper min-h-screen w-full min-w-0 bg-gradient-to-b from-neutral-950 to-neutral-900 text-gray-100 px-1 py-6 md:py-10 md:px-1"
+      className: "agri-wrapper min-h-screen w-full min-w-0 bg-gray-50 text-gray-900 px-2 py-6 md:py-10 md:px-4"
     }, /*#__PURE__*/React.createElement("header", {
-      className: "agri-header max-w-7xl mx-auto mb-4 md:mb-6 w-full"
+      className: "agri-header max-w-7xl mx-auto mb-6 md:mb-8 w-full"
     }, /*#__PURE__*/React.createElement("div", {
       className: "w-full min-w-0"
     }, /*#__PURE__*/React.createElement("h1", {
-      className: "text-2xl md:text-3xl font-extrabold tracking-tight"
-    }, "ماشین‌حساب فوتوکِشت – وژه خراسان رضوی"), /*#__PURE__*/React.createElement("p", {
-      className: "text-sm md:text-base text-gray-300 mt-2"
+      className: "text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900"
+    }, "ماشین‌حساب فوتوکِشت – ویژه خراسان رضوی"), /*#__PURE__*/React.createElement("p", {
+      className: "text-sm md:text-base text-gray-600 mt-3 leading-relaxed"
     }, "با چند ورودی ساده ببینید کِشت زیر پنل خورشیدی در منطقه شما می‌صرفد یا نه."), /*#__PURE__*/React.createElement("div", {
-      className: "mt-2 text-xs text-gray-400 space-y-1"
+      className: "mt-3 text-xs text-gray-500 space-y-1.5 bg-white p-3 rounded-lg border border-gray-200 shadow-sm"
     }, /*#__PURE__*/React.createElement("div", null, "۱) منطقه، محصول، آب و خاک را انتخاب کنید. اعداد پیش‌فرض بر اساس شرایط رایج استان پر می‌شوند."), /*#__PURE__*/React.createElement("div", null, "۲) اگر لازم بود، قیمت‌ها و مقادیر را با وضعیت خودتان عوض کنید."), /*#__PURE__*/React.createElement("div", null, "۳) نتیجه را در کارت‌ها و نمودار ببینید. اگر «ارزش امروز» مثبت باشد، معمولاً طرح خوب است.")))), /*#__PURE__*/React.createElement("section", {
-      className: "agri-action-bar w-full max-w-none xl:max-w-7xl xl:mx-auto mb-4"
+      className: "agri-action-bar w-full max-w-none xl:max-w-7xl xl:mx-auto mb-6 sticky top-2 z-10 shadow-sm"
     }, actionButtons), globalError && /*#__PURE__*/React.createElement("div", {
-      className: "text-red-400 text-sm mb-4",
+      className: "text-red-700 bg-red-50 border border-red-200 rounded-xl p-4 mb-6 max-w-7xl mx-auto",
       role: "alert"
     }, globalError), /*#__PURE__*/React.createElement("main", {
-      className: "agri-main w-full max-w-none min-w-0 xl:max-w-7xl xl:mx-auto space-y-4"
-    }, [/*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
-  }, "\u06F0) \u0645\u0646\u0637\u0642\u0647 \u0648 \u0634\u0631\u0627\u06CC\u0637 \u0645\u062D\u0644\u06CC"), /*#__PURE__*/React.createElement("div", {
-    className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full min-w-0"
-  }, /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u0646\u0637\u0642\u0647",
-    value: s.region,
-    onChange: v => set("region", v),
-    options: Object.entries(regions).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u062D\u0635\u0648\u0644",
-    value: s.crop_type,
-    onChange: v => set("crop_type", v),
-    options: Object.keys(cropProfiles).map(k => ({
-      value: k,
-      label: needsFix(k) ? latin1ToUtf8(k) : k
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0645\u0646\u0628\u0639 \u0622\u0628",
-    value: s.water_source,
-    onChange: v => set("water_source", v),
-    options: Object.entries(waterSources).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u06AF\u0631\u062F \u0648 \u063A\u0628\u0627\u0631",
-    value: s.dust_level,
-    onChange: v => set("dust_level", v),
-    options: Object.entries(dustLevels).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(Select, {
-    label: "\u0646\u0648\u0639 \u062E\u0627\u06A9",
-    value: s.soil_type,
-    onChange: v => set("soil_type", v),
-    options: Object.entries(soils).map(([k, v]) => ({
-      value: k,
-      label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
-    }))
-  }), /*#__PURE__*/React.createElement(NumberInput, {
-    label: "\u0634\u0648\u0631\u06CC \u0622\u0628/\u062E\u0627\u06A9 (EC dS/m)",
-    value: s.salinity_EC,
-    onChange: v => set("salinity_EC", v),
-    step: 0.5,
-    min: 0,
-    max: 30,
-    required: true,
-    inputId: "salinity_EC",
-    error: errors.salinity_EC
-  })), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs text-gray-400 mt-3"
-  }, "* \u0627\u06AF\u0631 \u0645\u0646\u0637\u0642\u0647 \u062F\u0642\u06CC\u0642 \u0634\u0645\u0627 \u062F\u0631 \u0644\u06CC\u0633\u062A \u0646\u06CC\u0633\u062A\u060C \u0646\u0632\u062F\u06CC\u06A9\u200C\u062A\u0631\u06CC\u0646 \u0645\u0646\u0637\u0642\u0647 \u0631\u0627 \u0627\u0646\u062A\u062E\u0627\u0628 \u06A9\u0646\u06CC\u062F \u0648 \u0627\u0639\u062F\u0627\u062F \u0631\u0627 \u06A9\u0645\u06CC \u062A\u0646\u0638\u06CC\u0645 \u06A9\u0646\u06CC\u062F.")), /*#__PURE__*/React.createElement("div", {
-    className: "grid md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 w-full min-w-0"
+      className: "agri-main w-full max-w-none min-w-0 xl:max-w-7xl xl:mx-auto space-y-6"
+    }, [/*#__PURE__*/React.createElement(Section, {
+      title: "\u06F0) \u0645\u0646\u0637\u0642\u0647 \u0648 \u0634\u0631\u0627\u06CC\u0637 \u0645\u062D\u0644\u06CC"
+    }, /*#__PURE__*/React.createElement(Select, {
+      label: "\u0645\u0646\u0637\u0642\u0647",
+      value: s.region,
+      onChange: v => set("region", v),
+      options: Object.entries(regions).map(([k, v]) => ({
+        value: k,
+        label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+      }))
+    }), /*#__PURE__*/React.createElement(Select, {
+      label: "\u0645\u062D\u0635\u0648\u0644",
+      value: s.crop_type,
+      onChange: v => set("crop_type", v),
+      options: Object.keys(cropProfiles).map(k => ({
+        value: k,
+        label: needsFix(k) ? latin1ToUtf8(k) : k
+      }))
+    }), /*#__PURE__*/React.createElement(Select, {
+      label: "\u0645\u0646\u0628\u0639 \u0622\u0628",
+      value: s.water_source,
+      onChange: v => set("water_source", v),
+      options: Object.entries(waterSources).map(([k, v]) => ({
+        value: k,
+        label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+      }))
+    }), /*#__PURE__*/React.createElement(Select, {
+      label: "\u06AF\u0631\u062F \u0648 \u063A\u0628\u0627\u0631",
+      value: s.dust_level,
+      onChange: v => set("dust_level", v),
+      options: Object.entries(dustLevels).map(([k, v]) => ({
+        value: k,
+        label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+      }))
+    }), /*#__PURE__*/React.createElement(Select, {
+      label: "\u0646\u0648\u0639 \u062E\u0627\u06A9",
+      value: s.soil_type,
+      onChange: v => set("soil_type", v),
+      options: Object.entries(soils).map(([k, v]) => ({
+        value: k,
+        label: needsFix(v.title) ? latin1ToUtf8(v.title) : v.title
+      }))
+    }), /*#__PURE__*/React.createElement(NumberInput, {
+      label: "\u0634\u0648\u0631\u06CC \u0622\u0628/\u062E\u0627\u06A9 (EC dS/m)",
+      value: s.salinity_EC,
+      onChange: v => set("salinity_EC", v),
+      step: 0.5,
+      min: 0,
+      max: 30,
+      required: true,
+      inputId: "salinity_EC",
+      error: errors.salinity_EC
+    })), /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full min-w-0"
   }, /*#__PURE__*/React.createElement(KPI, {
     title: "هزینه اولیه ساخت",
     value: moneyOrDash("capex_total", displayCapex),
@@ -1095,30 +1101,30 @@ function AgrivoltaicsKhorasan() {
     value: displayIRR == null ? 'نامشخص' : `${(displayIRR * 100).toFixed(1)} %`,
     sub: "هرچه بیشتر، بهتر"
   })), /*#__PURE__*/React.createElement("div", {
-    className: `rounded-2xl p-4 border shadow-xl ${decisionText() === 'به‌صرفه' ? 'bg-emerald-900/30 border-emerald-700' : decisionText() === 'تقریباً سر به سر' ? 'bg-yellow-900/30 border-yellow-700' : 'bg-rose-900/30 border-rose-700'}`
+    className: `rounded-2xl p-5 border shadow-sm ${decisionText() === 'به‌صرفه' ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : decisionText() === 'تقریباً سر به سر' ? 'bg-yellow-50 border-yellow-200 text-yellow-900' : 'bg-red-50 border-red-200 text-red-900'}`
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-sm"
+    className: "text-sm font-medium opacity-80"
   }, "\u062E\u0644\u0627\u0635\u0647 \u062A\u0635\u0645\u06CC\u0645:"), /*#__PURE__*/React.createElement("div", {
-    className: "text-lg font-bold mt-1"
+    className: "text-2xl font-extrabold mt-1"
   }, decisionText()), /*#__PURE__*/React.createElement("div", {
-    className: "text-xs text-gray-300 mt-1"
+    className: "text-xs mt-2 opacity-70"
   }, "اگر «ارزش امروز» مثبت باشد و بازگشت سرمایه در چند سال اول رخ دهد، معمولاً طرح اقتصادی است.")), /*#__PURE__*/React.createElement("details", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl mb-4"
+    className: "bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm group"
   }, /*#__PURE__*/React.createElement("summary", {
-    className: "cursor-pointer text-emerald-300 font-bold text-base md:text-lg flex items-center justify-between"
+    className: "cursor-pointer text-emerald-700 font-bold text-base md:text-lg flex items-center justify-between select-none"
   }, "فرضیات محاسبه", /*#__PURE__*/React.createElement("span", {
-    className: "text-xs text-gray-400"
-  }, "برای تغییر، مقدار فیلد مربوط را ویرایش کنید")), /*#__PURE__*/React.createElement("div", {
-    className: "mt-3 grid md:grid-cols-2 lg:grid-cols-4 gap-2 text-sm text-gray-200"
+    className: "text-xs text-gray-400 group-open:text-emerald-600 transition-colors"
+  }, "برای تغییر کلیک کنید")), /*#__PURE__*/React.createElement("div", {
+    className: "mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-gray-700"
   }, assumptionItems.map(item => /*#__PURE__*/React.createElement("div", {
     key: item.label,
-    className: "rounded-xl bg-neutral-900/50 border border-neutral-800 p-3"
+    className: "rounded-xl bg-gray-50 border border-gray-200 p-3"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "text-gray-400 text-xs"
+    className: "text-gray-500 text-xs font-medium"
   }, item.label), /*#__PURE__*/React.createElement("div", {
-    className: "font-semibold mt-1"
+    className: "font-semibold mt-1 text-gray-900"
   }, item.value))), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs text-gray-400 md:col-span-2 lg:col-span-4"
+    className: "text-xs text-gray-500 md:col-span-2 lg:col-span-4 mt-2"
   }, "اگر هرکدام از این پیش‌فرض‌ها را تغییر دهید، محاسبه بر اساس مقدار جدید انجام می‌شود."))), /*#__PURE__*/React.createElement(Section, {
     title: "\u06F1) \u0627\u0637\u0644\u0627\u0639\u0627\u062A \u0632\u0645\u06CC\u0646 \u0648 \u0645\u062D\u0635\u0648\u0644"
   }, /*#__PURE__*/React.createElement(NumberInput, {
@@ -1575,12 +1581,10 @@ function AgrivoltaicsKhorasan() {
     unit: "\u062A\u0646 CO2/MWh",
     helperText: "\u0645\u062B\u0627\u0644: 0.55",
     error: errors.avoided_co2_t_per_MWh
-  })), /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl"
-  }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-3"
-  }, "نتایج خلاصه"), /*#__PURE__*/React.createElement("div", {
-    className: "grid md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full min-w-0"
+  })), /*#__PURE__*/React.createElement(Section, {
+    title: "نتایج خلاصه"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full min-w-0"
   }, /*#__PURE__*/React.createElement(KV, {
     k: "درآمد کشاورزی (قبل از پنل)",
     v: moneyOrDash("ag_rev_baseline", readyForOutput ? ag_rev_baseline : null)
@@ -1606,7 +1610,7 @@ function AgrivoltaicsKhorasan() {
     k: "بیمه سالانه",
     v: moneyOrDash("insurance_annual", readyForOutput ? insurance_annual : null)
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "grid lg:grid-cols-2 gap-4"
+    className: "grid grid-cols-1 lg:grid-cols-2 gap-4"
   }, /*#__PURE__*/React.createElement(Chart, {
     title: "جریان نقدی افزایشی هر سال",
     data: displayCashflows.slice(1)
@@ -1622,31 +1626,29 @@ function AgrivoltaicsKhorasan() {
       data: cum
     });
   })()), /*#__PURE__*/React.createElement("section", {
-    className: "bg-neutral-950/60 border border-neutral-800 rounded-2xl p-4 md:p-6 shadow-xl overflow-x-auto"
+    className: "bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm overflow-x-auto"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "text-emerald-400 text-base md:text-lg font-bold mb-4"
+    className: "text-emerald-700 text-base md:text-lg font-bold mb-4"
   }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("table", {
     className: "w-full min-w-[640px] text-sm"
   }, /*#__PURE__*/React.createElement("thead", {
-    className: "text-gray-300"
-  }, /*#__PURE__*/React.createElement("tr", {
-    className: "border-b border-neutral-800"
-  }, /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "text-gray-500 bg-gray-50 border-b border-gray-200"
+  }, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    className: "py-3 text-right font-medium px-2"
   }, "سال"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right font-medium px-2"
   }, "برق (kWh)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right font-medium px-2"
   }, "درآمد/صرفه‌جویی برق"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right font-medium px-2"
   }, "خالص کشاورزی (قبل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right font-medium px-2"
   }, "خالص کشاورزی (با پنل)"), /*#__PURE__*/React.createElement("th", {
-    className: "py-2 text-right"
+    className: "py-3 text-right font-medium px-2"
   }, "افزایشی"))), /*#__PURE__*/React.createElement("tbody", null, tableRows))), /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 text-xs text-gray-400"
+    className: "mt-4 text-xs text-gray-500"
   }, "* سال صفر شامل هزینه ساخت است و در جدول نیامده است."), /*#__PURE__*/React.createElement("div", {
-    className: "text-xs text-gray-400 pb-8"
+    className: "text-xs text-gray-500 pb-8"
   }, "نکته: برای دقت بیشتر، قیمت محصول و هزینه آب/برق را از فیش‌های اخیر خودتان وارد کنید. اگر خواستید، می‌توانیم نسخه روستایی/دهستانی با اعداد دقیق‌تری بسازیم." )]), shareModal));
   }
   try {
