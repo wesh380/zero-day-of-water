@@ -6,245 +6,251 @@
   <link rel="stylesheet" href="/assets/css-bundles-dist/layout.bundle.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta property="og:type" content="website">
-  <meta property="og:url" content="https://wesh360.ir/agrovoltaics/">
-  <meta property="og:title" content="فوتوکشت - Agrivoltaics | WESH360">
-  <meta property="og:description" content="معرفی فوتوکشت (Agrovoltaics) - تولید همزمان برق و محصول کشاورزی">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wesh360.ir/solar/agrivoltaics/">
+  <meta property="og:title" content="ماشین‌حساب فوتوکشت (Agrivoltaics)">
+  <meta property="og:description" content="محاسبه بازدهی کشاورزی زیر پنل‌های خورشیدی">
   <meta property="og:image" content="https://wesh360.ir/page/landing/logo2.webp">
   <meta name="twitter:card" content="summary_large_image">
-  <title>فوتوکشت - Agrivoltaics | WESH360</title>
-  <meta name="description" content="معرفی فوتوکشت (Agrovoltaics) - تولید همزمان برق و محصول کشاورزی">
-  <link rel="canonical" href="https://wesh360.ir/agrovoltaics/">
-<!-- CSS اشتراکی سایت -->
+  <meta name="twitter:title" content="ماشین‌حساب فوتوکشت (Agrivoltaics)">
+  <meta name="twitter:description" content="محاسبه بازدهی کشاورزی زیر پنل‌های خورشیدی">
+  <meta name="twitter:image" content="https://wesh360.ir/page/landing/logo2.webp">
+  <title>ماشین‌حساب فوتوکشت (Agrivoltaics) - کشاورزی زیر پنل خورشیدی | WESH360</title>
+  <meta name="description" content="ماشین‌حساب تخصصی فوتوکشت - محاسبه بازدهی کشاورزی زیر پنل‌های خورشیدی، تولید همزمان برق و محصول کشاورزی">
+  <link rel="canonical" href="https://wesh360.ir/solar/agrivoltaics/">
+  <!-- CSS -->
   <link rel="stylesheet" href="/assets/site-overrides.css">
   <link rel="icon" type="image/svg+xml" href="/assets/img/logo/wesh360.svg">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="/assets/img/logo/icons/icon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/logo/icons/icon-180.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="mask-icon" href="/assets/img/logo/wesh360.svg" color="#0ea5e9">
+  <meta name="theme-color" content="#0ea5e9">
+  <script src="/assets/js/nav-utils.js" defer></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            300: '#cbd5e1',
+                            700: '#334155',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+  </script>
   <style>
-    [data-page="agrovoltaics"] .av-hero,
-    [data-page="agrovoltaics"] .av-steps {
-      padding: clamp(24px, 3vw, 48px) clamp(16px, 4vw, 48px);
-    }
-
-    [data-page="agrovoltaics"] .av-hero {
-      background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.08), transparent 40%),
-        radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.06), transparent 35%),
-        #f7f7f8;
-      border-radius: 20px;
-      margin: clamp(16px, 2vw, 32px) auto;
-      max-width: 1100px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
-      color: #0f172a;
-    }
-
-    [data-page="agrovoltaics"] .av-hero__content {
-      display: grid;
-      gap: 16px;
-      text-align: center;
-    }
-
-    [data-page="agrovoltaics"] .av-hero__title {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    [data-page="agrovoltaics"] .av-hero__subtitle {
-      margin: 0;
-      font-size: 18px;
-      color: #1f2937;
-      line-height: 1.7;
-    }
-
-    [data-page="agrovoltaics"] .av-hero__actions {
-      display: inline-flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    [data-page="agrovoltaics"] .av-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      border: 2px solid transparent;
-      transition: all 150ms ease;
-      min-width: 140px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-    }
-
-    [data-page="agrovoltaics"] .av-button--primary {
-      background: linear-gradient(135deg, #0ea5e9, #22d3ee);
-      color: #f8fafc;
-    }
-
-    [data-page="agrovoltaics"] .av-button--secondary {
-      background: #ffffff;
-      color: #0f172a;
-      border-color: rgba(15, 23, 42, 0.08);
-    }
-
-    [data-page="agrovoltaics"] .av-button:focus-visible {
-      outline: 3px solid rgba(14, 165, 233, 0.35);
-      outline-offset: 3px;
-    }
-
-    [data-page="agrovoltaics"] .av-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-    }
-
-    [data-page="agrovoltaics"] .av-steps {
-      max-width: 1100px;
-      margin: 0 auto clamp(24px, 3vw, 40px);
-      display: grid;
-      gap: 18px;
-    }
-
-    [data-page="agrovoltaics"] .av-steps__heading {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    [data-page="agrovoltaics"] .av-steps__grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    [data-page="agrovoltaics"] .av-step-card {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-      border: 1px solid rgba(15, 23, 42, 0.04);
-      display: grid;
-      gap: 6px;
-    }
-
-    [data-page="agrovoltaics"] .av-step-card__title {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    [data-page="agrovoltaics"] .av-step-card__text {
-      margin: 0;
-      color: #1f2937;
-      line-height: 1.6;
-    }
-
-    [data-page="agrovoltaics"] .av-trust-note {
-      margin: 0;
-      color: #475569;
-      font-size: 15px;
-      line-height: 1.6;
-      padding: 12px 14px;
-      background: #eef2ff;
-      border-radius: 12px;
-      border: 1px solid rgba(79, 70, 229, 0.12);
-    }
-
-    @media (max-width: 640px) {
-      [data-page="agrovoltaics"] .av-hero {
-        border-radius: 14px;
+      /* Custom scrollbar for sticky element if needed */
+      .sticky-card {
+          position: -webkit-sticky;
+          position: sticky;
+          top: 2rem;
       }
-
-      [data-page="agrovoltaics"] .av-button {
-        width: 100%;
-      }
-    }
   </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
-  <header id="site-header" class="site-header" role="banner"></header>
-  <main id="main" role="main">
-    <section class="av-hero" aria-labelledby="agrovoltaics-hero-title">
-      <div class="av-hero__content">
-        <h1 id="agrovoltaics-hero-title" class="av-hero__title">فتوکشت؛ هم محصول، هم برق</h1>
-        <p class="av-hero__subtitle">با چند ورودی ساده ببینید نصب پنل خورشیدی روی مزرعه‌تان چقدر سود و صرفه‌جویی ایجاد می‌کند.</p>
-        <div class="av-hero__actions">
-          <a class="av-button av-button--primary" href="#root">شروع محاسبه</a>
-          <a class="av-button av-button--secondary" href="/contact/">درخواست مشاوره</a>
+
+    <header id="site-header" class="site-header" dir="rtl" role="banner" aria-label="سربرگ سایت">
+      <div class="site-header__inner container">
+        <a class="brand brand--rtl" href="/" aria-label="خانه هم‌افزایی انرژی و آب">
+          <img src="/assets/img/logo/wesh360.svg" alt="WESH360" decoding="async" fetchpriority="high" />
+        </a>
+        <button class="nav-toggle" type="button" aria-label="نمایش منو" aria-expanded="false" aria-controls="site-header-menu">
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+          <span class="nav-toggle__bar" aria-hidden="true"></span>
+        </button>
+        <div id="site-header-menu" class="site-header__menu" data-header-menu aria-hidden="true">
+          <nav class="site-header__nav" aria-label="ناوبری اصلی">
+            <ul class="site-header__nav-list">
+              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/dashboards/">داشبوردها</a></li>
+              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/calculators/">ماشین‌حساب (آزمایشی)</a></li>
+              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/research/">پژوهش</a></li>
+              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/contact/">ارتباط</a></li>
+              <li class="site-header__nav-item"><a class="site-header__nav-link" href="/security/">سیاست امنیت</a></li>
+            </ul>
+          </nav>
+          <div class="site-header__actions" aria-label="اقدامات اصلی">
+            <a class="site-header__action site-header__action--outline" href="/responsible-disclosure/">سیاست امنیت</a>
+          </div>
         </div>
       </div>
-    </section>
+    </header>
+<main id="main" role="main">
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
 
-    <section class="av-steps" aria-label="راهنمای سه‌مرحله‌ای ماشین‌حساب فوتوکشت">
-      <h2 class="av-steps__heading">سه گام ساده برای بررسی فوتوکشت</h2>
-      <div class="av-steps__grid">
-        <article class="av-step-card">
-          <h3 class="av-step-card__title">۱. مشخصات مزرعه</h3>
-          <p class="av-step-card__text">ابعاد زمین، فاصله ردیف‌ها و ظرفیت پنل‌های مدنظر را وارد کنید تا سناریوی محاسبه دقیق‌تر شود.</p>
-        </article>
-        <article class="av-step-card">
-          <h3 class="av-step-card__title">۲. ورودی‌های هزینه و درآمد</h3>
-          <p class="av-step-card__text">هزینه نصب، تعرفه فروش برق و داده‌های محصول را اضافه کنید تا برآورد مالی کامل شود.</p>
-        </article>
-        <article class="av-step-card">
-          <h3 class="av-step-card__title">۳. خروجی و دانلود</h3>
-          <p class="av-step-card__text">نتایج سود، صرفه‌جویی آب و نمودارها را ببینید و گزارش PDF را برای ارجاع ذخیره کنید.</p>
-        </article>
-      </div>
-      <p class="av-trust-note">این خروجی تخمینی است؛ برای تصمیم نهایی باید امکان‌سنجی محلی انجام شود.</p>
-    </section>
+        <!-- Header -->
+        <header class="mb-8 text-center md:text-right">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2">محاسبه‌گر سودآوری اگر.وولتائیک</h1>
+            <p class="text-slate-700 text-lg">برآورد درآمد ترکیبی از تولید برق خورشیدی و کشاورزی</p>
+        </header>
 
-    <!-- Calculator mount point (DO NOT REMOVE/DO NOT MOVE) -->
-    <div id="root"></div>
-    <!-- End calculator mount point -->
+        <!-- Main Layout: Mobile Stacked, Desktop Split -->
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8 flex flex-col gap-6">
+
+            <!-- Inputs Column (8 cols) -->
+            <div class="lg:col-span-8 space-y-6">
+
+                <!-- Section 1: Land & System Info -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-2">مشخصات زمین و سیستم</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Land Area -->
+                        <div>
+                            <label for="landArea" class="block text-sm font-medium text-slate-700 mb-2">مساحت زمین</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <input type="number" id="landArea" name="landArea" min="0" placeholder="مثلاً ۵"
+                                    class="block w-full rounded-md border-slate-300 pr-3 pl-16 py-3 text-slate-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm border h-12" />
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-slate-100 border-l border-slate-300 rounded-l-md px-3">
+                                    <span class="text-slate-600 sm:text-sm">هکتار</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Solar Coverage -->
+                        <div>
+                            <label for="solarCoverage" class="block text-sm font-medium text-slate-700 mb-2">پوشش پنل خورشیدی</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <input type="number" id="solarCoverage" name="solarCoverage" min="0" max="100" placeholder="مثلاً ۴۰" value="40"
+                                    class="block w-full rounded-md border-slate-300 pr-3 pl-16 py-3 text-slate-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm border h-12" />
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-slate-100 border-l border-slate-300 rounded-l-md px-3">
+                                    <span class="text-slate-600 sm:text-sm">درصد</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Economics -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-2">پارامترهای اقتصادی</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Electricity Price -->
+                        <div>
+                            <label for="electricityPrice" class="block text-sm font-medium text-slate-700 mb-2">نرخ خرید برق (هر کیلووات ساعت)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <input type="number" id="electricityPrice" name="electricityPrice" min="0" value="2500"
+                                    class="block w-full rounded-md border-slate-300 pr-3 pl-16 py-3 text-slate-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm border h-12" />
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-slate-100 border-l border-slate-300 rounded-l-md px-3">
+                                    <span class="text-slate-600 sm:text-sm">تومان</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Crop Revenue -->
+                        <div>
+                            <label for="cropRevenue" class="block text-sm font-medium text-slate-700 mb-2">درآمد کشاورزی (در هکتار)</label>
+                            <div class="relative rounded-md shadow-sm">
+                                <input type="number" id="cropRevenue" name="cropRevenue" min="0" value="150000000"
+                                    class="block w-full rounded-md border-slate-300 pr-3 pl-16 py-3 text-slate-900 focus:border-blue-500 focus:ring-blue-500 sm:text-sm border h-12" />
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 bg-slate-100 border-l border-slate-300 rounded-l-md px-3">
+                                    <span class="text-slate-600 sm:text-sm">تومان</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Crop Yield Impact -->
+                        <div class="md:col-span-2">
+                             <label for="cropYieldImpact" class="block text-sm font-medium text-slate-700 mb-2">تاثیر سایه بر محصول (درصد تغییر)</label>
+                             <div class="flex items-center space-x-4 space-x-reverse">
+                                 <input type="range" id="cropYieldImpact" name="cropYieldImpact" min="-50" max="50" value="-10"
+                                     class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                                 <span id="cropYieldValue" class="text-slate-900 font-bold w-16 text-left" dir="ltr">-10%</span>
+                             </div>
+                             <p class="text-xs text-slate-500 mt-1">مقادیر منفی به معنی کاهش محصول و مثبت به معنی افزایش محصول است.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Column (4 cols) -->
+            <div class="lg:col-span-4">
+                <div class="sticky-card bg-slate-900 text-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-6 text-slate-50 border-b border-slate-700 pb-2">نتایج محاسبات</h3>
+
+                    <div class="space-y-6">
+                        <!-- Total Profit -->
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <p class="text-slate-400 text-sm mb-1">سود سالانه کل</p>
+                            <p id="totalProfit" class="text-3xl font-bold text-white tracking-tight" dir="ltr">0</p>
+                            <p class="text-slate-400 text-xs mt-1 text-right">تومان</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Electricity Revenue -->
+                            <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                                <span class="text-slate-300 text-sm">درآمد برق</span>
+                                <div class="text-left">
+                                    <span id="electricityRevenue" class="font-bold text-lg text-emerald-400" dir="ltr">0</span>
+                                    <span class="text-xs text-slate-500 block">تومان</span>
+                                </div>
+                            </div>
+
+                            <!-- Crop Revenue -->
+                            <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                                <span class="text-slate-300 text-sm">درآمد کشاورزی</span>
+                                <div class="text-left">
+                                    <span id="finalCropRevenue" class="font-bold text-lg text-yellow-400" dir="ltr">0</span>
+                                    <span class="text-xs text-slate-500 block">تومان</span>
+                                </div>
+                            </div>
+
+                            <!-- System Capacity -->
+                            <div class="flex justify-between items-center pt-2">
+                                <span class="text-slate-300 text-sm">ظرفیت نیروگاه</span>
+                                <div class="text-left">
+                                    <span id="systemCapacity" class="font-bold text-white" dir="ltr">0</span>
+                                    <span class="text-xs text-slate-500">مگاوات</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="calculateBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200 mt-4 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                            بروزرسانی محاسبات
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 text-center text-slate-500 text-sm">
+            <p>&copy; 2024 Agrovoltaics Calculator. All rights reserved.</p>
+        </footer>
+    </div>
   </main>
-  <script>
-    (function() {
-      var mount = document.getElementById('root');
-      if (!mount) {
-        var warning = document.createElement('div');
-        warning.textContent = 'هشدار: نقطه اتصال ماشین‌حساب پیدا نشد.';
-        warning.setAttribute('role', 'alert');
-        warning.style.backgroundColor = '#fef2f2';
-        warning.style.color = '#b91c1c';
-        warning.style.padding = '16px';
-        warning.style.margin = '16px';
-        warning.style.border = '1px solid #fecaca';
-        warning.style.borderRadius = '8px';
-        warning.style.textAlign = 'center';
 
-        var footerScript = document.querySelector('script[src="/assets/global-footer.js"]');
-        if (footerScript && footerScript.parentNode) {
-          footerScript.parentNode.insertBefore(warning, footerScript);
-        } else {
-          document.body.appendChild(warning);
-        }
-      }
-    })();
-  </script>
-  <!-- وندورها و اپ موجود -->
-  <!-- Calculator scripts (DO NOT REMOVE/DO NOT MOVE) -->
-  <script defer src="/solar/agrivoltaics/vendor/react.production.min.js" charset="utf-8"></script>
-  <script defer src="/solar/agrivoltaics/vendor/react-dom.production.min.js" charset="utf-8"></script>
-  <script defer src="/solar/agrivoltaics/vendor/qrcode.js" charset="utf-8"></script>
-  <script defer src="/solar/agrivoltaics/vendor/jspdf.umd.min.js" charset="utf-8"></script>
-  <script type="module" defer src="/solar/agrivoltaics/app.js" charset="utf-8"></script>
-  <!-- End calculator scripts -->
-  <!-- اسکریپت‌های اشتراکی -->
-  <script defer src="/assets/unified-badge.js" charset="utf-8"></script>
-  <script defer src="/assets/global-footer.js" charset="utf-8"></script>
-  <script defer src="/assets/js/utf8-fix.js" charset="utf-8"></script>
+  <!-- shared site scripts -->
+  <script charset="utf-8" defer src="/assets/unified-badge.js"></script>
+  <script charset="utf-8" defer src="/assets/global-footer.js"></script>
+
+  <!-- utf8 sanitizer (already CSP-safe) -->
+  <script charset="utf-8" defer src="/assets/js/utf8-fix.js"></script>
   <script defer src="/assets/js/ui-prune-ctas.js"></script>
-  <script defer src="/assets/js/header.js"></script>
+  <script src="/assets/js/header.js" defer></script>
+  <script src="/assets/js/nav-prune.js" defer></script>
   <script defer src="/assets/js/cloudflare-beacon-loader.js"></script>
   <!-- دکمه ثبت بازخورد Porsline -->
   <a class="porsline-button-wrapper" href="https://survey.porsline.ir/s/zdTiLuIp#/?ac=0&ns=0">
     بازخورد دهید
   </a>
   <script defer src="/assets/js/porsline-widget.js"></script>
+
+  <!-- My App Script -->
+  <script src="app.js"></script>
 </body>
 </html>
