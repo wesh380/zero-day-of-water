@@ -68,7 +68,7 @@ def run_viewports(url: str):
         page = browser.new_page()
         for size in VIEWPORTS:
             page.set_viewport_size(size)
-            page.goto(url, wait_until="networkidle")
+            page.goto(url, wait_until="domcontentloaded")
             page.wait_for_timeout(300)
             assert_page_ready(page)
         browser.close()
