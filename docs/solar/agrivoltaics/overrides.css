@@ -1,8 +1,10 @@
 .agri-calculator-shell,
 .agri-calculator-shell #root,
-.agri-calculator-shell .agri-wrapper {
+.agri-calculator-shell .agri-wrapper,
+.agri-calculator-shell .agri-main {
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -24,6 +26,14 @@
   min-width: 0;
 }
 
+.agri-calculator-shell .agri-wrapper > *,
+.agri-calculator-shell .agri-main > *,
+.agri-calculator-shell [class*="flex"] > *,
+.agri-calculator-shell [class*="grid"] > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 /* Allow auto margins for centering on larger screens if utility classes are used,
    so we do NOT force margin:0 !important globally on main anymore.
    But we ensure width is robust. */
@@ -40,6 +50,14 @@
   max-width: 100%;
   word-break: break-word;
   overflow-wrap: anywhere;
+}
+
+.agri-calculator-shell .agri-table-wrapper {
+  overflow-x: auto;
+}
+
+.agri-calculator-shell .agri-table-wrapper table {
+  width: 100%;
 }
 
 .agri-calculator-shell .agri-error-fallback {
