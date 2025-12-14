@@ -1,0 +1,77 @@
+.agri-calculator-shell,
+.agri-calculator-shell #root,
+.agri-calculator-shell .agri-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+.agri-calculator-shell * {
+  box-sizing: border-box;
+}
+
+.agri-calculator-shell .agri-wrapper {
+  display: block !important;
+}
+
+.agri-calculator-shell .agri-main {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-inline: 0 !important;
+}
+
+.agri-action-bar {
+  background: linear-gradient(180deg, rgba(23, 23, 23, 0.9), rgba(12, 12, 12, 0.9));
+  border: 1px solid rgba(64, 64, 64, 0.4);
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.agri-action-bar .agri-actions {
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.agri-action-bar button {
+  white-space: normal;
+  min-width: 0;
+}
+
+.agri-calculator-shell input,
+.agri-calculator-shell select,
+.agri-calculator-shell button {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.agri-calculator-shell .agri-action-bar .agri-actions > * {
+  min-width: 0;
+}
+
+.agri-calculator-shell table {
+  min-width: 640px;
+}
+
+.agri-calculator-shell .agri-kpi {
+  min-width: 0;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.agri-calculator-shell .agri-error-fallback {
+  margin: 1.5rem auto;
+  max-width: 720px;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecdd3;
+  text-align: center;
+  font-weight: 600;
+}
