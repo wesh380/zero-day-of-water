@@ -22,6 +22,12 @@ html[data-page="agrovoltaics"] body {
 }
 html[data-page="agrovoltaics"] a {
     color:#0f172a;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+html[data-page="agrovoltaics"] a:hover {
+    text-decoration-thickness: 2px;
 }
 
 html[data-page="agrovoltaics"] ::selection {
@@ -40,13 +46,14 @@ html[data-page="agrovoltaics"] .wrapper {
     background-color: #ffffff;
     color: #0f172a;
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
 }
 
 /* استایل‌های input و select برای agrovoltaics */
 html[data-page="agrovoltaics"] input::placeholder {
-    color: #475569 !important;
+    color: rgba(100, 116, 139, 0.7) !important;
     opacity: 1 !important;
-    -webkit-text-fill-color: #475569 !important;
+    -webkit-text-fill-color: rgba(100, 116, 139, 0.7) !important;
 }
 
 html[data-page="agrovoltaics"] select,
@@ -87,4 +94,43 @@ html[data-page="agrovoltaics"] a:focus-visible {
     outline-offset: 2px;
     box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.25);
     border-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-page="agrovoltaics"] body {
+        background: #0f172a;
+        color: #e2e8f0;
+    }
+
+    html[data-page="agrovoltaics"] .card,
+    html[data-page="agrovoltaics"] .panel,
+    html[data-page="agrovoltaics"] .box,
+    html[data-page="agrovoltaics"] .section,
+    html[data-page="agrovoltaics"] main,
+    html[data-page="agrovoltaics"] .container,
+    html[data-page="agrovoltaics"] .wrapper {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        border-color: #334155;
+    }
+
+    html[data-page="agrovoltaics"] input::placeholder {
+        color: rgba(148, 163, 184, 0.8) !important;
+        -webkit-text-fill-color: rgba(148, 163, 184, 0.8) !important;
+    }
+
+    html[data-page="agrovoltaics"] select,
+    html[data-page="agrovoltaics"] input,
+    html[data-page="agrovoltaics"] textarea {
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
+        background-color: #0b1220 !important;
+        border-color: #475569 !important;
+    }
+
+    html[data-page="agrovoltaics"] select option {
+        background-color: #0b1220 !important;
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
+    }
 }
