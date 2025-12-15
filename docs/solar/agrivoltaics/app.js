@@ -163,14 +163,14 @@ const KPI = ({
 }) => /*#__PURE__*/React.createElement("div", {
   className: "agri-kpi rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-4 shadow-xl min-w-0 max-w-full overflow-hidden"
 }, /*#__PURE__*/React.createElement("div", {
-  className: "text-base text-slate-700 dark:text-slate-200 leading-7 truncate"
+  className: "text-base text-slate-600 dark:text-slate-300 leading-7 truncate"
 }, title), /*#__PURE__*/React.createElement("div", {
-  className: "text-xl md:text-2xl font-extrabold mt-1 text-emerald-400 text-center leading-tight break-words whitespace-normal"
+  className: "text-2xl font-semibold md:text-3xl text-slate-900 dark:text-slate-100 mt-1 text-center leading-tight break-words whitespace-normal tabular-nums"
 }, /*#__PURE__*/React.createElement("bdi", {
   className: "inline-block max-w-full whitespace-normal break-words",
   dir: "ltr"
 }, value)), sub && /*#__PURE__*/React.createElement("div", {
-  className: "text-sm text-slate-600 dark:text-slate-300 mt-1 text-center leading-7 break-words whitespace-normal"
+  className: "text-sm text-slate-500 dark:text-slate-400 mt-1 text-center leading-7 break-words whitespace-normal"
 }, sub));
 const KV = ({
   k,
@@ -822,19 +822,19 @@ function AgrivoltaicsKhorasan() {
   const displayCarbonRevenueYear = readyForOutput ? carbonRevenueYear : () => 0;
   const tableRows = displayCashflowsAGV.map((_, i) => /*#__PURE__*/React.createElement("tr", {
     key: i,
-    className: "border-b border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
+    className: "border-b border-slate-200 dark:border-slate-700 odd:bg-slate-50/50 dark:odd:bg-slate-900"
   }, /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, i + 1), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, energyOrDash("annualPV", displayAnnualPV(i), "kWh")), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, moneyOrDash("elec_and_carbon", displayElecRevenueYear(i) + displayCarbonRevenueYear(i))), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, moneyOrDash("cashflowsBaseline", displayCashflowsBaseline[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, moneyOrDash("cashflowsAGV", displayCashflowsAGV[i])), /*#__PURE__*/React.createElement("td", {
-    className: "py-2"
+    className: "py-2 text-slate-700 dark:text-slate-200"
   }, moneyOrDash("cashflowsIncremental", displayCashflows[i + 1] ?? null))));
   const disableActions = !readyForOutput || isLoading;
   const Chart = ({
@@ -937,7 +937,7 @@ function AgrivoltaicsKhorasan() {
       disabled: isLoading,
       className: `w-full sm:w-auto min-w-0 px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`
     }, isLoading ? "در حال محاسبه..." : "به‌روزرسانی محاسبات"), /*#__PURE__*/React.createElement("button", {
-      className: "w-full sm:w-auto min-w-0 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white",
+      className: "w-full sm:w-auto min-w-0 px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white",
       onClick: () => setSimple(v => !v)
     }, "حالت ", simple ? 'پیشرفته' : 'ساده'));
     const shareModal = shareLink ? /*#__PURE__*/React.createElement("div", {
@@ -1592,7 +1592,7 @@ function AgrivoltaicsKhorasan() {
   }, "جدول سال‌به‌سال"), /*#__PURE__*/React.createElement("table", {
     className: "w-full min-w-[640px] text-base"
   }, /*#__PURE__*/React.createElement("thead", {
-    className: "text-slate-700 dark:text-slate-200"
+    className: "text-slate-900 dark:text-slate-100"
   }, /*#__PURE__*/React.createElement("tr", {
     className: "border-b border-slate-200 dark:border-slate-700"
   }, /*#__PURE__*/React.createElement("th", {
