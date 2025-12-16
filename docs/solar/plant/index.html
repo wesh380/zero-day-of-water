@@ -16,6 +16,9 @@
     <title>کدوم نیروگاه برات مناسبه؟ | WESH360</title>
     <meta name="description" content="آشنایی با ظرفیت‌های رایج نیروگاه خورشیدی و مسیر رسمی ثبت درخواست در سامانه ساتبا.">
     <link rel="canonical" href="https://wesh360.ir/solar/plant/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="/assets/fonts.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
@@ -54,7 +57,7 @@
   <script src="/assets/js/nav-utils.js" defer></script>
   <script src="/assets/js/cloudflare-beacon-suppress.js" defer></script>
 </head>
-<body>
+<body style="font-family: 'Vazirmatn', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
     <header id="site-header" class="site-header" dir="rtl" role="banner" aria-label="سربرگ سایت">
@@ -89,19 +92,38 @@
         <h1 class="text-3xl font-extrabold text-slate-900">کدوم نیروگاه برات مناسبه؟</h1>
         <p class="text-sm text-slate-500">آخرین به‌روزرسانی اعداد: ۲۰۲۵/۱۲/۱۵</p>
         <p class="text-base text-slate-700 leading-relaxed max-w-3xl ml-auto">
-          خلاصه شرایط رایج برای ظرفیت‌های مختلف نیروگاه خورشیدی را ببین و بر اساس فضای در دسترس، سرمایه و زمان‌بندی، تصمیم بگیر کدام مسیر به نیازت نزدیک‌تر است.
+          خلاصه شرایط رایج برای ظرفیت‌های مختلف نیروگاه خورشیدی را ببین و بر اساس فضای در دسترس، سرمایه و زمان‌بندی، تصمیم بگیر کدام مسیر به نیازت نزدیک‌تر است. برای ثبت درخواست رسمی به سامانه مهرسان هدایت می‌شوی.
         </p>
       </header>
+
+      <section class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-4 text-right">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div class="space-y-1">
+            <p class="text-sm font-semibold text-slate-900">ادامه مسیر از اینجاست</p>
+            <p class="text-sm text-slate-700">مستقیماً وارد سامانه رسمی ساتبا (مهرسان) می‌شوی.</p>
+          </div>
+          <div class="space-y-1">
+            <a href="https://mehrsun.satba.gov.ir/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
+              رفتن به سامانه مهرسان (ساتبا)
+            </a>
+            <p class="text-xs text-muted-light text-center sm:text-right">وارد سامانه رسمی ساتبا می‌شوید</p>
+          </div>
+        </div>
+      </section>
 
       <section class="space-y-8">
         <div class="space-y-3 text-right">
           <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های کوچک</h2>
           <p class="text-sm text-muted-light leading-relaxed">مناسب فضاهای محدود شهری، پشت‌بام و سوله‌های کوچک.</p>
         </div>
-        <div class="grid gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3" aria-label="ظرفیت‌های نیروگاه‌های کوچک">
+        <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none" aria-label="ظرفیت‌های نیروگاه‌های کوچک">
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۵ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: شرکت توزیع برق شهرستان</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین + انشعاب برق (کنتور) یا انشعاب مجازی</span>
+              </div>
               <p class="text-sm text-muted-light">گزینه جمع‌وجور برای پشت‌بام منازل و مغازه‌ها.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -118,12 +140,14 @@
                 <dd>۴۰ تا ۵۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> شرکت توزیع برق شهرستان</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین + انشعاب برق (کنتور) یا انشعاب مجازی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود دو هفته</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود سه روز</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
@@ -135,6 +159,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۲۰ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: شرکت توزیع برق شهرستان</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین + انشعاب برق (کنتور) یا انشعاب مجازی</span>
+              </div>
               <p class="text-sm text-muted-light">مناسب کارگاه‌ها، سوله‌های کوچک و زمین‌های شهری.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -151,12 +179,14 @@
                 <dd>حدود ۲۰۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> شرکت توزیع برق شهرستان</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین + انشعاب برق (کنتور) یا انشعاب مجازی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود دو هفته</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک هفته</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
@@ -168,6 +198,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۵۰ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: شرکت توزیع برق شهرستان</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین + انشعاب برق (کنتور) یا انشعاب مجازی</span>
+              </div>
               <p class="text-sm text-muted-light">برای واحدهای تجاری و زمین‌های کوچک شخصی.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -184,12 +218,14 @@
                 <dd>حدود ۵۰۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> شرکت توزیع برق شهرستان</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین + انشعاب برق (کنتور) یا انشعاب مجازی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود دو هفته</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
@@ -206,10 +242,14 @@
           <p class="text-sm text-muted-light leading-relaxed">گزینه‌های میانه برای فضاهای صنعتی کوچک یا زمین‌های نیمه‌صنعتی.</p>
           <p class="text-xs text-amber-700">مبالغ دلاری تقریبی و وابسته به نرخ روز هستند.</p>
         </div>
-        <div class="grid gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3" aria-label="ظرفیت‌های نیروگاه‌های متوسط">
+        <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none" aria-label="ظرفیت‌های نیروگاه‌های متوسط">
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۱۰۰ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: شرکت توزیع برق شهرستان</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین + انشعاب برق (کنتور) یا انشعاب مجازی</span>
+              </div>
               <p class="text-sm text-muted-light">پیشنهاد برای واحدهای صنعتی کوچک.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -226,12 +266,14 @@
                 <dd>حدود ۱۲۰۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> شرکت توزیع برق شهرستان</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین + انشعاب برق (کنتور) یا انشعاب مجازی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
@@ -243,6 +285,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۲۰۰ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: شرکت توزیع برق شهرستان</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین + انشعاب برق (کنتور) یا انشعاب مجازی</span>
+              </div>
               <p class="text-sm text-muted-light">گزینه متعادل برای واحدهای صنعتی و کشاورزی.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -259,12 +305,14 @@
                 <dd>حدود ۲۵۰۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> شرکت توزیع برق شهرستان</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین + انشعاب برق (کنتور) یا انشعاب مجازی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود یک ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود یک ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱)</p>
@@ -276,6 +324,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۵۰۰ کیلووات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: ساتبا</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین می‌دهند + قرارداد ریالی/ارزی</span>
+              </div>
               <p class="text-sm text-muted-light">برای زمین‌های بزرگ‌تر و پروژه‌های نیمه‌سرمایه‌گذاری.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -295,15 +347,18 @@
                 <dd>حدود ۷۰۰۰ مترمربع</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> ساتبا</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین می‌دهند + قرارداد ریالی/ارزی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود سه ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p><span class="font-medium text-slate-900">عرضه:</span> عرضه در تابلو سبز بورس انرژی</p>
                 <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> مناسب زمین‌های بزرگ‌تر و پروژه‌های نیمه‌سرمایه‌گذاری.</p>
               </div>
             </details>
@@ -312,15 +367,19 @@
       </section>
 
       <section class="space-y-8">
-          <div class="space-y-3 text-right">
-            <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های بزرگ</h2>
-            <p class="text-sm text-muted-light leading-relaxed">گزینه‌های جدی سرمایه‌گذاری برای زمین‌های وسیع و پیگیری ساختاریافته.</p>
-            <p class="text-xs text-amber-700">مبالغ دلاری تقریبی و وابسته به نرخ روز هستند.</p>
-          </div>
-        <div class="grid gap-4 pb-4 md:grid-cols-2 lg:grid-cols-3" aria-label="ظرفیت‌های نیروگاه‌های بزرگ">
+        <div class="space-y-3 text-right">
+          <h2 class="text-2xl font-bold text-slate-900">نیروگاه‌های بزرگ</h2>
+          <p class="text-sm text-muted-light leading-relaxed">گزینه‌های جدی سرمایه‌گذاری برای زمین‌های وسیع و پیگیری ساختاریافته.</p>
+          <p class="text-xs text-amber-700">مبالغ دلاری تقریبی و وابسته به نرخ روز هستند.</p>
+        </div>
+        <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:snap-none" aria-label="ظرفیت‌های نیروگاه‌های بزرگ">
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۱ مگاوات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: ساتبا</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین می‌دهند + قرارداد ریالی/ارزی</span>
+              </div>
               <p class="text-sm text-muted-light">شروع پروژه‌های جدی سرمایه‌گذاری خورشیدی.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -340,15 +399,18 @@
                 <dd>حدود ۱٫۵ هکتار</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> ساتبا</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین می‌دهند + قرارداد ریالی/ارزی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود چهار ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p><span class="font-medium text-slate-900">عرضه:</span> عرضه در تابلو سبز بورس انرژی</p>
                 <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> شروع پروژه‌های جدی سرمایه‌گذاری خورشیدی.</p>
               </div>
             </details>
@@ -357,6 +419,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۵ مگاوات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: ساتبا</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین می‌دهند + قرارداد ریالی/ارزی</span>
+              </div>
               <p class="text-sm text-muted-light">نیازمند زمین بیشتر و پیگیری اداری منسجم.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -376,15 +442,18 @@
                 <dd>حدود ۷٫۵ هکتار</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> ساتبا</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین می‌دهند + قرارداد ریالی/ارزی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود شش ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p><span class="font-medium text-slate-900">عرضه:</span> عرضه در تابلو سبز بورس انرژی</p>
                 <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> پروژه سرمایه‌گذاری با نیاز به زمین و پیگیری ساختاریافته.</p>
               </div>
             </details>
@@ -393,6 +462,10 @@
           <article class="min-w-[280px] max-w-sm snap-start rounded-2xl border border-border-light bg-white p-5 shadow-sm space-y-4">
             <div class="space-y-1 text-right">
               <h3 class="text-xl font-bold text-slate-900">۱۰ مگاوات</h3>
+              <div class="flex flex-wrap items-center justify-end gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-800">محل اخذ مجوز: ساتبا</span>
+                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 font-semibold text-amber-800">شرایط: زمین می‌دهند + قرارداد ریالی/ارزی</span>
+              </div>
               <p class="text-sm text-muted-light">مناسب سرمایه‌گذاران حرفه‌ای و پروژه‌های بزرگ مقیاس.</p>
             </div>
             <dl class="space-y-2 text-sm text-slate-800">
@@ -412,15 +485,18 @@
                 <dd>حدود ۱۵ هکتار</dd>
               </div>
             </dl>
-            <details class="group border border-border-light rounded-xl p-4 bg-slate-50 text-right space-y-2">
-              <summary class="flex w-full items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-base font-bold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 cursor-pointer">
+            <details class="group rounded-xl border border-border-light bg-white text-right">
+              <summary class="flex w-full items-center justify-between gap-2 cursor-pointer px-3 py-2 text-base font-semibold text-slate-900 transition hover:text-sky-700 group-open:bg-slate-50">
                 جزئیات بیشتر
-                <span class="material-icons-outlined text-base" aria-hidden="true">expand_more</span>
+                <span class="material-icons-outlined text-base transition-transform duration-200 group-open:rotate-180" aria-hidden="true">expand_more</span>
               </summary>
-              <div class="text-sm text-slate-800 space-y-2 pt-2">
+              <div class="text-sm text-slate-800 space-y-2 px-3 pb-3 pt-1">
+                <p><span class="font-medium text-slate-900">محل اخذ مجوز:</span> ساتبا</p>
+                <p><span class="font-medium text-slate-900">شرایط:</span> زمین می‌دهند + قرارداد ریالی/ارزی</p>
                 <p><span class="font-medium text-slate-900">زمان گرفتن مجوز:</span> حدود چهار ماه</p>
                 <p><span class="font-medium text-slate-900">زمان اجرا:</span> حدود شش ماه</p>
                 <p><span class="font-medium text-slate-900">نوع قرارداد:</span> ۲۰ ساله (ماده ۶۱ – تابلو سبز)</p>
+                <p><span class="font-medium text-slate-900">عرضه:</span> عرضه در تابلو سبز بورس انرژی</p>
                 <p class="leading-relaxed"><span class="font-medium text-slate-900">کاربرد:</span> پروژه بزرگ مقیاس و مناسب سرمایه‌گذاران حرفه‌ای.</p>
               </div>
             </details>
@@ -440,6 +516,8 @@
           <p class="text-xs text-muted-light">وارد سامانه رسمی ساتبا می‌شوید</p>
         </div>
       </section>
+
+      <p class="text-xs text-slate-600 text-right">اعداد تقریبی‌اند و بسته به شهر/شبکه/تجهیزات تغییر می‌کنند.</p>
 
       <section class="rounded-2xl border border-border-light bg-white p-6 shadow-sm space-y-3 text-right">
         <h2 class="text-xl font-bold text-slate-900">پشتیبانی و بازخورد</h2>
