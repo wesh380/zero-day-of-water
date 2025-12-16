@@ -47,81 +47,68 @@ class RateLimiter {
 
 const rateLimiter = new RateLimiter(2, 1500); // حداکثر 2 درخواست همزمان با حداقل 1.5 ثانیه فاصله
 
-// Helper function برای sleep
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+const CACHE_TTL_MS = 10 * 60 * 1000;
+
+function toHash(str = '') {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return hash.toString(16);
 }
 
-// تابع اصلی برای فراخوانی API با retry logic
-async function fetchWithRetry(path, options, maxRetries = 3) {
-  let lastError;
+function readCache(key) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || Date.now() > parsed.exp) return null;
+    return parsed.value;
+  } catch (_) {
+    return null;
+  }
+}
 
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const res = await apiFetch(path, options);
-      const text = await res.text();
+function writeCache(key, value) {
+  try {
+    const payload = { value, exp: Date.now() + CACHE_TTL_MS };
+    sessionStorage.setItem(key, JSON.stringify(payload));
+  } catch (_) {
+    // ignore cache write failures
+  }
+}
 
-      // اگر درخواست موفق بود
-      if (res.ok) {
-        const out = JSON.parse(text);
-        return out?.text ?? '';
-      }
+// تابع اصلی برای فراخوانی API بدون retry برای 429/quota
+async function fetchWithSingleAttempt(path, options = {}, { signal } = {}) {
+  const mergedOptions = { ...options, signal };
+  const res = await apiFetch(path, mergedOptions);
+  const text = await res.text();
 
-      // پردازش خطا
-      let detail;
-      try { detail = JSON.parse(text); } catch { detail = { raw: text }; }
-
-      // اگر خطای 429 (Rate Limit) است
-      if (res.status === 429) {
-        // استخراج زمان انتظار از پیام خطا
-        const retryMatch = text.match(/retry in ([\d.]+)/i);
-        const retryAfter = retryMatch ? parseFloat(retryMatch[1]) * 1000 : Math.pow(2, attempt) * 2000;
-
-        console.warn(`⏳ Rate limit reached. Waiting ${(retryAfter/1000).toFixed(1)}s before retry (attempt ${attempt + 1}/${maxRetries})...`);
-
-        if (attempt < maxRetries - 1) {
-          await sleep(retryAfter);
-          continue;
-        }
-      }
-
-      // سایر خطاها
-      const msg = `AI_HTTP_${res.status}: ${detail?.error || detail?.status || ''} ${detail?.detail?.message || ''}`.trim();
-      lastError = new Error(msg);
-
-      // فقط برای خطاهای 429 و 5xx retry می‌کنیم
-      if (res.status !== 429 && res.status < 500) {
-        throw lastError;
-      }
-
-      if (attempt < maxRetries - 1) {
-        const backoffDelay = Math.pow(2, attempt) * 1000;
-        console.warn(`⚠️ Request failed with status ${res.status}. Retrying in ${backoffDelay/1000}s...`);
-        await sleep(backoffDelay);
-      }
-
-    } catch (error) {
-      lastError = error;
-
-      // اگر خطای شبکه است و این آخرین تلاش نیست
-      if (attempt < maxRetries - 1 && (error.message.includes('fetch') || error.message.includes('network'))) {
-        const backoffDelay = Math.pow(2, attempt) * 1000;
-        console.warn(`🔌 Network error. Retrying in ${backoffDelay/1000}s...`);
-        await sleep(backoffDelay);
-        continue;
-      }
-
-      throw error;
-    }
+  if (res.ok) {
+    const out = JSON.parse(text);
+    return out?.text ?? '';
   }
 
-  throw lastError || new Error('Request failed after retries');
+  let detail;
+  try { detail = JSON.parse(text); } catch { detail = { raw: text }; }
+
+  if (res.status === 429 || detail?.error === 'quota_exhausted') {
+    throw new Error('AI_QUOTA');
+  }
+
+  const msg = `AI_HTTP_${res.status}: ${detail?.error || detail?.status || ''} ${detail?.detail?.message || ''}`.trim();
+  throw new Error(msg);
 }
 
-export async function askAI(prompt, { json = false, model = null, maxRetries = 3 } = {}) {
+export async function askAI(prompt, { json = false, model = null, signal } = {}) {
   if (!prompt || String(prompt).trim().length < 3) {
     throw new Error('EMPTY_PROMPT');
   }
+
+  const cacheKey = `ai_cache_${toHash(`${prompt}|${json ? '1' : '0'}|${model || ''}`)}`;
+  const cached = typeof sessionStorage !== 'undefined' ? readCache(cacheKey) : null;
+  if (cached) return cached;
 
   // استفاده از rate limiter
   return rateLimiter.execute(async () => {
@@ -131,11 +118,18 @@ export async function askAI(prompt, { json = false, model = null, maxRetries = 3
       requestBody.model = model;
     }
 
-    return fetchWithRetry('/api/gemini', {
+    const result = await fetchWithSingleAttempt('/api/gemini', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(requestBody)
-    }, maxRetries);
+      body: JSON.stringify(requestBody),
+      signal
+    }, { signal });
+
+    if (typeof sessionStorage !== 'undefined') {
+      writeCache(cacheKey, result);
+    }
+
+    return result;
   });
 }
 
