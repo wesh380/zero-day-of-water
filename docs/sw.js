@@ -1,7 +1,7 @@
 // Service Worker برای WESH360 - Amaayesh Map Caching
-// Version 2.0.0 - Phase 3 Optimizations
+// Version 2.1.0 - Phase 3 Optimizations + asset refresh
 
-const CACHE_NAME = 'wesh360-amaayesh-v2';
+const CACHE_NAME = 'wesh360-amaayesh-v3';
 const DATA_CACHE = 'wesh360-data-v2';
 
 // فایل‌های critical که باید cache شوند
@@ -82,9 +82,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // استراتژی برای static assets: Cache first
+  // استراتژی برای JS/CSS داخل assets: Stale-While-Revalidate برای اطمینان از تازگی باندل‌ها
+  if (url.pathname.startsWith('/assets/') && url.pathname.match(/\.(js|css)$/)) {
+    event.respondWith(staleWhileRevalidate(request, CACHE_NAME));
+    return;
+  }
+
+  // استراتژی برای سایر static assets: Cache first
   if (
-    url.pathname.match(/\.(js|css|png|jpg|jpeg|svg|webp|woff2?)$/) ||
+    url.pathname.match(/\.(png|jpg|jpeg|svg|webp|woff2?)$/) ||
     url.pathname.includes('/assets/')
   ) {
     event.respondWith(cacheFirst(request, CACHE_NAME));
@@ -170,6 +176,31 @@ async function cacheFirstWithRevalidation(request, cacheName) {
   // اگر نداریم، منتظر fetch بمان
   console.log('[SW] Cache miss, fetching:', request.url);
   return fetchPromise;
+}
+
+// Stale-While-Revalidate برای JS/CSS
+async function staleWhileRevalidate(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+
+  const networkFetch = fetch(request)
+    .then((response) => {
+      if (response && response.status === 200) {
+        cache.put(request, response.clone());
+      }
+      return response;
+    })
+    .catch(() => null);
+
+  if (cached) {
+    console.log('[SW] SWR cache hit:', request.url);
+    return cached;
+  }
+
+  console.log('[SW] SWR cache miss, fetching:', request.url);
+  const response = await networkFetch;
+  if (response) return response;
+  throw new Error('Network error');
 }
 
 // Message handler: برای manual cache clear
