@@ -1,5 +1,5 @@
-// استفاده از مدل جدید Gemini 2.0 Flash - پایدار و سریع
-const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+// استفاده از مدل جدید Gemini 2.5 Flash - پایدار و سریع
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
 export async function handler(event) {
   const key = process.env.GEMINI_API_KEY || '';
@@ -7,18 +7,23 @@ export async function handler(event) {
 
   let bodyIn = {};
   try { bodyIn = JSON.parse(event.body || '{}'); } catch {}
-  const { prompt, json, model } = bodyIn;
+  const { prompt, json } = bodyIn;
   if (!prompt || String(prompt).trim().length < 3) {
     return send(400, { error: 'empty_prompt' });
   }
 
-  // استفاده از model ارسال شده یا مدل پیش‌فرض
-  const selectedModel = model || DEFAULT_MODEL;
+  // فقط از مدل سمت سرور استفاده می‌کنیم
+  const selectedModel = DEFAULT_MODEL;
   const API = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent`;
 
   const body = {
     contents: [{ parts: [{ text: String(prompt) }]}],
-    ...(json ? { generationConfig: { response_mime_type: 'application/json' } } : {})
+    generationConfig: {
+      candidateCount: 1,
+      maxOutputTokens: 400,
+      temperature: 0.2,
+      ...(json ? { response_mime_type: 'application/json' } : {})
+    }
   };
 
   const r = await fetch(`${API}?key=${encodeURIComponent(key)}`, {

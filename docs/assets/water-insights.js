@@ -39,10 +39,65 @@
     initSimulatorUI();
   }
 })();
-    
 
 
 
+
+  const aiOrchestrator = (() => {
+    let debounceTimer = null;
+    let currentTask = null;
+    let isRunning = false;
+    let currentController = null;
+
+    const runNext = () => {
+      if (isRunning || !currentTask) {
+        if (isRunning) {
+          debounceTimer = setTimeout(runNext, 120);
+        }
+        return;
+      }
+
+      isRunning = true;
+      const task = currentTask;
+      currentTask = null;
+      currentController = new AbortController();
+
+      task.onStart?.();
+
+      (async () => {
+        try {
+          const text = await askAI(task.prompt, { json: task.json, signal: currentController.signal });
+          if (!currentController.signal.aborted) {
+            task.onSuccess?.(text);
+          }
+        } catch (e) {
+          if (!currentController.signal.aborted) {
+            task.onError?.(e);
+          }
+        } finally {
+          task.onFinally?.();
+          isRunning = false;
+          currentController = null;
+
+          if (currentTask) {
+            debounceTimer = setTimeout(runNext, 120);
+          }
+        }
+      })();
+    };
+
+    return {
+      schedule(task) {
+        currentTask = task;
+        if (debounceTimer) clearTimeout(debounceTimer);
+        if (currentController) currentController.abort();
+        debounceTimer = setTimeout(runNext, 800);
+      }
+    };
+  })();
+
+
+  
   function setLoading(el, on=true) {
     if (!el) return;
     if (on) {
@@ -92,12 +147,7 @@
       const foods = (inp.value || '').trim();
       if (!foods) { out.textContent = 'لطفاً مواد غذایی را وارد کنید.'; out.focus(); return; }
 
-      clearSkeleton();
-      renderSkeleton();
-      showThinkingUI();
-
-      try {
-        const basePrompt = `
+      const basePrompt = `
 You are a virtual water footprint expert.
 Input: list of food items in Persian.
 Task: Calculate the total water footprint in liters and provide a short comparison in Persian (e.g., equivalent showers).
@@ -112,75 +162,84 @@ Your output MUST be a JSON object with this structure:
 All numbers must be numeric (no units attached in JSON).
 `;
 
-        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
-        const text = await askAI(`${basePrompt}\nFood list: ${foods}`, { json: true });
-        if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
-        const clean = text.replace(/```json|```/g, '').trim();
-
-        let data;
-        try {
-          data = JSON.parse(clean);
-        } catch (e) {
+      aiOrchestrator.schedule({
+        json: true,
+        prompt: `${basePrompt}\nFood list: ${foods}`,
+        onStart() {
           clearSkeleton();
-          out.textContent = '⚠️ پاسخ نامعتبر';
-          console.warn('Invalid JSON');
-          return;
-        }
-        if (
-          typeof data.total_liters !== 'number' ||
-          !Array.isArray(data.details) ||
-          !data.details.every(d => typeof d.item === 'string' && typeof d.liters === 'number')
-        ) {
+          renderSkeleton();
+          showThinkingUI();
+        },
+        onSuccess(text) {
+          if (window.__CLD_DEBUG__) console.log("Raw API response:", text);
+          const clean = text.replace(/```json|```/g, '').trim();
+
+          let data;
+          try {
+            data = JSON.parse(clean);
+          } catch (e) {
+            clearSkeleton();
+            out.textContent = '⚠️ پاسخ نامعتبر';
+            console.warn('Invalid JSON');
+            return;
+          }
+          if (
+            typeof data.total_liters !== 'number' ||
+            !Array.isArray(data.details) ||
+            !data.details.every(d => typeof d.item === 'string' && typeof d.liters === 'number')
+          ) {
+            clearSkeleton();
+            out.textContent = '⚠️ پاسخ نامعتبر';
+            return;
+          }
+
+          // ساخت خروجی
           clearSkeleton();
-          out.textContent = '⚠️ پاسخ نامعتبر';
-          return;
+          const wrapper = document.createElement('div');
+          wrapper.className = 'space-y-1';
+
+          const total = document.createElement('p');
+          total.className = 'text-4xl font-extrabold text-blue-600';
+          total.textContent = nf.format(data.total_liters) + ' لیتر';
+
+          const comparison = document.createElement('p');
+          comparison.className = 'text-slate-600 mt-2';
+          comparison.textContent = data.comparison_text_persian || '';
+
+          const list = document.createElement('ul');
+          list.className = 'mt-4 space-y-1';
+          data.details.forEach(it => {
+            const li = document.createElement('li');
+            li.className = 'flex justify-between';
+            const item = document.createElement('span');
+            item.textContent = it.item;
+            const liters = document.createElement('span');
+            liters.textContent = nf.format(it.liters) + ' لیتر';
+            li.append(item, liters);
+            list.appendChild(li);
+          });
+
+          wrapper.append(total, comparison, list);
+          out.appendChild(wrapper);
+          out.focus();
+        },
+        onError(e) {
+          if (e.name === 'AbortError') return;
+          clearSkeleton();
+          if (e.message.includes('AI_QUOTA')) {
+            out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+          } else if (e.message.includes('EMPTY_PROMPT')) {
+            out.textContent = 'لطفاً مواد غذایی را وارد کنید.';
+          } else {
+            out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در محاسبه</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+          }
+          out.focus();
+          console.warn('Footprint calculation error:', e.message);
+        },
+        onFinally() {
+          hideThinkingUI();
         }
-
-        // ساخت خروجی
-        clearSkeleton();
-        const wrapper = document.createElement('div');
-        wrapper.className = 'space-y-1';
-
-        const total = document.createElement('p');
-        total.className = 'text-4xl font-extrabold text-blue-600';
-        total.textContent = nf.format(data.total_liters) + ' لیتر';
-
-        const comparison = document.createElement('p');
-        comparison.className = 'text-slate-600 mt-2';
-        comparison.textContent = data.comparison_text_persian || '';
-
-        const list = document.createElement('ul');
-        list.className = 'mt-4 space-y-1';
-        data.details.forEach(it => {
-          const li = document.createElement('li');
-          li.className = 'flex justify-between';
-          const item = document.createElement('span');
-          item.textContent = it.item;
-          const liters = document.createElement('span');
-          liters.textContent = nf.format(it.liters) + ' لیتر';
-          li.append(item, liters);
-          list.appendChild(li);
-        });
-
-        wrapper.append(total, comparison, list);
-        out.appendChild(wrapper);
-        out.focus();
-
-      } catch(e){
-        clearSkeleton();
-        // مدیریت هوشمند خطاها
-        if (e.message.includes('AI_HTTP_429')) {
-          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
-        } else if (e.message.includes('EMPTY_PROMPT')) {
-          out.textContent = 'لطفاً مواد غذایی را وارد کنید.';
-        } else {
-          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در محاسبه</p><p>لطفاً دوباره تلاش کنید.</p></div>';
-        }
-        out.focus();
-        console.warn('Footprint calculation error:', e.message);
-      } finally {
-        hideThinkingUI();
-      }
+      });
     });
   })();
 
@@ -194,13 +253,9 @@ All numbers must be numeric (no units attached in JSON).
     if (!btn || !rain || !cut || !out) return;
 
     btn.addEventListener('click', async () => {
-      try {
-        setLoading(btn, true);
-        out.textContent = '⏳';
-        if (thinking) thinking.classList.remove('hidden');
-        const rainVal = rain.value || rain.getAttribute('value') || '0';
-        const cutVal  = cut.value  || cut.getAttribute('value')  || '0';
-        const prompt =
+      const rainVal = rain.value || rain.getAttribute('value') || '0';
+      const cutVal  = cut.value  || cut.getAttribute('value')  || '0';
+      const prompt =
 `دستور: شبیه‌ساز منابع آب مشهد.
 ورودی:
 - تغییر بارش ماه آینده: ${rainVal} میلی‌متر
@@ -211,45 +266,54 @@ All numbers must be numeric (no units attached in JSON).
   "impact_index":عدد,
   "note_fa":"متن"
 }`;
-        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
-        const text = await askAI(prompt, { json: true });
-        if (window.__CLD_DEBUG__) console.log("Simulator response:", text);
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch(e) {
-          out.textContent = '⚠️ پاسخ نامعتبر.';
-          console.warn('JSON parse error (Simulator):', e.message, 'Raw:', text);
-          return;
+      aiOrchestrator.schedule({
+        json: true,
+        prompt,
+        onStart() {
+          setLoading(btn, true);
+          out.textContent = '⏳';
+          if (thinking) thinking.classList.remove('hidden');
+        },
+        onSuccess(text) {
+          if (window.__CLD_DEBUG__) console.log("Simulator response:", text);
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch(e) {
+            out.textContent = '⚠️ پاسخ نامعتبر.';
+            console.warn('JSON parse error (Simulator):', e.message, 'Raw:', text);
+            return;
+          }
+          const ul = document.createElement('ul');
+          ul.className = 'list-disc pr-4';
+          (data.bullets_fa || []).forEach(b => {
+            const li = document.createElement('li');
+            li.className = 'mb-1';
+            li.textContent = b;
+            ul.appendChild(li);
+          });
+          const impact = document.createElement('p');
+          impact.className = 'font-bold mt-2';
+          impact.textContent = 'شاخص تأثیر: ' + nf.format(data.impact_index);
+          const note = document.createElement('p');
+          note.className = 'mt-1';
+          note.textContent = data.note_fa || '';
+          out.replaceChildren(ul, impact, note);
+        },
+        onError(e) {
+          if (e.name === 'AbortError') return;
+          if (e.message.includes('AI_QUOTA')) {
+            out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+          } else {
+            out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در شبیه‌سازی</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+          }
+          console.warn('Simulation error:', e.message);
+        },
+        onFinally() {
+          setLoading(btn, false);
+          if (thinking) thinking.classList.add('hidden');
         }
-        const ul = document.createElement('ul');
-        ul.className = 'list-disc pr-4';
-        (data.bullets_fa || []).forEach(b => {
-          const li = document.createElement('li');
-          li.className = 'mb-1';
-          li.textContent = b;
-          ul.appendChild(li);
-        });
-        const impact = document.createElement('p');
-        impact.className = 'font-bold mt-2';
-        impact.textContent = 'شاخص تأثیر: ' + nf.format(data.impact_index);
-        const note = document.createElement('p');
-        note.className = 'mt-1';
-        note.textContent = data.note_fa || '';
-        out.replaceChildren(ul, impact, note);
-      } catch(e){
-        // مدیریت هوشمند خطاها
-        if (e.message.includes('AI_HTTP_429')) {
-          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
-        } else {
-          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در شبیه‌سازی</p><p>لطفاً دوباره تلاش کنید.</p></div>';
-        }
-        console.warn('Simulation error:', e.message);
-      }
-      finally {
-        setLoading(btn, false);
-        if (thinking) thinking.classList.add('hidden');
-      }
+      });
     });
   })();
 
@@ -263,13 +327,9 @@ All numbers must be numeric (no units attached in JSON).
     if (!btn || !fam || !shw || !out) return;
 
     btn.addEventListener('click', async () => {
-      try {
-        setLoading(btn, true);
-        out.textContent = '⏳';
-        if (thinking) thinking.classList.remove('hidden');
-        const members = fam.value || '4';
-        const shower  = shw.value || '10';
-        const prompt =
+      const members = fam.value || '4';
+      const shower  = shw.value || '10';
+      const prompt =
 `دستور: مشاور صرفه‌جویی آب هستی.
 ورودی: خانواده ${members} نفره، زمان حمام ${shower} دقیقه.
 ۵ توصیه کوتاه ارائه بده.
@@ -277,44 +337,53 @@ All numbers must be numeric (no units attached in JSON).
 {
   "bullets_fa":[{"tip":"متن","liters_per_day":عدد}]
 }`;
-        // استفاده از مدل پیش‌فرض (gemini-2.0-flash-exp) که در gemini.js تعریف شده
-        const text = await askAI(prompt, { json: true });
-        if (window.__CLD_DEBUG__) console.log("Tips response:", text);
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch(e) {
-          out.textContent = '⚠️ پاسخ نامعتبر.';
-          console.warn('JSON parse error (Tips):', e.message, 'Raw:', text);
-          return;
+      aiOrchestrator.schedule({
+        json: true,
+        prompt,
+        onStart() {
+          setLoading(btn, true);
+          out.textContent = '⏳';
+          if (thinking) thinking.classList.remove('hidden');
+        },
+        onSuccess(text) {
+          if (window.__CLD_DEBUG__) console.log("Tips response:", text);
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch(e) {
+            out.textContent = '⚠️ پاسخ نامعتبر.';
+            console.warn('JSON parse error (Tips):', e.message, 'Raw:', text);
+            return;
+          }
+          const ul = document.createElement('ul');
+          ul.className = 'list-disc pr-4';
+          (data.bullets_fa || []).forEach(t => {
+            const li = document.createElement('li');
+            const tip = document.createElement('span');
+            tip.textContent = t.tip + ': ';
+            const strong = document.createElement('strong');
+            strong.textContent = nf.format(t.liters_per_day) + ' لیتر/روز';
+            li.appendChild(tip);
+            li.appendChild(strong);
+            ul.appendChild(li);
+          });
+          out.replaceChildren(ul);
+        },
+        onError(e) {
+          if (e.name === 'AbortError') return;
+          if (e.message.includes('AI_QUOTA')) {
+            out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
+          } else {
+            out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در تولید راهکار</p><p>لطفاً دوباره تلاش کنید.</p></div>';
+          }
+          console.warn('Tips generation error:', e.message);
+        },
+        onFinally() {
+          setLoading(btn, false);
+          if (thinking) thinking.classList.add('hidden');
         }
-        const ul = document.createElement('ul');
-        ul.className = 'list-disc pr-4';
-        (data.bullets_fa || []).forEach(t => {
-          const li = document.createElement('li');
-          const tip = document.createElement('span');
-          tip.textContent = t.tip + ': ';
-          const strong = document.createElement('strong');
-          strong.textContent = nf.format(t.liters_per_day) + ' لیتر/روز';
-          li.appendChild(tip);
-          li.appendChild(strong);
-          ul.appendChild(li);
-        });
-        out.replaceChildren(ul);
-      } catch(e){
-        // مدیریت هوشمند خطاها
-        if (e.message.includes('AI_HTTP_429')) {
-          out.innerHTML = '<div class="text-amber-700 text-sm"><p class="font-bold mb-2">⏳ درخواست‌های زیاد به سرور</p><p>لطفاً چند لحظه صبر کنید و دوباره امتحان کنید.</p></div>';
-        } else {
-          out.innerHTML = '<div class="text-red-600 text-sm"><p class="font-bold mb-2">⚠️ خطا در تولید راهکار</p><p>لطفاً دوباره تلاش کنید.</p></div>';
-        }
-        console.warn('Tips generation error:', e.message);
-      }
-      finally {
-        setLoading(btn, false);
-        if (thinking) thinking.classList.add('hidden');
-      }
+      });
     });
   })();
 
-    
+
